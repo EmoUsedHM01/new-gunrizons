@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "com.gtnewhorizon.newgunrizons.mixin",
+  "refmap": "mixins.newgunrizons.refmap.json",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+
+  ],
+  "client": [
+    "MixinEntityRenderer",
+    "MixinRenderGlobal"
+  ],
+  "server": [
+
+  ]
+}

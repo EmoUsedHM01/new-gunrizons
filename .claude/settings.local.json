@@ -76,7 +76,8 @@
       "Bash(/tmp/decompile26.sh:*)",
       "Bash(/tmp/decompile27.sh:*)",
       "Bash(\"C:/Users/tuner/.gradle/jdks/azul_systems__inc_-17-amd64-windows.2/bin/jar.exe\" tf:*)",
-      "Bash(\"$JAVAP\":*)"
+      "Bash(\"$JAVAP\":*)",
+      "Bash(echo:*)"
     ]
   }
 }

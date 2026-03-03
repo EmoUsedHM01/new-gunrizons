@@ -36,12 +36,11 @@ NewGunrizons is a Minecraft 1.7.10 Forge mod built using the GT New Horizons (GT
 
 ### FML Lifecycle (Forge Mod Loader)
 
-The mod uses the standard FML event-driven lifecycle via `@Mod.EventHandler` methods in `MyMod.java`:
+The mod uses the standard FML event-driven lifecycle via `@Mod.EventHandler` methods in `NewGunrizonsMod.java`:
 
 1. **preInit** — Config loading, block/item registration with GameRegistry
 2. **init** — Recipe registration, mod setup
 3. **postInit** — Cross-mod compatibility
-4. **serverStarting** — Server command registration
 
 ### Proxy Pattern
 
@@ -49,11 +48,44 @@ Client and server logic are separated via `@SidedProxy`:
 - **CommonProxy** — Shared logic (config, registration). Always loaded.
 - **ClientProxy** extends CommonProxy — Client-only logic (rendering, keybinds, GUIs). Only loaded on physical client.
 
-The proxy is statically accessed via `MyMod.proxy`.
+The proxy is statically accessed via `NewGunrizonsMod.proxy`.
 
-### Configuration
+### Package Structure
 
-`Config.java` uses Forge's `Configuration` API. Config file is auto-generated at `config/newgunrizons.cfg`. Add new config properties using `config.get(category, key, default)` and call `config.save()` if changed.
+```
+com.gtnewhorizon.newgunrizons/
+├── NewGunrizonsMod.java, CommonProxy, ClientProxy
+├── config/          — ModContext, CommonModContext, ClientModContext, PlayerContext, SafeGlobals, Tags
+├── weapon/          — Weapon, WeaponState, PlayerWeaponInstance, ItemAmmo, ItemBullet, etc.
+├── attachment/      — AttachmentBuilder, ItemAttachment, ItemScope, CompatibleAttachment, etc.
+├── grenade/         — ItemGrenade, EntityGrenade, GrenadeRenderer, etc.
+├── entity/          — EntityProjectile, EntityShellCasing, WeaponSpawnEntity, Explosion
+├── mechanic/        — WeaponFireAspect, WeaponReloadAspect, WeaponAttachmentAspect
+├── state/           — Aspect, StateManager, RenderableState, Permit, etc.
+├── network/         — All network messages + handlers, SyncManager, TypeRegistry
+├── crafting/        — RecipeManager, RecipeGenerator, CraftingComplexity
+├── client/
+│   ├── render/      — WeaponRenderer, ShellCasingRenderer, RenderContext, etc.
+│   ├── scope/       — ScopeManager, ScopeRenderer, ScopePerspective
+│   ├── animation/   — Transition, MultipartTransition, IdleSway, etc.
+│   ├── particle/    — FlashFX, SmokeFX, ExplosionParticleFX
+│   ├── shader/      — DynamicShader, DynamicShaderGroup, Framebuffers
+│   ├── input/       — KeyBindings, WeaponKeyInputHandler
+│   ├── handler/     — ClientEventHandler, WeaponEventHandler, ClientWeaponTicker
+│   ├── resource/    — WeaponResourcePack, TransformingResourceManager
+│   └── effect/      — EffectManager
+├── server/          — ServerEventHandler
+├── registry/        — Guns, Attachments, AuxiliaryAttachments, Bullets, Magazines, etc.
+├── tab/             — Creative tabs (GunsTab, AmmoTab, etc.)
+├── block/           — Ore blocks
+├── material/        — Item resources (ingots, plates) + electronic parts
+├── factory/
+│   ├── gun/{assault,sniper,smg,shotgun,pistol,lmg,special}/  — Gun factory files
+│   └── grenade/     — Grenade factories
+├── model/{weapon,action,sight,magazine,grip,ammo,misc}/       — 3D model files
+├── mixin/           — MixinEntityRenderer, MixinRenderGlobal
+└── util/            — MiscUtils, RayTracing, BlockPos, Tuple, etc.
+```
 
 ## Key Build Conventions
 

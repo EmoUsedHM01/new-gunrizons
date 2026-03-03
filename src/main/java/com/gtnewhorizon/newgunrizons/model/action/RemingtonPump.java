@@ -1,0 +1,153 @@
+package com.gtnewhorizon.newgunrizons.model.action;
+
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
+
+public class RemingtonPump extends ModelBase {
+
+    ModelRenderer pump1;
+    ModelRenderer pump2;
+    ModelRenderer pump3;
+    ModelRenderer pump4;
+    ModelRenderer pump5;
+    ModelRenderer pump6;
+    ModelRenderer pump7;
+    ModelRenderer pump8;
+    ModelRenderer pump9;
+    ModelRenderer pump10;
+    ModelRenderer pump11;
+    ModelRenderer pump12;
+    ModelRenderer pump13;
+    ModelRenderer pump14;
+    ModelRenderer pump15;
+    ModelRenderer pump16;
+
+    public RemingtonPump() {
+        this.textureWidth = 512;
+        this.textureHeight = 256;
+        this.pump1 = new ModelRenderer(this, 250, 0);
+        this.pump1.addBox(0.0F, 0.0F, 0.0F, 1, 1, 20);
+        this.pump1.setRotationPoint(-2.8F, -3.0F, -39.0F);
+        this.pump1.setTextureSize(64, 32);
+        this.pump1.mirror = true;
+        this.setRotation(this.pump1, 0.0F, 0.0F, 0.0F);
+        this.pump2 = new ModelRenderer(this, 250, 0);
+        this.pump2.addBox(0.0F, 0.0F, 0.0F, 1, 1, 20);
+        this.pump2.setRotationPoint(-0.2F, -3.0F, -39.0F);
+        this.pump2.setTextureSize(64, 32);
+        this.pump2.mirror = true;
+        this.setRotation(this.pump2, 0.0F, 0.0F, 0.0F);
+        this.pump3 = new ModelRenderer(this, 250, 0);
+        this.pump3.addBox(0.0F, 0.0F, 0.0F, 2, 1, 20);
+        this.pump3.setRotationPoint(-2.0F, -1.2F, -39.0F);
+        this.pump3.setTextureSize(64, 32);
+        this.pump3.mirror = true;
+        this.setRotation(this.pump3, 0.0F, 0.0F, 0.0F);
+        this.pump4 = new ModelRenderer(this, 250, 0);
+        this.pump4.addBox(0.0F, 0.0F, 0.0F, 2, 1, 20);
+        this.pump4.setRotationPoint(0.8F, -2.0F, -39.0F);
+        this.pump4.setTextureSize(64, 32);
+        this.pump4.mirror = true;
+        this.setRotation(this.pump4, 0.0F, 0.0F, 2.007645F);
+        this.pump5 = new ModelRenderer(this, 250, 0);
+        this.pump5.addBox(0.0F, 0.0F, 0.0F, 1, 2, 20);
+        this.pump5.setRotationPoint(-2.8F, -2.0F, -39.0F);
+        this.pump5.setTextureSize(64, 32);
+        this.pump5.mirror = true;
+        this.setRotation(this.pump5, 0.0F, 0.0F, -0.4089647F);
+        this.pump6 = new ModelRenderer(this, 250, 0);
+        this.pump6.addBox(0.0F, 0.0F, 0.0F, 3, 2, 15);
+        this.pump6.setRotationPoint(-2.5F, -4.4F, -39.0F);
+        this.pump6.setTextureSize(64, 32);
+        this.pump6.mirror = true;
+        this.setRotation(this.pump6, 0.0F, 0.0F, 0.0F);
+        this.pump7 = new ModelRenderer(this, 250, 0);
+        this.pump7.addBox(0.0F, 0.0F, 0.0F, 1, 2, 1);
+        this.pump7.setRotationPoint(-2.8F, -4.4F, -25.0F);
+        this.pump7.setTextureSize(64, 32);
+        this.pump7.mirror = true;
+        this.setRotation(this.pump7, 0.0F, 0.0F, 0.0F);
+        this.pump8 = new ModelRenderer(this, 250, 0);
+        this.pump8.addBox(0.0F, 0.0F, 0.0F, 1, 2, 1);
+        this.pump8.setRotationPoint(-0.2F, -4.4F, -25.0F);
+        this.pump8.setTextureSize(64, 32);
+        this.pump8.mirror = true;
+        this.setRotation(this.pump8, 0.0F, 0.0F, 0.0F);
+        this.pump9 = new ModelRenderer(this, 250, 0);
+        this.pump9.addBox(0.0F, 0.0F, 0.0F, 1, 1, 4);
+        this.pump9.setRotationPoint(-2.8F, -4.4F, -24.0F);
+        this.pump9.setTextureSize(64, 32);
+        this.pump9.mirror = true;
+        this.setRotation(this.pump9, -0.3717861F, 0.0F, 0.0F);
+        this.pump10 = new ModelRenderer(this, 250, 0);
+        this.pump10.addBox(0.0F, 0.0F, 0.0F, 1, 1, 4);
+        this.pump10.setRotationPoint(-0.2F, -4.4F, -24.0F);
+        this.pump10.setTextureSize(64, 32);
+        this.pump10.mirror = true;
+        this.setRotation(this.pump10, -0.3717861F, 0.0F, 0.0F);
+        this.pump11 = new ModelRenderer(this, 250, 0);
+        this.pump11.addBox(0.0F, 0.0F, 0.0F, 1, 1, 1);
+        this.pump11.setRotationPoint(-2.8F, -3.5F, -24.0F);
+        this.pump11.setTextureSize(64, 32);
+        this.pump11.mirror = true;
+        this.setRotation(this.pump11, 0.0F, 0.0F, 0.0F);
+        this.pump12 = new ModelRenderer(this, 250, 0);
+        this.pump12.addBox(0.0F, 0.0F, 0.0F, 1, 1, 1);
+        this.pump12.setRotationPoint(-0.2F, -3.5F, -24.0F);
+        this.pump12.setTextureSize(64, 32);
+        this.pump12.mirror = true;
+        this.setRotation(this.pump12, 0.0F, 0.0F, 0.0F);
+        this.pump13 = new ModelRenderer(this, 250, 0);
+        this.pump13.addBox(0.0F, 0.0F, 0.0F, 1, 1, 1);
+        this.pump13.setRotationPoint(-0.2F, -4.4F, -25.0F);
+        this.pump13.setTextureSize(64, 32);
+        this.pump13.mirror = true;
+        this.setRotation(this.pump13, -0.6320364F, 0.0F, 0.0F);
+        this.pump14 = new ModelRenderer(this, 250, 0);
+        this.pump14.addBox(0.0F, 0.0F, 0.0F, 1, 1, 1);
+        this.pump14.setRotationPoint(-2.8F, -4.4F, -25.0F);
+        this.pump14.setTextureSize(64, 32);
+        this.pump14.mirror = true;
+        this.setRotation(this.pump14, -0.6320364F, 0.0F, 0.0F);
+        this.pump15 = new ModelRenderer(this, 250, 0);
+        this.pump15.addBox(0.0F, 0.0F, 0.0F, 1, 1, 15);
+        this.pump15.setRotationPoint(-2.8F, -3.0F, -39.0F);
+        this.pump15.setTextureSize(64, 32);
+        this.pump15.mirror = true;
+        this.setRotation(this.pump15, 0.0F, 0.0F, -1.115358F);
+        this.pump16 = new ModelRenderer(this, 250, 0);
+        this.pump16.addBox(0.0F, 0.0F, 0.0F, 1, 1, 20);
+        this.pump16.setRotationPoint(0.8F, -3.0F, -39.0F);
+        this.pump16.setTextureSize(64, 32);
+        this.pump16.mirror = true;
+        this.setRotation(this.pump16, 0.0F, 0.0F, 2.67686F);
+    }
+
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+        super.render(entity, f, f1, f2, f3, f4, f5);
+        this.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+        this.pump1.render(f5);
+        this.pump2.render(f5);
+        this.pump3.render(f5);
+        this.pump4.render(f5);
+        this.pump5.render(f5);
+        this.pump6.render(f5);
+        this.pump7.render(f5);
+        this.pump8.render(f5);
+        this.pump9.render(f5);
+        this.pump10.render(f5);
+        this.pump11.render(f5);
+        this.pump12.render(f5);
+        this.pump13.render(f5);
+        this.pump14.render(f5);
+        this.pump15.render(f5);
+        this.pump16.render(f5);
+    }
+
+    private void setRotation(ModelRenderer model, float x, float y, float z) {
+        model.rotateAngleX = x;
+        model.rotateAngleY = y;
+        model.rotateAngleZ = z;
+    }
+}

@@ -37,7 +37,8 @@ dependencies {
 
     api("com.github.GTNewHorizons:NotEnoughItems:2.8.71-GTNH:dev")
     api("com.github.GTNewHorizons:waila:1.19.22:dev")
-    api("com.github.GTNewHorizons:Angelica:2.0.0-alpha20:dev")
+
+    //api("com.github.GTNewHorizons:Angelica:2.0.0-alpha20:dev")
 
     compileOnly("org.projectlombok:lombok:1.18.30")
     annotationProcessor("org.projectlombok:lombok:1.18.30")

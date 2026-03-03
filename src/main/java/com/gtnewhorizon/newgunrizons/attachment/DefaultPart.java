@@ -1,0 +1,14 @@
+package com.gtnewhorizon.newgunrizons.attachment;
+
+public final class DefaultPart implements Part {
+
+    private final String name;
+
+    public DefaultPart(String name) {
+        this.name = name;
+    }
+
+    public String toString() {
+        return "[" + this.name + "]";
+    }
+}

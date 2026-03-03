@@ -1,0 +1,153 @@
+package com.gtnewhorizon.newgunrizons.model.sight;
+
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
+
+public class M1A1rearsight extends ModelBase {
+
+    ModelRenderer RearSight1;
+    ModelRenderer RearSight2;
+    ModelRenderer RearSight3;
+    ModelRenderer RearSight4;
+    ModelRenderer RearSight5;
+    ModelRenderer RearSight6;
+    ModelRenderer RearSight7;
+    ModelRenderer RearSigh8;
+    ModelRenderer RearSight9;
+    ModelRenderer RearSight10;
+    ModelRenderer RearSight11;
+    ModelRenderer RearSight12;
+    ModelRenderer RearSight13;
+    ModelRenderer RearSight14;
+    ModelRenderer RearSight15;
+    ModelRenderer RearSight16;
+
+    public M1A1rearsight() {
+        this.textureWidth = 128;
+        this.textureHeight = 64;
+        this.RearSight1 = new ModelRenderer(this, 0, 0);
+        this.RearSight1.addBox(0.0F, 0.0F, 0.0F, 1, 5, 1);
+        this.RearSight1.setRotationPoint(2.5F, -3.0F, 0.0F);
+        this.RearSight1.setTextureSize(64, 32);
+        this.RearSight1.mirror = true;
+        this.setRotation(this.RearSight1, 0.0F, 0.0F, 0.0F);
+        this.RearSight2 = new ModelRenderer(this, 0, 0);
+        this.RearSight2.addBox(0.0F, 0.0F, 0.0F, 1, 5, 1);
+        this.RearSight2.setRotationPoint(6.0F, -3.0F, 0.0F);
+        this.RearSight2.setTextureSize(64, 32);
+        this.RearSight2.mirror = true;
+        this.setRotation(this.RearSight2, 0.0F, 0.0F, 0.0F);
+        this.RearSight3 = new ModelRenderer(this, 0, 0);
+        this.RearSight3.addBox(0.0F, 0.0F, 0.0F, 1, 14, 2);
+        this.RearSight3.setRotationPoint(0.0F, -6.0F, 2.0F);
+        this.RearSight3.setTextureSize(64, 32);
+        this.RearSight3.mirror = true;
+        this.setRotation(this.RearSight3, -1.115358F, 0.0F, 0.0F);
+        this.RearSight4 = new ModelRenderer(this, 0, 0);
+        this.RearSight4.addBox(0.0F, 0.0F, 0.0F, 1, 2, 9);
+        this.RearSight4.setRotationPoint(0.0F, -6.0F, 2.0F);
+        this.RearSight4.setTextureSize(64, 32);
+        this.RearSight4.mirror = true;
+        this.setRotation(this.RearSight4, -1.07818F, 0.0F, 0.0F);
+        this.RearSight5 = new ModelRenderer(this, 0, 0);
+        this.RearSight5.addBox(0.0F, 0.0F, 0.0F, 1, 2, 9);
+        this.RearSight5.setRotationPoint(8.5F, -6.0F, 2.0F);
+        this.RearSight5.setTextureSize(64, 32);
+        this.RearSight5.mirror = true;
+        this.setRotation(this.RearSight5, -1.07818F, 0.0F, 0.0F);
+        this.RearSight6 = new ModelRenderer(this, 0, 0);
+        this.RearSight6.addBox(0.0F, 0.0F, 0.0F, 8, 1, 16);
+        this.RearSight6.setRotationPoint(0.5F, 1.2F, -10.5F);
+        this.RearSight6.setTextureSize(64, 32);
+        this.RearSight6.mirror = true;
+        this.setRotation(this.RearSight6, 0.0F, 0.0F, 0.0F);
+        this.RearSight7 = new ModelRenderer(this, 0, 0);
+        this.RearSight7.addBox(0.0F, 0.0F, 0.0F, 3, 4, 1);
+        this.RearSight7.setRotationPoint(3.3F, -2.0F, 0.0F);
+        this.RearSight7.setTextureSize(64, 32);
+        this.RearSight7.mirror = true;
+        this.setRotation(this.RearSight7, 0.0F, 0.0F, 0.0F);
+        this.RearSigh8 = new ModelRenderer(this, 0, 0);
+        this.RearSigh8.addBox(0.0F, 0.0F, 0.0F, 1, 14, 2);
+        this.RearSigh8.setRotationPoint(8.5F, -6.0F, 2.0F);
+        this.RearSigh8.setTextureSize(64, 32);
+        this.RearSigh8.mirror = true;
+        this.setRotation(this.RearSigh8, -1.115358F, 0.0F, 0.0F);
+        this.RearSight9 = new ModelRenderer(this, 0, 0);
+        this.RearSight9.addBox(0.0F, 0.0F, 0.0F, 1, 2, 15);
+        this.RearSight9.setRotationPoint(8.5F, 0.2F, -10.5F);
+        this.RearSight9.setTextureSize(64, 32);
+        this.RearSight9.mirror = true;
+        this.setRotation(this.RearSight9, 0.0F, 0.0F, 0.0F);
+        this.RearSight10 = new ModelRenderer(this, 0, 0);
+        this.RearSight10.addBox(0.0F, 0.0F, 0.0F, 1, 2, 15);
+        this.RearSight10.setRotationPoint(0.0F, 0.2F, -10.5F);
+        this.RearSight10.setTextureSize(64, 32);
+        this.RearSight10.mirror = true;
+        this.setRotation(this.RearSight10, 0.0F, 0.0F, 0.0F);
+        this.RearSight11 = new ModelRenderer(this, 0, 0);
+        this.RearSight11.addBox(0.0F, 0.0F, 0.0F, 1, 2, 10);
+        this.RearSight11.setRotationPoint(8.5F, -1.5F, -6.5F);
+        this.RearSight11.setTextureSize(64, 32);
+        this.RearSight11.mirror = true;
+        this.setRotation(this.RearSight11, 0.0F, 0.0F, 0.0F);
+        this.RearSight12 = new ModelRenderer(this, 0, 0);
+        this.RearSight12.addBox(0.0F, 0.0F, 0.0F, 1, 2, 6);
+        this.RearSight12.setRotationPoint(8.5F, -3.5F, -3.0F);
+        this.RearSight12.setTextureSize(64, 32);
+        this.RearSight12.mirror = true;
+        this.setRotation(this.RearSight12, 0.0F, 0.0F, 0.0F);
+        this.RearSight13 = new ModelRenderer(this, 0, 0);
+        this.RearSight13.addBox(0.0F, 0.0F, 0.0F, 1, 2, 6);
+        this.RearSight13.setRotationPoint(0.0F, -3.5F, -3.0F);
+        this.RearSight13.setTextureSize(64, 32);
+        this.RearSight13.mirror = true;
+        this.setRotation(this.RearSight13, 0.0F, 0.0F, 0.0F);
+        this.RearSight14 = new ModelRenderer(this, 0, 0);
+        this.RearSight14.addBox(0.0F, 0.0F, 0.0F, 2, 1, 1);
+        this.RearSight14.setRotationPoint(3.5F, -3.0F, 0.0F);
+        this.RearSight14.setTextureSize(64, 32);
+        this.RearSight14.mirror = true;
+        this.setRotation(this.RearSight14, 0.0F, 0.0F, 0.669215F);
+        this.RearSight15 = new ModelRenderer(this, 0, 0);
+        this.RearSight15.addBox(0.0F, 0.0F, 0.0F, 1, 2, 1);
+        this.RearSight15.setRotationPoint(6.0F, -3.0F, 0.0F);
+        this.RearSight15.setTextureSize(64, 32);
+        this.RearSight15.mirror = true;
+        this.setRotation(this.RearSight15, 0.0F, 0.0F, 0.8922867F);
+        this.RearSight16 = new ModelRenderer(this, 0, 0);
+        this.RearSight16.addBox(0.0F, 0.0F, 0.0F, 1, 2, 10);
+        this.RearSight16.setRotationPoint(0.0F, -1.5F, -6.5F);
+        this.RearSight16.setTextureSize(64, 32);
+        this.RearSight16.mirror = true;
+        this.setRotation(this.RearSight16, 0.0F, 0.0F, 0.0F);
+    }
+
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+        super.render(entity, f, f1, f2, f3, f4, f5);
+        this.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+        this.RearSight1.render(f5);
+        this.RearSight2.render(f5);
+        this.RearSight3.render(f5);
+        this.RearSight4.render(f5);
+        this.RearSight5.render(f5);
+        this.RearSight6.render(f5);
+        this.RearSight7.render(f5);
+        this.RearSigh8.render(f5);
+        this.RearSight9.render(f5);
+        this.RearSight10.render(f5);
+        this.RearSight11.render(f5);
+        this.RearSight12.render(f5);
+        this.RearSight13.render(f5);
+        this.RearSight14.render(f5);
+        this.RearSight15.render(f5);
+        this.RearSight16.render(f5);
+    }
+
+    private void setRotation(ModelRenderer model, float x, float y, float z) {
+        model.rotateAngleX = x;
+        model.rotateAngleY = y;
+        model.rotateAngleZ = z;
+    }
+}
