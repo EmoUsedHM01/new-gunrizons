@@ -2,7 +2,7 @@ package com.vicmatskiv.weaponlib;
 
 public final class DefaultPart implements Part {
 
-    private String name;
+    private final String name;
 
     public DefaultPart(String name) {
         this.name = name;

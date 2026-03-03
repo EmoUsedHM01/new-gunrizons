@@ -17,12 +17,11 @@ import io.netty.buffer.ByteBuf;
 
 public class EntityShellCasing extends EntityProjectile {
 
-    private static final Logger logger = LogManager.getLogger(EntityShellCasing.class);
     private static final String TAG_ENTITY_ITEM = "entity_item";
-    static final float DEFAULT_INACCURACY = 1.0F;
-    private Random random = new Random();
+
     private Weapon weapon;
-    private PlayerWeaponInstance weaponInstance;
+
+    private final PlayerWeaponInstance weaponInstance;
     private float initialYaw;
     private float initialPitch;
     private float xRotation;
@@ -34,14 +33,15 @@ public class EntityShellCasing extends EntityProjectile {
     private float rotationSlowdownFactor = 0.95F;
     private float maxRotationChange = 30.0F;
 
-    public EntityShellCasing(World world) {
-        super(world);
-        this.setRotations();
-    }
-
     public EntityShellCasing(PlayerWeaponInstance weaponInstance, World world, EntityLivingBase player, float velocity,
         float gravityVelocity, float inaccuracy) {
         super(world, player, velocity, gravityVelocity, inaccuracy);
+
+        Random random = new Random();
+        this.xRotationChange = this.maxRotationChange * (float) random.nextGaussian();
+        this.yRotationChange = this.maxRotationChange * (float) random.nextGaussian();
+        this.zRotationChange = this.maxRotationChange * (float) random.nextGaussian();
+
         this.weapon = weaponInstance.getWeapon();
         this.weaponInstance = weaponInstance;
     }
@@ -68,7 +68,7 @@ public class EntityShellCasing extends EntityProjectile {
             + (double) (MathHelper.sin(this.rotationYaw / 180.0F * 3.1415927F)
                 * MathHelper.cos(this.rotationPitch / 180.0F * 3.1415927F)
                 * forwardOffset);
-        this.posY += (double) (-MathHelper.sin(this.rotationPitch / 180.0F * 3.1415927F) * forwardOffset);
+        this.posY += -MathHelper.sin(this.rotationPitch / 180.0F * 3.1415927F) * forwardOffset;
         this.posZ -= (double) (MathHelper.sin(this.rotationYaw / 180.0F * 3.1415927F) * sideOffset)
             - (double) (MathHelper.cos(this.rotationYaw / 180.0F * 3.1415927F)
                 * MathHelper.cos(this.rotationPitch / 180.0F * 3.1415927F)
@@ -92,12 +92,6 @@ public class EntityShellCasing extends EntityProjectile {
         this.initialYaw = this.rotationYaw;
         this.initialPitch = this.rotationPitch;
         this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, this.velocity, this.inaccuracy);
-    }
-
-    private void setRotations() {
-        this.xRotationChange = this.maxRotationChange * (float) this.random.nextGaussian();
-        this.yRotationChange = this.maxRotationChange * (float) this.random.nextGaussian();
-        this.zRotationChange = this.maxRotationChange * (float) this.random.nextGaussian();
     }
 
     public void onUpdate() {
@@ -133,7 +127,7 @@ public class EntityShellCasing extends EntityProjectile {
 
     public void readEntityFromNBT(NBTTagCompound tagCompound) {
         super.readEntityFromNBT(tagCompound);
-        Item item = Item.getItemById(tagCompound.getInteger("entity_item"));
+        Item item = Item.getItemById(tagCompound.getInteger(TAG_ENTITY_ITEM));
         if (item instanceof Weapon) {
             this.weapon = (Weapon) item;
         }
@@ -147,18 +141,6 @@ public class EntityShellCasing extends EntityProjectile {
 
     Weapon getWeapon() {
         return this.weapon;
-    }
-
-    boolean isDamageableEntity(Entity entity) {
-        return false;
-    }
-
-    public float getInitialYaw() {
-        return this.initialYaw;
-    }
-
-    public float getInitialPitch() {
-        return this.initialPitch;
     }
 
     public float getXRotation() {

@@ -1,5 +1,8 @@
 package com.vicmatskiv.weaponlib.scope;
 
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL30;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
@@ -18,11 +21,15 @@ import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 public class ScopePerspective {
 
-    private static final int DEFAULT_WIDTH = 400;
-    private static final int DEFAULT_HEIGHT = 400;
+    private static final int SCOPE_TEXTURE_SIZE = 400;
+
+    /** Scope render is capped at ~60 FPS; the previous frame's texture stays valid. */
+    private static final long SCOPE_RENDER_INTERVAL_NS = 10_666_666L;
+    private long lastScopeRenderNano;
 
     protected ClientModContext modContext;
     protected Framebuffer framebuffer;
+    private Framebuffer renderFramebuffer;
     protected ScopeWorldRenderer entityRenderer;
     protected EffectRenderer effectRenderer;
     protected DynamicShaderGroupManager shaderGroupManager;
@@ -32,13 +39,17 @@ public class ScopePerspective {
     /** Set to {@code true} while the scope is rendering, read by MixinRenderGlobal. */
     public static boolean isRenderingScope;
 
+    /** Whether Iris/Angelica shader pipeline is present (checked once, cached). */
+    private static boolean irisDetectionDone;
+    private static boolean irisPresent;
+
     public ScopePerspective() {}
 
     public void activate(ClientModContext modContext, ScopeManager manager) {
         this.modContext = modContext;
 
         if (this.framebuffer == null) {
-            this.framebuffer = new Framebuffer(DEFAULT_WIDTH, DEFAULT_HEIGHT, true);
+            this.framebuffer = new Framebuffer(SCOPE_TEXTURE_SIZE, SCOPE_TEXTURE_SIZE, true);
             this.framebuffer.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
         }
 
@@ -53,6 +64,10 @@ public class ScopePerspective {
 
     public void deactivate() {
         this.framebuffer.deleteFramebuffer();
+        if (this.renderFramebuffer != null) {
+            this.renderFramebuffer.deleteFramebuffer();
+            this.renderFramebuffer = null;
+        }
         this.shaderGroupManager.removeAllShaders(
             new DynamicShaderContext(null, this.entityRenderer, null, 0.0F));
         Minecraft.getMinecraft()
@@ -91,9 +106,28 @@ public class ScopePerspective {
     }
 
     public void update(RenderTickEvent event, PlayerWeaponInstance weaponInstance) {
+        long now = System.nanoTime();
+        if (now - this.lastScopeRenderNano < SCOPE_RENDER_INTERVAL_NS) {
+            return;
+        }
+        this.lastScopeRenderNano = now;
+
+        Minecraft mc = Minecraft.getMinecraft();
+        boolean useScreenResFbo = isIrisPresent();
+
+        // When Iris/Angelica is loaded, render to a screen-resolution FBO to avoid
+        // triggering the expensive framebuffer resize cascade in prepareRenderTargets().
+        // When vanilla (no Iris), render directly to the 400x400 display FBO.
+        Framebuffer targetFbo;
+        if (useScreenResFbo) {
+            ensureRenderFramebufferSize(mc.displayWidth, mc.displayHeight);
+            targetFbo = this.renderFramebuffer;
+        } else {
+            targetFbo = this.framebuffer;
+        }
+
         this.modContext.getSafeGlobals().renderingPhase.set(RenderingPhase.RENDER_PERSPECTIVE);
         long finishTimeNano = this.renderEndNanoTime + 16666666L;
-        Minecraft mc = Minecraft.getMinecraft();
 
         // Save Minecraft state
         int origDisplayWidth = mc.displayWidth;
@@ -102,27 +136,33 @@ public class ScopePerspective {
         Framebuffer origFramebuffer = mc.framebufferMc;
         boolean origHideGUI = mc.gameSettings.hideGUI;
 
-        // Swap to scope rendering context.
-        // - framebufferMc: Angelica/Iris pipeline compositing targets the scope FBO
-        // - hideGUI: suppresses Iris HandRenderer.renderSolid()/renderTranslucent()
-        // Vanilla hand rendering and chunk frustum culling are handled by mixins
-        // (MixinEntityRenderer and MixinRenderGlobal respectively).
-        mc.framebufferMc = this.framebuffer;
-        mc.displayWidth = DEFAULT_WIDTH;
-        mc.displayHeight = DEFAULT_HEIGHT;
+        mc.framebufferMc = targetFbo;
         mc.entityRenderer = this.entityRenderer;
         mc.gameSettings.hideGUI = true;
 
-        this.framebuffer.bindFramebuffer(true);
+        // Only change displayWidth/Height on vanilla — safe there, and needed for
+        // correct 1:1 projection. With Iris this triggers the resize cascade.
+        if (!useScreenResFbo) {
+            mc.displayWidth = SCOPE_TEXTURE_SIZE;
+            mc.displayHeight = SCOPE_TEXTURE_SIZE;
+        }
+
+        targetFbo.bindFramebuffer(true);
         this.entityRenderer.updateRenderer();
-        this.prepareRenderWorld(event, weaponInstance);
+        this.prepareRenderWorld(event, weaponInstance, targetFbo);
+
         isRenderingScope = true;
         try {
             this.entityRenderer.renderWorld(event.renderTickTime, finishTimeNano);
         } finally {
             isRenderingScope = false;
         }
-        this.postRenderWorld(event);
+        this.postRenderWorld(event, targetFbo);
+
+        // With Iris, blit center square from screen-res FBO to 400x400 display FBO.
+        if (useScreenResFbo) {
+            blitCenterSquareToDisplayFbo();
+        }
 
         // Restore Minecraft state
         mc.gameSettings.hideGUI = origHideGUI;
@@ -136,21 +176,63 @@ public class ScopePerspective {
         this.modContext.getSafeGlobals().renderingPhase.set(RenderingPhase.NORMAL);
     }
 
-    private void prepareRenderWorld(RenderTickEvent event, PlayerWeaponInstance weaponInstance) {
+    private void ensureRenderFramebufferSize(int width, int height) {
+        if (this.renderFramebuffer != null
+            && this.renderFramebuffer.framebufferWidth == width
+            && this.renderFramebuffer.framebufferHeight == height) {
+            return;
+        }
+        if (this.renderFramebuffer != null) {
+            this.renderFramebuffer.deleteFramebuffer();
+        }
+        this.renderFramebuffer = new Framebuffer(width, height, true);
+    }
+
+    private void blitCenterSquareToDisplayFbo() {
+        int srcW = this.renderFramebuffer.framebufferWidth;
+        int srcH = this.renderFramebuffer.framebufferHeight;
+        int squareSize = Math.min(srcW, srcH);
+        int srcX0 = (srcW - squareSize) / 2;
+        int srcY0 = (srcH - squareSize) / 2;
+
+        GL30.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, this.renderFramebuffer.framebufferObject);
+        GL30.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, this.framebuffer.framebufferObject);
+        GL30.glBlitFramebuffer(
+            srcX0, srcY0, srcX0 + squareSize, srcY0 + squareSize,
+            0, 0, SCOPE_TEXTURE_SIZE, SCOPE_TEXTURE_SIZE,
+            GL11.GL_COLOR_BUFFER_BIT,
+            GL11.GL_LINEAR);
+    }
+
+    private void prepareRenderWorld(RenderTickEvent event, PlayerWeaponInstance weaponInstance,
+        Framebuffer targetFbo) {
         DynamicShaderContext shaderContext = new DynamicShaderContext(
             DynamicShaderPhase.POST_WORLD_OPTICAL_SCOPE_RENDER,
             this.entityRenderer,
-            this.framebuffer,
+            targetFbo,
             event.renderTickTime);
         this.shaderGroupManager.applyShader(shaderContext, weaponInstance);
     }
 
-    private void postRenderWorld(RenderTickEvent event) {
+    private void postRenderWorld(RenderTickEvent event, Framebuffer targetFbo) {
         DynamicShaderContext shaderContext = new DynamicShaderContext(
             DynamicShaderPhase.POST_WORLD_OPTICAL_SCOPE_RENDER,
             this.entityRenderer,
-            this.framebuffer,
+            targetFbo,
             event.renderTickTime);
         this.shaderGroupManager.removeStaleShaders(shaderContext);
+    }
+
+    private static boolean isIrisPresent() {
+        if (!irisDetectionDone) {
+            irisDetectionDone = true;
+            try {
+                Class.forName("net.coderbot.iris.Iris");
+                irisPresent = true;
+            } catch (ClassNotFoundException e) {
+                irisPresent = false;
+            }
+        }
+        return irisPresent;
     }
 }

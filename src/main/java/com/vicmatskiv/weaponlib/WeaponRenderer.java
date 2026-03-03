@@ -381,7 +381,7 @@ public class WeaponRenderer implements IItemRenderer {
             GL11.glPopMatrix();
         }
 
-        CustomRenderer postRenderer = (CustomRenderer) compatibleAttachment
+        CustomRenderer postRenderer = compatibleAttachment
             .getAttachment()
             .getPostRenderer();
         if (postRenderer != null) {
@@ -1141,26 +1141,26 @@ public class WeaponRenderer implements IItemRenderer {
                 }
 
                 if (this.firstPersonLeftHandPositioningReloading == null) {
-                    this.firstPersonLeftHandPositioningReloading = (List) this.firstPersonPositioningReloading.stream()
+                    this.firstPersonLeftHandPositioningReloading = this.firstPersonPositioningReloading.stream()
                         .map((tx) -> new Transition((c) -> {}, 0L))
                         .collect(Collectors.toList());
                 }
 
                 if (this.firstPersonLeftHandPositioningUnloading == null) {
-                    this.firstPersonLeftHandPositioningUnloading = (List) this.firstPersonPositioningUnloading.stream()
+                    this.firstPersonLeftHandPositioningUnloading = this.firstPersonPositioningUnloading.stream()
                         .map((tx) -> { return new Transition((c) -> {}, 0L); })
                         .collect(Collectors.toList());
                 }
 
                 if (this.firstPersonLeftHandPositioningLoadIteration == null) {
-                    this.firstPersonLeftHandPositioningLoadIteration = (List) this.firstPersonPositioningReloading
+                    this.firstPersonLeftHandPositioningLoadIteration = this.firstPersonPositioningReloading
                         .stream()
                         .map((tx) -> { return new Transition((c) -> {}, 0L); })
                         .collect(Collectors.toList());
                 }
 
                 if (this.firstPersonLeftHandPositioningAllLoadIterationsCompleted == null) {
-                    this.firstPersonLeftHandPositioningAllLoadIterationsCompleted = (List) this.firstPersonPositioningReloading
+                    this.firstPersonLeftHandPositioningAllLoadIterationsCompleted = this.firstPersonPositioningReloading
                         .stream()
                         .map((tx) -> { return new Transition((c) -> {}, 0L); })
                         .collect(Collectors.toList());
@@ -1195,26 +1195,26 @@ public class WeaponRenderer implements IItemRenderer {
                 }
 
                 if (this.firstPersonRightHandPositioningReloading == null) {
-                    this.firstPersonRightHandPositioningReloading = (List) this.firstPersonPositioningReloading.stream()
+                    this.firstPersonRightHandPositioningReloading = this.firstPersonPositioningReloading.stream()
                         .map((tx) -> { return new Transition((c) -> {}, 0L); })
                         .collect(Collectors.toList());
                 }
 
                 if (this.firstPersonRightHandPositioningUnloading == null) {
-                    this.firstPersonRightHandPositioningUnloading = (List) this.firstPersonPositioningUnloading.stream()
+                    this.firstPersonRightHandPositioningUnloading = this.firstPersonPositioningUnloading.stream()
                         .map((tx) -> { return new Transition((c) -> {}, 0L); })
                         .collect(Collectors.toList());
                 }
 
                 if (this.firstPersonRightHandPositioningLoadIteration == null) {
-                    this.firstPersonRightHandPositioningLoadIteration = (List) this.firstPersonPositioningReloading
+                    this.firstPersonRightHandPositioningLoadIteration = this.firstPersonPositioningReloading
                         .stream()
                         .map((tx) -> { return new Transition((c) -> {}, 0L); })
                         .collect(Collectors.toList());
                 }
 
                 if (this.firstPersonRightHandPositioningAllLoadIterationsCompleted == null) {
-                    this.firstPersonRightHandPositioningAllLoadIterationsCompleted = (List) this.firstPersonPositioningReloading
+                    this.firstPersonRightHandPositioningAllLoadIterationsCompleted = this.firstPersonPositioningReloading
                         .stream()
                         .map((tx) -> { return new Transition((c) -> {}, 0L); })
                         .collect(Collectors.toList());

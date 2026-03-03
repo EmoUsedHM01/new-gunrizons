@@ -503,7 +503,7 @@ public class Weapon extends Item implements PlayerItemInstanceFactory<PlayerWeap
         long pumpTimeoutMilliseconds;
         private float inaccuracy = 1.0F;
         int pellets = 1;
-        float flashIntensity = 0.2F;
+        float flashIntensity = 0.4F;
         Supplier<Float> flashScale = () -> 1.0F;
         Supplier<Float> flashOffsetX = () -> 0.0F;
         Supplier<Float> flashOffsetY = () -> 0.0F;

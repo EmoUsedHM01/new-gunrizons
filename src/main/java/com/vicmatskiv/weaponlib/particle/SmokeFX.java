@@ -11,17 +11,33 @@ import org.lwjgl.opengl.GL11;
 
 public class SmokeFX extends EntityFX {
 
-    private static final double SMOKE_SCALE_FACTOR = 1.0005988079071D;
-    private static final String SMOKE_TEXTURE = "weaponlib:/com/vicmatskiv/weaponlib/resources/smokes.png";
-    private final int imageIndex;
-    private static final int imagesPerRow = 4;
+    private static final float SCALE_GROWTH_PER_TICK = 1.0006F;
+    private static final float PEAK_ALPHA = 0.2F;
+    private static final double ALPHA_PHASE_OFFSET = Math.PI / 4.0;
+    private static final float RENDER_SCALE = 0.1F;
+    private static final int BASE_MAX_AGE = 50;
+    private static final int MAX_AGE_VARIANCE = 30;
+    private static final float MIN_MOTION_X = 1.0F;
+    private static final double BUOYANCY = 5.0E-4;
+    private static final double HORIZONTAL_DRAG = 0.6;
+    private static final double VERTICAL_DRAG = 1.0;
+    private static final double GROUND_FRICTION = 0.7;
 
-    public SmokeFX(World par1World, double positionX, double positionY, double positionZ, float scale, float motionX,
+    private static final String SMOKE_TEXTURE = "weaponlib:/com/vicmatskiv/weaponlib/resources/smokes.png";
+    private static final int IMAGES_PER_ROW = 4;
+    private static final float UV_WIDTH = 1.0F / IMAGES_PER_ROW;
+
+    private static final float MIN_ALPHA_THRESHOLD = 1.0F / 255.0F;
+    private static final int FULL_BRIGHTNESS = 200;
+
+    private final int imageIndex;
+
+    public SmokeFX(World world, double positionX, double positionY, double positionZ, float scale, float motionX,
         float motionY, float motionZ) {
-        super(par1World, positionX, positionY, positionZ, 0.0D, 0.0D, 0.0D);
+        super(world, positionX, positionY, positionZ, 0.0D, 0.0D, 0.0D);
 
         if (motionX == 0.0F) {
-            motionX = 1.0F;
+            motionX = MIN_MOTION_X;
         }
 
         this.motionX = motionX;
@@ -35,8 +51,8 @@ public class SmokeFX extends EntityFX {
         this.particleBlue = 1.0F;
         this.particleAlpha = 0.0F;
         this.particleScale *= scale;
-        this.particleMaxAge = 50 + (int) (this.rand.nextFloat() * 30.0F);
-        this.imageIndex = this.rand.nextInt() % imagesPerRow;
+        this.particleMaxAge = BASE_MAX_AGE + (int) (this.rand.nextFloat() * MAX_AGE_VARIANCE);
+        this.imageIndex = this.rand.nextInt() % IMAGES_PER_ROW;
     }
 
     public void onUpdate() {
@@ -47,20 +63,19 @@ public class SmokeFX extends EntityFX {
             this.setDead();
         }
 
-        this.motionY += 5.0E-4D;
+        this.motionY += BUOYANCY;
         this.moveEntity(this.motionX, this.motionY, this.motionZ);
-        this.motionX *= 0.599999785423279D;
-        this.motionY *= 0.9999999785423279D;
-        this.motionZ *= 0.599999785423279D;
-        double alphaRadians = 0.7853981633974483D
-            + Math.PI * (double) ((float) this.particleAge) / (double) ((float) this.particleMaxAge);
-        this.particleAlpha = 0.2F * (float) Math.sin(Math.min(alphaRadians, Math.PI));
-        this.particleScale = (float) ((double) this.particleScale * 1.0005988079071D);
+        this.motionX *= HORIZONTAL_DRAG;
+        this.motionY *= VERTICAL_DRAG;
+        this.motionZ *= HORIZONTAL_DRAG;
+        double alphaRadians = ALPHA_PHASE_OFFSET
+            + Math.PI * (double) this.particleAge / (double) this.particleMaxAge;
+        this.particleAlpha = PEAK_ALPHA * (float) Math.sin(Math.min(alphaRadians, Math.PI));
+        this.particleScale *= SCALE_GROWTH_PER_TICK;
         if (this.onGround) {
-            this.motionX *= 0.699999988079071D;
-            this.motionZ *= 0.699999988079071D;
+            this.motionX *= GROUND_FRICTION;
+            this.motionZ *= GROUND_FRICTION;
         }
-
     }
 
     public void renderParticle(Tessellator tessellator, float partialTicks, float par3, float par4, float par5,
@@ -69,40 +84,26 @@ public class SmokeFX extends EntityFX {
             .getTextureManager()
             .bindTexture(new ResourceLocation(SMOKE_TEXTURE));
         GL11.glPushMatrix();
-        GL11.glPushAttrib(8192);
+        GL11.glPushAttrib(GL11.GL_TEXTURE_BIT);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glDepthMask(false);
-        GL11.glEnable(3042);
-        GL11.glBlendFunc(770, 771);
-        GL11.glAlphaFunc(516, 0.003921569F);
-        tessellator.startDrawing(7);
-        float f10 = 0.1F * this.particleScale;
-        float f11 = (float) (this.prevPosX + (this.posX - this.prevPosX) * (double) partialTicks - interpPosX);
-        float f12 = (float) (this.prevPosY + (this.posY - this.prevPosY) * (double) partialTicks - interpPosY);
-        float f13 = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * (double) partialTicks - interpPosZ);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glAlphaFunc(GL11.GL_GREATER, MIN_ALPHA_THRESHOLD);
+        tessellator.startDrawing(GL11.GL_QUADS);
+        float size = RENDER_SCALE * this.particleScale;
+        float x = (float) (this.prevPosX + (this.posX - this.prevPosX) * (double) partialTicks - interpPosX);
+        float y = (float) (this.prevPosY + (this.posY - this.prevPosY) * (double) partialTicks - interpPosY);
+        float z = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * (double) partialTicks - interpPosZ);
         tessellator.setColorRGBA_F(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha);
-        int i = this.getBrightnessForRender(partialTicks);
-        int j = i >> 16 & '\uffff';
-        int k = i & '\uffff';
-        tessellator.setBrightness(200);
+        tessellator.setBrightness(FULL_BRIGHTNESS);
         RenderHelper.disableStandardItemLighting();
-        float uWidth = 0.25F;
-        float aU = (float) (this.imageIndex + 1) * uWidth;
-        float aV = 1.0F;
-        float bU = (float) (this.imageIndex + 1) * uWidth;
-        float bV = 0.0F;
-        float cU = (float) this.imageIndex * uWidth;
-        float cV = 0.0F;
-        float dU = (float) this.imageIndex * uWidth;
-        float dV = 1.0F;
-        tessellator
-            .addVertexWithUV(f11 - par3 * f10 - par6 * f10, f12 - par4 * f10, f13 - par5 * f10 - par7 * f10, aU, aV);
-        tessellator
-            .addVertexWithUV(f11 - par3 * f10 + par6 * f10, f12 + par4 * f10, f13 - par5 * f10 + par7 * f10, bU, bV);
-        tessellator
-            .addVertexWithUV(f11 + par3 * f10 + par6 * f10, f12 + par4 * f10, f13 + par5 * f10 + par7 * f10, cU, cV);
-        tessellator
-            .addVertexWithUV(f11 + par3 * f10 - par6 * f10, f12 - par4 * f10, f13 + par5 * f10 - par7 * f10, dU, dV);
+        float u0 = this.imageIndex * UV_WIDTH;
+        float u1 = (this.imageIndex + 1) * UV_WIDTH;
+        tessellator.addVertexWithUV(x - par3 * size - par6 * size, y - par4 * size, z - par5 * size - par7 * size, u1, 1.0F);
+        tessellator.addVertexWithUV(x - par3 * size + par6 * size, y + par4 * size, z - par5 * size + par7 * size, u1, 0.0F);
+        tessellator.addVertexWithUV(x + par3 * size + par6 * size, y + par4 * size, z + par5 * size + par7 * size, u0, 0.0F);
+        tessellator.addVertexWithUV(x + par3 * size - par6 * size, y - par4 * size, z + par5 * size - par7 * size, u0, 1.0F);
         tessellator.draw();
         RenderHelper.enableStandardItemLighting();
         GL11.glPopAttrib();

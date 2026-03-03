@@ -17,10 +17,6 @@ import java.util.Objects;
 
 public class SpawnParticleMessageHandler implements IMessageHandler<SpawnParticleMessage, IMessage> {
 
-    private static final ResourceLocation REGULAR_SMOKE_TEXTURE = new ResourceLocation(
-        "weaponlib:/com/vicmatskiv/weaponlib/resources/large-smoke.png");
-    private static final ResourceLocation YELLOW_SMOKE_TEXTURE = new ResourceLocation(
-        "weaponlib:/com/vicmatskiv/weaponlib/resources/large-yellow-smoke.png");
     private ModContext modContext;
     private double yOffset = 1.0D;
 

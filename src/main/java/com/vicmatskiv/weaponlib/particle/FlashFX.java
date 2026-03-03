@@ -11,27 +11,30 @@ import org.lwjgl.opengl.GL11;
 
 public class FlashFX extends EntityFX {
 
-    private static final float FLASH_ALPHA_FACTOR = 0.8F;
-    private static final double FLASH_SCALE_FACTOR = 1.100000023841858D;
+    private static final float ALPHA_FADE_PER_TICK = 0.8F;
+    private static final float SCALE_GROWTH_PER_TICK = 1.1F;
+    private static final float BASE_SCALE_MULTIPLIER = 1.4F;
+    private static final float RENDER_SCALE = 0.1F;
+    private static final int MAX_AGE_TICKS = 1;
+    private static final float MIN_MOTION = 0.01F;
+    private static final float GROUND_FRICTION = 0.7F;
+
     private static final String FLASH_TEXTURE = "weaponlib:/com/vicmatskiv/weaponlib/resources/flashes.png";
+    private static final int IMAGES_PER_ROW = 8;
+    private static final float UV_WIDTH = 1.0F / IMAGES_PER_ROW;
+
+    private static final float MIN_ALPHA_THRESHOLD = 1.0F / 255.0F;
+    private static final int FULL_BRIGHTNESS = 200;
+
     private final int imageIndex;
-    private static final int imagesPerRow = 8;
 
-    public FlashFX(World par1World, double positionX, double positionY, double positionZ, float scale, float alpha,
+    public FlashFX(World world, double positionX, double positionY, double positionZ, float scale, float alpha,
         float motionX, float motionY, float motionZ) {
-        super(par1World, positionX, positionY, positionZ, 0.0D, 0.0D, 0.0D);
+        super(world, positionX, positionY, positionZ, 0.0D, 0.0D, 0.0D);
 
-        if (motionX == 0.0F) {
-            motionX = 0.01F;
-        }
-
-        if (motionZ == 0.0F) {
-            motionZ = 0.01F;
-        }
-
-        if (motionY == 0.0F) {
-            motionY = 0.01F;
-        }
+        if (motionX == 0.0F) motionX = MIN_MOTION;
+        if (motionZ == 0.0F) motionZ = MIN_MOTION;
+        if (motionY == 0.0F) motionY = MIN_MOTION;
 
         this.motionX = motionX;
         this.motionY = motionY;
@@ -43,10 +46,10 @@ public class FlashFX extends EntityFX {
         this.particleGreen = 1.0F;
         this.particleBlue = 1.0F;
         this.particleAlpha = alpha;
-        this.particleScale *= 1.4F;
+        this.particleScale *= BASE_SCALE_MULTIPLIER;
         this.particleScale *= scale;
-        this.particleMaxAge = 1;
-        this.imageIndex = this.rand.nextInt() % 8;
+        this.particleMaxAge = MAX_AGE_TICKS;
+        this.imageIndex = this.rand.nextInt() % IMAGES_PER_ROW;
     }
 
     public void onUpdate() {
@@ -58,16 +61,12 @@ public class FlashFX extends EntityFX {
         }
 
         this.moveEntity(this.motionX, this.motionY, this.motionZ);
-        this.motionX *= 0.9999999785423279D;
-        this.motionY *= 0.9999999785423279D;
-        this.motionZ *= 0.9999999785423279D;
-        this.particleAlpha *= FLASH_ALPHA_FACTOR;
-        this.particleScale = (float) ((double) this.particleScale * 1.100000023841858D);
+        this.particleAlpha *= ALPHA_FADE_PER_TICK;
+        this.particleScale *= SCALE_GROWTH_PER_TICK;
         if (this.onGround) {
-            this.motionX *= 0.699999988079071D;
-            this.motionZ *= 0.699999988079071D;
+            this.motionX *= GROUND_FRICTION;
+            this.motionZ *= GROUND_FRICTION;
         }
-
     }
 
     public void renderParticle(Tessellator tessellator, float partialTicks, float par3, float par4, float par5,
@@ -76,40 +75,27 @@ public class FlashFX extends EntityFX {
             .getTextureManager()
             .bindTexture(new ResourceLocation(FLASH_TEXTURE));
         GL11.glPushMatrix();
-        GL11.glPushAttrib(8192);
+        GL11.glPushAttrib(GL11.GL_TEXTURE_BIT);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glDepthMask(false);
-        GL11.glEnable(3042);
-        GL11.glBlendFunc(770, 771);
-        GL11.glAlphaFunc(516, 0.003921569F);
-        tessellator.startDrawing(7);
-        int i = this.getBrightnessForRender(partialTicks);
-        int j = i >> 16 & '\uffff';
-        int k = i & '\uffff';
-        tessellator.setBrightness(200);
+        GL11.glEnable(GL11.GL_BLEND);
+        // Additive blending so the flash actually brightens the scene
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+        GL11.glAlphaFunc(GL11.GL_GREATER, MIN_ALPHA_THRESHOLD);
+        tessellator.startDrawing(GL11.GL_QUADS);
+        tessellator.setBrightness(FULL_BRIGHTNESS);
         RenderHelper.disableStandardItemLighting();
-        float f10 = 0.1F * this.particleScale;
-        float f11 = (float) (this.prevPosX + (this.posX - this.prevPosX) * (double) partialTicks - interpPosX);
-        float f12 = (float) (this.prevPosY + (this.posY - this.prevPosY) * (double) partialTicks - interpPosY);
-        float f13 = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * (double) partialTicks - interpPosZ);
+        float size = RENDER_SCALE * this.particleScale;
+        float x = (float) (this.prevPosX + (this.posX - this.prevPosX) * (double) partialTicks - interpPosX);
+        float y = (float) (this.prevPosY + (this.posY - this.prevPosY) * (double) partialTicks - interpPosY);
+        float z = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * (double) partialTicks - interpPosZ);
         tessellator.setColorRGBA_F(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha);
-        float uWidth = 0.125F;
-        float aU = (float) (this.imageIndex + 1) * uWidth;
-        float aV = 1.0F;
-        float bU = (float) (this.imageIndex + 1) * uWidth;
-        float bV = 0.0F;
-        float cU = (float) this.imageIndex * uWidth;
-        float cV = 0.0F;
-        float dU = (float) this.imageIndex * uWidth;
-        float dV = 1.0F;
-        tessellator
-            .addVertexWithUV(f11 - par3 * f10 - par6 * f10, f12 - par4 * f10, f13 - par5 * f10 - par7 * f10, aU, aV);
-        tessellator
-            .addVertexWithUV(f11 - par3 * f10 + par6 * f10, f12 + par4 * f10, f13 - par5 * f10 + par7 * f10, bU, bV);
-        tessellator
-            .addVertexWithUV(f11 + par3 * f10 + par6 * f10, f12 + par4 * f10, f13 + par5 * f10 + par7 * f10, cU, cV);
-        tessellator
-            .addVertexWithUV(f11 + par3 * f10 - par6 * f10, f12 - par4 * f10, f13 + par5 * f10 - par7 * f10, dU, dV);
+        float u0 = this.imageIndex * UV_WIDTH;
+        float u1 = (this.imageIndex + 1) * UV_WIDTH;
+        tessellator.addVertexWithUV(x - par3 * size - par6 * size, y - par4 * size, z - par5 * size - par7 * size, u1, 1.0F);
+        tessellator.addVertexWithUV(x - par3 * size + par6 * size, y + par4 * size, z - par5 * size + par7 * size, u1, 0.0F);
+        tessellator.addVertexWithUV(x + par3 * size + par6 * size, y + par4 * size, z + par5 * size + par7 * size, u0, 0.0F);
+        tessellator.addVertexWithUV(x + par3 * size - par6 * size, y - par4 * size, z + par5 * size - par7 * size, u0, 1.0F);
         tessellator.draw();
         RenderHelper.enableStandardItemLighting();
         GL11.glPopAttrib();

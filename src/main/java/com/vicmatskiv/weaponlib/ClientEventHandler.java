@@ -144,11 +144,19 @@ public class ClientEventHandler {
             this.mainLoopLock.lock();
             if (clientPlayer != null) {
                 PlayerWeaponInstance weaponInstance = this.modContext.getMainHeldWeapon();
-                if (weaponInstance != null && weaponInstance.isAimed()) {
-                    ScopePerspective view = this.modContext.getViewManager()
-                        .getPerspective(weaponInstance, true);
-                    if (view != null) {
-                        view.update(event, weaponInstance);
+                if (weaponInstance != null) {
+                    if (weaponInstance.isAimed()) {
+                        ScopePerspective view = this.modContext.getViewManager()
+                            .getPerspective(weaponInstance, true);
+                        if (view != null) {
+                            view.update(event, weaponInstance);
+                        }
+                    } else {
+                        // Trigger scope deactivation when no longer aiming.
+                        // ScopeManager.getPerspective with init=true cleans up
+                        // the perspective and frees the FBO.
+                        this.modContext.getViewManager()
+                            .getPerspective(weaponInstance, true);
                     }
                 }
             }

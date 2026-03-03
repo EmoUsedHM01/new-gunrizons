@@ -77,7 +77,7 @@ public class ClientModContext extends CommonModContext {
 
         this.viewManager = new ScopeManager(this);
         this.inventoryTextureMap = new HashMap<>();
-        this.effectManager = new ClientEffectManager();
+        this.effectManager = new EffectManager();
         this.playerRawPitchAnimationManager = new PlayerRawPitchAnimationManager();
     }
 
