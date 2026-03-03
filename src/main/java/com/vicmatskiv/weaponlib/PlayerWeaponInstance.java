@@ -33,7 +33,7 @@ public class PlayerWeaponInstance extends PlayerItemInstance<WeaponState> {
     public final DynamicShaderGroupSource BLUR_SOURCE;
     public final DynamicShaderGroupSource NIGHT_VISION_SOURCE;
     public final DynamicShaderGroupSource VIGNETTE_SOURCE;
-    private static final long AIM_CHANGE_DURATION = 1200L;
+    private static final long AIM_CHANGE_DURATION = 400L;
     @Getter
     private int ammo;
     @Getter
