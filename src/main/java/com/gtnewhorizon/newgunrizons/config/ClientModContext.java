@@ -8,6 +8,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.gtnewhorizon.newgunrizons.client.render.BulletRenderer;
+import com.gtnewhorizon.newgunrizons.entities.EntityBullet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,19 +19,16 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 
 import com.gtnewhorizon.newgunrizons.client.animation.PlayerRawPitchAnimationManager;
-import com.gtnewhorizon.newgunrizons.client.effect.EffectManager;
 import com.gtnewhorizon.newgunrizons.client.handler.ClientEventHandler;
 import com.gtnewhorizon.newgunrizons.client.handler.ClientWeaponTicker;
 import com.gtnewhorizon.newgunrizons.client.handler.WeaponEventHandler;
 import com.gtnewhorizon.newgunrizons.client.input.KeyBindings;
 import com.gtnewhorizon.newgunrizons.client.render.CustomGui;
-import com.gtnewhorizon.newgunrizons.client.render.ShellCasingRenderer;
-import com.gtnewhorizon.newgunrizons.client.render.SpawnEntityRenderer;
+import com.gtnewhorizon.newgunrizons.client.render.ShellRenderer;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.client.resource.WeaponResourcePack;
 import com.gtnewhorizon.newgunrizons.client.scope.ScopeManager;
-import com.gtnewhorizon.newgunrizons.entity.EntityShellCasing;
-import com.gtnewhorizon.newgunrizons.entity.WeaponSpawnEntity;
+import com.gtnewhorizon.newgunrizons.entities.EntityShellCasing;
 import com.gtnewhorizon.newgunrizons.grenade.EntityGrenade;
 import com.gtnewhorizon.newgunrizons.grenade.EntityGrenadeRenderer;
 import com.gtnewhorizon.newgunrizons.grenade.GrenadeRenderer;
@@ -38,7 +37,7 @@ import com.gtnewhorizon.newgunrizons.network.StatusMessageCenter;
 import com.gtnewhorizon.newgunrizons.network.SyncManager;
 import com.gtnewhorizon.newgunrizons.weapon.PlayerItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.weapon.PlayerWeaponInstance;
-import com.gtnewhorizon.newgunrizons.weapon.Weapon;
+import com.gtnewhorizon.newgunrizons.weapon.ItemWeapon;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -48,7 +47,6 @@ import lombok.Getter;
 
 public class ClientModContext extends CommonModContext {
 
-    private ClientEventHandler clientEventHandler;
     private final Lock mainLoopLock = new ReentrantLock();
     private final Queue<Runnable> runInClientThreadQueue = new LinkedBlockingQueue<>();
     @Getter
@@ -61,8 +59,6 @@ public class ClientModContext extends CommonModContext {
     private float aspectRatio;
     @Getter
     private Map<Object, Integer> inventoryTextureMap;
-    @Getter
-    private EffectManager effectManager;
     @Getter
     private PlayerRawPitchAnimationManager playerRawPitchAnimationManager;
 
@@ -87,7 +83,7 @@ public class ClientModContext extends CommonModContext {
             .addShutdownHook(new Thread(clientWeaponTicker::shutdown));
         clientWeaponTicker.start();
 
-        this.clientEventHandler = new ClientEventHandler(
+        ClientEventHandler clientEventHandler = new ClientEventHandler(
             this,
             this.mainLoopLock,
             this.safeGlobals,
@@ -95,16 +91,15 @@ public class ClientModContext extends CommonModContext {
 
         FMLCommonHandler.instance()
             .bus()
-            .register(this.clientEventHandler);
-        MinecraftForge.EVENT_BUS.register(this.clientEventHandler);
+            .register(clientEventHandler);
+        MinecraftForge.EVENT_BUS.register(clientEventHandler);
 
-        RenderingRegistry.registerEntityRenderingHandler(WeaponSpawnEntity.class, new SpawnEntityRenderer());
-        RenderingRegistry.registerEntityRenderingHandler(EntityShellCasing.class, new ShellCasingRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(EntityBullet.class, new BulletRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(EntityShellCasing.class, new ShellRenderer());
         RenderingRegistry.registerEntityRenderingHandler(EntityGrenade.class, new EntityGrenadeRenderer());
 
         this.viewManager = new ScopeManager(this);
         this.inventoryTextureMap = new HashMap<>();
-        this.effectManager = new EffectManager();
         this.playerRawPitchAnimationManager = new PlayerRawPitchAnimationManager();
     }
 
@@ -112,7 +107,7 @@ public class ClientModContext extends CommonModContext {
         return true;
     }
 
-    public void registerWeapon(String name, Weapon weapon, WeaponRenderer renderer) {
+    public void registerWeapon(String name, ItemWeapon weapon, WeaponRenderer renderer) {
         super.registerWeapon(name, weapon, renderer);
         MinecraftForgeClient.registerItemRenderer(weapon, weapon.getRenderer());
         renderer.setClientModContext(this);

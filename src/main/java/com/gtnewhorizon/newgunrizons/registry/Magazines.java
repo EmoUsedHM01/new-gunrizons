@@ -61,7 +61,7 @@ import com.gtnewhorizon.newgunrizons.model.magazine.Type100Mag;
 import com.gtnewhorizon.newgunrizons.model.magazine.VEPRMag;
 import com.gtnewhorizon.newgunrizons.model.magazine.VSSVintorezMag;
 import com.gtnewhorizon.newgunrizons.model.magazine.revolverclip;
-import com.gtnewhorizon.newgunrizons.weapon.ItemMagazine;
+import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
 
 public class Magazines {
 

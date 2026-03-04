@@ -10,7 +10,7 @@ import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.config.ModContext;
 import com.gtnewhorizon.newgunrizons.weapon.PlayerWeaponInstance;
 import com.gtnewhorizon.newgunrizons.weapon.Reloadable;
-import com.gtnewhorizon.newgunrizons.weapon.Weapon;
+import com.gtnewhorizon.newgunrizons.weapon.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.weapon.WeaponState;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -59,8 +59,8 @@ public class WeaponKeyInputHandler {
                     nvInstance.setNightVisionOn(!nvInstance.isNightVisionOn());
                 }
             } else if (KeyBindings.attachmentKey.isPressed()) {
-                if (itemStack != null && itemStack.getItem() instanceof Weapon) {
-                    ((Weapon) itemStack.getItem()).toggleClientAttachmentSelectionMode(player);
+                if (itemStack != null && itemStack.getItem() instanceof ItemWeapon) {
+                    ((ItemWeapon) itemStack.getItem()).toggleClientAttachmentSelectionMode(player);
                 }
             } else if (KeyBindings.upArrowKey.isPressed()) {
                 instance = this.modContext.getPlayerItemInstanceRegistry()

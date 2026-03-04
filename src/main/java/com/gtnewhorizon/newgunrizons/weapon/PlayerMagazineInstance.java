@@ -1,5 +1,6 @@
 package com.gtnewhorizon.newgunrizons.weapon;
 
+import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 

@@ -6,13 +6,15 @@ import java.util.Deque;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingDeque;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.attachment.CompatibleAttachment;
-import com.gtnewhorizon.newgunrizons.attachment.ItemAttachment;
+import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.network.TypeRegistry;
 import com.gtnewhorizon.newgunrizons.weapon.PlayerItemInstance;
 
@@ -21,12 +23,18 @@ import io.netty.buffer.ByteBuf;
 public class PlayerGrenadeInstance extends PlayerItemInstance<GrenadeState> {
 
     private static final int SERIAL_VERSION = 11;
+    @Getter
     private int ammo;
+    @Getter
     private long activationTimestamp;
-    private final Deque<AsyncGrenadeState> filteredStateQueue = new LinkedBlockingDeque();
+    private final Deque<AsyncGrenadeState> filteredStateQueue = new LinkedBlockingDeque<>();
     private int[] activeAttachmentIds = new int[0];
     private byte[] selectedAttachmentIndexes = new byte[0];
+    @Setter
+    @Getter
     private long lastSafetyPinAlertTimestamp;
+    @Getter
+    @Setter
     private boolean throwingFar;
 
     public PlayerGrenadeInstance() {}
@@ -63,10 +71,6 @@ public class PlayerGrenadeInstance extends PlayerItemInstance<GrenadeState> {
         }
 
         return result;
-    }
-
-    public int getAmmo() {
-        return this.ammo;
     }
 
     protected void setAmmo(int ammo) {
@@ -139,10 +143,6 @@ public class PlayerGrenadeInstance extends PlayerItemInstance<GrenadeState> {
         return (ItemGrenade) this.item;
     }
 
-    public long getActivationTimestamp() {
-        return this.activationTimestamp;
-    }
-
     void setActivationTimestamp(long activationTimestamp) {
         this.activationTimestamp = activationTimestamp;
     }
@@ -150,10 +150,9 @@ public class PlayerGrenadeInstance extends PlayerItemInstance<GrenadeState> {
     public int[] getActiveAttachmentIds() {
         if (this.activeAttachmentIds == null || this.activeAttachmentIds.length != AttachmentCategory.values.length) {
             this.activeAttachmentIds = new int[AttachmentCategory.values.length];
-            for (CompatibleAttachment itemGrenadeCompatibleAttachment : this.getWeapon()
+            for (CompatibleAttachment attachment : this.getWeapon()
                 .getCompatibleAttachments()
                 .values()) {
-                CompatibleAttachment attachment = itemGrenadeCompatibleAttachment;
                 if (attachment.isDefault()) {
                     this.activeAttachmentIds[attachment.getAttachment()
                         .getCategory()
@@ -203,22 +202,6 @@ public class PlayerGrenadeInstance extends PlayerItemInstance<GrenadeState> {
 
     public String toString() {
         return this.getWeapon().builder.name + "[" + this.getUuid() + "]";
-    }
-
-    public long getLastSafetyPinAlertTimestamp() {
-        return this.lastSafetyPinAlertTimestamp;
-    }
-
-    public void setLastSafetyPinAlertTimestamp(long lastSafetyPinAlertTimestamp) {
-        this.lastSafetyPinAlertTimestamp = lastSafetyPinAlertTimestamp;
-    }
-
-    public void setThrowingFar(boolean throwingFar) {
-        this.throwingFar = throwingFar;
-    }
-
-    public boolean isThrowingFar() {
-        return this.throwingFar;
     }
 
     static {

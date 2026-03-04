@@ -12,10 +12,10 @@ import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.attachment.ItemAttachment;
+import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.client.shader.Framebuffers;
 import com.gtnewhorizon.newgunrizons.config.ModContext;
-import com.gtnewhorizon.newgunrizons.util.Tuple;
+import com.gtnewhorizon.newgunrizons.util.Pair;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -94,7 +94,7 @@ public class StaticModelSourceRenderer implements IItemRenderer {
             throw new IllegalArgumentException();
         } else {
             GL11.glPushMatrix();
-            for (Tuple<ModelBase, String> texturedModel : modelSource.getTexturedModels()) {
+            for (Pair<ModelBase, String> texturedModel : modelSource.getTexturedModels()) {
                 Minecraft.getMinecraft().renderEngine.bindTexture(
                     new ResourceLocation(this.builder.getModId() + ":textures/models/" + texturedModel.getV()));
                 GL11.glPushMatrix();

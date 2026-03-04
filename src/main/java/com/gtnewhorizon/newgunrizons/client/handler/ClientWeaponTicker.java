@@ -12,7 +12,7 @@ import com.gtnewhorizon.newgunrizons.config.ClientModContext;
 import com.gtnewhorizon.newgunrizons.config.SafeGlobals;
 import com.gtnewhorizon.newgunrizons.grenade.ItemGrenade;
 import com.gtnewhorizon.newgunrizons.util.Updatable;
-import com.gtnewhorizon.newgunrizons.weapon.Weapon;
+import com.gtnewhorizon.newgunrizons.weapon.ItemWeapon;
 
 import cpw.mods.fml.client.FMLClientHandler;
 
@@ -80,8 +80,8 @@ public class ClientWeaponTicker extends Thread {
         EntityPlayer player = FMLClientHandler.instance()
             .getClientPlayerEntity();
         Item item = this.getHeldItemMainHand(player);
-        if (item instanceof Weapon) {
-            ((Weapon) item).tryStopFire(player);
+        if (item instanceof ItemWeapon) {
+            ((ItemWeapon) item).tryStopFire(player);
         } else if (item instanceof ItemGrenade) {
             ((ItemGrenade) item).attackUp(player, true);
         }
@@ -102,8 +102,8 @@ public class ClientWeaponTicker extends Thread {
         EntityPlayer player = FMLClientHandler.instance()
             .getClientPlayerEntity();
         Item item = this.getHeldItemMainHand(player);
-        if (item instanceof Weapon) {
-            ((Weapon) item).tryFire(player);
+        if (item instanceof ItemWeapon) {
+            ((ItemWeapon) item).tryFire(player);
         } else if (item instanceof ItemGrenade) {
             ((ItemGrenade) item).attack(player, true);
         }
@@ -114,8 +114,8 @@ public class ClientWeaponTicker extends Thread {
         EntityPlayer player = FMLClientHandler.instance()
             .getClientPlayerEntity();
         Item item = this.getHeldItemMainHand(player);
-        if (item instanceof Weapon) {
-            ((Weapon) item).toggleAiming();
+        if (item instanceof ItemWeapon) {
+            ((ItemWeapon) item).toggleAiming();
         } else if (item instanceof ItemGrenade) {
             ((ItemGrenade) item).attack(player, false);
         }

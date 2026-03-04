@@ -8,8 +8,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
-import com.gtnewhorizon.newgunrizons.weapon.ItemBullet;
-import com.gtnewhorizon.newgunrizons.weapon.ItemMagazine;
+import com.gtnewhorizon.newgunrizons.items.ItemBullet;
+import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

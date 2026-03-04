@@ -24,10 +24,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.gtnewhorizon.newgunrizons.config.ModContext;
-import com.gtnewhorizon.newgunrizons.entity.Explosion;
-import com.gtnewhorizon.newgunrizons.util.BlockPos;
-import com.gtnewhorizon.newgunrizons.util.BlockState;
-import com.gtnewhorizon.newgunrizons.util.RayTracing;
+import com.gtnewhorizon.newgunrizons.entities.Explosion;
+import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
+import com.gtnewhorizon.gtnhlib.client.model.state.BlockState;
+import com.gtnewhorizon.newgunrizons.util.RayCast;
 
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import cpw.mods.fml.common.registry.IThrowableEntity;
@@ -160,8 +160,8 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
                 Vec3 vec3 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
                 Vec3 vec31 = Vec3
                     .createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-                MovingObjectPosition movingobjectposition = RayTracing
-                    .rayTraceBlocks(this.worldObj, vec3, vec31, this::canCollideWithBlock);
+                MovingObjectPosition movingobjectposition = RayCast
+                    .rayCastBlocks(this.worldObj, vec3, vec31, this::canCollideWithBlock);
                 vec3 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
                 vec31 = Vec3
                     .createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
@@ -364,11 +364,11 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
                 && this.itemGrenade != null) {
                 String bounceHardSound = this.itemGrenade.getBounceHardSound();
                 if (bounceHardSound != null) {
-                    BlockState blockState = BlockState.fromBlock(
+                    BlockState blockState = new BlockState(
                         this.worldObj.getBlock(
                             movingobjectposition.blockX,
                             movingobjectposition.blockY,
-                            movingobjectposition.blockZ));
+                            movingobjectposition.blockZ), 0);
                     if (madeFromHardMaterial(blockState)) {
                         this.worldObj
                             .playSoundAtEntity(this, bounceHardSound, 2.0F / ((float) this.bounceCount + 1.0F), 1.0F);
@@ -377,11 +377,11 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
 
                 String bounceSoftSound = this.itemGrenade.getBounceSoftSound();
                 if (bounceSoftSound != null) {
-                    BlockState blockState = BlockState.fromBlock(
+                    BlockState blockState = new BlockState(
                         this.worldObj.getBlock(
                             movingobjectposition.blockX,
                             movingobjectposition.blockY,
-                            movingobjectposition.blockZ));
+                            movingobjectposition.blockZ), 0);
                     if (!madeFromHardMaterial(blockState)) {
                         this.worldObj
                             .playSoundAtEntity(this, bounceSoftSound, 1.0F / ((float) this.bounceCount + 1.0F), 1.0F);
@@ -401,20 +401,19 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
                 double projectedXPos = this.posX + dX * (double) i;
                 double projectedYPos = this.posY + dY * (double) i;
                 double projectedZPos = this.posZ + dZ * (double) i;
-                Vec3 projectedPos = Vec3.createVectorHelper(projectedXPos, projectedYPos, projectedZPos);
-                BlockPos blockPos = new BlockPos(projectedPos);
+                BlockPos blockPos = new BlockPos((int) projectedXPos, (int) projectedYPos, (int) projectedZPos);
                 AxisAlignedBB projectedEntityBoundingBox = this.boundingBox
                     .getOffsetBoundingBox(dX * (double) i, dY * (double) i, dZ * (double) i);
-                if (this.worldObj.getBlock(blockPos.getBlockPosX(), blockPos.getBlockPosY(), blockPos.getBlockPosZ())
+                if (this.worldObj.getBlock(blockPos.getX(), blockPos.getY(), blockPos.getZ())
                     .getMaterial() == Material.air
                     || !AxisAlignedBB
                         .getBoundingBox(
-                            blockPos.getBlockPosX(),
-                            blockPos.getBlockPosY(),
-                            blockPos.getBlockPosZ(),
-                            blockPos.getBlockPosX() + 1,
-                            blockPos.getBlockPosY() + 1,
-                            blockPos.getBlockPosZ() + 1)
+                            blockPos.getX(),
+                            blockPos.getY(),
+                            blockPos.getZ(),
+                            blockPos.getX() + 1,
+                            blockPos.getY() + 1,
+                            blockPos.getZ() + 1)
                         .intersectsWith(projectedEntityBoundingBox)) {
                     this.posX = projectedXPos;
                     this.posY = projectedYPos;
@@ -447,14 +446,13 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
                     this.posZ + dZ * (double) (i + 1));
                 intercept = axisalignedbb.calculateIntercept(currentPos, projectedPos);
                 if (intercept == null) {
-                    BlockPos blockPos = new BlockPos(projectedPos);
-                    BlockState blockState;
-                    if ((blockState = BlockState.fromBlock(
+                    BlockPos blockPos = new BlockPos(
+                        (int) projectedPos.xCoord, (int) projectedPos.yCoord, (int) projectedPos.zCoord);
+                    BlockState blockState = new BlockState(
                         this.worldObj
-                            .getBlock(blockPos.getBlockPosX(), blockPos.getBlockPosY(), blockPos.getBlockPosZ())))
-                        != null
-                        && !(blockState.getBlock()
-                            .getMaterial() == Material.air)) {
+                            .getBlock(blockPos.getX(), blockPos.getY(), blockPos.getZ()), 0);
+                    if (blockState.block()
+                            .getMaterial() != Material.air) {
                         logger.debug("Found non-intercept position colliding with block {}", blockState);
                         intercept = movingobjectposition;
                     } else {
@@ -505,10 +503,10 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
                 Vec3 cvec1 = Vec3.createVectorHelper(this.posX + x * k2, this.posY + y * k2, this.posZ + z * k2);
                 Vec3 cvec10 = Vec3.createVectorHelper(this.posX + x * k2, this.posY + y * k2, this.posZ + z * k2);
                 Vec3 cvec2 = Vec3.createVectorHelper(this.posX + x * k, this.posY + y * k, this.posZ + z * k);
-                BiPredicate<Block, BlockState> isCollidable = (block, blockMetadata) -> block
-                    .canCollideCheck(blockMetadata.getBlockMetadata(), false);
-                MovingObjectPosition rayTraceResult = RayTracing
-                    .rayTraceBlocks(this.worldObj, cvec1, cvec2, isCollidable);
+                BiPredicate<Block, Integer> isCollidable = (block, blockMetadata) -> block
+                    .canCollideCheck(blockMetadata, false);
+                MovingObjectPosition rayTraceResult = RayCast
+                    .rayCastBlocks(this.worldObj, cvec1, cvec2, isCollidable);
                 if (rayTraceResult != null) {
                     cvec2 = Vec3.createVectorHelper(
                         rayTraceResult.hitVec.xCoord,
@@ -544,7 +542,7 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
     }
 
     private static boolean madeFromHardMaterial(BlockState blockState) {
-        Block block = blockState.getBlock();
+        Block block = blockState.block();
         Material material = block.getMaterial();
         return material == Material.rock || material == Material.iron
             || material == Material.ice
@@ -626,7 +624,7 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
         return this.yRotation - this.initialYaw - 90.0F;
     }
 
-    public boolean canCollideWithBlock(Block block, BlockState metadata) {
+    public boolean canCollideWithBlock(Block block, int metadata) {
         return !(block == Blocks.air || block == Blocks.tallgrass
             || block == Blocks.leaves
             || block == Blocks.leaves2
@@ -634,7 +632,7 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
             || block == Blocks.hay_block
             || block == Blocks.double_plant
             || block == Blocks.web
-            || block == Blocks.wheat) && block.canCollideCheck(metadata.getBlockMetadata(), false);
+            || block == Blocks.wheat) && block.canCollideCheck(metadata, false);
     }
 
     private void recordVelocityHistory() {

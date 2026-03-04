@@ -3,6 +3,7 @@ package com.gtnewhorizon.newgunrizons.attachment;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;

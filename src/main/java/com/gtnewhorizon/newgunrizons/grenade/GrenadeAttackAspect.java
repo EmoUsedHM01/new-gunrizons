@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.gtnewhorizon.newgunrizons.config.CommonModContext;
 import com.gtnewhorizon.newgunrizons.config.ModContext;
-import com.gtnewhorizon.newgunrizons.entity.Explosion;
+import com.gtnewhorizon.newgunrizons.entities.Explosion;
 import com.gtnewhorizon.newgunrizons.state.Aspect;
 import com.gtnewhorizon.newgunrizons.state.PermitManager;
 import com.gtnewhorizon.newgunrizons.state.StateManager;

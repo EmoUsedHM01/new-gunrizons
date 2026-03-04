@@ -18,11 +18,11 @@ import com.gtnewhorizon.newgunrizons.client.input.KeyBindings;
 import com.gtnewhorizon.newgunrizons.config.ModContext;
 import com.gtnewhorizon.newgunrizons.config.Tags;
 import com.gtnewhorizon.newgunrizons.grenade.ItemGrenade;
-import com.gtnewhorizon.newgunrizons.mechanic.WeaponAttachmentAspect;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponAttachmentAspect;
 import com.gtnewhorizon.newgunrizons.network.StatusMessageCenter;
-import com.gtnewhorizon.newgunrizons.weapon.ItemMagazine;
+import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
 import com.gtnewhorizon.newgunrizons.weapon.PlayerWeaponInstance;
-import com.gtnewhorizon.newgunrizons.weapon.Weapon;
+import com.gtnewhorizon.newgunrizons.weapon.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.weapon.WeaponState;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -61,7 +61,7 @@ public class CustomGui extends Gui {
                 int color;
                 int stringWidth;
                 if (weaponInstance != null) {
-                    Weapon weaponItem = (Weapon) itemStack.getItem();
+                    ItemWeapon weaponItem = (ItemWeapon) itemStack.getItem();
                     String crosshair = weaponItem != null ? weaponItem.getCrosshair(weaponInstance) : null;
                     if (crosshair != null) {
                         ScaledResolution scaledResolution = event.resolution;

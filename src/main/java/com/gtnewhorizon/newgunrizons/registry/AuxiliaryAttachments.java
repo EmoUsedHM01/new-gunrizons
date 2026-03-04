@@ -6,7 +6,7 @@ import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentBuilder;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
-import com.gtnewhorizon.newgunrizons.attachment.ItemAttachment;
+import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.model.action.ACRAction;
 import com.gtnewhorizon.newgunrizons.model.action.ACRAction2;
 import com.gtnewhorizon.newgunrizons.model.action.AK12action;

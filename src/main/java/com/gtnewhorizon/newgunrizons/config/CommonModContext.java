@@ -8,12 +8,11 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 
-import com.gtnewhorizon.newgunrizons.client.effect.EffectManager;
 import com.gtnewhorizon.newgunrizons.client.input.WeaponKeyInputHandler;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.RecipeManager;
-import com.gtnewhorizon.newgunrizons.entity.EntityShellCasing;
-import com.gtnewhorizon.newgunrizons.entity.WeaponSpawnEntity;
+import com.gtnewhorizon.newgunrizons.entities.EntityShellCasing;
+import com.gtnewhorizon.newgunrizons.entities.EntityBullet;
 import com.gtnewhorizon.newgunrizons.grenade.EntityGrenade;
 import com.gtnewhorizon.newgunrizons.grenade.GrenadeAttackAspect;
 import com.gtnewhorizon.newgunrizons.grenade.GrenadeMessage;
@@ -22,10 +21,10 @@ import com.gtnewhorizon.newgunrizons.grenade.GrenadeRenderer;
 import com.gtnewhorizon.newgunrizons.grenade.GrenadeState;
 import com.gtnewhorizon.newgunrizons.grenade.ItemGrenade;
 import com.gtnewhorizon.newgunrizons.grenade.PlayerGrenadeInstance;
-import com.gtnewhorizon.newgunrizons.mechanic.MagazineReloadAspect;
-import com.gtnewhorizon.newgunrizons.mechanic.WeaponAttachmentAspect;
-import com.gtnewhorizon.newgunrizons.mechanic.WeaponFireAspect;
-import com.gtnewhorizon.newgunrizons.mechanic.WeaponReloadAspect;
+import com.gtnewhorizon.newgunrizons.weapon.MagazineReloadAspect;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponAttachmentAspect;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponFireAspect;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponReloadAspect;
 import com.gtnewhorizon.newgunrizons.network.BlockHitMessage;
 import com.gtnewhorizon.newgunrizons.network.BlockHitMessageHandler;
 import com.gtnewhorizon.newgunrizons.network.ExplosionMessage;
@@ -47,7 +46,7 @@ import com.gtnewhorizon.newgunrizons.weapon.PlayerItemInstance;
 import com.gtnewhorizon.newgunrizons.weapon.PlayerItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.weapon.PlayerMagazineInstance;
 import com.gtnewhorizon.newgunrizons.weapon.PlayerWeaponInstance;
-import com.gtnewhorizon.newgunrizons.weapon.Weapon;
+import com.gtnewhorizon.newgunrizons.weapon.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.weapon.WeaponState;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -139,7 +138,7 @@ public class CommonModContext implements ModContext {
             .bus()
             .register(new WeaponKeyInputHandler(this, (ctx) -> this.getPlayer()));
         EntityRegistry.registerModEntity(
-            WeaponSpawnEntity.class,
+            EntityBullet.class,
             "Ammo" + this.modEntityID,
             this.modEntityID++,
             mod,
@@ -187,7 +186,7 @@ public class CommonModContext implements ModContext {
         return result;
     }
 
-    public void registerWeapon(String name, Weapon weapon, WeaponRenderer renderer) {
+    public void registerWeapon(String name, ItemWeapon weapon, WeaponRenderer renderer) {
         GameRegistry.registerItem(weapon, name);
     }
 
@@ -241,10 +240,6 @@ public class CommonModContext implements ModContext {
 
     public ResourceLocation getNamedResource(String name) {
         return new ResourceLocation(this.modId, name);
-    }
-
-    public EffectManager getEffectManager() {
-        throw new IllegalStateException();
     }
 
     static {

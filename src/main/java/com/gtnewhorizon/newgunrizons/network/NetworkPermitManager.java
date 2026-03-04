@@ -24,7 +24,6 @@ import cpw.mods.fml.relauncher.Side;
 
 public class NetworkPermitManager implements PermitManager, IMessageHandler<PermitMessage, IMessage> {
 
-    private static final Logger logger = LogManager.getLogger(NetworkPermitManager.class);
     private final ModContext modContext;
     private final Map<UUID, Object> permitCallbacks = new HashMap<>();
     private final Map<Class<?>, BiConsumer<Permit<?>, ?>> evaluators = new HashMap<>();
@@ -43,7 +42,6 @@ public class NetworkPermitManager implements PermitManager, IMessageHandler<Perm
     public <S extends ManagedState<S>, P extends Permit<S>, E extends ExtendedState<S>> void registerEvaluator(
         Class<? extends P> permitClass, Class<? extends E> esClass, BiConsumer<P, E> evaluator) {
         this.evaluators.put(permitClass, (p, c) -> {
-            logger.debug("Processing permit {} for instance {}", p, c);
             evaluator.accept(permitClass.cast(p), esClass.cast(c));
         });
     }

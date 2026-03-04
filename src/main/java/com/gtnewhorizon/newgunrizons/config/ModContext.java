@@ -3,20 +3,19 @@ package com.gtnewhorizon.newgunrizons.config;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
-import com.gtnewhorizon.newgunrizons.client.effect.EffectManager;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.RecipeManager;
 import com.gtnewhorizon.newgunrizons.grenade.GrenadeAttackAspect;
 import com.gtnewhorizon.newgunrizons.grenade.GrenadeRenderer;
 import com.gtnewhorizon.newgunrizons.grenade.ItemGrenade;
-import com.gtnewhorizon.newgunrizons.mechanic.MagazineReloadAspect;
-import com.gtnewhorizon.newgunrizons.mechanic.WeaponAttachmentAspect;
-import com.gtnewhorizon.newgunrizons.mechanic.WeaponFireAspect;
-import com.gtnewhorizon.newgunrizons.mechanic.WeaponReloadAspect;
+import com.gtnewhorizon.newgunrizons.weapon.MagazineReloadAspect;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponAttachmentAspect;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponFireAspect;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponReloadAspect;
 import com.gtnewhorizon.newgunrizons.network.StatusMessageCenter;
 import com.gtnewhorizon.newgunrizons.weapon.PlayerItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.weapon.PlayerWeaponInstance;
-import com.gtnewhorizon.newgunrizons.weapon.Weapon;
+import com.gtnewhorizon.newgunrizons.weapon.ItemWeapon;
 
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
@@ -26,7 +25,7 @@ public interface ModContext {
 
     void init(Object var1, String var2, SimpleNetworkWrapper var4);
 
-    void registerWeapon(String var1, Weapon var2, WeaponRenderer var3);
+    void registerWeapon(String var1, ItemWeapon var2, WeaponRenderer var3);
 
     SimpleNetworkWrapper getChannel();
 
@@ -75,6 +74,4 @@ public interface ModContext {
     GrenadeAttackAspect getGrenadeAttackAspect();
 
     String getModId();
-
-    EffectManager getEffectManager();
 }

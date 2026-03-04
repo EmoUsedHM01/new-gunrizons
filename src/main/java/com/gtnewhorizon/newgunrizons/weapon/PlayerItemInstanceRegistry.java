@@ -59,44 +59,47 @@ public class PlayerItemInstanceRegistry {
             : this.getItemInstance((EntityPlayer) player, ((EntityPlayer) player).inventory.currentItem);
     }
 
+    private void registerInstance(Map<Integer, PlayerItemInstance<?>> slotInstances, int slot,
+        PlayerItemInstance<?> instance) {
+        slotInstances.put(slot, instance);
+        this.syncManager.watch(instance);
+        if (instance.updateId == 0L) {
+            instance.markDirty();
+        }
+    }
+
     public PlayerItemInstance<?> getItemInstance(EntityPlayer player, int slot) {
         Map<Integer, PlayerItemInstance<?>> slotInstances = this.registry
-            .computeIfAbsent(player.getPersistentID(), (p) -> { return new HashMap<>(); });
+            .computeIfAbsent(player.getPersistentID(), p -> new HashMap<>());
         PlayerItemInstance<?> result = slotInstances.get(slot);
+
         if (result == null) {
             result = this.createItemInstance(player, slot);
             if (result != null) {
-                slotInstances.put(slot, result);
-                this.syncManager.watch(result);
-                if (result.updateId == 0L) {
-                    result.markDirty();
-                }
+                this.registerInstance(slotInstances, slot, result);
             }
-        } else {
-            ItemStack slotItemStack = player.inventory.getStackInSlot(slot);
-            if (slotItemStack != null && slotItemStack.getItem() != result.getItem()) {
-                this.syncManager.unwatch(result);
-                result = this.createItemInstance(player, slot);
-                if (result != null) {
-                    slotInstances.put(slot, result);
-                    this.syncManager.watch(result);
-                    if (result.updateId == 0L) {
-                        result.markDirty();
-                    }
-                }
-            }
+            return result;
+        }
 
-            if (result != null && result.getItemInventoryIndex() != slot) {
-                logger.warn("Invalid instance slot id, correcting...");
-                result.setItemInventoryIndex(slot);
+        ItemStack slotItemStack = player.inventory.getStackInSlot(slot);
+        if (slotItemStack != null && slotItemStack.getItem() != result.getItem()) {
+            this.syncManager.unwatch(result);
+            result = this.createItemInstance(player, slot);
+            if (result != null) {
+                this.registerInstance(slotInstances, slot, result);
             }
+        }
 
-            if (result != null && result.getPlayer() != player) {
-                logger.warn(
-                    "Invalid player " + result.getPlayer() + " associated with instance in slot, changing to {}",
-                    player);
-                result.setPlayer(player);
-            }
+        if (result != null && result.getItemInventoryIndex() != slot) {
+            logger.warn("Invalid instance slot id, correcting...");
+            result.setItemInventoryIndex(slot);
+        }
+
+        if (result != null && result.getPlayer() != player) {
+            logger.warn(
+                "Invalid player " + result.getPlayer() + " associated with instance in slot, changing to {}",
+                player);
+            result.setPlayer(player);
         }
 
         return result;
@@ -106,6 +109,7 @@ public class PlayerItemInstanceRegistry {
         return Item.getIdFromItem(instance1.getItem()) == Item.getIdFromItem(instance2.getItem());
     }
 
+    @SuppressWarnings("unchecked")
     public <S extends ManagedState<S>, T extends PlayerItemInstance<S>> boolean update(S newManagedState,
         T extendedStateToMerge) {
         Map<Integer, PlayerItemInstance<?>> slotContexts = this.registry.get(
@@ -140,7 +144,7 @@ public class PlayerItemInstanceRegistry {
                     logger.debug("Deserializing instance for slot {} from stack {}", slot, itemStack);
                     result = Tags.getInstance(itemStack);
                     logger.debug("Deserialized instance {} for slot {} from stack {}", result, slot, itemStack);
-                } catch (RuntimeException var7) {
+                } catch (RuntimeException e) {
                     logger.debug("Failed to deserialize instance from {}", itemStack);
                 }
 
@@ -160,7 +164,7 @@ public class PlayerItemInstanceRegistry {
     }
 
     public PlayerItemInstance<?> getItemInstance(EntityLivingBase player, ItemStack itemStack) {
-        Optional result = Optional.empty();
+        Optional<PlayerItemInstance<?>> result = Optional.empty();
 
         try {
             result = this.itemStackInstanceCache.get(itemStack, () -> {
@@ -179,8 +183,8 @@ public class PlayerItemInstanceRegistry {
                 if (instance == null || instance.getItem() != itemStack.getItem()) {
                     try {
                         instance = Tags.getInstance(itemStack);
-                    } catch (RuntimeException var6) {
-                        logger.error("Failed to deserialize instance from stack {}: {}", itemStack, var6.toString());
+                    } catch (RuntimeException e) {
+                        logger.error("Failed to deserialize instance from stack {}: {}", itemStack, e.toString());
                     }
                 }
 
@@ -194,36 +198,27 @@ public class PlayerItemInstanceRegistry {
 
                 return Optional.ofNullable(instance);
             });
-        } catch (ExecutionException | UncheckedExecutionException var5) {
-            logger.error("Failed to initialize cache instance from {}", itemStack, var5.getCause());
+        } catch (ExecutionException | UncheckedExecutionException e) {
+            logger.error("Failed to initialize cache instance from {}", itemStack, e.getCause());
         }
 
-        return (PlayerItemInstance) result.orElse(null);
+        return result.orElse(null);
     }
 
     public void update(EntityPlayer player) {
-        if (player != null) {
-            Map<Integer, PlayerItemInstance<?>> slotContexts = this.registry.get(player.getPersistentID());
-            if (slotContexts != null) {
-                Iterator it = slotContexts.entrySet()
-                    .iterator();
+        if (player == null) return;
 
-                while (true) {
-                    Entry e;
-                    ItemStack slotStack;
-                    do {
-                        if (!it.hasNext()) {
-                            return;
-                        }
+        Map<Integer, PlayerItemInstance<?>> slotContexts = this.registry.get(player.getPersistentID());
+        if (slotContexts == null) return;
 
-                        e = (Entry) it.next();
-                        slotStack = player.inventory.getStackInSlot((Integer) e.getKey());
-                    } while (slotStack != null && slotStack.getItem() == ((PlayerItemInstance) e.getValue()).getItem());
-
-                    logger.debug("Removing {} from slot {}", e.getValue(), e.getKey());
-                    this.syncManager.unwatch((PlayerItemInstance) e.getValue());
-                    it.remove();
-                }
+        Iterator<Entry<Integer, PlayerItemInstance<?>>> it = slotContexts.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<Integer, PlayerItemInstance<?>> entry = it.next();
+            ItemStack slotStack = player.inventory.getStackInSlot(entry.getKey());
+            if (slotStack == null || slotStack.getItem() != entry.getValue().getItem()) {
+                logger.debug("Removing {} from slot {}", entry.getValue(), entry.getKey());
+                this.syncManager.unwatch(entry.getValue());
+                it.remove();
             }
         }
     }

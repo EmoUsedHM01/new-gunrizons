@@ -6,7 +6,7 @@ import java.util.List;
 import net.minecraft.util.Vec3;
 
 import com.google.common.collect.Lists;
-import com.gtnewhorizon.newgunrizons.util.BlockPos;
+import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
@@ -104,9 +104,9 @@ public class ExplosionMessage implements IMessage {
         int j = (int) this.posY;
         int k = (int) this.posZ;
         for (BlockPos blockpos : this.affectedBlockPositions) {
-            int l = blockpos.getBlockPosX() - i;
-            int i1 = blockpos.getBlockPosY() - j;
-            int j1 = blockpos.getBlockPosZ() - k;
+            int l = blockpos.getX() - i;
+            int i1 = blockpos.getY() - j;
+            int j1 = blockpos.getZ() - k;
             buf.writeByte(l);
             buf.writeByte(i1);
             buf.writeByte(j1);

@@ -12,7 +12,7 @@ import com.gtnewhorizon.newgunrizons.model.ammo.Bullet44;
 import com.gtnewhorizon.newgunrizons.model.ammo.BulletBig;
 import com.gtnewhorizon.newgunrizons.model.ammo.SMAWRocket;
 import com.gtnewhorizon.newgunrizons.model.ammo.ShotgunShell;
-import com.gtnewhorizon.newgunrizons.weapon.ItemBullet;
+import com.gtnewhorizon.newgunrizons.items.ItemBullet;
 
 public class Bullets {
 
@@ -104,7 +104,7 @@ public class Bullets {
         Bullet9x39mm = (new ItemBullet.Builder()).withModId("newgunrizons")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet9x39mm")
-            .withModel(new BulletBig(), "Gold.png")
+            .withModel(new BulletBig(), "gold.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.2F, 0.4F);
@@ -129,7 +129,7 @@ public class Bullets {
         Bullet8mm = (new ItemBullet.Builder()).withModId("newgunrizons")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet8mm")
-            .withModel(new BulletBig(), "Gold.png")
+            .withModel(new BulletBig(), "gold.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.2F, 0.4F);

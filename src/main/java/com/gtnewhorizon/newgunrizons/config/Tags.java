@@ -66,9 +66,9 @@ public final class Tags {
             if (instance != null) {
                 TypeRegistry.getInstance()
                     .toBytes(instance, buf);
-                itemStack.stackTagCompound.setByteArray("Instance", buf.array());
+                itemStack.stackTagCompound.setByteArray(INSTANCE_TAG, buf.array());
             } else {
-                itemStack.stackTagCompound.removeTag("Instance");
+                itemStack.stackTagCompound.removeTag(INSTANCE_TAG);
             }
 
         }

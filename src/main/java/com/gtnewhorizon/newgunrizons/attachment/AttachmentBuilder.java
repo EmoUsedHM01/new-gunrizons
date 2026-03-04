@@ -9,6 +9,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +22,7 @@ import com.gtnewhorizon.newgunrizons.client.render.StaticModelSourceRenderer;
 import com.gtnewhorizon.newgunrizons.config.ModContext;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.crafting.OptionsMetadata;
-import com.gtnewhorizon.newgunrizons.util.Tuple;
+import com.gtnewhorizon.newgunrizons.util.Pair;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -55,7 +56,7 @@ public class AttachmentBuilder {
     protected ItemAttachment.ApplyHandler2 remove2;
     private String crosshair;
     private CustomRenderer postRenderer;
-    private final List<Tuple<ModelBase, String>> texturedModels = new ArrayList<>();
+    private final List<Pair<ModelBase, String>> texturedModels = new ArrayList<>();
     private boolean isRenderablePart;
     private int maxStackSize = 1;
     private Function<ItemStack, String> informationProvider;
@@ -165,7 +166,7 @@ public class AttachmentBuilder {
     }
 
     public AttachmentBuilder withModel(ModelBase model, String textureName) {
-        this.texturedModels.add(new Tuple<>(model, textureName.toLowerCase()));
+        this.texturedModels.add(new Pair<>(model, textureName.toLowerCase()));
         return this;
     }
 

@@ -14,8 +14,8 @@ import net.minecraft.util.ResourceLocation;
 
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.attachment.CompatibleAttachment;
-import com.gtnewhorizon.newgunrizons.attachment.ItemAttachment;
-import com.gtnewhorizon.newgunrizons.attachment.ItemScope;
+import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
+import com.gtnewhorizon.newgunrizons.items.ItemScope;
 import com.gtnewhorizon.newgunrizons.client.shader.DynamicShaderGroupSource;
 import com.gtnewhorizon.newgunrizons.client.shader.DynamicShaderPhase;
 import com.gtnewhorizon.newgunrizons.network.TypeRegistry;
@@ -59,7 +59,7 @@ public class PlayerWeaponInstance extends PlayerItemInstance<WeaponState> {
     @Getter
     @Setter
     private int loadIterationCount;
-    private final Deque<AsyncWeaponState> filteredStateQueue;
+    private final Deque<WeaponStateTimed> filteredStateQueue;
     private int[] activeAttachmentIds;
     private byte[] selectedAttachmentIndexes;
 
@@ -145,7 +145,7 @@ public class PlayerWeaponInstance extends PlayerItemInstance<WeaponState> {
     }
 
     private void addStateToHistory(WeaponState state) {
-        AsyncWeaponState t;
+        WeaponStateTimed t;
         while ((t = this.filteredStateQueue.peekFirst()) != null && t.getState()
             .getPriority() < state.getPriority()) {
             this.filteredStateQueue.pollFirst();
@@ -163,7 +163,7 @@ public class PlayerWeaponInstance extends PlayerItemInstance<WeaponState> {
             }
         }
 
-        this.filteredStateQueue.addFirst(new AsyncWeaponState(state, this.stateUpdateTimestamp, expirationTimeout));
+        this.filteredStateQueue.addFirst(new WeaponStateTimed(state, this.stateUpdateTimestamp, expirationTimeout));
     }
 
     public boolean setState(WeaponState state) {
@@ -172,10 +172,10 @@ public class PlayerWeaponInstance extends PlayerItemInstance<WeaponState> {
         return result;
     }
 
-    public AsyncWeaponState nextHistoryState() {
-        AsyncWeaponState result = this.filteredStateQueue.pollLast();
+    public WeaponStateTimed nextHistoryState() {
+        WeaponStateTimed result = this.filteredStateQueue.pollLast();
         if (result == null) {
-            result = new AsyncWeaponState(this.getState(), this.stateUpdateTimestamp);
+            result = new WeaponStateTimed(this.getState(), this.stateUpdateTimestamp);
         }
 
         return result;
@@ -266,8 +266,8 @@ public class PlayerWeaponInstance extends PlayerItemInstance<WeaponState> {
         this.setLoadIterationCount(otherWeaponInstance.loadIterationCount);
     }
 
-    public Weapon getWeapon() {
-        return (Weapon) this.item;
+    public ItemWeapon getWeapon() {
+        return (ItemWeapon) this.item;
     }
 
     public void setRecoil(float recoil) {

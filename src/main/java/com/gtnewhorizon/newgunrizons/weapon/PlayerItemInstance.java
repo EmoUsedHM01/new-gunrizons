@@ -1,5 +1,7 @@
 package com.gtnewhorizon.newgunrizons.weapon;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -17,16 +19,26 @@ import com.gtnewhorizon.newgunrizons.state.ManagedState;
 import io.netty.buffer.ByteBuf;
 
 public class PlayerItemInstance<S extends ManagedState<S>> extends UniversalObject
+
     implements ExtendedState<S>, PlayerContext {
 
     private static final Logger logger = LogManager.getLogger(PlayerItemInstance.class);
+    @Getter
     protected S state;
+    @Getter
     protected long stateUpdateTimestamp = System.currentTimeMillis();
+    @Getter
     protected long updateId;
+    @Setter
+    @Getter
     protected EntityLivingBase player;
+    @Getter
     protected Item item;
+    @Getter
     protected int itemInventoryIndex;
     private PlayerItemInstance<S> preparedState;
+    @Setter
+    @Getter
     private long syncStartTimestamp;
 
     public PlayerItemInstance() {}
@@ -50,34 +62,14 @@ public class PlayerItemInstance<S extends ManagedState<S>> extends UniversalObje
 
     }
 
-    public EntityLivingBase getPlayer() {
-        return this.player;
-    }
-
-    public void setPlayer(EntityLivingBase player) {
-        this.player = player;
-    }
-
-    public Item getItem() {
-        return this.item;
-    }
-
     public ItemStack getItemStack() {
         return this.player instanceof EntityPlayer
             ? ((EntityPlayer) this.player).inventory.getStackInSlot(this.itemInventoryIndex)
             : null;
     }
 
-    public int getItemInventoryIndex() {
-        return this.itemInventoryIndex;
-    }
-
     protected void setItemInventoryIndex(int itemInventoryIndex) {
         this.itemInventoryIndex = itemInventoryIndex;
-    }
-
-    protected <T extends PlayerItemInstance<S>> T getPreparedState() {
-        return (T) this.preparedState;
     }
 
     public void init(ByteBuf buf) {
@@ -85,8 +77,7 @@ public class PlayerItemInstance<S extends ManagedState<S>> extends UniversalObje
         this.item = Item.getItemById(buf.readInt());
         this.itemInventoryIndex = buf.readInt();
         this.updateId = buf.readLong();
-        this.state = (S) TypeRegistry.getInstance()
-            .fromBytes(buf);
+        this.state = TypeRegistry.getInstance().fromBytes(buf);
     }
 
     public void serialize(ByteBuf buf) {
@@ -107,8 +98,8 @@ public class PlayerItemInstance<S extends ManagedState<S>> extends UniversalObje
                 .commitPhase() == state) {
                 logger.debug(
                     "Committing state {} to {}",
-                    new Object[] { this.preparedState.getState(), this.preparedState.getState()
-                        .commitPhase() });
+                    this.preparedState.getState(), this.preparedState.getState()
+                        .commitPhase());
                 this.updateWith(this.preparedState, false);
             } else {
                 this.rollback();
@@ -129,18 +120,6 @@ public class PlayerItemInstance<S extends ManagedState<S>> extends UniversalObje
 
     }
 
-    public S getState() {
-        return this.state;
-    }
-
-    public long getStateUpdateTimestamp() {
-        return this.stateUpdateTimestamp;
-    }
-
-    public long getUpdateId() {
-        return this.updateId;
-    }
-
     void markDirty() {
         ++this.updateId;
     }
@@ -148,14 +127,6 @@ public class PlayerItemInstance<S extends ManagedState<S>> extends UniversalObje
     public <E extends ExtendedState<S>> void prepareTransaction(E preparedExtendedState) {
         this.setState(preparedExtendedState.getState());
         this.preparedState = (PlayerItemInstance) preparedExtendedState;
-    }
-
-    public long getSyncStartTimestamp() {
-        return this.syncStartTimestamp;
-    }
-
-    public void setSyncStartTimestamp(long syncStartTimestamp) {
-        this.syncStartTimestamp = syncStartTimestamp;
     }
 
     public boolean needsOpticalScopePerspective() {

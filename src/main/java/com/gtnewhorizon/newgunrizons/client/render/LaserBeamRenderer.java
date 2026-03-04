@@ -14,9 +14,9 @@ import com.gtnewhorizon.newgunrizons.weapon.PlayerWeaponInstance;
 
 public class LaserBeamRenderer implements CustomRenderer {
 
-    private final float xOffset = 0.5F;
-    private final float yOffset = -1.3F;
-    private final float zOffset = -1.7F;
+    private static final float X_OFFSET = 0.5F;
+    private static final float Y_OFFSET = -1.3F;
+    private static final float Z_OFFSET = -1.7F;
 
     private final BiConsumer<EntityLivingBase, ItemStack> positioning;
 
@@ -60,18 +60,18 @@ public class LaserBeamRenderer implements CustomRenderer {
             // causing subsequent weapon model parts to render white.
             long time = System.currentTimeMillis();
             Random random = new Random(time - time % 300L);
-            float start = this.zOffset;
+            float start = Z_OFFSET;
             float length = 100.0F;
             float end = 0.0F;
 
             GL11.glBegin(GL11.GL_LINES);
             for (int i = 0; i < 100 && start < length && end < length; ++i) {
-                GL11.glVertex3f(this.xOffset, this.yOffset, start);
+                GL11.glVertex3f(X_OFFSET, Y_OFFSET, start);
                 end = start - (1.0F + random.nextFloat() * 2.0F);
                 if (end > length) {
                     end = length;
                 }
-                GL11.glVertex3f(this.xOffset, this.yOffset, end);
+                GL11.glVertex3f(X_OFFSET, Y_OFFSET, end);
                 start = end + random.nextFloat() * 0.5F;
             }
             GL11.glEnd();

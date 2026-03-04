@@ -8,7 +8,7 @@ import java.util.function.Function;
 
 import net.minecraft.util.ResourceLocation;
 
-import com.gtnewhorizon.newgunrizons.util.Tuple;
+import com.gtnewhorizon.newgunrizons.util.Pair;
 
 import lombok.Getter;
 
@@ -16,7 +16,7 @@ public class DynamicShaderGroupSource {
 
     @Getter
     private final ResourceLocation shaderLocation;
-    private final List<Tuple<String, Function<DynamicShaderContext, Object>>> uniforms;
+    private final List<Pair<String, Function<DynamicShaderContext, Object>>> uniforms;
     @Getter
     private final UUID sourceId;
 
@@ -27,11 +27,11 @@ public class DynamicShaderGroupSource {
     }
 
     public DynamicShaderGroupSource withUniform(String name, Function<DynamicShaderContext, Object> value) {
-        this.uniforms.add(new Tuple<>(name, value));
+        this.uniforms.add(new Pair<>(name, value));
         return this;
     }
 
-    public List<Tuple<String, Function<DynamicShaderContext, Object>>> getUniforms(DynamicShaderContext context) {
+    public List<Pair<String, Function<DynamicShaderContext, Object>>> getUniforms(DynamicShaderContext context) {
         return Collections.unmodifiableList(this.uniforms);
     }
 }

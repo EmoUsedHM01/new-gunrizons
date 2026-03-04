@@ -124,7 +124,7 @@ public class ScopePerspective {
             targetFbo = this.framebuffer;
         }
 
-        this.modContext.getSafeGlobals().renderingPhase.set(RenderingPhase.RENDER_PERSPECTIVE);
+        this.modContext.getSafeGlobals().renderingPhase.set(RenderingPhase.RENDER_SCOPE);
         long finishTimeNano = this.renderEndNanoTime + 16666666L;
 
         // Save Minecraft state

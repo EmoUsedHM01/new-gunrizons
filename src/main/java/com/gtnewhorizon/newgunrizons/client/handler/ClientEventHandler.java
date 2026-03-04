@@ -118,7 +118,7 @@ public class ClientEventHandler {
         // During scope rendering, super.renderWorld() fires RenderHandEvent from
         // vanilla's hand block. Cancel it to prevent shader/framebuffer state
         // corruption — the scope framebuffer must stay bound, not the main one.
-        if (this.safeGlobals.renderingPhase.get() == RenderingPhase.RENDER_PERSPECTIVE) {
+        if (this.safeGlobals.renderingPhase.get() == RenderingPhase.RENDER_SCOPE) {
             event.setCanceled(true);
             return;
         }

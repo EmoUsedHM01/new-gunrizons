@@ -30,7 +30,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.gtnewhorizon.newgunrizons.attachment.CompatibleAttachment;
 import com.gtnewhorizon.newgunrizons.attachment.DefaultPart;
-import com.gtnewhorizon.newgunrizons.attachment.ItemAttachment;
+import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.attachment.Part;
 import com.gtnewhorizon.newgunrizons.client.animation.MultipartPositioning;
 import com.gtnewhorizon.newgunrizons.client.animation.MultipartRenderStateManager;
@@ -43,7 +43,7 @@ import com.gtnewhorizon.newgunrizons.client.render.TransformType;
 import com.gtnewhorizon.newgunrizons.client.shader.Framebuffers;
 import com.gtnewhorizon.newgunrizons.config.ClientModContext;
 import com.gtnewhorizon.newgunrizons.state.RenderableState;
-import com.gtnewhorizon.newgunrizons.util.Tuple;
+import com.gtnewhorizon.newgunrizons.util.Pair;
 import com.gtnewhorizon.newgunrizons.weapon.PlayerItemInstance;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -275,9 +275,9 @@ public class GrenadeRenderer implements IItemRenderer {
             }
         }
 
-        for (Tuple<ModelBase, String> modelBaseStringTuple : compatibleAttachment.getAttachment()
+        for (Pair<ModelBase, String> modelBaseStringPair : compatibleAttachment.getAttachment()
             .getTexturedModels()) {
-            Tuple<ModelBase, String> texturedModel = modelBaseStringTuple;
+            Pair<ModelBase, String> texturedModel = modelBaseStringPair;
             Minecraft.getMinecraft().renderEngine.bindTexture(
                 new ResourceLocation(this.builder.getModId() + ":textures/models/" + texturedModel.getV()));
             GL11.glPushMatrix();

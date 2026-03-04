@@ -13,6 +13,8 @@ import java.util.Random;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.ScaledResolution;
@@ -33,7 +35,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.gtnewhorizon.newgunrizons.attachment.CompatibleAttachment;
 import com.gtnewhorizon.newgunrizons.attachment.DefaultPart;
-import com.gtnewhorizon.newgunrizons.attachment.ItemAttachment;
+import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.attachment.ModelWithAttachments;
 import com.gtnewhorizon.newgunrizons.attachment.Part;
 import com.gtnewhorizon.newgunrizons.client.animation.MultipartPositioning;
@@ -44,11 +46,11 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.shader.Framebuffers;
 import com.gtnewhorizon.newgunrizons.config.ClientModContext;
 import com.gtnewhorizon.newgunrizons.state.RenderableState;
-import com.gtnewhorizon.newgunrizons.util.Tuple;
-import com.gtnewhorizon.newgunrizons.weapon.AsyncWeaponState;
+import com.gtnewhorizon.newgunrizons.util.Pair;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponStateTimed;
 import com.gtnewhorizon.newgunrizons.weapon.PlayerItemInstance;
 import com.gtnewhorizon.newgunrizons.weapon.PlayerWeaponInstance;
-import com.gtnewhorizon.newgunrizons.weapon.Weapon;
+import com.gtnewhorizon.newgunrizons.weapon.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.weapon.WeaponState;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -58,6 +60,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class WeaponRenderer implements IItemRenderer {
 
     private static final Logger logger = LogManager.getLogger(WeaponRenderer.class);
+
     private static final float DEFAULT_RANDOMIZING_RATE = 0.33F;
     private static final float DEFAULT_RANDOMIZING_FIRING_RATE = 20.0F;
     private static final float DEFAULT_RANDOMIZING_ZOOM_RATE = 0.25F;
@@ -70,11 +73,13 @@ public class WeaponRenderer implements IItemRenderer {
     private static final int DEFAULT_ITERATION_COMPLETED_ANIMATION_DURATION = 100;
     private static final int DEFAULT_PREPARE_FIRST_LOAD_ITERATION_ANIMATION_DURATION = 100;
     private static final int DEFAULT_ALL_LOAD_ITERATION_ANIMATIONS_COMPLETED_DURATION = 100;
+
     private static final int INVENTORY_TEXTURE_WIDTH = 256;
     private static final int INVENTORY_TEXTURE_HEIGHT = 256;
     private final WeaponRenderer.Builder builder;
     private final Map<EntityLivingBase, MultipartRenderStateManager> firstPersonStateManagers;
     private final MultipartTransitionProvider weaponTransitionProvider;
+    @Setter
     protected ClientModContext clientModContext;
 
     private WeaponRenderer(WeaponRenderer.Builder builder) {
@@ -95,10 +100,6 @@ public class WeaponRenderer implements IItemRenderer {
         return this.clientModContext;
     }
 
-    public void setClientModContext(ClientModContext clientModContext) {
-        this.clientModContext = clientModContext;
-    }
-
     protected StateDescriptor getStateDescriptor(EntityLivingBase player, ItemStack itemStack) {
         float amplitude = this.builder.normalRandomizingAmplitude;
         float rate = this.builder.normalRandomizingRate;
@@ -117,8 +118,8 @@ public class WeaponRenderer implements IItemRenderer {
         }
 
         if (playerWeaponInstance != null) {
-            AsyncWeaponState asyncWeaponState = this.getNextNonExpiredState(playerWeaponInstance);
-            switch (asyncWeaponState.getState()) {
+            WeaponStateTimed weaponStateTimed = this.getNextNonExpiredState(playerWeaponInstance);
+            switch (weaponStateTimed.getState()) {
                 case RECOILED:
                     if (playerWeaponInstance.isAutomaticModeEnabled() && !this.hasRecoilPositioning()) {
                         if (playerWeaponInstance.isAimed()) {
@@ -139,8 +140,8 @@ public class WeaponRenderer implements IItemRenderer {
                     break;
                 case PAUSED:
                     if (playerWeaponInstance.isAutomaticModeEnabled() && !this.hasRecoilPositioning()) {
-                        boolean isLongPaused = (float) (System.currentTimeMillis() - asyncWeaponState.getTimestamp())
-                            > 50.0F / playerWeaponInstance.getFireRate() && asyncWeaponState.isInfinite();
+                        boolean isLongPaused = (float) (System.currentTimeMillis() - weaponStateTimed.getTimestamp())
+                            > 50.0F / playerWeaponInstance.getFireRate() && weaponStateTimed.isInfinite();
                         if (playerWeaponInstance.isAimed()) {
                             currentState = RenderableState.ZOOMING;
                             if (!isLongPaused) {
@@ -219,18 +220,17 @@ public class WeaponRenderer implements IItemRenderer {
         return new StateDescriptor(playerWeaponInstance, stateManager, rate, amplitude);
     }
 
-    private AsyncWeaponState getNextNonExpiredState(PlayerWeaponInstance playerWeaponState) {
-        AsyncWeaponState asyncWeaponState = null;
-
-        while ((asyncWeaponState = playerWeaponState.nextHistoryState()) != null) {
-            if (System.currentTimeMillis() < asyncWeaponState.getTimestamp() + asyncWeaponState.getDuration()
-                && (asyncWeaponState.getState() != WeaponState.FIRING
+    private WeaponStateTimed getNextNonExpiredState(PlayerWeaponInstance playerWeaponState) {
+        WeaponStateTimed weaponStateTimed;
+        while ((weaponStateTimed = playerWeaponState.nextHistoryState()) != null) {
+            if (System.currentTimeMillis() < weaponStateTimed.getTimestamp() + weaponStateTimed.getDuration()
+                && (weaponStateTimed.getState() != WeaponState.FIRING
                     || !this.hasRecoilPositioning() && playerWeaponState.isAutomaticModeEnabled())) {
                 break;
             }
         }
 
-        return asyncWeaponState;
+        return weaponStateTimed;
     }
 
     private Consumer<RenderContext> createWeaponPartPositionFunction(Transition t) {
@@ -238,12 +238,12 @@ public class WeaponRenderer implements IItemRenderer {
             return (context) -> {};
         } else {
             Consumer<RenderContext> weaponPositionFunction = t.getItemPositioning();
-            return weaponPositionFunction != null ? weaponPositionFunction::accept : (context) -> {};
+            return weaponPositionFunction != null ? weaponPositionFunction : (context) -> {};
         }
     }
 
     private Consumer<RenderContext> createWeaponPartPositionFunction(Consumer<RenderContext> weaponPositionFunction) {
-        return weaponPositionFunction != null ? weaponPositionFunction::accept : (context) -> {};
+        return weaponPositionFunction != null ? weaponPositionFunction : (context) -> {};
     }
 
     private List<MultipartTransition> getComplexTransition(List<Transition> wt, List<Transition> lht,
@@ -298,7 +298,7 @@ public class WeaponRenderer implements IItemRenderer {
         MultipartPositioning.Positioner positioner) {
         List<CompatibleAttachment> attachments = null;
         if (this.builder.getModel() instanceof ModelWithAttachments) {
-            attachments = ((Weapon) weaponItemStack.getItem())
+            attachments = ((ItemWeapon) weaponItemStack.getItem())
                 .getActiveAttachments(renderContext.getPlayer(), weaponItemStack);
         }
 
@@ -306,7 +306,7 @@ public class WeaponRenderer implements IItemRenderer {
             Minecraft.getMinecraft().renderEngine.bindTexture(
                 new ResourceLocation(this.builder.getModId() + ":textures/models/" + this.builder.getTextureName()));
         } else {
-            Weapon weapon = (Weapon) weaponItemStack.getItem();
+            ItemWeapon weapon = (ItemWeapon) weaponItemStack.getItem();
             String textureName = weapon.getTextureName();
 
             Minecraft.getMinecraft().renderEngine
@@ -356,9 +356,7 @@ public class WeaponRenderer implements IItemRenderer {
             }
         }
 
-        for (Tuple<ModelBase, String> modelBaseStringTuple : compatibleAttachment.getAttachment()
-            .getTexturedModels()) {
-            Tuple<ModelBase, String> texturedModel = modelBaseStringTuple;
+        for (Pair<ModelBase, String> texturedModel : compatibleAttachment.getAttachment().getTexturedModels()) {
             Minecraft.getMinecraft().renderEngine.bindTexture(
                 new ResourceLocation(this.builder.getModId() + ":textures/models/" + texturedModel.getV()));
             GL11.glPushMatrix();
@@ -392,8 +390,7 @@ public class WeaponRenderer implements IItemRenderer {
         }
 
         for (CompatibleAttachment attachment : itemAttachment.getAttachments()) {
-            CompatibleAttachment childAttachment = attachment;
-            this.renderCompatibleAttachment(childAttachment, positioner, renderContext);
+            renderCompatibleAttachment(attachment, positioner, renderContext);
         }
 
         GL11.glPopAttrib();
@@ -510,13 +507,19 @@ public class WeaponRenderer implements IItemRenderer {
     public static class Builder {
 
         private final Random random = new Random();
+
+        @Getter
         private ModelBase model;
+        @Getter
         private String textureName;
-        private float weaponProximity;
-        private float yOffsetZoom;
-        private float xOffsetZoom = 0.69F;
+
+        private final float xOffsetZoom = 0.69F;
+
+        @Getter
         private Consumer<ItemStack> entityPositioning;
+        @Getter
         private Consumer<ItemStack> inventoryPositioning;
+        @Getter
         private Consumer<RenderContext> thirdPersonPositioning;
         private Consumer<RenderContext> firstPersonPositioning;
         private Consumer<RenderContext> firstPersonPositioningZooming;
@@ -541,6 +544,7 @@ public class WeaponRenderer implements IItemRenderer {
         private Consumer<RenderContext> firstPersonRightHandPositioningRecoiled;
         private Consumer<RenderContext> firstPersonRightHandPositioningShooting;
         private Consumer<RenderContext> firstPersonRightHandPositioningLoadIterationCompleted;
+
         private List<Transition> firstPersonPositioningReloading;
         private List<Transition> firstPersonLeftHandPositioningReloading;
         private List<Transition> firstPersonRightHandPositioningReloading;
@@ -556,18 +560,21 @@ public class WeaponRenderer implements IItemRenderer {
         private long totalReloadingDuration;
         private long totalUnloadingDuration;
         private long totalLoadIterationDuration;
+        @Getter
         private String modId;
         private int recoilAnimationDuration = 100;
         private int shootingAnimationDuration = 100;
         private final int loadIterationCompletedAnimationDuration = 100;
         private int prepareFirstLoadIterationAnimationDuration = 100;
         private int allLoadIterationAnimationsCompletedDuration = 100;
-        private float normalRandomizingRate = 0.33F;
-        private float firingRandomizingRate = 20.0F;
-        private float zoomRandomizingRate = 0.25F;
+
+        private final float normalRandomizingRate = 0.33F;
+        private final float firingRandomizingRate = 20.0F;
+        private final float zoomRandomizingRate = 0.25F;
         private final float normalRandomizingAmplitude = 0.06F;
-        private float zoomRandomizingAmplitude = 0.005F;
-        private float firingRandomizingAmplitude = 0.03F;
+        private final float zoomRandomizingAmplitude = 0.005F;
+        private final float firingRandomizingAmplitude = 0.03F;
+
         private final LinkedHashMap<Part, Consumer<RenderContext>> firstPersonCustomPositioning = new LinkedHashMap<>();
         private final LinkedHashMap<Part, List<Transition>> firstPersonCustomPositioningUnloading = new LinkedHashMap<>();
         private final LinkedHashMap<Part, List<Transition>> firstPersonCustomPositioningReloading = new LinkedHashMap<>();
@@ -577,9 +584,11 @@ public class WeaponRenderer implements IItemRenderer {
         private final LinkedHashMap<Part, Consumer<RenderContext>> firstPersonCustomPositioningZoomingRecoiled = new LinkedHashMap<>();
         private final LinkedHashMap<Part, Consumer<RenderContext>> firstPersonCustomPositioningZoomingShooting = new LinkedHashMap<>();
         private final LinkedHashMap<Part, Consumer<RenderContext>> firstPersonCustomPositioningLoadIterationCompleted = new LinkedHashMap<>();
+
         private List<Transition> firstPersonPositioningEjectSpentRound;
         private List<Transition> firstPersonLeftHandPositioningEjectSpentRound;
         private List<Transition> firstPersonRightHandPositioningEjectSpentRound;
+
         private final LinkedHashMap<Part, List<Transition>> firstPersonCustomPositioningEjectSpentRound = new LinkedHashMap<>();
         private boolean hasRecoilPositioningDefined;
 
@@ -615,53 +624,8 @@ public class WeaponRenderer implements IItemRenderer {
             return this;
         }
 
-        public WeaponRenderer.Builder withNormalRandomizingRate(float normalRandomizingRate) {
-            this.normalRandomizingRate = normalRandomizingRate;
-            return this;
-        }
-
-        public WeaponRenderer.Builder withZoomRandomizingRate(float zoomRandomizingRate) {
-            this.zoomRandomizingRate = zoomRandomizingRate;
-            return this;
-        }
-
-        public WeaponRenderer.Builder withFiringRandomizingRate(float firingRandomizingRate) {
-            this.firingRandomizingRate = firingRandomizingRate;
-            return this;
-        }
-
-        public WeaponRenderer.Builder withFiringRandomizingAmplitude(float firingRandomizingAmplitude) {
-            this.firingRandomizingAmplitude = firingRandomizingAmplitude;
-            return this;
-        }
-
-        public WeaponRenderer.Builder withNormalRandomizingAmplitude(float firingRandomizingRate) {
-            this.firingRandomizingRate = firingRandomizingRate;
-            return this;
-        }
-
-        public WeaponRenderer.Builder withZoomRandomizingAmplitude(float zoomRandomizingAmplitude) {
-            this.zoomRandomizingAmplitude = zoomRandomizingAmplitude;
-            return this;
-        }
-
         public WeaponRenderer.Builder withTextureName(String textureName) {
             this.textureName = textureName + ".png";
-            return this;
-        }
-
-        public WeaponRenderer.Builder withWeaponProximity(float weaponProximity) {
-            this.weaponProximity = weaponProximity;
-            return this;
-        }
-
-        public WeaponRenderer.Builder withYOffsetZoom(float yOffsetZoom) {
-            this.yOffsetZoom = yOffsetZoom;
-            return this;
-        }
-
-        public WeaponRenderer.Builder withXOffsetZoom(float xOffsetZoom) {
-            this.xOffsetZoom = xOffsetZoom;
             return this;
         }
 
@@ -992,8 +956,6 @@ public class WeaponRenderer implements IItemRenderer {
             if (FMLCommonHandler.instance()
                 .getSide() != Side.CLIENT) {
                 return null;
-            } else if (this.modId == null) {
-                throw new IllegalStateException("ModId is not set");
             } else {
                 if (this.inventoryPositioning == null) {
                     this.inventoryPositioning = (itemStack) -> { GL11.glTranslatef(0.0F, 0.12F, 0.0F); };
@@ -1011,7 +973,7 @@ public class WeaponRenderer implements IItemRenderer {
                             PlayerWeaponInstance instance = renderer.getClientModContext()
                                 .getMainHeldWeapon();
                             if (instance != null && instance.isAimed()) {
-                                GL11.glTranslatef(this.xOffsetZoom, this.yOffsetZoom, this.weaponProximity);
+                                GL11.glTranslatef(this.xOffsetZoom, 0, 0);
                             } else {
                                 GL11.glTranslatef(0.0F, -1.2F, 0.0F);
                             }
@@ -1134,20 +1096,20 @@ public class WeaponRenderer implements IItemRenderer {
 
                 if (this.firstPersonLeftHandPositioningUnloading == null) {
                     this.firstPersonLeftHandPositioningUnloading = this.firstPersonPositioningUnloading.stream()
-                        .map((tx) -> { return new Transition((c) -> {}, 0L); })
+                        .map((tx) -> new Transition((c) -> {}, 0L))
                         .collect(Collectors.toList());
                 }
 
                 if (this.firstPersonLeftHandPositioningLoadIteration == null) {
                     this.firstPersonLeftHandPositioningLoadIteration = this.firstPersonPositioningReloading.stream()
-                        .map((tx) -> { return new Transition((c) -> {}, 0L); })
+                        .map((tx) -> new Transition((c) -> {}, 0L))
                         .collect(Collectors.toList());
                 }
 
                 if (this.firstPersonLeftHandPositioningAllLoadIterationsCompleted == null) {
                     this.firstPersonLeftHandPositioningAllLoadIterationsCompleted = this.firstPersonPositioningReloading
                         .stream()
-                        .map((tx) -> { return new Transition((c) -> {}, 0L); })
+                        .map((tx) -> new Transition((c) -> {}, 0L))
                         .collect(Collectors.toList());
                 }
 
@@ -1181,26 +1143,26 @@ public class WeaponRenderer implements IItemRenderer {
 
                 if (this.firstPersonRightHandPositioningReloading == null) {
                     this.firstPersonRightHandPositioningReloading = this.firstPersonPositioningReloading.stream()
-                        .map((tx) -> { return new Transition((c) -> {}, 0L); })
+                        .map((tx) -> new Transition((c) -> {}, 0L))
                         .collect(Collectors.toList());
                 }
 
                 if (this.firstPersonRightHandPositioningUnloading == null) {
                     this.firstPersonRightHandPositioningUnloading = this.firstPersonPositioningUnloading.stream()
-                        .map((tx) -> { return new Transition((c) -> {}, 0L); })
+                        .map((tx) -> new Transition((c) -> {}, 0L))
                         .collect(Collectors.toList());
                 }
 
                 if (this.firstPersonRightHandPositioningLoadIteration == null) {
                     this.firstPersonRightHandPositioningLoadIteration = this.firstPersonPositioningReloading.stream()
-                        .map((tx) -> { return new Transition((c) -> {}, 0L); })
+                        .map((tx) -> new Transition((c) -> {}, 0L))
                         .collect(Collectors.toList());
                 }
 
                 if (this.firstPersonRightHandPositioningAllLoadIterationsCompleted == null) {
                     this.firstPersonRightHandPositioningAllLoadIterationsCompleted = this.firstPersonPositioningReloading
                         .stream()
-                        .map((tx) -> { return new Transition((c) -> {}, 0L); })
+                        .map((tx) -> new Transition((c) -> {}, 0L))
                         .collect(Collectors.toList());
                 }
 
@@ -1230,26 +1192,22 @@ public class WeaponRenderer implements IItemRenderer {
 
                 if (!this.firstPersonCustomPositioning.isEmpty()
                     && this.firstPersonCustomPositioningRecoiled.isEmpty()) {
-                    this.firstPersonCustomPositioning
-                        .forEach((part, pos) -> { this.firstPersonCustomPositioningRecoiled.put(part, pos); });
+                    this.firstPersonCustomPositioningRecoiled.putAll(this.firstPersonCustomPositioning);
                 }
 
                 if (!this.firstPersonCustomPositioning.isEmpty()
                     && this.firstPersonCustomPositioningZoomingRecoiled.isEmpty()) {
-                    this.firstPersonCustomPositioning
-                        .forEach((part, pos) -> { this.firstPersonCustomPositioningZoomingRecoiled.put(part, pos); });
+                    this.firstPersonCustomPositioningZoomingRecoiled.putAll(this.firstPersonCustomPositioning);
                 }
 
                 if (!this.firstPersonCustomPositioning.isEmpty()
                     && this.firstPersonCustomPositioningZoomingShooting.isEmpty()) {
-                    this.firstPersonCustomPositioning
-                        .forEach((part, pos) -> { this.firstPersonCustomPositioningZoomingShooting.put(part, pos); });
+                    this.firstPersonCustomPositioningZoomingShooting.putAll(this.firstPersonCustomPositioning);
                 }
 
                 if (!this.firstPersonCustomPositioning.isEmpty()
                     && this.firstPersonCustomPositioningLoadIterationCompleted.isEmpty()) {
-                    this.firstPersonCustomPositioning.forEach(
-                        (part, pos) -> { this.firstPersonCustomPositioningLoadIterationCompleted.put(part, pos); });
+                    this.firstPersonCustomPositioningLoadIterationCompleted.putAll(this.firstPersonCustomPositioning);
                 }
 
                 this.firstPersonCustomPositioningReloading.forEach((p, tx) -> {
@@ -1292,29 +1250,6 @@ public class WeaponRenderer implements IItemRenderer {
             }
         }
 
-        public Consumer<ItemStack> getEntityPositioning() {
-            return this.entityPositioning;
-        }
-
-        public Consumer<ItemStack> getInventoryPositioning() {
-            return this.inventoryPositioning;
-        }
-
-        public Consumer<RenderContext> getThirdPersonPositioning() {
-            return this.thirdPersonPositioning;
-        }
-
-        public String getTextureName() {
-            return this.textureName;
-        }
-
-        public ModelBase getModel() {
-            return this.model;
-        }
-
-        public String getModId() {
-            return this.modId;
-        }
     }
 
     public boolean handleRenderType(ItemStack item, ItemRenderType type) {
@@ -1350,7 +1285,7 @@ public class WeaponRenderer implements IItemRenderer {
                     .getInventoryTextureMap()
                     .put(this, inventoryTexture);
                 framebuffer.bindFramebuffer(true);
-                this.setupInventoryRendering(INVENTORY_TEXTURE_WIDTH, INVENTORY_TEXTURE_HEIGHT);
+                this.setupInventoryRendering();
                 GL11.glScalef(130.0F, 130.0F, 130.0F);
                 GL11.glScalef(1.0F, 1.0F, 1.0F);
                 GL11.glRotatef(25.0F, 1.0F, 0.0F, 0.0F);
@@ -1433,11 +1368,14 @@ public class WeaponRenderer implements IItemRenderer {
 
     }
 
-    private void setupInventoryRendering(double projectionWidth, double projectionHeight) {
+    private void setupInventoryRendering() {
         GL11.glClear(256);
         GL11.glMatrixMode(5889);
         GL11.glLoadIdentity();
-        GL11.glOrtho(0.0D, projectionWidth, projectionHeight, 0.0D, 1000.0D, 3000.0D);
+        GL11.glOrtho(0.0D,
+            WeaponRenderer.INVENTORY_TEXTURE_WIDTH,
+            WeaponRenderer.INVENTORY_TEXTURE_HEIGHT,
+            0.0D, 1000.0D, 3000.0D);
         GL11.glMatrixMode(5888);
         GL11.glLoadIdentity();
         GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
@@ -1470,31 +1408,18 @@ public class WeaponRenderer implements IItemRenderer {
         GL11.glBlendFunc(770, 771);
         GL11.glAlphaFunc(516, 0.003921569F);
         GL11.glBindTexture(3553, inventoryTexture);
-        drawTexturedQuadFit(0.0D, 0.0D, 256.0D, 256.0D, 0.0D);
+        drawTexturedQuadFit();
         GL11.glPopAttrib();
         GL11.glPopMatrix();
     }
 
-    public void drawTexturedModalRect(int x, int y, int u, int v, int width, int height) {
-        int zLevel = 50;
-        float f = 0.00390625F;
-        float f1 = 0.00390625F;
+    private static void drawTexturedQuadFit() {
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
-        tessellator.addVertexWithUV(x, y + height, zLevel, (float) (u) * f, (float) (v + height) * f1);
-        tessellator.addVertexWithUV(x + width, y + height, zLevel, (float) (u + width) * f, (float) (v + height) * f1);
-        tessellator.addVertexWithUV(x + width, y, zLevel, (float) (u + width) * f, (float) (v) * f1);
-        tessellator.addVertexWithUV(x, y, zLevel, (float) (u) * f, (float) (v) * f1);
-        tessellator.draw();
-    }
-
-    private static void drawTexturedQuadFit(double x, double y, double width, double height, double zLevel) {
-        Tessellator tessellator = Tessellator.instance;
-        tessellator.startDrawingQuads();
-        tessellator.addVertexWithUV(x + 0.0D, y + height, zLevel, 0.0F, 1.0F);
-        tessellator.addVertexWithUV(x + width, y + height, zLevel, 1.0F, 1.0F);
-        tessellator.addVertexWithUV(x + width, y + 0.0D, zLevel, 1.0F, 0.0F);
-        tessellator.addVertexWithUV(x + 0.0D, y + 0.0D, zLevel, 0.0F, 0.0F);
+        tessellator.addVertexWithUV( 0.0D,  256.0, 0.0, 0.0F, 1.0F);
+        tessellator.addVertexWithUV(256.0,  256.0, 0.0, 1.0F, 1.0F);
+        tessellator.addVertexWithUV( 256.0,  0.0D, 0.0, 1.0F, 0.0F);
+        tessellator.addVertexWithUV( 0.0D,  0.0D, 0.0, 0.0F, 0.0F);
         tessellator.draw();
     }
 
@@ -1545,7 +1470,7 @@ public class WeaponRenderer implements IItemRenderer {
 
         protected MultipartRenderStateManager stateManager;
         protected float rate;
-        protected float amplitude = 0.04F;
+        protected float amplitude;
         private final PlayerWeaponInstance instance;
 
         public StateDescriptor(PlayerWeaponInstance instance, MultipartRenderStateManager stateManager, float rate,

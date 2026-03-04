@@ -18,7 +18,7 @@ import com.gtnewhorizon.newgunrizons.grenade.EntityGrenade;
 import com.gtnewhorizon.newgunrizons.grenade.PlayerGrenadeInstance;
 import com.gtnewhorizon.newgunrizons.weapon.PlayerItemInstance;
 import com.gtnewhorizon.newgunrizons.weapon.PlayerWeaponInstance;
-import com.gtnewhorizon.newgunrizons.weapon.Weapon;
+import com.gtnewhorizon.newgunrizons.weapon.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.weapon.WeaponState;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -47,7 +47,7 @@ public class WeaponEventHandler {
         if (instance != null) {
             float fov;
             if (instance.isAttachmentZoomEnabled()) {
-                if (this.safeGlobals.renderingPhase.get() == RenderingPhase.RENDER_PERSPECTIVE) {
+                if (this.safeGlobals.renderingPhase.get() == RenderingPhase.RENDER_SCOPE) {
                     fov = instance.getZoom();
                 } else {
                     fov = clientPlayer.capabilities.isFlying ? 1.1F : 1.0F;
@@ -77,7 +77,7 @@ public class WeaponEventHandler {
     public void handleRenderLivingEvent(Pre event) {
         if (!event.isCanceled() && event.entity instanceof EntityPlayer) {
             ItemStack itemStack = event.entity.getHeldItem();
-            if (itemStack != null && itemStack.getItem() instanceof Weapon) {
+            if (itemStack != null && itemStack.getItem() instanceof ItemWeapon) {
                 RenderPlayer rp = (RenderPlayer) event.renderer;
                 PlayerItemInstance<?> instance = this.modContext.getPlayerItemInstanceRegistry()
                     .getItemInstance(event.entity, itemStack);
