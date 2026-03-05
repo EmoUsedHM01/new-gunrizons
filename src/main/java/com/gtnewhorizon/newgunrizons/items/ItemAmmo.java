@@ -9,8 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-import com.gtnewhorizon.newgunrizons.weapon.ItemWeapon;
-
 public class ItemAmmo extends Item {
 
     private final List<ItemWeapon> compatibleWeapons = new ArrayList<>();

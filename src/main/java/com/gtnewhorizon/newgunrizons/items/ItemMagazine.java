@@ -17,10 +17,10 @@ import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.attachment.Part;
 import com.gtnewhorizon.newgunrizons.config.ModContext;
 import com.gtnewhorizon.newgunrizons.config.Tags;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceFactory;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemMagazineInstance;
 import com.gtnewhorizon.newgunrizons.util.Updatable;
 import com.gtnewhorizon.newgunrizons.weapon.MagazineState;
-import com.gtnewhorizon.newgunrizons.weapon.PlayerItemInstanceFactory;
-import com.gtnewhorizon.newgunrizons.weapon.PlayerMagazineInstance;
 import com.gtnewhorizon.newgunrizons.weapon.Reloadable;
 
 import lombok.Getter;
@@ -32,7 +32,7 @@ import lombok.Getter;
  * compatible {@link ItemBullet} types.
  */
 public class ItemMagazine extends ItemAttachment
-    implements PlayerItemInstanceFactory<PlayerMagazineInstance, MagazineState>, Reloadable, Updatable, Part {
+    implements ItemInstanceFactory<ItemMagazineInstance, MagazineState>, Reloadable, Updatable, Part {
 
     @Getter
     private final int ammo;
@@ -81,8 +81,8 @@ public class ItemMagazine extends ItemAttachment
         return this;
     }
 
-    public PlayerMagazineInstance createItemInstance(EntityLivingBase player, ItemStack itemStack, int slot) {
-        PlayerMagazineInstance instance = new PlayerMagazineInstance(slot, player, itemStack);
+    public ItemMagazineInstance createItemInstance(EntityLivingBase player, ItemStack itemStack, int slot) {
+        ItemMagazineInstance instance = new ItemMagazineInstance(slot, player, itemStack);
         instance.setState(MagazineState.READY);
         return instance;
     }

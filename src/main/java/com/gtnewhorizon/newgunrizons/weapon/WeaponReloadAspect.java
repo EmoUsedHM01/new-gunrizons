@@ -19,36 +19,38 @@ import com.gtnewhorizon.newgunrizons.config.Tags;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.items.ItemBullet;
 import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
+import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.network.WeaponActionMessage;
 import com.gtnewhorizon.newgunrizons.state.Aspect;
 import com.gtnewhorizon.newgunrizons.state.StateManager;
 import com.gtnewhorizon.newgunrizons.util.InventoryUtils;
 
-public class WeaponReloadAspect implements Aspect<WeaponState, PlayerWeaponInstance> {
+public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstance> {
 
     private static final Logger logger = LogManager.getLogger(WeaponReloadAspect.class);
     private static final long ALERT_TIMEOUT = 500L;
     private static final Set<WeaponState> allowedUpdateFromStates;
 
-    private static final Predicate<PlayerWeaponInstance> sprinting;
-    private static final Predicate<PlayerWeaponInstance> hasNextLoadIteration;
-    private static final Predicate<PlayerWeaponInstance> supportsDirectBulletLoad;
-    private static final Predicate<PlayerWeaponInstance> magazineAttached;
-    private static final Predicate<PlayerWeaponInstance> loadIterationCompleted;
-    private static final Predicate<PlayerWeaponInstance> allLoadIterationsCompleted;
-    private static final Predicate<PlayerWeaponInstance> reloadAnimationCompleted;
-    private static final Predicate<PlayerWeaponInstance> unloadAnimationCompleted;
-    private static final Predicate<PlayerWeaponInstance> prepareFirstLoadIterationAnimationCompleted;
-    private final Predicate<PlayerWeaponInstance> inventoryHasFreeSlots = (
+    private static final Predicate<ItemWeaponInstance> sprinting;
+    private static final Predicate<ItemWeaponInstance> hasNextLoadIteration;
+    private static final Predicate<ItemWeaponInstance> supportsDirectBulletLoad;
+    private static final Predicate<ItemWeaponInstance> magazineAttached;
+    private static final Predicate<ItemWeaponInstance> loadIterationCompleted;
+    private static final Predicate<ItemWeaponInstance> allLoadIterationsCompleted;
+    private static final Predicate<ItemWeaponInstance> reloadAnimationCompleted;
+    private static final Predicate<ItemWeaponInstance> unloadAnimationCompleted;
+    private static final Predicate<ItemWeaponInstance> prepareFirstLoadIterationAnimationCompleted;
+    private final Predicate<ItemWeaponInstance> inventoryHasFreeSlots = (
         weaponInstance) -> weaponInstance.getPlayer() instanceof EntityPlayer
             && InventoryUtils.inventoryHasFreeSlots((EntityPlayer) weaponInstance.getPlayer());
-    private static final Predicate<PlayerWeaponInstance> alertTimeoutExpired;
+    private static final Predicate<ItemWeaponInstance> alertTimeoutExpired;
     private final Predicate<ItemStack> magazineNotEmpty = (magazineStack) -> Tags.getAmmo(magazineStack) > 0;
     private final ModContext modContext;
-    private StateManager<WeaponState, ? super PlayerWeaponInstance> stateManager;
+    private StateManager<WeaponState, ? super ItemWeaponInstance> stateManager;
 
     /** Client-side guard: checks if player has compatible ammo or magazine in inventory. */
-    private final Predicate<PlayerWeaponInstance> hasCompatibleAmmo = (weaponInstance) -> {
+    private final Predicate<ItemWeaponInstance> hasCompatibleAmmo = (weaponInstance) -> {
         if (!(weaponInstance.getPlayer() instanceof EntityPlayer player)) {
             return false;
         }
@@ -66,19 +68,20 @@ public class WeaponReloadAspect implements Aspect<WeaponState, PlayerWeaponInsta
         if (!compatibleBullets.isEmpty()) {
             return InventoryUtils.hasCompatibleItem(compatibleBullets, player, (s) -> true);
         }
-        return weapon.builder.ammo != null && player.inventory.hasItem(weapon.builder.ammo);
+        return weapon.getAmmo() != null && player.inventory.hasItem(weapon.getAmmo());
     };
 
     public WeaponReloadAspect(ModContext modContext) {
         this.modContext = modContext;
     }
 
-    public void setStateManager(StateManager<WeaponState, ? super PlayerWeaponInstance> stateManager) {
+    public void setStateManager(StateManager<WeaponState, ? super ItemWeaponInstance> stateManager) {
         this.stateManager = stateManager.in(this)
             .change(WeaponState.READY)
             .to(WeaponState.LOAD)
-            .when(supportsDirectBulletLoad.or(magazineAttached.negate())
-                .and(this.hasCompatibleAmmo))
+            .when(
+                supportsDirectBulletLoad.or(magazineAttached.negate())
+                    .and(this.hasCompatibleAmmo))
             .withAction(this::performLoad)
             .manual()
             .in(this)
@@ -140,8 +143,8 @@ public class WeaponReloadAspect implements Aspect<WeaponState, PlayerWeaponInsta
     }
 
     public void reloadMainHeldItem(EntityPlayer player) {
-        PlayerWeaponInstance instance = this.modContext.getPlayerItemInstanceRegistry()
-            .getMainHandItemInstance(player, PlayerWeaponInstance.class);
+        ItemWeaponInstance instance = this.modContext.getItemInstanceRegistry()
+            .getMainHandItemInstance(player, ItemWeaponInstance.class);
         if (instance != null) {
             this.stateManager.changeState(this, instance, WeaponState.LOAD, WeaponState.UNLOAD, WeaponState.ALERT);
         }
@@ -149,15 +152,15 @@ public class WeaponReloadAspect implements Aspect<WeaponState, PlayerWeaponInsta
     }
 
     public void updateMainHeldItem(EntityPlayer player) {
-        PlayerWeaponInstance instance = this.modContext.getPlayerItemInstanceRegistry()
-            .getMainHandItemInstance(player, PlayerWeaponInstance.class);
+        ItemWeaponInstance instance = this.modContext.getItemInstanceRegistry()
+            .getMainHandItemInstance(player, ItemWeaponInstance.class);
         if (instance != null) {
             this.stateManager.changeStateFromAnyOf(this, instance, allowedUpdateFromStates);
         }
 
     }
 
-    private void performLoad(PlayerWeaponInstance weaponInstance) {
+    private void performLoad(ItemWeaponInstance weaponInstance) {
         if (!(weaponInstance.getPlayer() instanceof EntityPlayer player)) {
             return;
         }
@@ -174,18 +177,17 @@ public class WeaponReloadAspect implements Aspect<WeaponState, PlayerWeaponInsta
             int ammo = Tags.getAmmo(weaponInstance.getItemStack());
             if (existingMagazine == null) {
                 ammo = 0;
-                // Find compatible magazine in client inventory (read-only, mirrors server's two-pass search)
-                ItemMagazine foundMag = this.findCompatibleMagazine(compatibleMagazines, player);
-                if (foundMag != null) {
-                    ammo = this.getMagazineAmmoFromInventory(foundMag, player);
-                    WeaponAttachmentAspect.addAttachment(foundMag, weaponInstance);
+                // Find compatible magazine stack in client inventory (read-only, mirrors server's two-pass search)
+                ItemStack foundStack = this.findCompatibleMagazineStack(compatibleMagazines, player);
+                if (foundStack != null) {
+                    ammo = Tags.getAmmo(foundStack);
+                    WeaponAttachmentAspect.addAttachment((ItemMagazine) foundStack.getItem(), weaponInstance);
                 }
             }
             weaponInstance.setAmmo(ammo);
         } else if (!compatibleBullets.isEmpty()) {
-            int maxToLoad = Math.min(
-                weapon.getMaxBulletsPerReload(),
-                weapon.getAmmoCapacity() - weaponInstance.getAmmo());
+            int maxToLoad = Math
+                .min(weapon.getMaxBulletsPerReload(), weapon.getAmmoCapacity() - weaponInstance.getAmmo());
             int loaded = this.countAvailableBullets(compatibleBullets, player, maxToLoad);
             if (loaded > 0) {
                 weaponInstance.setAmmo(weaponInstance.getAmmo() + loaded);
@@ -193,8 +195,8 @@ public class WeaponReloadAspect implements Aspect<WeaponState, PlayerWeaponInsta
                     weaponInstance.setLoadIterationCount(loaded);
                 }
             }
-        } else if (weapon.builder.ammo != null && player.inventory.hasItem(weapon.builder.ammo)) {
-            weaponInstance.setAmmo(weapon.builder.ammoCapacity);
+        } else if (weapon.getAmmo() != null && player.inventory.hasItem(weapon.getAmmo())) {
+            weaponInstance.setAmmo(weapon.getAmmoCapacity());
         }
 
         // Play sound on client
@@ -208,13 +210,13 @@ public class WeaponReloadAspect implements Aspect<WeaponState, PlayerWeaponInsta
                 new WeaponActionMessage(WeaponActionMessage.WEAPON_LOAD, weaponInstance.getItemInventoryIndex()));
     }
 
-    /** Finds the first compatible magazine in player inventory (prefers non-empty, falls back to any). */
-    private ItemMagazine findCompatibleMagazine(List<ItemMagazine> compatibleMagazines, EntityPlayer player) {
+    /** Finds the first compatible magazine stack in player inventory (prefers non-empty, falls back to any). */
+    private ItemStack findCompatibleMagazineStack(List<ItemMagazine> compatibleMagazines, EntityPlayer player) {
         // First pass: non-empty magazines
         for (ItemMagazine mag : compatibleMagazines) {
             for (ItemStack stack : player.inventory.mainInventory) {
                 if (stack != null && stack.getItem() == mag && Tags.getAmmo(stack) > 0) {
-                    return mag;
+                    return stack;
                 }
             }
         }
@@ -222,21 +224,11 @@ public class WeaponReloadAspect implements Aspect<WeaponState, PlayerWeaponInsta
         for (ItemMagazine mag : compatibleMagazines) {
             for (ItemStack stack : player.inventory.mainInventory) {
                 if (stack != null && stack.getItem() == mag) {
-                    return mag;
+                    return stack;
                 }
             }
         }
         return null;
-    }
-
-    /** Reads the ammo count from the first matching magazine ItemStack in inventory. */
-    private int getMagazineAmmoFromInventory(ItemMagazine mag, EntityPlayer player) {
-        for (ItemStack stack : player.inventory.mainInventory) {
-            if (stack != null && stack.getItem() == mag) {
-                return Tags.getAmmo(stack);
-            }
-        }
-        return 0;
     }
 
     /** Counts how many bullets are available for direct loading (without consuming). */
@@ -251,7 +243,7 @@ public class WeaponReloadAspect implements Aspect<WeaponState, PlayerWeaponInsta
         return 0;
     }
 
-    private void prepareUnload(PlayerWeaponInstance weaponInstance) {
+    private void prepareUnload(ItemWeaponInstance weaponInstance) {
         if (weaponInstance.getWeapon()
             .getUnloadSound() != null) {
             weaponInstance.getPlayer()
@@ -263,8 +255,11 @@ public class WeaponReloadAspect implements Aspect<WeaponState, PlayerWeaponInsta
         }
     }
 
-    private void performUnload(PlayerWeaponInstance weaponInstance) {
-        // Optimistic: set ammo to 0 on client
+    private void performUnload(ItemWeaponInstance weaponInstance) {
+        // Optimistic: remove magazine attachment and zero ammo on client
+        int[] activeAttachmentIds = weaponInstance.getActiveAttachmentIds();
+        activeAttachmentIds[AttachmentCategory.MAGAZINE.ordinal()] = -1;
+        weaponInstance.setActiveAttachmentIds(activeAttachmentIds);
         weaponInstance.setAmmo(0);
 
         // Send action to server for authoritative inventory operations
@@ -273,12 +268,12 @@ public class WeaponReloadAspect implements Aspect<WeaponState, PlayerWeaponInsta
                 new WeaponActionMessage(WeaponActionMessage.WEAPON_UNLOAD, weaponInstance.getItemInventoryIndex()));
     }
 
-    public void inventoryFullAlert(PlayerWeaponInstance weaponInstance) {
+    public void inventoryFullAlert(ItemWeaponInstance weaponInstance) {
         this.modContext.getStatusMessageCenter()
             .addAlertMessage(StatCollector.translateToLocalFormatted("gui.inventoryFull"), 3, 250L, 200L);
     }
 
-    public void startLoadIteration(PlayerWeaponInstance weaponInstance) {
+    public void startLoadIteration(ItemWeaponInstance weaponInstance) {
         if (weaponInstance.getWeapon()
             .getReloadIterationSound() != null) {
             weaponInstance.getPlayer()
@@ -290,11 +285,11 @@ public class WeaponReloadAspect implements Aspect<WeaponState, PlayerWeaponInsta
         }
     }
 
-    public void completeLoadIteration(PlayerWeaponInstance weaponInstance) {
+    public void completeLoadIteration(ItemWeaponInstance weaponInstance) {
         weaponInstance.setLoadIterationCount(weaponInstance.getLoadIterationCount() - 1);
     }
 
-    public void completeAllLoadIterations(PlayerWeaponInstance weaponInstance) {
+    public void completeAllLoadIterations(ItemWeaponInstance weaponInstance) {
         if (weaponInstance.getWeapon()
             .getAllReloadIterationsCompletedSound() != null) {
             weaponInstance.getPlayer()
@@ -327,7 +322,8 @@ public class WeaponReloadAspect implements Aspect<WeaponState, PlayerWeaponInsta
                 != null;
         loadIterationCompleted = (weaponInstance) -> System.currentTimeMillis()
             >= weaponInstance.getStateUpdateTimestamp() + Math.max(
-                weaponInstance.getWeapon().builder.loadIterationTimeout,
+                weaponInstance.getWeapon()
+                    .getLoadIterationTimeout(),
                 weaponInstance.getWeapon()
                     .getTotalLoadIterationDuration() + 250L);
         allLoadIterationsCompleted = (weaponInstance) -> System.currentTimeMillis()
@@ -335,7 +331,8 @@ public class WeaponReloadAspect implements Aspect<WeaponState, PlayerWeaponInsta
                 .getAllLoadIterationAnimationsCompletedDuration();
         reloadAnimationCompleted = (weaponInstance) -> (double) System.currentTimeMillis()
             >= (double) weaponInstance.getStateUpdateTimestamp() + Math.max(
-                (double) weaponInstance.getWeapon().builder.reloadingTimeout,
+                (double) weaponInstance.getWeapon()
+                    .getReloadingTimeout(),
                 (double) weaponInstance.getWeapon()
                     .getTotalReloadingDuration() * 1.1D);
         unloadAnimationCompleted = (weaponInstance) -> (double) System.currentTimeMillis()

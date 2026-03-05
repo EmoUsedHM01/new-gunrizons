@@ -7,11 +7,11 @@ package com.gtnewhorizon.newgunrizons.state;
  * <p>
  * Implementations:
  * <ul>
- *   <li>{@code WeaponFireAspect} — firing, recoil, auto-fire</li>
- *   <li>{@code WeaponReloadAspect} — loading, unloading, magazine swap</li>
- *   <li>{@code WeaponAttachmentAspect} — attachment mode, selection, application</li>
- *   <li>{@code MagazineReloadAspect} — magazine bullet loading</li>
- *   <li>{@code GrenadeAttackAspect} — grenade arming, throwing, detonation</li>
+ * <li>{@code WeaponFireAspect} — firing, recoil, auto-fire</li>
+ * <li>{@code WeaponReloadAspect} — loading, unloading, magazine swap</li>
+ * <li>{@code WeaponAttachmentAspect} — attachment mode, selection, application</li>
+ * <li>{@code MagazineReloadAspect} — magazine bullet loading</li>
+ * <li>{@code GrenadeAttackAspect} — grenade arming, throwing, detonation</li>
  * </ul>
  *
  * @param <T> the state enum type this aspect operates on

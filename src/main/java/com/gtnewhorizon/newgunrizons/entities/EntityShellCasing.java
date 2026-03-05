@@ -9,8 +9,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-import com.gtnewhorizon.newgunrizons.weapon.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.weapon.PlayerWeaponInstance;
+import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 
 import io.netty.buffer.ByteBuf;
 
@@ -26,7 +26,7 @@ public class EntityShellCasing extends EntityProjectile {
 
     private ItemWeapon weapon;
 
-    private PlayerWeaponInstance weaponInstance;
+    private ItemWeaponInstance weaponInstance;
 
     private float initialYaw;
     private float initialPitch;
@@ -47,7 +47,7 @@ public class EntityShellCasing extends EntityProjectile {
         this.zRotationChange = ROTATION_MAX_CHANGE * (float) random.nextGaussian();
     }
 
-    public EntityShellCasing(PlayerWeaponInstance weaponInstance, World world, EntityLivingBase player, float velocity,
+    public EntityShellCasing(ItemWeaponInstance weaponInstance, World world, EntityLivingBase player, float velocity,
         float gravityVelocity, float inaccuracy) {
         super(world, player, velocity, gravityVelocity, inaccuracy);
 

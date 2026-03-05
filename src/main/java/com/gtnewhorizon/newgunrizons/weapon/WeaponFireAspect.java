@@ -16,39 +16,42 @@ import com.gtnewhorizon.newgunrizons.client.particle.ParticleManager;
 import com.gtnewhorizon.newgunrizons.config.CommonModContext;
 import com.gtnewhorizon.newgunrizons.config.ModContext;
 import com.gtnewhorizon.newgunrizons.config.Tags;
-import com.gtnewhorizon.newgunrizons.network.TryFireMessage;
+import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
+import com.gtnewhorizon.newgunrizons.network.WeaponActionMessage;
 import com.gtnewhorizon.newgunrizons.state.Aspect;
 import com.gtnewhorizon.newgunrizons.state.StateManager;
 
-public class WeaponFireAspect implements Aspect<WeaponState, PlayerWeaponInstance> {
+public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance> {
 
     private static final long ALERT_TIMEOUT = 500L;
 
-    private static final Predicate<PlayerWeaponInstance> readyToShootAccordingToFireRate = (
+    private static final Predicate<ItemWeaponInstance> readyToShootAccordingToFireRate = (
         instance) -> (float) (System.currentTimeMillis() - instance.getLastFireTimestamp())
-            >= 50.0F / instance.getWeapon().builder.fireRate;
-    private static final Predicate<PlayerWeaponInstance> readyToShootAccordingToFireMode = (
+            >= 50.0F / instance.getWeapon()
+                .getFireRate();
+    private static final Predicate<ItemWeaponInstance> readyToShootAccordingToFireMode = (
         instance) -> instance.getSeriesShotCount() < instance.getMaxShots();
-    private static final Predicate<PlayerWeaponInstance> hasAmmo = (instance) -> instance.getAmmo() > 0;
-    private static final Predicate<PlayerWeaponInstance> ejectSpentRoundRequired = (instance) -> instance.getWeapon()
+    private static final Predicate<ItemWeaponInstance> hasAmmo = (instance) -> instance.getAmmo() > 0;
+    private static final Predicate<ItemWeaponInstance> ejectSpentRoundRequired = (instance) -> instance.getWeapon()
         .ejectSpentRoundRequired();
-    private static final Predicate<PlayerWeaponInstance> ejectSpentRoundTimeoutExpired = (
-        instance) -> System.currentTimeMillis()
-            >= instance.getWeapon().builder.pumpTimeoutMilliseconds + instance.getStateUpdateTimestamp();
-    private static final Predicate<PlayerWeaponInstance> alertTimeoutExpired = (instance) -> System.currentTimeMillis()
+    private static final Predicate<ItemWeaponInstance> ejectSpentRoundTimeoutExpired = (
+        instance) -> System.currentTimeMillis() >= instance.getWeapon()
+            .getPumpTimeoutMilliseconds() + instance.getStateUpdateTimestamp();
+    private static final Predicate<ItemWeaponInstance> alertTimeoutExpired = (instance) -> System.currentTimeMillis()
         >= ALERT_TIMEOUT + instance.getStateUpdateTimestamp();
-    private static final Predicate<PlayerWeaponInstance> sprinting = (instance) -> instance.getPlayer()
+    private static final Predicate<ItemWeaponInstance> sprinting = (instance) -> instance.getPlayer()
         .isSprinting();
     private static final Set<WeaponState> allowedFireOrEjectFromStates;
     private static final Set<WeaponState> allowedUpdateFromStates;
     private final ModContext modContext;
-    private StateManager<WeaponState, ? super PlayerWeaponInstance> stateManager;
+    private StateManager<WeaponState, ? super ItemWeaponInstance> stateManager;
 
     public WeaponFireAspect(CommonModContext modContext) {
         this.modContext = modContext;
     }
 
-    public void setStateManager(StateManager<WeaponState, ? super PlayerWeaponInstance> stateManager) {
+    public void setStateManager(StateManager<WeaponState, ? super ItemWeaponInstance> stateManager) {
         this.stateManager = stateManager;
         stateManager.in(this)
             .change(WeaponState.READY)
@@ -105,13 +108,13 @@ public class WeaponFireAspect implements Aspect<WeaponState, PlayerWeaponInstanc
             .change(WeaponState.PAUSED)
             .to(WeaponState.READY)
             .when(ejectSpentRoundRequired.negate())
-            .withAction(PlayerWeaponInstance::resetCurrentSeries)
+            .withAction(ItemWeaponInstance::resetCurrentSeries)
             .manual();
     }
 
     public void onFireButtonClick(EntityPlayer player) {
-        PlayerWeaponInstance weaponInstance = this.modContext.getPlayerItemInstanceRegistry()
-            .getMainHandItemInstance(player, PlayerWeaponInstance.class);
+        ItemWeaponInstance weaponInstance = this.modContext.getItemInstanceRegistry()
+            .getMainHandItemInstance(player, ItemWeaponInstance.class);
         if (weaponInstance != null) {
             this.stateManager.changeStateFromAnyOf(
                 this,
@@ -125,8 +128,8 @@ public class WeaponFireAspect implements Aspect<WeaponState, PlayerWeaponInstanc
     }
 
     public void onFireButtonRelease(EntityPlayer player) {
-        PlayerWeaponInstance weaponInstance = this.modContext.getPlayerItemInstanceRegistry()
-            .getMainHandItemInstance(player, PlayerWeaponInstance.class);
+        ItemWeaponInstance weaponInstance = this.modContext.getItemInstanceRegistry()
+            .getMainHandItemInstance(player, ItemWeaponInstance.class);
         if (weaponInstance != null) {
             this.stateManager.changeState(this, weaponInstance, WeaponState.EJECT_REQUIRED, WeaponState.READY);
         }
@@ -134,15 +137,15 @@ public class WeaponFireAspect implements Aspect<WeaponState, PlayerWeaponInstanc
     }
 
     public void onUpdate(EntityPlayer player) {
-        PlayerWeaponInstance weaponInstance = this.modContext.getPlayerItemInstanceRegistry()
-            .getMainHandItemInstance(player, PlayerWeaponInstance.class);
+        ItemWeaponInstance weaponInstance = this.modContext.getItemInstanceRegistry()
+            .getMainHandItemInstance(player, ItemWeaponInstance.class);
         if (weaponInstance != null) {
             this.stateManager.changeStateFromAnyOf(this, weaponInstance, allowedUpdateFromStates);
         }
 
     }
 
-    private void cannotFire(PlayerWeaponInstance weaponInstance) {
+    private void cannotFire(ItemWeaponInstance weaponInstance) {
         if (weaponInstance.getAmmo() == 0) {
             String message;
             if (weaponInstance.getWeapon()
@@ -166,12 +169,13 @@ public class WeaponFireAspect implements Aspect<WeaponState, PlayerWeaponInstanc
 
     }
 
-    private void fire(PlayerWeaponInstance weaponInstance) {
+    private void fire(ItemWeaponInstance weaponInstance) {
         EntityLivingBase player = weaponInstance.getPlayer();
         ItemWeapon weapon = (ItemWeapon) weaponInstance.getItem();
         Random random = player.getRNG();
         this.modContext.getChannel()
-            .sendToServer(new TryFireMessage(true));
+            .sendToServer(
+                new WeaponActionMessage(WeaponActionMessage.FIRE, ((EntityPlayer) player).inventory.currentItem));
         boolean silencerOn = this.modContext.getAttachmentAspect()
             .isSilencerOn(weaponInstance);
         {
@@ -191,24 +195,32 @@ public class WeaponFireAspect implements Aspect<WeaponState, PlayerWeaponInstanc
         float rotationYawFactor = -1.0F + random.nextFloat() * 2.0F;
         player.rotationYaw += weaponInstance.getRecoil() * rotationYawFactor;
 
-        if (weapon.builder.flashIntensity > 0.0F) {
+        if (weapon.getFlashIntensity() > 0.0F) {
             ParticleManager.spawnFlashParticle(
                 player,
-                weapon.builder.flashIntensity,
-                weapon.builder.flashScale.get(),
-                weaponInstance.isAimed() ? 0.0F : weapon.builder.flashOffsetX.get(),
-                weapon.builder.flashOffsetY.get());
+                weapon.getFlashIntensity(),
+                weapon.getFlashScale()
+                    .get(),
+                weaponInstance.isAimed() ? 0.0F
+                    : weapon.getFlashOffsetX()
+                        .get(),
+                weapon.getFlashOffsetY()
+                    .get());
         }
 
-        ParticleManager
-            .spawnSmokeParticle(player, weapon.builder.smokeOffsetX.get(), weapon.builder.smokeOffsetY.get());
+        ParticleManager.spawnSmokeParticle(
+            player,
+            weapon.getSmokeOffsetX()
+                .get(),
+            weapon.getSmokeOffsetY()
+                .get());
 
         weaponInstance.setSeriesShotCount(weaponInstance.getSeriesShotCount() + 1);
         weaponInstance.setLastFireTimestamp(System.currentTimeMillis());
         weaponInstance.setAmmo(weaponInstance.getAmmo() - 1);
     }
 
-    private void ejectSpentRound(PlayerWeaponInstance weaponInstance) {
+    private void ejectSpentRound(ItemWeaponInstance weaponInstance) {
         EntityLivingBase player = weaponInstance.getPlayer();
         if (weaponInstance.getWeapon()
             .getEjectSpentRoundSound() != null) {
@@ -220,31 +232,46 @@ public class WeaponFireAspect implements Aspect<WeaponState, PlayerWeaponInstanc
         }
     }
 
-    public void serverFire(EntityLivingBase player, ItemStack itemStack) {
+    public void serverFire(EntityLivingBase player, ItemStack itemStack, int slotIndex) {
+        if (!(itemStack.getItem() instanceof ItemWeapon)) {
+            return;
+        }
+        ItemWeapon weapon = (ItemWeapon) itemStack.getItem();
 
-        if (itemStack.getItem() instanceof ItemWeapon weapon) {
+        ItemWeaponInstance instance = Tags.getInstance(itemStack, ItemWeaponInstance.class);
+        if (instance == null) {
+            instance = weapon.createItemInstance(player, itemStack, slotIndex);
+            Tags.setInstance(itemStack, instance);
+        }
+        instance.setPlayer(player);
 
-            for (int i = 0; i < weapon.builder.pellets; ++i) {
-                weapon.spawnBullet(player);
-            }
+        // Server-authoritative ammo check
+        int ammo = instance.getAmmo();
+        if (ammo <= 0) {
+            return;
+        }
+        instance.setAmmo(ammo - 1);
+        Tags.setAmmo(itemStack, ammo - 1);
+        Tags.setInstance(itemStack, instance);
 
-            PlayerWeaponInstance playerWeaponInstance = Tags.getInstance(itemStack, PlayerWeaponInstance.class);
+        // Spawn projectiles
+        for (int i = 0; i < weapon.getPellets(); ++i) {
+            weapon.spawnBullet(player);
+        }
 
-            if (weapon.isShellCasingEjectEnabled() && playerWeaponInstance != null) {
-                weapon.spawnShell(playerWeaponInstance, player);
-            }
+        if (weapon.isShellCasingEjectEnabled()) {
+            weapon.spawnShell(instance, player);
+        }
 
-            boolean silencerOn = playerWeaponInstance != null && this.modContext.getAttachmentAspect()
-                .isSilencerOn(playerWeaponInstance);
-            {
-                String snd = silencerOn ? weapon.getSilencedShootSound() : weapon.getShootSound();
-                float vol = silencerOn ? weapon.getSilencedShootSoundVolume() : weapon.getShootSoundVolume();
-                if (player instanceof EntityPlayer) {
-                    player.worldObj.playSoundToNearExcept((EntityPlayer) player, snd, vol, 1.0F);
-                } else {
-                    player.worldObj.playSoundAtEntity(player, snd, vol, 1.0F);
-                }
-            }
+        // Play sound for other players
+        boolean silencerOn = this.modContext.getAttachmentAspect()
+            .isSilencerOn(instance);
+        String snd = silencerOn ? weapon.getSilencedShootSound() : weapon.getShootSound();
+        float vol = silencerOn ? weapon.getSilencedShootSoundVolume() : weapon.getShootSoundVolume();
+        if (player instanceof EntityPlayer) {
+            player.worldObj.playSoundToNearExcept((EntityPlayer) player, snd, vol, 1.0F);
+        } else {
+            player.worldObj.playSoundAtEntity(player, snd, vol, 1.0F);
         }
     }
 

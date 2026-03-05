@@ -37,14 +37,16 @@ import com.gtnewhorizon.newgunrizons.client.animation.MultipartTransition;
 import com.gtnewhorizon.newgunrizons.client.animation.MultipartTransitionProvider;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.CustomRenderer;
+import com.gtnewhorizon.newgunrizons.client.render.Framebuffers;
 import com.gtnewhorizon.newgunrizons.client.render.RenderContext;
 import com.gtnewhorizon.newgunrizons.client.render.TransformType;
-import com.gtnewhorizon.newgunrizons.client.shader.Framebuffers;
 import com.gtnewhorizon.newgunrizons.config.ClientModContext;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
+import com.gtnewhorizon.newgunrizons.items.ItemGrenade;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemGrenadeInstance;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
 import com.gtnewhorizon.newgunrizons.state.RenderableState;
 import com.gtnewhorizon.newgunrizons.util.Pair;
-import com.gtnewhorizon.newgunrizons.weapon.PlayerItemInstance;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -60,45 +62,118 @@ public class GrenadeRenderer implements IItemRenderer {
     private static final float DEFAULT_NORMAL_RANDOMIZING_AMPLITUDE = 0.06F;
     private static final int DEFAULT_ANIMATION_DURATION = 70;
 
-    private final GrenadeRenderer.Builder builder;
     private final Map<GrenadeRenderer.StateManagerKey, MultipartRenderStateManager> firstPersonStateManagers;
     private final MultipartTransitionProvider weaponTransitionProvider;
     @Setter
     protected ClientModContext clientModContext;
 
+    private final ModelBase model;
+    private final String textureName;
+    private final Consumer<ItemStack> entityPositioning;
+    private final Runnable thrownEntityPositioning;
+    private final Consumer<ItemStack> inventoryPositioning;
+    private final Consumer<RenderContext> thirdPersonPositioning;
+    private final Consumer<RenderContext> firstPersonPositioning;
+    private final Consumer<RenderContext> firstPersonLeftHandPositioning;
+    private final Consumer<RenderContext> firstPersonRightHandPositioning;
+    private final LinkedHashMap<Part, GrenadeRenderer.SimplePositioning> firstPersonCustomPositioning;
+    private final Consumer<RenderContext> firstPersonPositioningRunning;
+    private final Consumer<RenderContext> firstPersonLeftHandPositioningRunning;
+    private final Consumer<RenderContext> firstPersonRightHandPositioningRunning;
+    private final List<Transition> firstPersonPositioningSafetyPinOff;
+    private final List<Transition> firstPersonLeftHandPositioningSafetyPinOff;
+    private final List<Transition> firstPersonRightHandPositioningSafetyPinOff;
+    private final LinkedHashMap<Part, List<Transition>> firstPersonCustomPositioningSafetyPinOff;
+    private final Consumer<RenderContext> firstPersonPositioningStrikerLeverOff;
+    private final Consumer<RenderContext> firstPersonLeftHandPositioningStrikerLeverOff;
+    private final Consumer<RenderContext> firstPersonRightHandPositioningStrikerLeverOff;
+    private final LinkedHashMap<Part, GrenadeRenderer.SimplePositioning> firstPersonCustomPositioningStrikerLeverOff;
+    private final List<Transition> firstPersonPositioningThrowing;
+    private final List<Transition> firstPersonLeftHandPositioningThrowing;
+    private final List<Transition> firstPersonRightHandPositioningThrowing;
+    private final LinkedHashMap<Part, List<Transition>> firstPersonCustomPositioningThrowing;
+    private final Consumer<RenderContext> firstPersonPositioningThrown;
+    private final Consumer<RenderContext> firstPersonLeftHandPositioningThrown;
+    private final Consumer<RenderContext> firstPersonRightHandPositioningThrown;
+    private final LinkedHashMap<Part, GrenadeRenderer.SimplePositioning> firstPersonCustomPositioningThrown;
+    private final long totalThrowingDuration;
+    private final String modId;
+    private final float normalRandomizingRate;
+    private final float normalRandomizingAmplitude;
+    private final int animationDuration;
+    private final Supplier<Float> xCenterOffset;
+    private final Supplier<Float> yCenterOffset;
+    private final Supplier<Float> zCenterOffset;
+
     private GrenadeRenderer(GrenadeRenderer.Builder builder) {
-        this.builder = builder;
+        this.model = builder.getModel();
+        this.textureName = builder.getTextureName();
+        this.entityPositioning = builder.getEntityPositioning();
+        this.thrownEntityPositioning = builder.thrownEntityPositioning;
+        this.inventoryPositioning = builder.getInventoryPositioning();
+        this.thirdPersonPositioning = builder.getThirdPersonPositioning();
+        this.firstPersonPositioning = builder.firstPersonPositioning;
+        this.firstPersonLeftHandPositioning = builder.firstPersonLeftHandPositioning;
+        this.firstPersonRightHandPositioning = builder.firstPersonRightHandPositioning;
+        this.firstPersonCustomPositioning = builder.firstPersonCustomPositioning;
+        this.firstPersonPositioningRunning = builder.firstPersonPositioningRunning;
+        this.firstPersonLeftHandPositioningRunning = builder.firstPersonLeftHandPositioningRunning;
+        this.firstPersonRightHandPositioningRunning = builder.firstPersonRightHandPositioningRunning;
+        this.firstPersonPositioningSafetyPinOff = builder.firstPersonPositioningSafetyPinOff;
+        this.firstPersonLeftHandPositioningSafetyPinOff = builder.firstPersonLeftHandPositioningSafetyPinOff;
+        this.firstPersonRightHandPositioningSafetyPinOff = builder.firstPersonRightHandPositioningSafetyPinOff;
+        this.firstPersonCustomPositioningSafetyPinOff = builder.firstPersonCustomPositioningSafetyPinOff;
+        this.firstPersonPositioningStrikerLeverOff = builder.firstPersonPositioningStrikerLeverOff;
+        this.firstPersonLeftHandPositioningStrikerLeverOff = builder.firstPersonLeftHandPositioningStrikerLeverOff;
+        this.firstPersonRightHandPositioningStrikerLeverOff = builder.firstPersonRightHandPositioningStrikerLeverOff;
+        this.firstPersonCustomPositioningStrikerLeverOff = builder.firstPersonCustomPositioningStrikerLeverOff;
+        this.firstPersonPositioningThrowing = builder.firstPersonPositioningThrowing;
+        this.firstPersonLeftHandPositioningThrowing = builder.firstPersonLeftHandPositioningThrowing;
+        this.firstPersonRightHandPositioningThrowing = builder.firstPersonRightHandPositioningThrowing;
+        this.firstPersonCustomPositioningThrowing = builder.firstPersonCustomPositioningThrowing;
+        this.firstPersonPositioningThrown = builder.firstPersonPositioningThrown;
+        this.firstPersonLeftHandPositioningThrown = builder.firstPersonLeftHandPositioningThrown;
+        this.firstPersonRightHandPositioningThrown = builder.firstPersonRightHandPositioningThrown;
+        this.firstPersonCustomPositioningThrown = builder.firstPersonCustomPositioningThrown;
+        this.totalThrowingDuration = builder.totalThrowingDuration;
+        this.modId = builder.getModId();
+        this.normalRandomizingRate = builder.normalRandomizingRate;
+        this.normalRandomizingAmplitude = builder.normalRandomizingAmplitude;
+        this.animationDuration = builder.animationDuration;
+        this.xCenterOffset = builder.xCenterOffset;
+        this.yCenterOffset = builder.yCenterOffset;
+        this.zCenterOffset = builder.zCenterOffset;
         this.firstPersonStateManagers = new HashMap<>();
         this.weaponTransitionProvider = new GrenadeRenderer.WeaponPositionProvider();
     }
 
-    protected long getTotalThrowingDuration() {
-        return this.builder.totalThrowingDuration;
+    public long getTotalThrowingDuration() {
+        return this.totalThrowingDuration;
     }
 
-    protected ClientModContext getClientModContext() {
+    public ClientModContext getClientModContext() {
         return this.clientModContext;
     }
 
     protected StateDescriptor getStateDescriptor(EntityLivingBase player, ItemStack itemStack) {
-        float amplitude = this.builder.normalRandomizingAmplitude;
-        float rate = this.builder.normalRandomizingRate;
+        float amplitude = this.normalRandomizingAmplitude;
+        float rate = this.normalRandomizingRate;
         RenderableState currentState = null;
-        PlayerItemInstance<?> playerItemInstance = this.clientModContext.getPlayerItemInstanceRegistry()
+        ItemInstance<?> itemInstance = this.clientModContext.getItemInstanceRegistry()
             .getItemInstance(player, itemStack);
-        PlayerGrenadeInstance playerGrenadeInstance = null;
-        if (playerItemInstance != null && playerItemInstance instanceof PlayerGrenadeInstance
-            && playerItemInstance.getItem() == itemStack.getItem()) {
-            playerGrenadeInstance = (PlayerGrenadeInstance) playerItemInstance;
+        ItemGrenadeInstance itemGrenadeInstance = null;
+        if (itemInstance != null && itemInstance instanceof ItemGrenadeInstance
+            && itemInstance.getItem() == itemStack.getItem()) {
+            itemGrenadeInstance = (ItemGrenadeInstance) itemInstance;
         } else {
             logger.error(
                 "Invalid or mismatching item. Player item instance: {}. Item stack: {}",
-                playerItemInstance,
+                itemInstance,
                 itemStack);
         }
 
-        if (playerGrenadeInstance != null) {
-            AsyncGrenadeState asyncWeaponState = this.getNextNonExpiredState(playerGrenadeInstance);
+        if (itemGrenadeInstance != null) {
+            GrenadeStateTimed asyncWeaponState = this.getNextNonExpiredState(itemGrenadeInstance);
             switch (asyncWeaponState.getState()) {
                 case SAFETY_PING_OFF:
                     currentState = RenderableState.SAFETY_PIN_OFF;
@@ -113,7 +188,7 @@ public class GrenadeRenderer implements IItemRenderer {
                     currentState = RenderableState.THROWN;
                     break;
                 default:
-                    if (player.isSprinting() && this.builder.firstPersonPositioningRunning != null) {
+                    if (player.isSprinting() && this.firstPersonPositioningRunning != null) {
                         currentState = RenderableState.RUNNING;
                     }
             }
@@ -127,7 +202,7 @@ public class GrenadeRenderer implements IItemRenderer {
 
         GrenadeRenderer.StateManagerKey key = new GrenadeRenderer.StateManagerKey(
             player,
-            playerGrenadeInstance != null ? playerGrenadeInstance.getItemInventoryIndex() : -1);
+            itemGrenadeInstance != null ? itemGrenadeInstance.getItemInventoryIndex() : -1);
         MultipartRenderStateManager stateManager = this.firstPersonStateManagers.get(key);
         if (stateManager == null) {
             stateManager = new MultipartRenderStateManager(currentState, this.weaponTransitionProvider);
@@ -136,11 +211,11 @@ public class GrenadeRenderer implements IItemRenderer {
             stateManager.setState(currentState, true, currentState == RenderableState.THROWING);
         }
 
-        return new StateDescriptor(playerGrenadeInstance, stateManager, rate, amplitude);
+        return new StateDescriptor(itemGrenadeInstance, stateManager, rate, amplitude);
     }
 
-    private AsyncGrenadeState getNextNonExpiredState(PlayerGrenadeInstance playerWeaponState) {
-        AsyncGrenadeState asyncWeaponState = null;
+    private GrenadeStateTimed getNextNonExpiredState(ItemGrenadeInstance playerWeaponState) {
+        GrenadeStateTimed asyncWeaponState = null;
 
         while ((asyncWeaponState = playerWeaponState.nextHistoryState()) != null
             && System.currentTimeMillis() > asyncWeaponState.getTimestamp() + asyncWeaponState.getDuration()) {}
@@ -223,29 +298,29 @@ public class GrenadeRenderer implements IItemRenderer {
 
     public void renderItem(ItemStack weaponItemStack, RenderContext renderContext,
         MultipartPositioning.Positioner positioner) {
-        if (this.builder.getTextureName() != null) {
-            Minecraft.getMinecraft().renderEngine.bindTexture(
-                new ResourceLocation(this.builder.getModId() + ":textures/models/" + this.builder.getTextureName()));
+        if (this.textureName != null) {
+            Minecraft.getMinecraft().renderEngine
+                .bindTexture(new ResourceLocation(this.modId + ":textures/models/" + this.textureName));
         } else {
             String textureName;
             ItemGrenade weapon = (ItemGrenade) weaponItemStack.getItem();
             textureName = weapon.getTextureName();
 
             Minecraft.getMinecraft().renderEngine
-                .bindTexture(new ResourceLocation(this.builder.getModId() + ":textures/models/" + textureName));
+                .bindTexture(new ResourceLocation(this.modId + ":textures/models/" + textureName));
         }
 
-        this.builder.getModel()
-            .render(
-                null,
-                renderContext.getLimbSwing(),
-                renderContext.getFlimbSwingAmount(),
-                renderContext.getAgeInTicks(),
-                renderContext.getNetHeadYaw(),
-                renderContext.getHeadPitch(),
-                renderContext.getScale());
-        PlayerItemInstance<?> itemInstance = renderContext.getPlayerItemInstance();
-        if (itemInstance instanceof PlayerGrenadeInstance grenadeInstance) {
+        this.model.render(
+            null,
+            renderContext.getLimbSwing(),
+            renderContext.getFlimbSwingAmount(),
+            renderContext.getAgeInTicks(),
+            renderContext.getNetHeadYaw(),
+            renderContext.getHeadPitch(),
+            renderContext.getScale());
+        ItemInstance<?> itemInstance = renderContext.getItemInstance();
+        if (itemInstance instanceof ItemGrenadeInstance) {
+            ItemGrenadeInstance grenadeInstance = (ItemGrenadeInstance) itemInstance;
             List<CompatibleAttachment> attachments = grenadeInstance.getActiveAttachments();
             this.renderAttachments(positioner, renderContext, attachments);
         }
@@ -278,8 +353,8 @@ public class GrenadeRenderer implements IItemRenderer {
         for (Pair<ModelBase, String> modelBaseStringPair : compatibleAttachment.getAttachment()
             .getTexturedModels()) {
             Pair<ModelBase, String> texturedModel = modelBaseStringPair;
-            Minecraft.getMinecraft().renderEngine.bindTexture(
-                new ResourceLocation(this.builder.getModId() + ":textures/models/" + texturedModel.getV()));
+            Minecraft.getMinecraft().renderEngine
+                .bindTexture(new ResourceLocation(this.modId + ":textures/models/" + texturedModel.getV()));
             GL11.glPushMatrix();
             GL11.glPushAttrib(8193);
             if (compatibleAttachment.getModelPositioning() != null) {
@@ -320,27 +395,27 @@ public class GrenadeRenderer implements IItemRenderer {
     }
 
     public String getTextureName() {
-        return this.builder.getTextureName();
+        return this.textureName;
     }
 
     public ModelBase getModel() {
-        return this.builder.getModel();
+        return this.model;
     }
 
     public Supplier<Float> getXRotationCenterOffset() {
-        return this.builder.xCenterOffset;
+        return this.xCenterOffset;
     }
 
     public Supplier<Float> getYRotationCenterOffset() {
-        return this.builder.yCenterOffset;
+        return this.yCenterOffset;
     }
 
     public Supplier<Float> getZRotationCenterOffset() {
-        return this.builder.zCenterOffset;
+        return this.zCenterOffset;
     }
 
     public Runnable getThrownEntityPositioning() {
-        return this.builder.thrownEntityPositioning;
+        return this.thrownEntityPositioning;
     }
 
     public boolean handleRenderType(ItemStack item, ItemRenderType type) {
@@ -377,20 +452,17 @@ public class GrenadeRenderer implements IItemRenderer {
         MultipartPositioning.Positioner positioner = null;
         switch (type) {
             case ENTITY:
-                this.builder.getEntityPositioning()
-                    .accept(weaponItemStack);
+                this.entityPositioning.accept(weaponItemStack);
                 break;
             case INVENTORY:
-                this.builder.getInventoryPositioning()
-                    .accept(weaponItemStack);
+                this.inventoryPositioning.accept(weaponItemStack);
                 break;
             case EQUIPPED:
-                this.builder.getThirdPersonPositioning()
-                    .accept(renderContext);
+                this.thirdPersonPositioning.accept(renderContext);
                 break;
             case EQUIPPED_FIRST_PERSON:
                 StateDescriptor stateDescriptor = this.getStateDescriptor((EntityLivingBase) player, weaponItemStack);
-                renderContext.setPlayerItemInstance(stateDescriptor.instance);
+                renderContext.setItemInstance(stateDescriptor.instance);
                 MultipartPositioning multipartPositioning = stateDescriptor.stateManager.nextPositioning();
                 renderContext.setTransitionProgress(multipartPositioning.getProgress());
                 renderContext.setFromState(multipartPositioning.getFromState(RenderableState.class));
@@ -465,33 +537,33 @@ public class GrenadeRenderer implements IItemRenderer {
         public List<MultipartTransition> getPositioning(RenderableState state) {
             return switch (state) {
                 case SAFETY_PIN_OFF -> GrenadeRenderer.this.getComplexTransition(
-                    GrenadeRenderer.this.builder.firstPersonPositioningSafetyPinOff,
-                    GrenadeRenderer.this.builder.firstPersonLeftHandPositioningSafetyPinOff,
-                    GrenadeRenderer.this.builder.firstPersonRightHandPositioningSafetyPinOff,
-                    GrenadeRenderer.this.builder.firstPersonCustomPositioningSafetyPinOff);
+                    GrenadeRenderer.this.firstPersonPositioningSafetyPinOff,
+                    GrenadeRenderer.this.firstPersonLeftHandPositioningSafetyPinOff,
+                    GrenadeRenderer.this.firstPersonRightHandPositioningSafetyPinOff,
+                    GrenadeRenderer.this.firstPersonCustomPositioningSafetyPinOff);
                 case STRIKER_LEVER_OFF -> GrenadeRenderer.this.getSimpleTransition(
-                    GrenadeRenderer.this.builder.firstPersonPositioningStrikerLeverOff,
-                    GrenadeRenderer.this.builder.firstPersonLeftHandPositioningStrikerLeverOff,
-                    GrenadeRenderer.this.builder.firstPersonRightHandPositioningStrikerLeverOff,
-                    GrenadeRenderer.this.builder.firstPersonCustomPositioningStrikerLeverOff,
-                    GrenadeRenderer.this.builder.animationDuration);
+                    GrenadeRenderer.this.firstPersonPositioningStrikerLeverOff,
+                    GrenadeRenderer.this.firstPersonLeftHandPositioningStrikerLeverOff,
+                    GrenadeRenderer.this.firstPersonRightHandPositioningStrikerLeverOff,
+                    GrenadeRenderer.this.firstPersonCustomPositioningStrikerLeverOff,
+                    GrenadeRenderer.this.animationDuration);
                 case THROWING -> GrenadeRenderer.this.getComplexTransition(
-                    GrenadeRenderer.this.builder.firstPersonPositioningThrowing,
-                    GrenadeRenderer.this.builder.firstPersonLeftHandPositioningThrowing,
-                    GrenadeRenderer.this.builder.firstPersonRightHandPositioningThrowing,
-                    GrenadeRenderer.this.builder.firstPersonCustomPositioningThrowing);
+                    GrenadeRenderer.this.firstPersonPositioningThrowing,
+                    GrenadeRenderer.this.firstPersonLeftHandPositioningThrowing,
+                    GrenadeRenderer.this.firstPersonRightHandPositioningThrowing,
+                    GrenadeRenderer.this.firstPersonCustomPositioningThrowing);
                 case THROWN -> GrenadeRenderer.this.getSimpleTransition(
-                    GrenadeRenderer.this.builder.firstPersonPositioningThrown,
-                    GrenadeRenderer.this.builder.firstPersonLeftHandPositioningThrown,
-                    GrenadeRenderer.this.builder.firstPersonRightHandPositioningThrown,
-                    GrenadeRenderer.this.builder.firstPersonCustomPositioningThrown,
-                    GrenadeRenderer.this.builder.animationDuration);
+                    GrenadeRenderer.this.firstPersonPositioningThrown,
+                    GrenadeRenderer.this.firstPersonLeftHandPositioningThrown,
+                    GrenadeRenderer.this.firstPersonRightHandPositioningThrown,
+                    GrenadeRenderer.this.firstPersonCustomPositioningThrown,
+                    GrenadeRenderer.this.animationDuration);
                 default -> GrenadeRenderer.this.getSimpleTransition(
-                    GrenadeRenderer.this.builder.firstPersonPositioning,
-                    GrenadeRenderer.this.builder.firstPersonLeftHandPositioning,
-                    GrenadeRenderer.this.builder.firstPersonRightHandPositioning,
-                    GrenadeRenderer.this.builder.firstPersonCustomPositioning,
-                    GrenadeRenderer.this.builder.animationDuration);
+                    GrenadeRenderer.this.firstPersonPositioning,
+                    GrenadeRenderer.this.firstPersonLeftHandPositioning,
+                    GrenadeRenderer.this.firstPersonRightHandPositioning,
+                    GrenadeRenderer.this.firstPersonCustomPositioning,
+                    GrenadeRenderer.this.animationDuration);
             };
         }
     }
@@ -554,7 +626,6 @@ public class GrenadeRenderer implements IItemRenderer {
         private Consumer<RenderContext> firstPersonPositioningRunning;
         private Consumer<RenderContext> firstPersonLeftHandPositioningRunning;
         private Consumer<RenderContext> firstPersonRightHandPositioningRunning;
-        private final LinkedHashMap<Part, Consumer<RenderContext>> firstPersonCustomPositioningRunning = new LinkedHashMap<>();
         private List<Transition> firstPersonPositioningSafetyPinOff;
         private List<Transition> firstPersonLeftHandPositioningSafetyPinOff;
         private List<Transition> firstPersonRightHandPositioningSafetyPinOff;
@@ -571,11 +642,10 @@ public class GrenadeRenderer implements IItemRenderer {
         private Consumer<RenderContext> firstPersonLeftHandPositioningThrown;
         private Consumer<RenderContext> firstPersonRightHandPositioningThrown;
         private final LinkedHashMap<Part, GrenadeRenderer.SimplePositioning> firstPersonCustomPositioningThrown = new LinkedHashMap<>();
-        private long totalTakingPinOffDuration;
         private long totalThrowingDuration;
         @Getter
         private String modId;
-        private float normalRandomizingRate = DEFAULT_RANDOMIZING_RATE;
+        private final float normalRandomizingRate = DEFAULT_RANDOMIZING_RATE;
         private final float normalRandomizingAmplitude = DEFAULT_NORMAL_RANDOMIZING_AMPLITUDE;
         public int animationDuration = DEFAULT_ANIMATION_DURATION;
         private Supplier<Float> xCenterOffset = () -> 0.0F;
@@ -594,11 +664,6 @@ public class GrenadeRenderer implements IItemRenderer {
 
         public GrenadeRenderer.Builder withAnimationDuration(int animationDuration) {
             this.animationDuration = animationDuration;
-            return this;
-        }
-
-        public GrenadeRenderer.Builder withNormalRandomizingRate(float normalRandomizingRate) {
-            this.normalRandomizingRate = normalRandomizingRate;
             return this;
         }
 
@@ -661,23 +726,6 @@ public class GrenadeRenderer implements IItemRenderer {
             Consumer<RenderContext> rightHand) {
             this.firstPersonLeftHandPositioningRunning = leftHand;
             this.firstPersonRightHandPositioningRunning = rightHand;
-            return this;
-        }
-
-        public GrenadeRenderer.Builder withFirstPersonCustomPositioningRunning(Part part,
-            Consumer<RenderContext> positioning) {
-            if (part instanceof StandardPart) {
-                throw new IllegalArgumentException("Part " + part + " is not custom");
-            } else if (this.firstPersonCustomPositioningRunning.put(part, positioning) != null) {
-                throw new IllegalArgumentException("Part " + part + " already added");
-            } else {
-                return this;
-            }
-        }
-
-        public GrenadeRenderer.Builder withFirstPersonPositioningThrown(
-            Consumer<RenderContext> firstPersonPositioningThrown) {
-            this.firstPersonPositioningThrown = firstPersonPositioningThrown;
             return this;
         }
 
@@ -807,7 +855,6 @@ public class GrenadeRenderer implements IItemRenderer {
                     this.entityPositioning = (itemStack) -> {};
                 }
 
-                GrenadeRenderer renderer = new GrenadeRenderer(this);
                 if (this.firstPersonPositioning == null) {
                     this.firstPersonPositioning = (renderContext) -> {};
                 }
@@ -824,11 +871,6 @@ public class GrenadeRenderer implements IItemRenderer {
 
                 Iterator var2;
                 Transition t;
-                for (var2 = this.firstPersonPositioningSafetyPinOff.iterator(); var2
-                    .hasNext(); this.totalTakingPinOffDuration += t.getPause()) {
-                    t = (Transition) var2.next();
-                    this.totalTakingPinOffDuration += t.getDuration();
-                }
 
                 for (var2 = this.firstPersonPositioningThrowing.iterator(); var2
                     .hasNext(); this.totalThrowingDuration += t.getPause()) {
@@ -900,8 +942,7 @@ public class GrenadeRenderer implements IItemRenderer {
                 }
 
                 if (this.firstPersonLeftHandPositioningStrikerLeverOff == null) {
-                    if (this.firstPersonLeftHandPositioningSafetyPinOff != null
-                        && !this.firstPersonLeftHandPositioningSafetyPinOff.isEmpty()) {
+                    if (!this.firstPersonLeftHandPositioningSafetyPinOff.isEmpty()) {
                         this.firstPersonLeftHandPositioningStrikerLeverOff = this.firstPersonLeftHandPositioningSafetyPinOff
                             .get(this.firstPersonLeftHandPositioningSafetyPinOff.size() - 1)
                             .getItemPositioning();
@@ -913,8 +954,7 @@ public class GrenadeRenderer implements IItemRenderer {
                 }
 
                 if (this.firstPersonLeftHandPositioningThrown == null) {
-                    if (this.firstPersonLeftHandPositioningThrowing != null
-                        && !this.firstPersonLeftHandPositioningThrowing.isEmpty()) {
+                    if (!this.firstPersonLeftHandPositioningThrowing.isEmpty()) {
                         this.firstPersonLeftHandPositioningThrown = this.firstPersonLeftHandPositioningThrowing
                             .get(this.firstPersonLeftHandPositioningThrowing.size() - 1)
                             .getItemPositioning();
@@ -935,19 +975,12 @@ public class GrenadeRenderer implements IItemRenderer {
                         .collect(Collectors.toList());
                 }
 
-                if (this.firstPersonRightHandPositioningThrowing == null) {
-                    this.firstPersonRightHandPositioningThrowing = this.firstPersonPositioningThrowing.stream()
-                        .map((tx) -> new Transition((c) -> {}, 0L))
-                        .collect(Collectors.toList());
-                }
-
                 if (this.firstPersonRightHandPositioningRunning == null) {
                     this.firstPersonRightHandPositioningRunning = this.firstPersonRightHandPositioning;
                 }
 
                 if (this.firstPersonRightHandPositioningStrikerLeverOff == null) {
-                    if (this.firstPersonRightHandPositioningSafetyPinOff != null
-                        && !this.firstPersonRightHandPositioningSafetyPinOff.isEmpty()) {
+                    if (!this.firstPersonRightHandPositioningSafetyPinOff.isEmpty()) {
                         this.firstPersonRightHandPositioningStrikerLeverOff = this.firstPersonRightHandPositioningSafetyPinOff
                             .get(this.firstPersonRightHandPositioningSafetyPinOff.size() - 1)
                             .getItemPositioning();
@@ -959,8 +992,7 @@ public class GrenadeRenderer implements IItemRenderer {
                 }
 
                 if (this.firstPersonRightHandPositioningThrown == null) {
-                    if (this.firstPersonRightHandPositioningThrowing != null
-                        && !this.firstPersonRightHandPositioningThrowing.isEmpty()) {
+                    if (!this.firstPersonRightHandPositioningThrowing.isEmpty()) {
                         this.firstPersonRightHandPositioningThrown = this.firstPersonRightHandPositioningThrowing
                             .get(this.firstPersonRightHandPositioningThrowing.size() - 1)
                             .getItemPositioning();
@@ -1005,6 +1037,7 @@ public class GrenadeRenderer implements IItemRenderer {
                         });
                 }
 
+                GrenadeRenderer renderer = new GrenadeRenderer(this);
                 return renderer;
             }
         }
@@ -1027,9 +1060,9 @@ public class GrenadeRenderer implements IItemRenderer {
         protected MultipartRenderStateManager stateManager;
         protected float rate;
         protected float amplitude = 0.04F;
-        private final PlayerGrenadeInstance instance;
+        private final ItemGrenadeInstance instance;
 
-        public StateDescriptor(PlayerGrenadeInstance instance, MultipartRenderStateManager stateManager, float rate,
+        public StateDescriptor(ItemGrenadeInstance instance, MultipartRenderStateManager stateManager, float rate,
             float amplitude) {
             this.instance = instance;
             this.stateManager = stateManager;

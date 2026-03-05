@@ -4,10 +4,10 @@ import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentBuilder;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
-import com.gtnewhorizon.newgunrizons.grenade.ItemGrenade;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
-import com.gtnewhorizon.newgunrizons.items.grenades.FuseGrenadeFactory;
-import com.gtnewhorizon.newgunrizons.items.grenades.ImpactGrenadeFactory;
+import com.gtnewhorizon.newgunrizons.items.ItemGrenade;
+import com.gtnewhorizon.newgunrizons.items.factories.grenades.FuseGrenadeFactory;
+import com.gtnewhorizon.newgunrizons.items.factories.grenades.ImpactGrenadeFactory;
 import com.gtnewhorizon.newgunrizons.model.misc.Pin;
 
 public class Grenades {

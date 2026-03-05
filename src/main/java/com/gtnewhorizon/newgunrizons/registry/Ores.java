@@ -13,17 +13,17 @@ import com.gtnewhorizon.newgunrizons.blocks.BlockSulfurOre;
 import com.gtnewhorizon.newgunrizons.blocks.BlockTantalumOre;
 import com.gtnewhorizon.newgunrizons.blocks.BlockTinOre;
 import com.gtnewhorizon.newgunrizons.blocks.BlockTitaniumOre;
-import com.gtnewhorizon.newgunrizons.items.material.ItemAluminumIngot;
-import com.gtnewhorizon.newgunrizons.items.material.ItemCopperIngot;
-import com.gtnewhorizon.newgunrizons.items.material.ItemLeadIngot;
-import com.gtnewhorizon.newgunrizons.items.material.ItemRuby;
-import com.gtnewhorizon.newgunrizons.items.material.ItemSilicon;
-import com.gtnewhorizon.newgunrizons.items.material.ItemSteelDust;
-import com.gtnewhorizon.newgunrizons.items.material.ItemSteelIngot;
-import com.gtnewhorizon.newgunrizons.items.material.ItemSulfurDust;
-import com.gtnewhorizon.newgunrizons.items.material.ItemTantalumIngot;
-import com.gtnewhorizon.newgunrizons.items.material.ItemTinIngot;
-import com.gtnewhorizon.newgunrizons.items.material.ItemTitaniumIngot;
+import com.gtnewhorizon.newgunrizons.items.materials.ItemAluminumIngot;
+import com.gtnewhorizon.newgunrizons.items.materials.ItemCopperIngot;
+import com.gtnewhorizon.newgunrizons.items.materials.ItemLeadIngot;
+import com.gtnewhorizon.newgunrizons.items.materials.ItemRuby;
+import com.gtnewhorizon.newgunrizons.items.materials.ItemSilicon;
+import com.gtnewhorizon.newgunrizons.items.materials.ItemSteelDust;
+import com.gtnewhorizon.newgunrizons.items.materials.ItemSteelIngot;
+import com.gtnewhorizon.newgunrizons.items.materials.ItemSulfurDust;
+import com.gtnewhorizon.newgunrizons.items.materials.ItemTantalumIngot;
+import com.gtnewhorizon.newgunrizons.items.materials.ItemTinIngot;
+import com.gtnewhorizon.newgunrizons.items.materials.ItemTitaniumIngot;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 

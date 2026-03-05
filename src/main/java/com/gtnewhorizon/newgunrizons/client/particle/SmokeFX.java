@@ -23,7 +23,9 @@ public class SmokeFX extends EntityFX {
     private static final double VERTICAL_DRAG = 1.0;
     private static final double GROUND_FRICTION = 0.7;
 
-    private static final String SMOKE_TEXTURE = "newgunrizons:/com/gtnewhorizon/newgunrizons/resources/smokes.png";
+    private static final ResourceLocation SMOKE_TEXTURE = new ResourceLocation(
+        "newgunrizons",
+        "textures/effect/smokes.png");
     private static final int IMAGES_PER_ROW = 4;
     private static final float UV_WIDTH = 1.0F / IMAGES_PER_ROW;
 
@@ -81,7 +83,7 @@ public class SmokeFX extends EntityFX {
         float par6, float par7) {
         Minecraft.getMinecraft()
             .getTextureManager()
-            .bindTexture(new ResourceLocation(SMOKE_TEXTURE));
+            .bindTexture(SMOKE_TEXTURE);
         GL11.glPushMatrix();
         GL11.glPushAttrib(GL11.GL_TEXTURE_BIT);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

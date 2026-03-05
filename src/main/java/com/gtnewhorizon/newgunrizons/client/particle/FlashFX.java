@@ -19,7 +19,9 @@ public class FlashFX extends EntityFX {
     private static final float MIN_MOTION = 0.01F;
     private static final float GROUND_FRICTION = 0.7F;
 
-    private static final String FLASH_TEXTURE = "newgunrizons:/com/gtnewhorizon/newgunrizons/resources/flashes.png";
+    private static final ResourceLocation FLASH_TEXTURE = new ResourceLocation(
+        "newgunrizons",
+        "textures/effect/flashes.png");
     private static final int IMAGES_PER_ROW = 8;
     private static final float UV_WIDTH = 1.0F / IMAGES_PER_ROW;
 
@@ -73,7 +75,7 @@ public class FlashFX extends EntityFX {
         float par6, float par7) {
         Minecraft.getMinecraft()
             .getTextureManager()
-            .bindTexture(new ResourceLocation(FLASH_TEXTURE));
+            .bindTexture(FLASH_TEXTURE);
         GL11.glPushMatrix();
         GL11.glPushAttrib(GL11.GL_TEXTURE_BIT);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

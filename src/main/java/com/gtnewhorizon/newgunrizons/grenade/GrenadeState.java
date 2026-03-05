@@ -15,7 +15,6 @@ public enum GrenadeState implements ManagedState<GrenadeState> {
     THROWN(9),
     EXPLODED_IN_HANDS(9);
 
-    private static final int DEFAULT_PRIORITY = 0;
     private final GrenadeState preparingPhase;
     private final GrenadeState commitPhase;
     @Getter

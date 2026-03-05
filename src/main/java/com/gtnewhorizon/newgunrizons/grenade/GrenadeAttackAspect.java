@@ -14,24 +14,27 @@ import org.apache.logging.log4j.Logger;
 
 import com.gtnewhorizon.newgunrizons.config.CommonModContext;
 import com.gtnewhorizon.newgunrizons.config.ModContext;
+import com.gtnewhorizon.newgunrizons.entities.EntityGrenade;
 import com.gtnewhorizon.newgunrizons.entities.Explosion;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemGrenadeInstance;
+import com.gtnewhorizon.newgunrizons.network.GrenadeMessage;
 import com.gtnewhorizon.newgunrizons.state.Aspect;
 import com.gtnewhorizon.newgunrizons.state.StateManager;
 
-public class GrenadeAttackAspect implements Aspect<GrenadeState, PlayerGrenadeInstance> {
+public class GrenadeAttackAspect implements Aspect<GrenadeState, ItemGrenadeInstance> {
 
     private static final Logger logger = LogManager.getLogger(GrenadeAttackAspect.class);
     private static final long ALERT_TIMEOUT = 300L;
-    private final Predicate<PlayerGrenadeInstance> hasSafetyPin = (instance) -> instance.getWeapon()
+    private final Predicate<ItemGrenadeInstance> hasSafetyPin = (instance) -> instance.getWeapon()
         .hasSafetyPin();
-    private static final Predicate<PlayerGrenadeInstance> reequipTimeoutExpired = (
-        instance) -> System.currentTimeMillis() > instance.getStateUpdateTimestamp() + instance.getWeapon()
+    private static final Predicate<ItemGrenadeInstance> reequipTimeoutExpired = (instance) -> System.currentTimeMillis()
+        > instance.getStateUpdateTimestamp() + instance.getWeapon()
             .getReequipTimeout();
-    private static final Predicate<PlayerGrenadeInstance> throwingCompleted = (
+    private static final Predicate<ItemGrenadeInstance> throwingCompleted = (
         instance) -> (double) System.currentTimeMillis()
             >= (double) instance.getStateUpdateTimestamp() + instance.getWeapon()
                 .getTotalThrowingDuration() * 1.1D;
-    private static final Predicate<PlayerGrenadeInstance> explosionTimeoutExpired = (
+    private static final Predicate<ItemGrenadeInstance> explosionTimeoutExpired = (
         instance) -> System.currentTimeMillis() >= instance.getStateUpdateTimestamp() + (long) instance.getWeapon()
             .getExplosionTimeout();
     private static final Set<GrenadeState> allowedAttackFromStates;
@@ -39,13 +42,13 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, PlayerGrenadeIn
     private static final Set<GrenadeState> allowedUpdateFromStates;
     private static final int SAFETY_IN_ALERT_TIMEOUT = 1000;
     private final ModContext modContext;
-    private StateManager<GrenadeState, ? super PlayerGrenadeInstance> stateManager;
+    private StateManager<GrenadeState, ? super ItemGrenadeInstance> stateManager;
 
     public GrenadeAttackAspect(CommonModContext modContext) {
         this.modContext = modContext;
     }
 
-    public void setStateManager(StateManager<GrenadeState, ? super PlayerGrenadeInstance> stateManager) {
+    public void setStateManager(StateManager<GrenadeState, ? super ItemGrenadeInstance> stateManager) {
         this.stateManager = stateManager;
         stateManager.in(this)
             .change(GrenadeState.READY)
@@ -93,13 +96,13 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, PlayerGrenadeIn
             .automatic();
     }
 
-    private void explode(PlayerGrenadeInstance instance) {
+    private void explode(ItemGrenadeInstance instance) {
         logger.debug("Exploding!");
         this.modContext.getChannel()
             .sendToServer(new GrenadeMessage(instance, 0L));
     }
 
-    private void throwIt(PlayerGrenadeInstance instance) {
+    private void throwIt(ItemGrenadeInstance instance) {
         logger.debug("Throwing with state " + instance.getState());
         long activationTimestamp;
         if (instance.getWeapon()
@@ -123,11 +126,11 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, PlayerGrenadeIn
             .sendToServer(new GrenadeMessage(instance, activationTimestamp));
     }
 
-    private void reequip(PlayerGrenadeInstance instance) {
+    private void reequip(ItemGrenadeInstance instance) {
         logger.debug("Reequipping");
     }
 
-    private void takeSafetyPinOff(PlayerGrenadeInstance instance) {
+    private void takeSafetyPinOff(ItemGrenadeInstance instance) {
         if (instance.getWeapon()
             .getSafetyPinOffSound() != null) {
             instance.getPlayer()
@@ -140,14 +143,14 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, PlayerGrenadeIn
         logger.debug("Taking safety pin off");
     }
 
-    private void releaseStrikerLever(PlayerGrenadeInstance instance) {
+    private void releaseStrikerLever(ItemGrenadeInstance instance) {
         logger.debug("Safety pin is off");
         instance.setActivationTimestamp(System.currentTimeMillis());
     }
 
-    void onAttackButtonClick(EntityPlayer player, boolean throwingFar) {
-        PlayerGrenadeInstance grenadeInstance = this.modContext.getPlayerItemInstanceRegistry()
-            .getMainHandItemInstance(player, PlayerGrenadeInstance.class);
+    public void onAttackButtonClick(EntityPlayer player, boolean throwingFar) {
+        ItemGrenadeInstance grenadeInstance = this.modContext.getItemInstanceRegistry()
+            .getMainHandItemInstance(player, ItemGrenadeInstance.class);
         if (grenadeInstance != null) {
             grenadeInstance.setThrowingFar(throwingFar);
             this.stateManager.changeStateFromAnyOf(
@@ -160,9 +163,9 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, PlayerGrenadeIn
 
     }
 
-    void onAttackButtonUp(EntityPlayer player, boolean throwingFar) {
-        PlayerGrenadeInstance grenadeInstance = this.modContext.getPlayerItemInstanceRegistry()
-            .getMainHandItemInstance(player, PlayerGrenadeInstance.class);
+    public void onAttackButtonUp(EntityPlayer player, boolean throwingFar) {
+        ItemGrenadeInstance grenadeInstance = this.modContext.getItemInstanceRegistry()
+            .getMainHandItemInstance(player, ItemGrenadeInstance.class);
         if (grenadeInstance != null) {
             grenadeInstance.setThrowingFar(throwingFar);
             this.stateManager.changeStateFromAnyOf(
@@ -174,9 +177,9 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, PlayerGrenadeIn
 
     }
 
-    void onUpdate(EntityPlayer player) {
-        PlayerGrenadeInstance grenadeInstance = this.modContext.getPlayerItemInstanceRegistry()
-            .getMainHandItemInstance(player, PlayerGrenadeInstance.class);
+    public void onUpdate(EntityPlayer player) {
+        ItemGrenadeInstance grenadeInstance = this.modContext.getItemInstanceRegistry()
+            .getMainHandItemInstance(player, ItemGrenadeInstance.class);
         if (grenadeInstance != null) {
             if (grenadeInstance.getState() == GrenadeState.STRIKER_LEVER_RELEASED
                 && System.currentTimeMillis() > grenadeInstance.getLastSafetyPinAlertTimestamp() + 1000L) {
@@ -199,7 +202,7 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, PlayerGrenadeIn
 
     }
 
-    public void serverThrowGrenade(EntityPlayer player, PlayerGrenadeInstance instance, long activationTimestamp) {
+    public void serverThrowGrenade(EntityPlayer player, ItemGrenadeInstance instance, long activationTimestamp) {
         logger.debug("Throwing grenade");
         serverThrowGrenade(this.modContext, player, instance, activationTimestamp);
         {
@@ -212,8 +215,8 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, PlayerGrenadeIn
         }
     }
 
-    public static void serverThrowGrenade(ModContext modContext, EntityLivingBase player,
-        PlayerGrenadeInstance instance, long activationTimestamp) {
+    public static void serverThrowGrenade(ModContext modContext, EntityLivingBase player, ItemGrenadeInstance instance,
+        long activationTimestamp) {
         if (activationTimestamp == 0L) {
             Explosion.createServerSideExplosion(
                 modContext,

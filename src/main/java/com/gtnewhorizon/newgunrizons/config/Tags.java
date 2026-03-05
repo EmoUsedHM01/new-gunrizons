@@ -3,8 +3,8 @@ package com.gtnewhorizon.newgunrizons.config;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
 import com.gtnewhorizon.newgunrizons.network.TypeRegistry;
-import com.gtnewhorizon.newgunrizons.weapon.PlayerItemInstance;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -28,17 +28,17 @@ public final class Tags {
         }
     }
 
-    public static PlayerItemInstance<?> getInstance(ItemStack itemStack) {
+    public static ItemInstance<?> getInstance(ItemStack itemStack) {
         if (itemStack != null && itemStack.stackTagCompound != null) {
             byte[] bytes = itemStack.stackTagCompound.getByteArray(INSTANCE_TAG);
-            return bytes != null && bytes.length > 0 ? (PlayerItemInstance) TypeRegistry.getInstance()
+            return bytes != null && bytes.length > 0 ? (ItemInstance) TypeRegistry.getInstance()
                 .fromBytes(Unpooled.wrappedBuffer(bytes)) : null;
         } else {
             return null;
         }
     }
 
-    public static <T extends PlayerItemInstance<?>> T getInstance(ItemStack itemStack, Class<T> targetClass) {
+    public static <T extends ItemInstance<?>> T getInstance(ItemStack itemStack, Class<T> targetClass) {
         if (itemStack != null && itemStack.stackTagCompound != null) {
             byte[] bytes = itemStack.stackTagCompound.getByteArray(INSTANCE_TAG);
             if (bytes != null && bytes.length > 0) {
@@ -57,7 +57,7 @@ public final class Tags {
         }
     }
 
-    public static void setInstance(ItemStack itemStack, PlayerItemInstance<?> instance) {
+    public static void setInstance(ItemStack itemStack, ItemInstance<?> instance) {
         if (itemStack != null) {
             if (itemStack.stackTagCompound == null) {
                 itemStack.stackTagCompound = new NBTTagCompound();

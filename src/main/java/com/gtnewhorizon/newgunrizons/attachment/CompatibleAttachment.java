@@ -16,11 +16,11 @@ import lombok.Getter;
  * <p>
  * Instances are created in two distinct patterns:
  * <ul>
- *   <li><b>Rendering mode</b> — defines how the attachment is visually positioned on the weapon,
- *       via {@link #modelPositioning} and/or {@link #positioning} callbacks, plus optional
- *       {@link #isDefault} and {@link #isPermanent} flags.</li>
- *   <li><b>Behavior mode</b> — defines logic to run when the attachment is equipped or unequipped,
- *       via {@link #applyHandler} and {@link #removeHandler}.</li>
+ * <li><b>Rendering mode</b> — defines how the attachment is visually positioned on the weapon,
+ * via {@link #modelPositioning} and/or {@link #positioning} callbacks, plus optional
+ * {@link #isDefault} and {@link #isPermanent} flags.</li>
+ * <li><b>Behavior mode</b> — defines logic to run when the attachment is equipped or unequipped,
+ * via {@link #applyHandler} and {@link #removeHandler}.</li>
  * </ul>
  */
 @Getter

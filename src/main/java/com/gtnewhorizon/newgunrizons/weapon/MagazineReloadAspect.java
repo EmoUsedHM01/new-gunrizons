@@ -12,28 +12,30 @@ import com.gtnewhorizon.newgunrizons.config.ModContext;
 import com.gtnewhorizon.newgunrizons.config.Tags;
 import com.gtnewhorizon.newgunrizons.items.ItemBullet;
 import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemMagazineInstance;
 import com.gtnewhorizon.newgunrizons.network.WeaponActionMessage;
 import com.gtnewhorizon.newgunrizons.state.Aspect;
 import com.gtnewhorizon.newgunrizons.state.StateManager;
 import com.gtnewhorizon.newgunrizons.util.InventoryUtils;
 
-public class MagazineReloadAspect implements Aspect<MagazineState, PlayerMagazineInstance> {
+public class MagazineReloadAspect implements Aspect<MagazineState, ItemMagazineInstance> {
 
     private static final Set<MagazineState> allowedUpdateFromStates;
     private static final long reloadAnimationDuration;
-    private static final Predicate<PlayerMagazineInstance> reloadAnimationCompleted;
+    private static final Predicate<ItemMagazineInstance> reloadAnimationCompleted;
     private final ModContext modContext;
-    private StateManager<MagazineState, ? super PlayerMagazineInstance> stateManager;
-    private final Predicate<PlayerMagazineInstance> notFull = (instance) -> Tags.getAmmo(instance.getItemStack())
+    private StateManager<MagazineState, ? super ItemMagazineInstance> stateManager;
+    private final Predicate<ItemMagazineInstance> notFull = (instance) -> Tags.getAmmo(instance.getItemStack())
         < instance.getMagazine()
             .getAmmo();
 
     /** Client-side guard: checks if player has compatible bullets in inventory. */
-    private final Predicate<PlayerMagazineInstance> hasCompatibleBullets = (instance) -> {
+    private final Predicate<ItemMagazineInstance> hasCompatibleBullets = (instance) -> {
         if (!(instance.getPlayer() instanceof EntityPlayer player)) {
             return false;
         }
-        if (!(instance.getItemStack().getItem() instanceof ItemMagazine magazine)) {
+        if (!(instance.getItemStack()
+            .getItem() instanceof ItemMagazine magazine)) {
             return false;
         }
         List<ItemBullet> compatibleBullets = magazine.getCompatibleBullets();
@@ -44,7 +46,7 @@ public class MagazineReloadAspect implements Aspect<MagazineState, PlayerMagazin
         this.modContext = modContext;
     }
 
-    public void setStateManager(StateManager<MagazineState, ? super PlayerMagazineInstance> stateManager) {
+    public void setStateManager(StateManager<MagazineState, ? super ItemMagazineInstance> stateManager) {
         this.stateManager = stateManager.in(this)
             .change(MagazineState.READY)
             .to(MagazineState.LOAD)
@@ -59,21 +61,21 @@ public class MagazineReloadAspect implements Aspect<MagazineState, PlayerMagazin
     }
 
     public void reloadMainHeldItem(EntityPlayer player) {
-        PlayerMagazineInstance instance = this.modContext.getPlayerItemInstanceRegistry()
-            .getMainHandItemInstance(player, PlayerMagazineInstance.class);
+        ItemMagazineInstance instance = this.modContext.getItemInstanceRegistry()
+            .getMainHandItemInstance(player, ItemMagazineInstance.class);
         this.stateManager.changeState(this, instance, MagazineState.LOAD);
     }
 
     public void updateMainHeldItem(EntityPlayer player) {
-        PlayerMagazineInstance instance = this.modContext.getPlayerItemInstanceRegistry()
-            .getMainHandItemInstance(player, PlayerMagazineInstance.class);
+        ItemMagazineInstance instance = this.modContext.getItemInstanceRegistry()
+            .getMainHandItemInstance(player, ItemMagazineInstance.class);
         if (instance != null) {
             this.stateManager.changeStateFromAnyOf(this, instance, allowedUpdateFromStates);
         }
 
     }
 
-    private void performLoad(PlayerMagazineInstance magazineInstance) {
+    private void performLoad(ItemMagazineInstance magazineInstance) {
         // Send action to server for authoritative inventory operations (bullet consumption)
         this.modContext.getChannel()
             .sendToServer(

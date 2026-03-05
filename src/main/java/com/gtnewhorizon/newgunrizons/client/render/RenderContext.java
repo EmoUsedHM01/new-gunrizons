@@ -13,9 +13,9 @@ import com.gtnewhorizon.newgunrizons.attachment.Part;
 import com.gtnewhorizon.newgunrizons.client.animation.MatrixHelper;
 import com.gtnewhorizon.newgunrizons.client.animation.PartPositionProvider;
 import com.gtnewhorizon.newgunrizons.config.ModContext;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.state.RenderableState;
-import com.gtnewhorizon.newgunrizons.weapon.PlayerItemInstance;
-import com.gtnewhorizon.newgunrizons.weapon.PlayerWeaponInstance;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -57,7 +57,7 @@ public class RenderContext implements PartPositionProvider {
     private final ModContext modContext;
     @Setter
     @Getter
-    private PlayerItemInstance<?> playerItemInstance;
+    private ItemInstance<?> itemInstance;
     private final Map<Part, Matrix4f> attachablePartPositions;
 
     public RenderContext(ModContext modContext, EntityLivingBase player, ItemStack itemStack) {
@@ -87,13 +87,13 @@ public class RenderContext implements PartPositionProvider {
         this.compatibleTransformType = compatibleTransformType;
     }
 
-    public PlayerWeaponInstance getWeaponInstance() {
-        if (this.playerItemInstance instanceof PlayerWeaponInstance) {
-            return (PlayerWeaponInstance) this.playerItemInstance;
+    public ItemWeaponInstance getWeaponInstance() {
+        if (this.itemInstance instanceof ItemWeaponInstance) {
+            return (ItemWeaponInstance) this.itemInstance;
         } else {
-            PlayerItemInstance<?> itemInstance = this.modContext.getPlayerItemInstanceRegistry()
+            ItemInstance<?> itemInstance = this.modContext.getItemInstanceRegistry()
                 .getItemInstance(this.player, this.itemStack);
-            return itemInstance instanceof PlayerWeaponInstance ? (PlayerWeaponInstance) itemInstance : null;
+            return itemInstance instanceof ItemWeaponInstance ? (ItemWeaponInstance) itemInstance : null;
         }
     }
 

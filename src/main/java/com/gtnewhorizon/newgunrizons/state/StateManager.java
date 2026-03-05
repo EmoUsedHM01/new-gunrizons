@@ -69,8 +69,8 @@ public class StateManager<S extends ManagedState<S>, E extends ExtendedState<S>>
      * Attempts to transition only if the current state is one of {@code fromStates}.
      */
     @SafeVarargs
-    public final void changeStateFromAnyOf(Aspect<S, ? extends E> aspect, E extendedState,
-        Collection<S> fromStates, S... targetStates) {
+    public final void changeStateFromAnyOf(Aspect<S, ? extends E> aspect, E extendedState, Collection<S> fromStates,
+        S... targetStates) {
         S currentState = extendedState.getState();
         if (!fromStates.contains(currentState)) {
             return;
@@ -86,8 +86,8 @@ public class StateManager<S extends ManagedState<S>, E extends ExtendedState<S>>
      * for automatic rules (those that fire without explicit targets).
      */
     @SafeVarargs
-    protected final void executeTransition(Aspect<S, ? extends E> aspect, E extendedState,
-        S currentState, S... targetStates) {
+    protected final void executeTransition(Aspect<S, ? extends E> aspect, E extendedState, S currentState,
+        S... targetStates) {
         if (extendedState == null) {
             return;
         }
@@ -118,8 +118,8 @@ public class StateManager<S extends ManagedState<S>, E extends ExtendedState<S>>
     // ==================== Rule matching ====================
 
     @SafeVarargs
-    private TransitionRule<S, E> findMatchingRule(Aspect<S, ? extends E> aspect, E extendedState,
-        S currentState, S... targetStates) {
+    private TransitionRule<S, E> findMatchingRule(Aspect<S, ? extends E> aspect, E extendedState, S currentState,
+        S... targetStates) {
         return this.transitionRules.entrySet()
             .stream()
             .filter(e -> e.getKey() == aspect)
@@ -172,9 +172,9 @@ public class StateManager<S extends ManagedState<S>, E extends ExtendedState<S>>
         @SafeVarargs
         final boolean matches(StateComparator<S> comparator, E context, S fromState, S... targetStates) {
             boolean fromMatches = fromState == null || comparator.compare(this.fromState, fromState);
-            boolean toMatches = (this.automatic && targetStates.length == 0)
-                || Arrays.stream(targetStates)
-                    .anyMatch(target -> comparator.compare(this.toState, target)
+            boolean toMatches = (this.automatic && targetStates.length == 0) || Arrays.stream(targetStates)
+                .anyMatch(
+                    target -> comparator.compare(this.toState, target)
                         || comparator.compare(this.toState, target.preparingPhase()));
             boolean guardPasses = this.guard.test(this.toState, context);
             return fromMatches && toMatches && guardPasses;
@@ -210,6 +210,7 @@ public class StateManager<S extends ManagedState<S>, E extends ExtendedState<S>>
      * Fluent API for defining state transition rules.
      * <p>
      * Usage:
+     * 
      * <pre>
      * stateManager.in(aspect)
      *     .change(WeaponState.READY)
@@ -274,12 +275,6 @@ public class StateManager<S extends ManagedState<S>, E extends ExtendedState<S>>
             Predicate<EE> prepareGuard) {
             this.prepareCallback = prepareCallback;
             this.prepareGuard = prepareGuard;
-            return this;
-        }
-
-        /** Sets the action executed when this transition fires (full context). */
-        public StateManager<S, E>.RuleBuilder<EE> withAction(TransitionAction<S, EE> action) {
-            this.action = action;
             return this;
         }
 

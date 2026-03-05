@@ -3,7 +3,9 @@ package com.gtnewhorizon.newgunrizons.network;
 import java.util.UUID;
 
 import io.netty.buffer.ByteBuf;
+import lombok.Getter;
 
+@Getter
 public abstract class UniversalObject implements UniversallySerializable {
 
     private UUID uuid = UUID.randomUUID();
@@ -13,10 +15,6 @@ public abstract class UniversalObject implements UniversallySerializable {
     }
 
     protected UniversalObject() {}
-
-    public UUID getUuid() {
-        return this.uuid;
-    }
 
     public void init(ByteBuf buf) {
         if (this.getSerialVersion() != buf.readInt()) {

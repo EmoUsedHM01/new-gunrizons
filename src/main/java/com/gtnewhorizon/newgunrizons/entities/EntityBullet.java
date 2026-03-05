@@ -1,5 +1,10 @@
 package com.gtnewhorizon.newgunrizons.entities;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -10,11 +15,10 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
+import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.network.SpawnParticleMessage;
-import com.gtnewhorizon.newgunrizons.weapon.ItemWeapon;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import io.netty.buffer.ByteBuf;
 import lombok.Getter;
 
@@ -24,78 +28,98 @@ public class EntityBullet extends EntityProjectile {
     private static final String TAG_DAMAGE = "damage";
     private static final String TAG_EXPLOSION_RADIUS = "explosionRadius";
 
-    private float explosionRadius;
-    private float damage = 6.0F;
+    private static final float DEFAULT_DAMAGE = 6.0F;
+    private static final float BLEEDING_COEFFICIENT = 1.0F;
+    private static final double PARTICLE_BROADCAST_RANGE = 100.0;
+
+    private static final Set<Block> PASS_THROUGH_BLOCKS = Collections.unmodifiableSet(
+        new HashSet<>(
+            Arrays.asList(
+                Blocks.air,
+                Blocks.tallgrass,
+                Blocks.leaves,
+                Blocks.leaves2,
+                Blocks.fire,
+                Blocks.hay_block,
+                Blocks.double_plant,
+                Blocks.web,
+                Blocks.wheat)));
+
     @Getter
     private ItemWeapon weapon;
+    private float damage = DEFAULT_DAMAGE;
+    private float explosionRadius;
 
     public EntityBullet(World world) {
         super(world);
     }
 
-    public EntityBullet(ItemWeapon weapon, World world, EntityLivingBase player, float speed, float gravityVelocity,
+    public EntityBullet(ItemWeapon weapon, World world, EntityLivingBase thrower, float speed, float gravityVelocity,
         float inaccuracy, float damage, float explosionRadius) {
-        super(world, player, speed, gravityVelocity, inaccuracy);
+        super(world, thrower, speed, gravityVelocity, inaccuracy);
         this.weapon = weapon;
         this.damage = damage;
         this.explosionRadius = explosionRadius;
     }
 
-    public void onUpdate() {
-        super.onUpdate();
-    }
-
     public void onImpact(MovingObjectPosition position) {
-
         if (worldObj.isRemote || weapon == null) return;
 
         if (explosionRadius > 0.0F) {
-            Explosion.createServerSideExplosion(
-                weapon.getModContext(),
-                worldObj,
-                this,
-                position.hitVec.xCoord,
-                position.hitVec.yCoord,
-                position.hitVec.zCoord,
-                explosionRadius,
-                false,
-                true);
+            handleExplosiveImpact(position);
         } else if (position.entityHit != null) {
-            if (getThrower() == null) {
-                position.entityHit.attackEntityFrom(new DamageSource("generic"), damage);
-            } else {
-                position.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), damage);
-            }
-
-            position.entityHit.hurtResistantTime = 0;
-            Entity var10000 = position.entityHit;
-            var10000.prevRotationYaw = (float) ((double) var10000.prevRotationYaw - 0.3D);
-            NetworkRegistry.TargetPoint point = new NetworkRegistry.TargetPoint(
-                position.entityHit.dimension,
-                posX,
-                posY,
-                posZ,
-                100.0D);
-
-            double magnitude = Math
-                .sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ) + 1.0D;
-
-            float bleedingCoefficient = 1.0F;
-            int count = (int) ((float) this.getParticleCount(this.damage) * bleedingCoefficient);
-            SimpleNetworkWrapper var8 = this.weapon.getModContext()
-                .getChannel();
-            SpawnParticleMessage.ParticleType var10003 = SpawnParticleMessage.ParticleType.BLOOD;
-            double var10006 = this.motionX / magnitude;
-            double var10005 = position.entityHit.posX - var10006;
-            double var10007 = this.motionY / magnitude;
-            var10006 = position.entityHit.posY - var10007;
-            double var10008 = this.motionZ / magnitude;
-            var8.sendToAllAround(
-                new SpawnParticleMessage(var10003, count, var10005, var10006, position.entityHit.posZ - var10008),
-                point);
+            handleEntityHit(position.entityHit);
         }
 
         this.setDead();
+    }
+
+    private void handleExplosiveImpact(MovingObjectPosition position) {
+        Explosion.createServerSideExplosion(
+            weapon.getModContext(),
+            worldObj,
+            this,
+            position.hitVec.xCoord,
+            position.hitVec.yCoord,
+            position.hitVec.zCoord,
+            explosionRadius,
+            false,
+            true);
+    }
+
+    private void handleEntityHit(Entity target) {
+        DamageSource source = getThrower() == null ? new DamageSource("generic")
+            : DamageSource.causeThrownDamage(this, getThrower());
+        target.attackEntityFrom(source, damage);
+        target.hurtResistantTime = 0;
+        target.prevRotationYaw -= 0.3F;
+
+        spawnBloodParticles(target);
+    }
+
+    private void spawnBloodParticles(Entity target) {
+        double speed = Math.sqrt(motionX * motionX + motionY * motionY + motionZ * motionZ) + 1.0;
+        double hitX = target.posX - motionX / speed;
+        double hitY = target.posY - motionY / speed;
+        double hitZ = target.posZ - motionZ / speed;
+        int count = (int) (getParticleCount() * BLEEDING_COEFFICIENT);
+
+        NetworkRegistry.TargetPoint broadcastPoint = new NetworkRegistry.TargetPoint(
+            target.dimension,
+            posX,
+            posY,
+            posZ,
+            PARTICLE_BROADCAST_RANGE);
+        weapon.getModContext()
+            .getChannel()
+            .sendToAllAround(
+                new SpawnParticleMessage(SpawnParticleMessage.ParticleType.BLOOD, count, hitX, hitY, hitZ),
+                broadcastPoint);
+    }
+
+    private int getParticleCount() {
+        float x = damage - 30.0F;
+        return (int) (-0.11 * x * x + 100.0);
     }
 
     public void writeSpawnData(ByteBuf buffer) {
@@ -118,7 +142,6 @@ public class EntityBullet extends EntityProjectile {
         if (item instanceof ItemWeapon) {
             this.weapon = (ItemWeapon) item;
         }
-
         this.damage = tagCompound.getFloat(TAG_DAMAGE);
         this.explosionRadius = tagCompound.getFloat(TAG_EXPLOSION_RADIUS);
     }
@@ -130,18 +153,7 @@ public class EntityBullet extends EntityProjectile {
         tagCompound.setFloat(TAG_EXPLOSION_RADIUS, this.explosionRadius);
     }
 
-    int getParticleCount(float damage) {
-        return (int) (-0.11D * (double) (damage - 30.0F) * (double) (damage - 30.0F) + 100.0D);
-    }
-
     public boolean canCollideWithBlock(Block block, int metadata) {
-        return !(block == Blocks.air || block == Blocks.tallgrass
-            || block == Blocks.leaves
-            || block == Blocks.leaves2
-            || block == Blocks.fire
-            || block == Blocks.hay_block
-            || block == Blocks.double_plant
-            || block == Blocks.web
-            || block == Blocks.wheat) && super.canCollideWithBlock(block, metadata);
+        return !PASS_THROUGH_BLOCKS.contains(block) && super.canCollideWithBlock(block, metadata);
     }
 }

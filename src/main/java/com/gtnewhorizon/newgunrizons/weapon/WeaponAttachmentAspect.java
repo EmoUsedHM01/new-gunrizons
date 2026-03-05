@@ -18,20 +18,22 @@ import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.attachment.CompatibleAttachment;
 import com.gtnewhorizon.newgunrizons.config.ModContext;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
+import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.network.WeaponActionMessage;
 import com.gtnewhorizon.newgunrizons.state.Aspect;
 import com.gtnewhorizon.newgunrizons.state.StateManager;
-import com.gtnewhorizon.newgunrizons.util.InventoryUtils;
 
-public final class WeaponAttachmentAspect implements Aspect<WeaponState, PlayerWeaponInstance> {
+public final class WeaponAttachmentAspect implements Aspect<WeaponState, ItemWeaponInstance> {
 
     private static final Logger logger = LogManager.getLogger(WeaponAttachmentAspect.class);
     private final ModContext modContext;
-    private StateManager<WeaponState, ? super PlayerWeaponInstance> stateManager;
+    private StateManager<WeaponState, ? super ItemWeaponInstance> stateManager;
     private final long clickSpammingTimeout = 150L;
-    private final Predicate<PlayerWeaponInstance> clickSpammingPreventer = (es) -> System.currentTimeMillis()
+    private final Predicate<ItemWeaponInstance> clickSpammingPreventer = (es) -> System.currentTimeMillis()
         >= es.getStateUpdateTimestamp() + this.clickSpammingTimeout;
-    private final Predicate<PlayerWeaponInstance> clickSpammingPreventer2 = (es) -> System.currentTimeMillis()
+    private final Predicate<ItemWeaponInstance> clickSpammingPreventer2 = (es) -> System.currentTimeMillis()
         >= es.getStateUpdateTimestamp() + this.clickSpammingTimeout * 2L;
 
     /** Tracks the attachment category for the current changeAttachment operation. */
@@ -41,7 +43,7 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, PlayerW
         this.modContext = modContext;
     }
 
-    public void setStateManager(StateManager<WeaponState, ? super PlayerWeaponInstance> stateManager) {
+    public void setStateManager(StateManager<WeaponState, ? super ItemWeaponInstance> stateManager) {
         this.stateManager = stateManager.in(this)
             .change(WeaponState.READY)
             .to(WeaponState.MODIFYING)
@@ -67,8 +69,8 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, PlayerW
     }
 
     public void toggleClientAttachmentSelectionMode(EntityPlayer player) {
-        PlayerWeaponInstance weaponInstance = this.modContext.getPlayerItemInstanceRegistry()
-            .getMainHandItemInstance(player, PlayerWeaponInstance.class);
+        ItemWeaponInstance weaponInstance = this.modContext.getItemInstanceRegistry()
+            .getMainHandItemInstance(player, ItemWeaponInstance.class);
         if (weaponInstance != null) {
             this.stateManager.changeState(this, weaponInstance, WeaponState.MODIFYING, WeaponState.READY);
         }
@@ -79,14 +81,14 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, PlayerW
         // No automatic transitions needed for attachment mode
     }
 
-    private void enterAttachmentSelectionMode(PlayerWeaponInstance weaponInstance) {
+    private void enterAttachmentSelectionMode(ItemWeaponInstance weaponInstance) {
         logger.debug("Entering attachment mode");
         byte[] selectedAttachmentIndexes = new byte[AttachmentCategory.VALUES.length];
         Arrays.fill(selectedAttachmentIndexes, (byte) -1);
         weaponInstance.setSelectedAttachmentIndexes(selectedAttachmentIndexes);
     }
 
-    private void exitAttachmentSelectionMode(PlayerWeaponInstance weaponInstance) {
+    private void exitAttachmentSelectionMode(ItemWeaponInstance weaponInstance) {
         logger.debug("Exiting attachment mode");
         weaponInstance.setSelectedAttachmentIndexes(new byte[0]);
     }
@@ -96,10 +98,10 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, PlayerW
             itemStack.stackTagCompound = new NBTTagCompound();
         }
         List<CompatibleAttachment> activeAttachments = new ArrayList<>();
-        PlayerItemInstance<?> itemInstance = this.modContext.getPlayerItemInstanceRegistry()
+        ItemInstance<?> itemInstance = this.modContext.getItemInstanceRegistry()
             .getItemInstance(player, itemStack);
         int[] activeAttachmentsIds;
-        if (!(itemInstance instanceof PlayerWeaponInstance)) {
+        if (!(itemInstance instanceof ItemWeaponInstance)) {
             activeAttachmentsIds = new int[AttachmentCategory.VALUES.length];
             for (CompatibleAttachment attachment : ((ItemWeapon) itemStack.getItem()).getCompatibleAttachments()
                 .values()) {
@@ -110,7 +112,7 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, PlayerW
                 }
             }
         } else {
-            activeAttachmentsIds = ((PlayerWeaponInstance) itemInstance).getActiveAttachmentIds();
+            activeAttachmentsIds = ((ItemWeaponInstance) itemInstance).getActiveAttachmentIds();
         }
 
         ItemWeapon weapon = (ItemWeapon) itemStack.getItem();
@@ -134,7 +136,7 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, PlayerW
         return activeAttachments;
     }
 
-    public void changeAttachment(AttachmentCategory attachmentCategory, PlayerWeaponInstance weaponInstance) {
+    public void changeAttachment(AttachmentCategory attachmentCategory, ItemWeaponInstance weaponInstance) {
         if (weaponInstance != null) {
             this.pendingAttachmentCategory = attachmentCategory;
             this.stateManager.changeState(this, weaponInstance, WeaponState.NEXT_ATTACHMENT);
@@ -142,23 +144,23 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, PlayerW
 
     }
 
-    private void changeAttachmentAction(PlayerWeaponInstance weaponInstance) {
+    private void changeAttachmentAction(ItemWeaponInstance weaponInstance) {
         AttachmentCategory attachmentCategory = this.pendingAttachmentCategory;
         if (attachmentCategory == null) {
             return;
         }
         // Send action to server for authoritative inventory operations
         this.modContext.getChannel()
-            .sendToServer(new WeaponActionMessage(
-                WeaponActionMessage.CHANGE_ATTACHMENT,
-                weaponInstance.getItemInventoryIndex(),
-                (byte) attachmentCategory.ordinal()));
+            .sendToServer(
+                new WeaponActionMessage(
+                    WeaponActionMessage.CHANGE_ATTACHMENT,
+                    weaponInstance.getItemInventoryIndex(),
+                    (byte) attachmentCategory.ordinal()));
         // Optimistic client-side visual update
         this.changeAttachmentInternal(attachmentCategory, weaponInstance);
     }
 
-    private void changeAttachmentInternal(AttachmentCategory attachmentCategory,
-        PlayerWeaponInstance weaponInstance) {
+    private void changeAttachmentInternal(AttachmentCategory attachmentCategory, ItemWeaponInstance weaponInstance) {
         if (weaponInstance.getPlayer() instanceof EntityPlayer player) {
             int[] originalActiveAttachmentIds = weaponInstance.getActiveAttachmentIds();
             int[] activeAttachmentIds = Arrays.copyOf(originalActiveAttachmentIds, originalActiveAttachmentIds.length);
@@ -201,7 +203,6 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, PlayerW
                     }
                 }
 
-                InventoryUtils.consumeInventoryItemFromSlot(player, lookupResult.index);
                 activeAttachmentIds[attachmentCategory.ordinal()] = Item.getIdFromItem(nextAttachment);
             } else {
                 activeAttachmentIds[attachmentCategory.ordinal()] = -1;
@@ -212,16 +213,12 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, PlayerW
                 }
             }
 
-            if (currentAttachment != null) {
-                InventoryUtils.addItemToPlayerInventory(player, currentAttachment, lookupResult.index);
-            }
-
             weaponInstance.setActiveAttachmentIds(activeAttachmentIds);
         }
     }
 
     private WeaponAttachmentAspect.AttachmentLookupResult next(AttachmentCategory category, Item currentAttachment,
-        PlayerWeaponInstance weaponInstance) {
+        ItemWeaponInstance weaponInstance) {
         WeaponAttachmentAspect.AttachmentLookupResult result = new WeaponAttachmentAspect.AttachmentLookupResult();
         byte[] originallySelectedAttachmentIndexes = weaponInstance.getSelectedAttachmentIds();
         if (originallySelectedAttachmentIndexes != null
@@ -269,7 +266,7 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, PlayerW
         }
     }
 
-    public static void addAttachment(ItemAttachment attachment, PlayerWeaponInstance weaponInstance) {
+    public static void addAttachment(ItemAttachment attachment, ItemWeaponInstance weaponInstance) {
         int[] activeAttachmentsIds = weaponInstance.getActiveAttachmentIds();
         int activeAttachmentIdForThisCategory = activeAttachmentsIds[attachment.getCategory()
             .ordinal()];
@@ -292,7 +289,7 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, PlayerW
 
     }
 
-    ItemAttachment removeAttachment(AttachmentCategory attachmentCategory, PlayerWeaponInstance weaponInstance) {
+    ItemAttachment removeAttachment(AttachmentCategory attachmentCategory, ItemWeaponInstance weaponInstance) {
         int[] activeAttachmentIds = weaponInstance.getActiveAttachmentIds();
         int activeAttachmentIdForThisCategory = activeAttachmentIds[attachmentCategory.ordinal()];
         ItemAttachment currentAttachment = null;
@@ -313,7 +310,7 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, PlayerW
         return currentAttachment;
     }
 
-    public static ItemAttachment getActiveAttachment(AttachmentCategory category, PlayerWeaponInstance weaponInstance) {
+    public static ItemAttachment getActiveAttachment(AttachmentCategory category, ItemWeaponInstance weaponInstance) {
         ItemAttachment itemAttachment = null;
         int[] activeAttachmentIds = weaponInstance.getActiveAttachmentIds();
         for (int activeIndex : activeAttachmentIds) {
@@ -335,19 +332,19 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, PlayerW
         return itemAttachment;
     }
 
-    public static boolean isActiveAttachment(ItemAttachment attachment, PlayerWeaponInstance weaponInstance) {
+    public static boolean isActiveAttachment(ItemAttachment attachment, ItemWeaponInstance weaponInstance) {
         int[] activeAttachmentIds = weaponInstance.getActiveAttachmentIds();
         return Arrays.stream(activeAttachmentIds)
             .anyMatch((attachmentId) -> { return attachment == Item.getItemById(attachmentId); });
     }
 
-    public boolean isSilencerOn(PlayerWeaponInstance weaponInstance) {
+    public boolean isSilencerOn(ItemWeaponInstance weaponInstance) {
         int[] activeAttachmentsIds = weaponInstance.getActiveAttachmentIds();
         int activeAttachmentIdForThisCategory = activeAttachmentsIds[AttachmentCategory.SILENCER.ordinal()];
         return activeAttachmentIdForThisCategory > 0;
     }
 
-    public ItemAttachment getActiveAttachment(PlayerWeaponInstance weaponInstance, AttachmentCategory category) {
+    public ItemAttachment getActiveAttachment(ItemWeaponInstance weaponInstance, AttachmentCategory category) {
         return weaponInstance.getAttachmentItemWithCategory(category);
     }
 

@@ -33,7 +33,8 @@ import lombok.Getter;
 public class Explosion {
 
     private static final ResourceLocation SMOKE_TEXTURE = new ResourceLocation(
-        "newgunrizons:/com/gtnewhorizon/newgunrizons/resources/large-smoke.png");
+        "newgunrizons",
+        "textures/effect/large-smoke.png");
     private final ModContext modContext;
     private final boolean isFlaming;
     private final boolean isSmoking;

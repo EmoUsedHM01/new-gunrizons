@@ -21,7 +21,9 @@ public class ExplosionParticleFX extends EntityFX {
     private static final double GROUND_FRICTION = 0.7;
     private static final int FULL_OPACITY_TICKS = 9;
 
-    private static final String TEXTURE = "newgunrizons:/com/gtnewhorizon/newgunrizons/resources/explosion-particles.png";
+    private static final ResourceLocation TEXTURE = new ResourceLocation(
+        "newgunrizons",
+        "textures/effect/explosion-particles.png");
     private static final int COLUMN_COUNT = 5;
     private static final int ROW_COUNT = 5;
     private static final int TOTAL_IMAGES = COLUMN_COUNT * ROW_COUNT;
@@ -86,7 +88,7 @@ public class ExplosionParticleFX extends EntityFX {
         float par6, float par7) {
         Minecraft.getMinecraft()
             .getTextureManager()
-            .bindTexture(new ResourceLocation(TEXTURE));
+            .bindTexture(TEXTURE);
         GL11.glPushMatrix();
         GL11.glPushAttrib(GL11.GL_TEXTURE_BIT);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

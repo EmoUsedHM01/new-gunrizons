@@ -3,6 +3,7 @@ package com.gtnewhorizon.newgunrizons.client.scope;
 import java.util.function.BiConsumer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 
@@ -12,11 +13,9 @@ import com.gtnewhorizon.newgunrizons.client.render.CustomRenderer;
 import com.gtnewhorizon.newgunrizons.client.render.RenderContext;
 import com.gtnewhorizon.newgunrizons.client.render.TransformType;
 import com.gtnewhorizon.newgunrizons.config.ClientModContext;
-import com.gtnewhorizon.newgunrizons.model.ModelViewfinder;
 
 public class ScopeRenderer implements CustomRenderer {
 
-    private final ModelViewfinder model = new ModelViewfinder();
     private final BiConsumer<EntityLivingBase, ItemStack> positioning;
 
     public ScopeRenderer(BiConsumer<EntityLivingBase, ItemStack> positioning) {
@@ -35,7 +34,7 @@ public class ScopeRenderer implements CustomRenderer {
 
         ClientModContext clientModContext = (ClientModContext) renderContext.getModContext();
         ScopePerspective perspective = clientModContext.getViewManager()
-            .getPerspective(renderContext.getPlayerItemInstance(), false);
+            .getPerspective(renderContext.getItemInstance(), false);
 
         if (perspective == null) {
             return;
@@ -52,14 +51,18 @@ public class ScopeRenderer implements CustomRenderer {
         GL11.glDisable(GL11.GL_ALPHA_TEST);
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glColor4f(brightness, brightness, brightness, 1.0F);
-        this.model.render(
-            renderContext.getPlayer(),
-            renderContext.getLimbSwing(),
-            renderContext.getFlimbSwingAmount(),
-            renderContext.getAgeInTicks(),
-            renderContext.getNetHeadYaw(),
-            renderContext.getHeadPitch(),
-            renderContext.getScale());
+        float s = renderContext.getScale();
+        GL11.glPushMatrix();
+        GL11.glTranslatef(0.0F, -10.0F * s, 0.0F);
+        Tessellator tess = Tessellator.instance;
+        tess.startDrawingQuads();
+        tess.setNormal(0.0F, 0.0F, 1.0F);
+        tess.addVertexWithUV(3.0F * s, 3.0F * s, 0.0F, 0.0F, 0.0F);
+        tess.addVertexWithUV(0.0F, 3.0F * s, 0.0F, 1.0F, 0.0F);
+        tess.addVertexWithUV(0.0F, 0.0F, 0.0F, 1.0F, 1.0F);
+        tess.addVertexWithUV(3.0F * s, 0.0F, 0.0F, 0.0F, 1.0F);
+        tess.draw();
+        GL11.glPopMatrix();
         Minecraft.getMinecraft().entityRenderer.enableLightmap(0.0D);
         GL11.glPopAttrib();
         GL11.glPopMatrix();

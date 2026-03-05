@@ -9,7 +9,7 @@ import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentBuilder;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
-import com.gtnewhorizon.newgunrizons.client.render.LaserBeamRenderer;
+import com.gtnewhorizon.newgunrizons.client.render.EntityLaserBeamRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.items.ItemScope;
@@ -1982,7 +1982,7 @@ public class Attachments {
         Laser = (new AttachmentBuilder()).withCategory(AttachmentCategory.GRIP)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Laser(), "AK12.png")
-            .withPostRender(new LaserBeamRenderer((p, s) -> GL11.glTranslatef(-0.2F, 1.4F, 1.8F)))
+            .withPostRender(new EntityLaserBeamRenderer((p, s) -> GL11.glTranslatef(-0.2F, 1.4F, 1.8F)))
             .withFirstPersonModelPositioning((model, itemStack) -> {
                 if (model instanceof Laser) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);
@@ -2042,7 +2042,7 @@ public class Attachments {
         Laser2 = (new AttachmentBuilder()).withCategory(AttachmentCategory.GRIP)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Laser2(), "AK12.png")
-            .withPostRender(new LaserBeamRenderer((p, s) -> GL11.glTranslatef(-0.2F, 1.3F, 1.8F)))
+            .withPostRender(new EntityLaserBeamRenderer((p, s) -> GL11.glTranslatef(-0.2F, 1.3F, 1.8F)))
             .withFirstPersonModelPositioning((model, itemStack) -> {
                 if (model instanceof Laser2) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);

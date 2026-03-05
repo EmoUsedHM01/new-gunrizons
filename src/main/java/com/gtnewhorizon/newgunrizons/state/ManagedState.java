@@ -7,8 +7,8 @@ import com.gtnewhorizon.newgunrizons.network.UniversallySerializable;
  * <p>
  * Each state can define optional intermediate phases for multistep transitions:
  * <ul>
- *   <li>{@link #preparingPhase()} — entered before the main transition (e.g. playing an animation)</li>
- *   <li>{@link #commitPhase()} — entered after the transition is fully committed</li>
+ * <li>{@link #preparingPhase()} — entered before the main transition (e.g. playing an animation)</li>
+ * <li>{@link #commitPhase()} — entered after the transition is fully committed</li>
  * </ul>
  * Implementations: {@code WeaponState}, {@code MagazineState}, {@code GrenadeState}.
  *

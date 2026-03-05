@@ -16,8 +16,8 @@ import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.attachment.CompatibleAttachment;
 import com.gtnewhorizon.newgunrizons.attachment.Part;
 import com.gtnewhorizon.newgunrizons.client.render.CustomRenderer;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.util.Pair;
-import com.gtnewhorizon.newgunrizons.weapon.PlayerWeaponInstance;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -141,6 +141,6 @@ public class ItemAttachment extends Item {
     @FunctionalInterface
     public interface AttachmentHandler {
 
-        void apply(ItemAttachment attachment, PlayerWeaponInstance weaponInstance);
+        void apply(ItemAttachment attachment, ItemWeaponInstance weaponInstance);
     }
 }

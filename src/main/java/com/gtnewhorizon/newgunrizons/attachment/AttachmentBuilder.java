@@ -20,7 +20,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.gtnewhorizon.newgunrizons.client.render.CustomRenderer;
 import com.gtnewhorizon.newgunrizons.client.render.RenderContext;
-import com.gtnewhorizon.newgunrizons.client.render.StaticModelSourceRenderer;
+import com.gtnewhorizon.newgunrizons.client.render.StaticModelRenderer;
 import com.gtnewhorizon.newgunrizons.config.ModContext;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.crafting.OptionsMetadata;
@@ -106,7 +106,7 @@ public class AttachmentBuilder {
 
     // ==================== Client-side render positioning ====================
     // These callbacks define GL transforms for rendering this attachment in different contexts.
-    // They are passed through to StaticModelSourceRenderer during build().
+    // They are passed through to StaticModelRenderer during build().
 
     /** Item-level: dropped entity on ground. */
     private Consumer<ItemStack> entityPositioning;
@@ -369,9 +369,9 @@ public class AttachmentBuilder {
         }
 
         Object renderer = null;
-        if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-            renderer = new StaticModelSourceRenderer.Builder()
-                .withEntityPositioning(this.entityPositioning)
+        if (FMLCommonHandler.instance()
+            .getSide() == Side.CLIENT) {
+            renderer = new StaticModelRenderer.Builder().withEntityPositioning(this.entityPositioning)
                 .withFirstPersonPositioning(this.firstPersonPositioning)
                 .withThirdPersonPositioning(this.thirdPersonPositioning)
                 .withInventoryPositioning(this.inventoryPositioning)
@@ -380,7 +380,8 @@ public class AttachmentBuilder {
                 .withThirdPersonModelPositioning(this.thirdPersonModelPositioning)
                 .withInventoryModelPositioning(this.inventoryModelPositioning)
                 .withFirstPersonHandPositioning(
-                    this.firstPersonLeftHandPositioning, this.firstPersonRightHandPositioning)
+                    this.firstPersonLeftHandPositioning,
+                    this.firstPersonRightHandPositioning)
                 .withModContext(modContext)
                 .withModId(this.modId)
                 .build();
@@ -430,8 +431,7 @@ public class AttachmentBuilder {
      * and therefore should have a crafting recipe.
      */
     private static boolean isPlayerFacingCategory(AttachmentCategory category) {
-        return category == AttachmentCategory.GRIP
-            || category == AttachmentCategory.SCOPE
+        return category == AttachmentCategory.GRIP || category == AttachmentCategory.SCOPE
             || category == AttachmentCategory.MAGAZINE
             || category == AttachmentCategory.BULLET
             || category == AttachmentCategory.SILENCER;

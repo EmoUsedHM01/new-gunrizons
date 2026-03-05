@@ -20,27 +20,33 @@ import com.gtnewhorizon.newgunrizons.config.ModContext;
  */
 public class ItemScope extends ItemAttachment {
 
-    private final ItemScope.Builder builder;
+    private final float minZoom;
+    private final float maxZoom;
+    private final boolean isOpticalZoom;
+    private final boolean hasNightVision;
 
     private ItemScope(ItemScope.Builder builder) {
         super(builder.getModId(), AttachmentCategory.SCOPE, null);
-        this.builder = builder;
+        this.minZoom = builder.minZoom;
+        this.maxZoom = builder.maxZoom;
+        this.isOpticalZoom = builder.isOpticalZoom;
+        this.hasNightVision = builder.hasNightVision;
     }
 
     public float getMinZoom() {
-        return this.builder.minZoom;
+        return this.minZoom;
     }
 
     public float getMaxZoom() {
-        return this.builder.maxZoom;
+        return this.maxZoom;
     }
 
     public boolean isOptical() {
-        return this.builder.isOpticalZoom;
+        return this.isOpticalZoom;
     }
 
     public boolean hasNightVision() {
-        return this.builder.hasNightVision;
+        return this.hasNightVision;
     }
 
     public static final class Builder extends AttachmentBuilder {

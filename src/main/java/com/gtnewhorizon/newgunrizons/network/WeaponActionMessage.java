@@ -2,17 +2,24 @@ package com.gtnewhorizon.newgunrizons.network;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
+import lombok.Getter;
 
 /**
  * Client-to-server message requesting a weapon/magazine action that involves
  * server-side inventory operations (consuming ammo, swapping attachments, etc.).
  */
+@Getter
 public class WeaponActionMessage implements IMessage {
 
     public static final byte WEAPON_LOAD = 0;
     public static final byte WEAPON_UNLOAD = 1;
     public static final byte MAGAZINE_LOAD = 2;
     public static final byte CHANGE_ATTACHMENT = 3;
+    public static final byte CHANGE_FIRE_MODE = 4;
+    public static final byte TOGGLE_LASER = 5;
+    public static final byte ZOOM_IN = 6;
+    public static final byte ZOOM_OUT = 7;
+    public static final byte FIRE = 8;
 
     private byte actionType;
     private int slotIndex;
@@ -28,18 +35,6 @@ public class WeaponActionMessage implements IMessage {
         this.actionType = actionType;
         this.slotIndex = slotIndex;
         this.attachmentCategory = attachmentCategory;
-    }
-
-    public byte getActionType() {
-        return this.actionType;
-    }
-
-    public int getSlotIndex() {
-        return this.slotIndex;
-    }
-
-    public byte getAttachmentCategory() {
-        return this.attachmentCategory;
     }
 
     public void fromBytes(ByteBuf buf) {

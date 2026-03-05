@@ -40,7 +40,7 @@ dependencies {
 
     implementation("com.github.GTNewHorizons:GTNHLib:0.9.31:dev")
 
-    //api("com.github.GTNewHorizons:Angelica:2.0.0-alpha20:dev")
+    api("com.github.GTNewHorizons:Angelica:2.0.0-alpha20:dev")
 
     compileOnly("org.projectlombok:lombok:1.18.30")
     annotationProcessor("org.projectlombok:lombok:1.18.30")

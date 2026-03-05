@@ -14,10 +14,12 @@ import com.gtnewhorizon.newgunrizons.config.Tags;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.items.ItemBullet;
 import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
+import com.gtnewhorizon.newgunrizons.items.ItemScope;
+import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.util.InventoryUtils;
-import com.gtnewhorizon.newgunrizons.weapon.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.weapon.PlayerWeaponInstance;
 import com.gtnewhorizon.newgunrizons.weapon.WeaponAttachmentAspect;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponFireAspect;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -26,10 +28,15 @@ import cpw.mods.fml.relauncher.Side;
 
 /**
  * Server-side handler for {@link WeaponActionMessage}. Performs the authoritative
- * inventory operations (consuming ammo, swapping attachments, etc.) that were
- * previously handled by the permit evaluators.
+ * inventory operations (consuming ammo, swapping attachments, etc.).
  */
 public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionMessage, IMessage> {
+
+    private final WeaponFireAspect weaponFireAspect;
+
+    public WeaponActionMessageHandler(WeaponFireAspect weaponFireAspect) {
+        this.weaponFireAspect = weaponFireAspect;
+    }
 
     @Override
     public IMessage onMessage(WeaponActionMessage message, MessageContext ctx) {
@@ -51,23 +58,61 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
 
         switch (message.getActionType()) {
             case WeaponActionMessage.WEAPON_LOAD:
-                this.processWeaponLoad(player, itemStack);
+                this.processWeaponLoad(player, itemStack, slotIndex);
                 break;
             case WeaponActionMessage.WEAPON_UNLOAD:
-                this.processWeaponUnload(player, itemStack);
+                this.processWeaponUnload(player, itemStack, slotIndex);
                 break;
             case WeaponActionMessage.MAGAZINE_LOAD:
                 this.processMagazineLoad(player, itemStack);
                 break;
             case WeaponActionMessage.CHANGE_ATTACHMENT:
-                this.processChangeAttachment(player, itemStack, message.getAttachmentCategory());
+                this.processChangeAttachment(player, itemStack, message.getAttachmentCategory(), slotIndex);
+                break;
+            case WeaponActionMessage.CHANGE_FIRE_MODE:
+                this.processChangeFireMode(player, itemStack, slotIndex);
+                break;
+            case WeaponActionMessage.TOGGLE_LASER:
+                this.processToggleLaser(player, itemStack, slotIndex);
+                break;
+            case WeaponActionMessage.ZOOM_IN:
+                this.processZoom(player, itemStack, true, slotIndex);
+                break;
+            case WeaponActionMessage.ZOOM_OUT:
+                this.processZoom(player, itemStack, false, slotIndex);
+                break;
+            case WeaponActionMessage.FIRE:
+                this.weaponFireAspect.serverFire(player, itemStack, slotIndex);
                 break;
         }
 
         return null;
     }
 
-    private void processWeaponLoad(EntityPlayerMP player, ItemStack weaponStack) {
+    /**
+     * Gets the weapon instance from NBT, or creates and persists a fresh one if absent.
+     * Returns null if the item is not an {@link ItemWeapon}.
+     */
+    private ItemWeaponInstance getOrCreateInstance(EntityPlayerMP player, ItemStack weaponStack, int slotIndex) {
+        if (!(weaponStack.getItem() instanceof ItemWeapon)) {
+            return null;
+        }
+        ItemWeapon weapon = (ItemWeapon) weaponStack.getItem();
+
+        if (weaponStack.stackTagCompound == null) {
+            weaponStack.stackTagCompound = new NBTTagCompound();
+        }
+
+        ItemWeaponInstance instance = Tags.getInstance(weaponStack, ItemWeaponInstance.class);
+        if (instance == null) {
+            instance = weapon.createItemInstance(player, weaponStack, slotIndex);
+            Tags.setInstance(weaponStack, instance);
+        }
+        instance.setPlayer(player);
+        return instance;
+    }
+
+    private void processWeaponLoad(EntityPlayerMP player, ItemStack weaponStack, int slotIndex) {
         if (!(weaponStack.getItem() instanceof ItemWeapon weapon)) {
             return;
         }
@@ -76,10 +121,7 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
             weaponStack.stackTagCompound = new NBTTagCompound();
         }
 
-        PlayerWeaponInstance instance = Tags.getInstance(weaponStack, PlayerWeaponInstance.class);
-        if (instance != null) {
-            instance.setPlayer(player);
-        }
+        ItemWeaponInstance instance = getOrCreateInstance(player, weaponStack, slotIndex);
 
         List<ItemMagazine> compatibleMagazines = weapon.getCompatibleMagazines();
         List<ItemAttachment> compatibleBullets = weapon.getCompatibleAttachments(ItemBullet.class);
@@ -88,18 +130,15 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
             this.loadWithMagazine(player, weaponStack, weapon, instance, compatibleMagazines);
         } else if (!compatibleBullets.isEmpty()) {
             this.loadWithBullets(player, weaponStack, weapon, instance, compatibleBullets);
-        } else if (weapon.builder.ammo != null) {
+        } else if (weapon.getAmmo() != null) {
             this.loadWithGenericAmmo(player, weaponStack, weapon, instance);
         }
     }
 
     private void loadWithMagazine(EntityPlayerMP player, ItemStack weaponStack, ItemWeapon weapon,
-        PlayerWeaponInstance instance, List<ItemMagazine> compatibleMagazines) {
-        ItemAttachment existingMagazine = null;
-
-        if (instance != null) {
-            existingMagazine = WeaponAttachmentAspect.getActiveAttachment(AttachmentCategory.MAGAZINE, instance);
-        }
+        ItemWeaponInstance instance, List<ItemMagazine> compatibleMagazines) {
+        ItemAttachment existingMagazine = WeaponAttachmentAspect
+            .getActiveAttachment(AttachmentCategory.MAGAZINE, instance);
 
         if (existingMagazine != null) {
             // Magazine already attached — ammo already set from existing magazine
@@ -122,19 +161,17 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
             int ammo = Tags.getAmmo(magazineStack);
             Tags.setAmmo(weaponStack, ammo);
 
-            if (instance != null) {
-                WeaponAttachmentAspect.addAttachment((ItemAttachment) magazineStack.getItem(), instance);
-                instance.setAmmo(ammo);
-                instance.setLoadIterationCount(0);
-                Tags.setInstance(weaponStack, instance);
-            }
+            WeaponAttachmentAspect.addAttachment((ItemAttachment) magazineStack.getItem(), instance);
+            instance.setAmmo(ammo);
+            instance.setLoadIterationCount(0);
+            Tags.setInstance(weaponStack, instance);
             player.worldObj.playSoundToNearExcept(player, weapon.getReloadSound(), 1.0F, 1.0F);
         }
     }
 
     private void loadWithBullets(EntityPlayerMP player, ItemStack weaponStack, ItemWeapon weapon,
-        PlayerWeaponInstance instance, List<ItemAttachment> compatibleBullets) {
-        int currentAmmo = instance != null ? instance.getAmmo() : 0;
+        ItemWeaponInstance instance, List<ItemAttachment> compatibleBullets) {
+        int currentAmmo = instance.getAmmo();
         int maxToLoad = Math.min(weapon.getMaxBulletsPerReload(), weapon.getAmmoCapacity() - currentAmmo);
 
         ItemStack consumedStack = InventoryUtils
@@ -144,45 +181,36 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
             int ammo = currentAmmo + consumedStack.stackSize;
             Tags.setAmmo(weaponStack, ammo);
 
-            if (instance != null) {
-                instance.setAmmo(ammo);
-                if (weapon.hasIteratedLoad()) {
-                    instance.setLoadIterationCount(consumedStack.stackSize);
-                }
-                Tags.setInstance(weaponStack, instance);
+            instance.setAmmo(ammo);
+            if (weapon.hasIteratedLoad()) {
+                instance.setLoadIterationCount(consumedStack.stackSize);
             }
+            Tags.setInstance(weaponStack, instance);
 
             player.worldObj.playSoundToNearExcept(player, weapon.getReloadSound(), 1.0F, 1.0F);
         }
     }
 
     private void loadWithGenericAmmo(EntityPlayerMP player, ItemStack weaponStack, ItemWeapon weapon,
-        PlayerWeaponInstance instance) {
-        if (player.inventory.consumeInventoryItem(weapon.builder.ammo)) {
-            Tags.setAmmo(weaponStack, weapon.builder.ammoCapacity);
+        ItemWeaponInstance instance) {
+        if (player.inventory.consumeInventoryItem(weapon.getAmmo())) {
+            Tags.setAmmo(weaponStack, weapon.getAmmoCapacity());
 
-            if (instance != null) {
-                instance.setAmmo(weapon.builder.ammoCapacity);
-                Tags.setInstance(weaponStack, instance);
-            }
+            instance.setAmmo(weapon.getAmmoCapacity());
+            Tags.setInstance(weaponStack, instance);
             player.worldObj.playSoundToNearExcept(player, weapon.getReloadSound(), 1.0F, 1.0F);
         }
     }
 
-    private void processWeaponUnload(EntityPlayerMP player, ItemStack weaponStack) {
+    private void processWeaponUnload(EntityPlayerMP player, ItemStack weaponStack, int slotIndex) {
         if (!(weaponStack.getItem() instanceof ItemWeapon weapon)) {
             return;
         }
 
-        if (weaponStack.stackTagCompound == null) {
-            return;
-        }
-
-        PlayerWeaponInstance instance = Tags.getInstance(weaponStack, PlayerWeaponInstance.class);
+        ItemWeaponInstance instance = getOrCreateInstance(player, weaponStack, slotIndex);
         if (instance == null) {
             return;
         }
-        instance.setPlayer(player);
 
         // Remove magazine attachment
         int[] activeAttachmentIds = instance.getActiveAttachmentIds();
@@ -231,7 +259,8 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
         }
     }
 
-    private void processChangeAttachment(EntityPlayerMP player, ItemStack weaponStack, byte categoryOrdinal) {
+    private void processChangeAttachment(EntityPlayerMP player, ItemStack weaponStack, byte categoryOrdinal,
+        int slotIndex) {
         if (!(weaponStack.getItem() instanceof ItemWeapon weapon)) {
             return;
         }
@@ -241,11 +270,10 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
         }
         AttachmentCategory attachmentCategory = AttachmentCategory.VALUES[categoryOrdinal];
 
-        PlayerWeaponInstance instance = Tags.getInstance(weaponStack, PlayerWeaponInstance.class);
+        ItemWeaponInstance instance = getOrCreateInstance(player, weaponStack, slotIndex);
         if (instance == null) {
             return;
         }
-        instance.setPlayer(player);
 
         int[] originalActiveAttachmentIds = instance.getActiveAttachmentIds();
         int[] activeAttachmentIds = Arrays.copyOf(originalActiveAttachmentIds, originalActiveAttachmentIds.length);
@@ -265,44 +293,24 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
         }
 
         // Search for next compatible attachment in inventory
-        byte[] selectedAttachmentIndexes = instance.getSelectedAttachmentIds();
-        if (selectedAttachmentIndexes == null
-            || selectedAttachmentIndexes.length != AttachmentCategory.VALUES.length) {
-            return;
-        }
-
-        byte[] updatedIndexes = Arrays.copyOf(selectedAttachmentIndexes, selectedAttachmentIndexes.length);
-        int activeIndex = updatedIndexes[attachmentCategory.ordinal()];
         int foundSlot = -1;
         CompatibleAttachment foundCompatibleAttachment = null;
-        int offset = activeIndex + 1;
 
-        for (int i = 0; i < 37; ++i) {
-            int currentIndex = i + offset;
-            if (currentIndex >= 36) {
-                currentIndex -= 37;
-            }
-            if (currentIndex == -1) {
-                break;
-            }
-
-            ItemStack slotItemStack = player.inventory.getStackInSlot(currentIndex);
-            if (slotItemStack != null
-                && slotItemStack.getItem() instanceof ItemAttachment attachmentFromInventory) {
+        for (int i = 0; i < player.inventory.mainInventory.length; ++i) {
+            ItemStack slotItemStack = player.inventory.getStackInSlot(i);
+            if (slotItemStack != null && slotItemStack.getItem() instanceof ItemAttachment) {
+                ItemAttachment attachmentFromInventory = (ItemAttachment) slotItemStack.getItem();
                 if (attachmentFromInventory.getCategory() == attachmentCategory) {
                     CompatibleAttachment compatibleAttachment = weapon.getCompatibleAttachments()
                         .get(attachmentFromInventory);
                     if (compatibleAttachment != null && attachmentFromInventory != currentAttachment) {
-                        foundSlot = currentIndex;
+                        foundSlot = i;
                         foundCompatibleAttachment = compatibleAttachment;
                         break;
                     }
                 }
             }
         }
-
-        updatedIndexes[attachmentCategory.ordinal()] = (byte) foundSlot;
-        instance.setSelectedAttachmentIndexes(updatedIndexes);
 
         // Remove current attachment handler
         if (currentAttachment != null && currentAttachment.getRemoveHandler() != null) {
@@ -344,6 +352,70 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
         }
 
         instance.setActiveAttachmentIds(activeAttachmentIds);
+        Tags.setInstance(weaponStack, instance);
+    }
+
+    private void processChangeFireMode(EntityPlayerMP player, ItemStack weaponStack, int slotIndex) {
+        if (!(weaponStack.getItem() instanceof ItemWeapon weapon)) {
+            return;
+        }
+
+        ItemWeaponInstance instance = getOrCreateInstance(player, weaponStack, slotIndex);
+        if (instance == null) {
+            return;
+        }
+
+        List<Integer> modes = weapon.getMaxShots();
+        if (modes.size() <= 1) {
+            return;
+        }
+
+        int currentIndex = modes.indexOf(instance.getMaxShots());
+        int nextIndex = (currentIndex + 1) % modes.size();
+        instance.setMaxShots(modes.get(nextIndex));
+        Tags.setInstance(weaponStack, instance);
+    }
+
+    private void processToggleLaser(EntityPlayerMP player, ItemStack weaponStack, int slotIndex) {
+        ItemWeaponInstance instance = getOrCreateInstance(player, weaponStack, slotIndex);
+        if (instance == null) {
+            return;
+        }
+        instance.setLaserOn(!instance.isLaserOn());
+        Tags.setInstance(weaponStack, instance);
+    }
+
+    private void processZoom(EntityPlayerMP player, ItemStack weaponStack, boolean zoomIn, int slotIndex) {
+        if (!(weaponStack.getItem() instanceof ItemWeapon)) {
+            return;
+        }
+
+        ItemWeaponInstance instance = getOrCreateInstance(player, weaponStack, slotIndex);
+        if (instance == null) {
+            return;
+        }
+
+        Item scopeItem = instance.getAttachmentItemWithCategory(AttachmentCategory.SCOPE);
+        if (!(scopeItem instanceof ItemScope) || !((ItemScope) scopeItem).isOptical()) {
+            return;
+        }
+
+        float minZoom = ((ItemScope) scopeItem).getMinZoom();
+        float maxZoom = ((ItemScope) scopeItem).getMaxZoom();
+        float increment = (minZoom - maxZoom) / 20.0F;
+        float zoom = instance.getZoom();
+
+        if (zoomIn) {
+            if (zoom > maxZoom) {
+                zoom = Math.max(zoom - increment, maxZoom);
+            }
+        } else {
+            if (zoom < minZoom) {
+                zoom = Math.min(zoom + increment, minZoom);
+            }
+        }
+
+        instance.setZoom(zoom);
         Tags.setInstance(weaponStack, instance);
     }
 }
