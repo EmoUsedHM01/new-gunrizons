@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.action.MakarovTop;
 import com.gtnewhorizon.newgunrizons.model.sight.makarovfrontsight;
 import com.gtnewhorizon.newgunrizons.model.sight.makarovrearsight;
@@ -21,11 +20,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class MakarovPMFactory  {
+public class MakarovPMFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("MakarovPM")
+        return (new ItemWeapon.Builder()).withName("MakarovPM")
             .withFireRate(0.35F)
             .withRecoil(5.0F)
 
@@ -45,14 +43,14 @@ public class MakarovPMFactory  {
             .withInaccuracy(3.0F)
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Pistol",
                     "Damage: 5",
                     "Caliber: 9mm",
                     "Magazines:",
                     "10rnd 9mm Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.MakarovTop, true, (model) -> {
                 if (model instanceof MakarovTop) {
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -65,13 +63,10 @@ public class MakarovPMFactory  {
                 }
 
             })
-            .withCompatibleAttachment(
-                Magazines.Magazine9mm,
-                ((model) -> { GL11.glTranslatef(0.0F, 0.0F, 0.1F); }))
+            .withCompatibleAttachment(Magazines.Magazine9mm, ((model) -> { GL11.glTranslatef(0.0F, 0.0F, 0.1F); }))
             .withTextureName("MakarovPM")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new MakarovPM())
+                (new WeaponRenderer.Builder()).withModel(new MakarovPM())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -183,7 +178,7 @@ public class MakarovPMFactory  {
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L))
+                        new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonPositioningZooming((renderContext) -> {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);

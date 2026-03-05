@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -35,11 +34,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class AN94Factory  {
+public class AN94Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("AN94")
+        return (new ItemWeapon.Builder()).withName("AN94")
             .withFireRate(0.6F)
             .withRecoil(3.0F)
 
@@ -62,14 +60,14 @@ public class AN94Factory  {
                 CommonProxy.SteelPlate,
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Assault rifle",
                     "Damage: 6.9",
                     "Caliber: 5.45x39mm",
                     "Magazines:",
                     "30rnd 5.45x39mm Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Attachments.PSO1, (player, stack) -> {
                 GL11.glTranslatef(0.14F, -0.97F, -0.8F);
                 GL11.glScaled(1.2D, 1.2D, 1.2D);
@@ -144,8 +142,7 @@ public class AN94Factory  {
             })
             .withTextureName("AN94")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new AN94())
+                (new WeaponRenderer.Builder()).withModel(new AN94())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

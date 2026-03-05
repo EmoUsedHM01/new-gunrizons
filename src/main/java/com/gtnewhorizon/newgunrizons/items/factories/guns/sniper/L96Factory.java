@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -38,11 +37,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class L96Factory  {
+public class L96Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("L115A3")
+        return (new ItemWeapon.Builder()).withName("L115A3")
             .withFireRate(0.16F)
             .withEjectRoundRequired()
             .withEjectSpentRoundSound("L96BoltAction")
@@ -69,14 +67,14 @@ public class L96Factory  {
                 CommonProxy.SteelPlate,
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.BigSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Sniper rifle",
                     "Damage: 23",
                     "Caliber: .308 Winchester",
                     "Magazines:",
                     "10rnd .308 Winchester Magazine",
-                    "Fire Rate: Bolt Action")
-            )
+                    "Fire Rate: Bolt Action"))
             .withCompatibleAttachment(Magazines.L115Mag, ((model) -> {
                 GL11.glScaled(1.6D, 1.6D, 1.6D);
                 GL11.glTranslatef(-0.27F, 0.6F, -0.97F);
@@ -195,8 +193,7 @@ public class L96Factory  {
             })
             .withTextureName("L115")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new L96())
+                (new WeaponRenderer.Builder()).withModel(new L96())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

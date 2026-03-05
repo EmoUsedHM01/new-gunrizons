@@ -1,6 +1,5 @@
 package com.gtnewhorizon.newgunrizons.registry;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentBuilder;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;

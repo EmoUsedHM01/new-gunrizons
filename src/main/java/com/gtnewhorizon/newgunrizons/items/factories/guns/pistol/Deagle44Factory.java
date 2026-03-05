@@ -12,17 +12,15 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.weapon.Deagle;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class Deagle44Factory  {
+public class Deagle44Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("Deagle50")
+        return (new ItemWeapon.Builder()).withName("Deagle50")
             .withFireRate(0.3F)
             .withRecoil(7.0F)
 
@@ -42,14 +40,14 @@ public class Deagle44Factory  {
             .withFlashOffsetY(() -> { return 0.1F; })
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Pistol",
                     "Damage: 6.5",
                     "Caliber: .50 Action Express",
                     "Magazines:",
                     "7rnd .50 Action Express Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.Deagle44Top, true, (model) -> {})
             .withCompatibleAttachment(Magazines.Deagle50Mag, ((model) -> {
                 GL11.glTranslatef(-0.03F, -0.1F, 0.14F);
@@ -57,8 +55,7 @@ public class Deagle44Factory  {
             }))
             .withTextureName("Deagle44")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Deagle())
+                (new WeaponRenderer.Builder()).withModel(new Deagle())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -169,7 +166,7 @@ public class Deagle44Factory  {
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L))
+                        new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonPositioningZooming((renderContext) -> {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);

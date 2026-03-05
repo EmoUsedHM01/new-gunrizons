@@ -2,7 +2,6 @@ package com.gtnewhorizon.newgunrizons.items.factories.guns.sniper;
 
 import java.util.Arrays;
 
-
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 
@@ -39,11 +38,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class Kar98KFactory  {
+public class Kar98KFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("Kar98K")
+        return (new ItemWeapon.Builder()).withName("Kar98K")
             .withAmmoCapacity(5)
             .withFireRate(0.16F)
             .withIteratedLoad()
@@ -72,13 +70,13 @@ public class Kar98KFactory  {
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents,
                 Blocks.planks)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Bolt-action rifle",
                     "Damage: 30",
                     "Cartridge:",
                     "7.92x57mm Mauser Bullet",
-                    "Fire Rate: Bolt Action")
-            )
+                    "Fire Rate: Bolt Action"))
             .withCompatibleAttachment(AuxiliaryAttachments.Kar98Kaction, true, (model) -> {
                 if (model instanceof Kar98Kaction) {}
 
@@ -161,8 +159,7 @@ public class Kar98KFactory  {
             })
             .withTextureName("Kar98K")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Kar98K())
+                (new WeaponRenderer.Builder()).withModel(new Kar98K())
                     .withPrepareFirstLoadIterationAnimationDuration(1100)
                     .withAllLoadIterationAnimationsCompletedDuration(1000)
                     .withEntityPositioning((itemStack) -> {

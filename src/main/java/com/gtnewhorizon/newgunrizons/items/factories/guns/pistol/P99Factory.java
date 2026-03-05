@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.pistol;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.item.Item;
 
@@ -22,11 +20,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class P99Factory  {
+public class P99Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("P99")
+        return (new ItemWeapon.Builder()).withName("P99")
             .withFireRate(0.6F)
             .withRecoil(6.0F)
 
@@ -46,14 +43,14 @@ public class P99Factory  {
             .withInaccuracy(3.0F)
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Pistol",
                     "Damage: 5",
                     "Caliber: 9mm",
                     "Magazines:",
                     "15rnd 9mm Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.P99Slide, true, (model) -> {
                 if (model instanceof P99Slide) {
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -81,8 +78,7 @@ public class P99Factory  {
             })
             .withTextureName("P99")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new P99())
+                (new WeaponRenderer.Builder()).withModel(new P99())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -191,7 +187,7 @@ public class P99Factory  {
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L))
+                        new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonPositioningZooming((renderContext) -> {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);

@@ -12,18 +12,16 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.LPscope;
 import com.gtnewhorizon.newgunrizons.model.weapon.HecateII;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class HecateIIFactory  {
+public class HecateIIFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("HecateII")
+        return (new ItemWeapon.Builder()).withName("HecateII")
             .withFireRate(0.16F)
             .withEjectRoundRequired()
             .withEjectSpentRoundSound("L96BoltAction")
@@ -50,14 +48,14 @@ public class HecateIIFactory  {
                 CommonProxy.SteelPlate,
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.BigSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Sniper rifle",
                     "Damage: 35",
                     "Caliber: .50 BMG",
                     "Magazines:",
                     "7rnd .50 BMG Magazine",
-                    "Fire Rate: Bolt Action")
-            )
+                    "Fire Rate: Bolt Action"))
             .withCompatibleAttachment(Magazines.HecateIIMag, ((model) -> {
                 GL11.glTranslatef(0.0F, -0.25F, 0.0F);
                 GL11.glScaled(1.2D, 0.7D, 1.0D);
@@ -86,8 +84,7 @@ public class HecateIIFactory  {
             })
             .withTextureName("HecateII")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new HecateII())
+                (new WeaponRenderer.Builder()).withModel(new HecateII())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.6D, 0.6D, 0.6D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

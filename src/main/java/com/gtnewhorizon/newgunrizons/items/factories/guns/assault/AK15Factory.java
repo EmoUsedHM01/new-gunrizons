@@ -13,7 +13,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK12IronSight;
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
@@ -44,11 +43,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class AK15Factory  {
+public class AK15Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("AK15")
+        return (new ItemWeapon.Builder()).withName("AK15")
             .withFireRate(0.6F)
             .withRecoil(3.0F)
 
@@ -73,7 +71,8 @@ public class AK15Factory  {
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents,
                 Blocks.planks)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Assault rifle",
                     "Damage: 7.6",
                     "Caliber: 7.62x39mm",
@@ -81,15 +80,12 @@ public class AK15Factory  {
                     "30rnd 7.62x39mm Magazine",
                     "30rnd 7.62x39mm PMAG Magazine",
                     "75rnd 7.62x39mm Drum Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(AuxiliaryAttachments.AKaction, true, (model) -> {})
             .withCompatibleAttachment(
                 Magazines.Magazine762x39,
                 ((model) -> { GL11.glTranslatef(0.0F, -0.17F, 0.05F); }))
-            .withCompatibleAttachment(
-                Magazines.AK15Mag,
-                ((model) -> { GL11.glTranslatef(0.0F, -0.17F, 0.05F); }))
+            .withCompatibleAttachment(Magazines.AK15Mag, ((model) -> { GL11.glTranslatef(0.0F, -0.17F, 0.05F); }))
             .withCompatibleAttachment(Magazines.Mag75rnd762x39, ((model) -> {
                 GL11.glRotatef(-15.0F, 1.0F, 0.0F, 0.0F);
                 GL11.glTranslatef(0.011F, 0.59F, 0.05F);
@@ -265,8 +261,7 @@ public class AK15Factory  {
             })
             .withTextureName("AK15")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new AK15())
+                (new WeaponRenderer.Builder()).withModel(new AK15())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

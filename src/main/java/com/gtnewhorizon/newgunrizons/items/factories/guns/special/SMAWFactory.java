@@ -10,7 +10,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -30,11 +29,10 @@ import com.gtnewhorizon.newgunrizons.model.weapon.SMAW;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class SMAWFactory  {
+public class SMAWFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("SMAW")
+        return (new ItemWeapon.Builder()).withName("SMAW")
             .withAmmoCapacity(1)
             .withFireRate(0.5F)
             .withRecoil(2.0F)
@@ -109,13 +107,10 @@ public class SMAWFactory  {
                 }
 
             })
-            .withCompatibleAttachment(
-                Bullets.SMAWRocket,
-                ((model) -> { GL11.glTranslatef(0.0F, 0.0F, 0.07F); }))
+            .withCompatibleAttachment(Bullets.SMAWRocket, ((model) -> { GL11.glTranslatef(0.0F, 0.0F, 0.07F); }))
             .withTextureName("SMAW")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new SMAW())
+                (new WeaponRenderer.Builder()).withModel(new SMAW())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.6D, 0.6D, 0.6D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.action.P225Top;
 import com.gtnewhorizon.newgunrizons.model.sight.P226frontsight;
 import com.gtnewhorizon.newgunrizons.model.sight.P226rearsight;
@@ -21,11 +20,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class P226Factory  {
+public class P226Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("P226")
+        return (new ItemWeapon.Builder()).withName("P226")
             .withFireRate(0.6F)
             .withRecoil(6.0F)
 
@@ -45,14 +43,14 @@ public class P226Factory  {
             .withInaccuracy(3.0F)
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Pistol",
                     "Damage: 5",
                     "Caliber: 9mm",
                     "Magazines:",
                     "15rnd 9mm Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.P226Top, true, (model) -> {
                 if (model instanceof P225Top) {
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -70,17 +68,14 @@ public class P226Factory  {
                 GL11.glScaled(1.1D, 1.1D, 1.1D);
                 GL11.glRotatef(-90.0F, 0.0F, 0.0F, -4.0F);
             })
-            .withCompatibleAttachment(
-                Magazines.M9BerettaMag,
-                ((model) -> { GL11.glTranslatef(0.0F, 0.0F, 0.1F); }))
+            .withCompatibleAttachment(Magazines.M9BerettaMag, ((model) -> { GL11.glTranslatef(0.0F, 0.0F, 0.1F); }))
             .withCompatibleAttachment(Attachments.Silencer9mm, (model) -> {
                 GL11.glTranslatef(-0.25F, -1.2F, -4.6F);
                 GL11.glScaled(1.5D, 1.5D, 1.5D);
             })
             .withTextureName("P225")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new P220())
+                (new WeaponRenderer.Builder()).withModel(new P220())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -189,7 +184,7 @@ public class P226Factory  {
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L))
+                        new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonPositioningZooming((renderContext) -> {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);

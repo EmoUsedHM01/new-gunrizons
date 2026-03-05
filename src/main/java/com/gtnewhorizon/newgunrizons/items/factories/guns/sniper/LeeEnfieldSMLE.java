@@ -2,7 +2,6 @@ package com.gtnewhorizon.newgunrizons.items.factories.guns.sniper;
 
 import java.util.Arrays;
 
-
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 
@@ -37,11 +36,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class LeeEnfieldSMLE  {
+public class LeeEnfieldSMLE {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("LeeEnfieldSMLEMkIII")
+        return (new ItemWeapon.Builder()).withName("LeeEnfieldSMLEMkIII")
             .withAmmoCapacity(10)
             .withFireRate(0.16F)
             .withEjectRoundRequired()
@@ -67,13 +65,13 @@ public class LeeEnfieldSMLE  {
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents,
                 Blocks.planks)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Bolt-action rifle",
                     "Damage: 26",
                     "Cartridge:",
                     ".303 British Bullet",
-                    "Fire Rate: Bolt Action")
-            )
+                    "Fire Rate: Bolt Action"))
             .withCompatibleAttachment(AuxiliaryAttachments.LeeEnfieldSMLEaction, true, (model) -> {
                 if (model instanceof LeeEnfieldSMLEAction) {}
 
@@ -155,8 +153,7 @@ public class LeeEnfieldSMLE  {
             })
             .withTextureName("LeeEnfieldSMLE")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new LeeEnfieldSMLEMk3())
+                (new WeaponRenderer.Builder()).withModel(new LeeEnfieldSMLEMk3())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

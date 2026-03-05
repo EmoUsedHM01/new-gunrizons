@@ -1,5 +1,6 @@
 package com.gtnewhorizon.newgunrizons.client.render;
 
+import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -9,7 +10,7 @@ import com.gtnewhorizon.newgunrizons.model.ModelBullet;
 public class EntityBulletRenderer extends Render {
 
     private static final ResourceLocation DEFAULT_TEXTURE = new ResourceLocation(
-        "newgunrizons",
+        NewGunrizonsMod.MODID,
         "textures/effect/bullet44.png");
 
     private static final ModelBullet DEFAULT_MODEL = new ModelBullet();

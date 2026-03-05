@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -31,11 +30,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class Type100Factory  {
+public class Type100Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("Type100")
+        return (new ItemWeapon.Builder()).withName("Type100")
             .withFireRate(0.5F)
             .withRecoil(3.0F)
 
@@ -56,14 +54,14 @@ public class Type100Factory  {
             .withShellCasingVerticalOffset(-0.02F)
             .withCreativeTab(NewGunrizonsMod.SMGTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Submachine gun",
                     "Damage: 7.6",
                     "Caliber: 8x22mm Nambu",
                     "Magazines:",
                     "30rnd 8x22mm Nambu Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.Type100Mag, ((model) -> {}))
             .withCompatibleAttachment(AuxiliaryAttachments.Extra, true, (model) -> {
                 if (model instanceof G36CIron1) {
@@ -113,8 +111,7 @@ public class Type100Factory  {
             .withCompatibleAttachment(AuxiliaryAttachments.Type100action, true, (model) -> {})
             .withTextureName("Type100")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Type100())
+                (new WeaponRenderer.Builder()).withModel(new Type100())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -153,12 +150,8 @@ public class Type100Factory  {
 
                     })
                     .withFirstPersonCustomPositioning(Magazines.Type100Mag, (renderContext) -> {})
-                    .withFirstPersonPositioningCustomRecoiled(
-                        Magazines.Type100Mag,
-                        (renderContext) -> {})
-                    .withFirstPersonPositioningCustomZoomingRecoiled(
-                        Magazines.Type100Mag,
-                        (renderContext) -> {})
+                    .withFirstPersonPositioningCustomRecoiled(Magazines.Type100Mag, (renderContext) -> {})
+                    .withFirstPersonPositioningCustomZoomingRecoiled(Magazines.Type100Mag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(
                         AuxiliaryAttachments.Type100action.getRenderablePart(),
                         (renderContext) -> {})

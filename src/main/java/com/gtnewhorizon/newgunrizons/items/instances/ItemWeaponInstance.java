@@ -5,6 +5,7 @@ import java.util.Deque;
 import java.util.UUID;
 import java.util.concurrent.LinkedBlockingDeque;
 
+import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -85,12 +86,12 @@ public class ItemWeaponInstance extends ItemInstance<WeaponState> {
     {
         this.BLUR_SOURCE = (new ShaderEffect(
             BLUR_SOURCE_UUID,
-            new ResourceLocation("newgunrizons", "shaders/post/blur.json")))
+            new ResourceLocation(NewGunrizonsMod.MODID, "shaders/post/blur.json")))
                 .withUniform("Radius", (context) -> this.hasOpticScope() ? 10.0F : 5.0F)
                 .withUniform("Progress", (context) -> this.getAimChangeProgress());
         this.NIGHT_VISION_SOURCE = (new ShaderEffect(
             NIGHT_VISION_SOURCE_UUID,
-            new ResourceLocation("newgunrizons", "shaders/post/night-vision.json")))
+            new ResourceLocation(NewGunrizonsMod.MODID, "shaders/post/night-vision.json")))
                 .withUniform(
                     "IntensityAdjust",
                     (context) -> 40.0F - Minecraft.getMinecraft().gameSettings.gammaSetting * 38.0F)
@@ -99,7 +100,7 @@ public class ItemWeaponInstance extends ItemInstance<WeaponState> {
                     (context) -> 2.0F + 3.0F * Minecraft.getMinecraft().gameSettings.gammaSetting);
         this.VIGNETTE_SOURCE = (new ShaderEffect(
             VIGNETTE_SOURCE_UUID,
-            new ResourceLocation("newgunrizons", "shaders/post/vignette.json")))
+            new ResourceLocation(NewGunrizonsMod.MODID, "shaders/post/vignette.json")))
                 .withUniform("Radius", (context) -> this.getOpticScopeVignetteRadius(context.getPartialTicks()));
     }
 

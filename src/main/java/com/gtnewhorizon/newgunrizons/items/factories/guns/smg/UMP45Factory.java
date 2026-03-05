@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -41,11 +40,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class UMP45Factory  {
+public class UMP45Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("HKUMP45")
+        return (new ItemWeapon.Builder()).withName("HKUMP45")
             .withFireRate(0.6F)
             .withRecoil(2.3F)
 
@@ -65,14 +63,14 @@ public class UMP45Factory  {
             .withInaccuracy(2.0F)
             .withCreativeTab(NewGunrizonsMod.SMGTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Submachine gun",
                     "Damage: 6.8",
                     "Caliber: .45 ACP",
                     "Magazines:",
                     "26rnd .45 ACP Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.VectorMag, ((model) -> {
                 GL11.glTranslatef(-0.32F, 0.0F, 0.2F);
                 GL11.glScaled(1.0D, 1.0D, 1.3D);
@@ -220,8 +218,7 @@ public class UMP45Factory  {
             })
             .withTextureName("AK12")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new UMP45())
+                (new WeaponRenderer.Builder()).withModel(new UMP45())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

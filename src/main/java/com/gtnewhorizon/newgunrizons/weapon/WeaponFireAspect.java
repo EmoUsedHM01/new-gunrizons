@@ -19,6 +19,7 @@ import com.gtnewhorizon.newgunrizons.config.Tags;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.network.WeaponActionMessage;
+import com.gtnewhorizon.newgunrizons.registry.Sounds;
 import com.gtnewhorizon.newgunrizons.state.Aspect;
 import com.gtnewhorizon.newgunrizons.state.StateManager;
 
@@ -160,9 +161,9 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
             this.modContext.getStatusMessageCenter()
                 .addAlertMessage(message, 3, 250L, 200L);
             if (weaponInstance.getPlayer() instanceof EntityPlayer) {
-                if (this.modContext.getNoAmmoSound() != null) {
+                if (Sounds.DRY_FIRE != null) {
                     weaponInstance.getPlayer()
-                        .playSound(this.modContext.getNoAmmoSound(), 1.0F, 1.0F);
+                        .playSound(Sounds.DRY_FIRE, 1.0F, 1.0F);
                 }
             }
         }

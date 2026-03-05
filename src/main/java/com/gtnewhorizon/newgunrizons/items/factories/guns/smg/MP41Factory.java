@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.smg;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.item.Item;
 
@@ -32,11 +30,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class MP41Factory  {
+public class MP41Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("MP41")
+        return (new ItemWeapon.Builder()).withName("MP41")
             .withFireRate(0.7F)
             .withRecoil(3.0F)
 
@@ -58,13 +55,14 @@ public class MP41Factory  {
             .withShellCasingVerticalOffset(-0.02F)
             .withCreativeTab(NewGunrizonsMod.SMGTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
-                "Type: Submachine gun",
-                "Damage: 6",
-                "Caliber: 9mm",
-                "Magazines:",
-                "32rnd 9mm Magazine",
-                "Fire Rate: Auto"))
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
+                    "Type: Submachine gun",
+                    "Damage: 6",
+                    "Caliber: 9mm",
+                    "Magazines:",
+                    "32rnd 9mm Magazine",
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.MP40Mag, ((model) -> {
                 GL11.glTranslatef(-0.365F, 0.4F, -1.52F);
                 GL11.glScaled(1.2D, 1.0D, 1.0D);
@@ -120,8 +118,7 @@ public class MP41Factory  {
             .withCompatibleAttachment(AuxiliaryAttachments.MP40action, true, (model) -> {})
             .withTextureName("MP41")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new MP41())
+                (new WeaponRenderer.Builder()).withModel(new MP41())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -158,12 +155,8 @@ public class MP41Factory  {
                         GL11.glRotatef(2.0F, 0.0F, 0.0F, 1.0F);
                     })
                     .withFirstPersonCustomPositioning(Magazines.MP40Mag, (renderContext) -> {})
-                    .withFirstPersonPositioningCustomRecoiled(
-                        Magazines.MP40Mag,
-                        (renderContext) -> {})
-                    .withFirstPersonPositioningCustomZoomingRecoiled(
-                        Magazines.MP40Mag,
-                        (renderContext) -> {})
+                    .withFirstPersonPositioningCustomRecoiled(Magazines.MP40Mag, (renderContext) -> {})
+                    .withFirstPersonPositioningCustomZoomingRecoiled(Magazines.MP40Mag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(
                         AuxiliaryAttachments.MP40action.getRenderablePart(),
                         (renderContext) -> {})

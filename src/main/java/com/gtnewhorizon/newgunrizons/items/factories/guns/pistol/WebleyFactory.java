@@ -2,7 +2,6 @@ package com.gtnewhorizon.newgunrizons.items.factories.guns.pistol;
 
 import java.util.Arrays;
 
-
 import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
@@ -18,11 +17,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class WebleyFactory  {
+public class WebleyFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("WebleyMkVI")
+        return (new ItemWeapon.Builder()).withName("WebleyMkVI")
             .withAmmoCapacity(6)
             .withMaxBulletsPerReload(6)
             .withFireRate(0.3F)
@@ -46,12 +44,12 @@ public class WebleyFactory  {
             .withFlashOffsetY(() -> { return 0.06F; })
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Service Revolver",
                     "Damage: 7",
                     "Cartridge: .455 Webley Mk II Bullet",
-                    "Fire Rate: Double Action Revolver")
-            )
+                    "Fire Rate: Double Action Revolver"))
             .withCompatibleAttachment(
                 AuxiliaryAttachments.WebleyCylinder,
                 true,
@@ -63,8 +61,7 @@ public class WebleyFactory  {
             .withCompatibleBullet(Bullets.Bullet455, (model) -> {})
             .withTextureName("Webley")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Webley())
+                (new WeaponRenderer.Builder()).withModel(new Webley())
                     .withPrepareFirstLoadIterationAnimationDuration(900)
                     .withAllLoadIterationAnimationsCompletedDuration(400)
                     .withEntityPositioning((itemStack) -> {

@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.action.M1911Top;
 import com.gtnewhorizon.newgunrizons.model.sight.M1911frontsight;
 import com.gtnewhorizon.newgunrizons.model.sight.M1911rearsight;
@@ -21,11 +20,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class M1911Factory  {
+public class M1911Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("M1911")
+        return (new ItemWeapon.Builder()).withName("M1911")
             .withFireRate(0.5F)
             .withRecoil(5.0F)
 
@@ -45,14 +43,14 @@ public class M1911Factory  {
             .withInaccuracy(3.0F)
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Pistol",
                     "Damage: 5.5",
                     "Caliber: .45 ACP",
                     "Magazines:",
                     "10rnd .45 ACP Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.M1911Top, true, (model) -> {
                 if (model instanceof M1911Top) {
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -65,17 +63,14 @@ public class M1911Factory  {
                 }
 
             })
-            .withCompatibleAttachment(
-                Magazines.ColtM1911Mag,
-                ((model) -> { GL11.glTranslatef(0.0F, 0.2F, 0.12F); }))
+            .withCompatibleAttachment(Magazines.ColtM1911Mag, ((model) -> { GL11.glTranslatef(0.0F, 0.2F, 0.12F); }))
             .withCompatibleAttachment(Attachments.Silencer45ACP, (model) -> {
                 GL11.glTranslatef(-0.23F, -1.14F, -4.92F);
                 GL11.glScaled(1.5D, 1.5D, 1.5D);
             })
             .withTextureName("M1911")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new M1911())
+                (new WeaponRenderer.Builder()).withModel(new M1911())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -186,7 +181,7 @@ public class M1911Factory  {
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L))
+                        new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonPositioningZooming((renderContext) -> {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);

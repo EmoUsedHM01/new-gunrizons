@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.grip.Grip2;
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
@@ -32,11 +31,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class MP5KFactory  {
+public class MP5KFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("HKMP5K")
+        return (new ItemWeapon.Builder()).withName("HKMP5K")
             .withFireRate(0.75F)
             .withRecoil(2.7F)
 
@@ -56,14 +54,14 @@ public class MP5KFactory  {
             .withInaccuracy(2.0F)
             .withCreativeTab(NewGunrizonsMod.SMGTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Submachine gun",
                     "Damage: 5",
                     "Caliber: 9mm",
                     "Magazines:",
                     "25rnd 9mm Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.MP5KMag, ((model) -> {}))
             .withCompatibleAttachment(AuxiliaryAttachments.MP5KGrip, true, (model) -> {
                 if (model instanceof Grip2) {
@@ -123,8 +121,7 @@ public class MP5KFactory  {
             })
             .withTextureName("MP5K")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new MP5K())
+                (new WeaponRenderer.Builder()).withModel(new MP5K())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

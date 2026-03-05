@@ -31,8 +31,6 @@ public interface ModContext {
 
     void registerRenderableItem(String var1, Item var2, Object var3);
 
-    String registerSound(String var1);
-
     ItemInstanceRegistry getItemInstanceRegistry();
 
     WeaponReloadAspect getWeaponReloadAspect();
@@ -48,22 +46,6 @@ public interface ModContext {
     StatusMessageCenter getStatusMessageCenter();
 
     RecipeManager getRecipeManager();
-
-    String getZoomSound();
-
-    void setChangeZoomSound(String var1);
-
-    String getChangeFireModeSound();
-
-    void setChangeFireModeSound(String var1);
-
-    String getNoAmmoSound();
-
-    void setNoAmmoSound(String var1);
-
-    String getExplosionSound();
-
-    void setExplosionSound(String var1);
 
     void registerGrenadeWeapon(String var1, ItemGrenade var2, GrenadeRenderer var3);
 

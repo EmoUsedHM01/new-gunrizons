@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.Acog2;
 import com.gtnewhorizon.newgunrizons.model.sight.AcogReticle;
 import com.gtnewhorizon.newgunrizons.model.sight.AcogScope2;
@@ -27,11 +26,10 @@ import com.gtnewhorizon.newgunrizons.model.weapon.MP7;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class MP7Factory  {
+public class MP7Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("HKMP7")
+        return (new ItemWeapon.Builder()).withName("HKMP7")
             .withFireRate(0.8F)
             .withRecoil(3.3F)
 
@@ -50,14 +48,14 @@ public class MP7Factory  {
             .withFlashOffsetY(() -> { return 0.21F; })
             .withCreativeTab(NewGunrizonsMod.SMGTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Personal defense weapon",
                     "Damage: 6.6",
                     "Caliber: 4.6x30mm",
                     "Magazines:",
                     "20rnd 4.6x30mm Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.HKMP7Mag, ((model) -> {}))
             .withCompatibleAttachment(Attachments.ACOG, (player, stack) -> {
                 GL11.glTranslatef(0.01F, -1.66F, 1.0F);
@@ -146,8 +144,7 @@ public class MP7Factory  {
             })
             .withTextureName("AK12")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new MP7())
+                (new WeaponRenderer.Builder()).withModel(new MP7())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.grip.Grip2;
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
@@ -41,11 +40,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class MP9Factory  {
+public class MP9Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("MP9")
+        return (new ItemWeapon.Builder()).withName("MP9")
             .withFireRate(0.8F)
             .withRecoil(2.7F)
 
@@ -63,14 +61,14 @@ public class MP9Factory  {
             .withFlashOffsetY(() -> { return 0.22F; })
             .withCreativeTab(NewGunrizonsMod.SMGTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Submachine gun",
                     "Damage: 5",
                     "Caliber: 9mm",
                     "Magazines:",
                     "20rnd 9mm Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.G18Mag, ((model) -> {
                 GL11.glTranslatef(0.0F, 0.1F, -0.05F);
                 GL11.glScaled(0.9D, 0.9D, 0.9D);
@@ -201,8 +199,7 @@ public class MP9Factory  {
             })
             .withTextureName("AK12")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new MP9())
+                (new WeaponRenderer.Builder()).withModel(new MP9())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

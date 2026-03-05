@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.misc.AKRail;
 import com.gtnewhorizon.newgunrizons.model.misc.AKRail2;
 import com.gtnewhorizon.newgunrizons.model.misc.AKRail3;
@@ -47,11 +46,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class AUGA3Factory  {
+public class AUGA3Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("AUG A3")
+        return (new ItemWeapon.Builder()).withName("AUG A3")
             .withFireRate(0.7F)
             .withRecoil(3.5F)
 
@@ -71,14 +69,14 @@ public class AUGA3Factory  {
             .withShellCasingForwardOffset(-0.1F)
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Assault rifle",
                     "Damage: 7",
                     "Caliber: 5.56x45mm NATO",
                     "Magazines:",
                     "30rnd 5.56x45mm NATO Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(AuxiliaryAttachments.AUGAction, true, (model) -> {})
             .withCompatibleAttachment(Magazines.NATOMag1, ((model) -> {
                 GL11.glTranslatef(-0.335F, 0.9F, 1.2F);
@@ -263,8 +261,7 @@ public class AUGA3Factory  {
             })
             .withTextureName("AK12")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new AUGA3())
+                (new WeaponRenderer.Builder()).withModel(new AUGA3())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -37,11 +36,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class SV98Factory  {
+public class SV98Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("SV98")
+        return (new ItemWeapon.Builder()).withName("SV98")
             .withFireRate(0.16F)
             .withEjectRoundRequired()
             .withEjectSpentRoundSound("L96BoltAction")
@@ -68,14 +66,14 @@ public class SV98Factory  {
                 CommonProxy.SteelPlate,
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.BigSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Sniper rifle",
                     "Damage: 25",
                     "Caliber: 7.62x54mm",
                     "Magazines:",
                     "10rnd 7.62x54mm Magazine",
-                    "Fire Rate: Bolt Action")
-            )
+                    "Fire Rate: Bolt Action"))
             .withCompatibleAttachment(Magazines.SV98Mag, ((model) -> {
                 GL11.glScaled(1.55D, 1.6D, 1.6D);
                 GL11.glTranslatef(-0.28F, 0.51F, -0.97F);
@@ -190,8 +188,7 @@ public class SV98Factory  {
             })
             .withTextureName("sv98")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new SV98())
+                (new WeaponRenderer.Builder()).withModel(new SV98())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

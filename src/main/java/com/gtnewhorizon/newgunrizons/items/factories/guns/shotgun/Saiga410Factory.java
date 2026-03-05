@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.shotgun;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.item.Item;
 
@@ -36,11 +34,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class Saiga410Factory  {
+public class Saiga410Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("Saiga410")
+        return (new ItemWeapon.Builder()).withName("Saiga410")
             .withFireRate(0.4F)
             .withRecoil(8.0F)
 
@@ -66,15 +63,15 @@ public class Saiga410Factory  {
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents,
                 "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Shotgun",
                     "Damage per Pellet: 4.5",
                     "Pellets per Shot: 15",
                     "Cartridge: .410 Shotgun Shell",
                     "Magazines:",
                     "7rnd .410 Shell Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(Attachments.PSO1, (player, stack) -> {
                 GL11.glTranslatef(0.14F, -0.9F, -1.1F);
                 GL11.glScaled(1.2D, 1.2D, 1.2D);
@@ -99,9 +96,7 @@ public class Saiga410Factory  {
 
             })
             .withCompatibleAttachment(AuxiliaryAttachments.Saiga12action, true, (model) -> {})
-            .withCompatibleAttachment(
-                Magazines.Saiga410Mag,
-                ((model) -> {  }))
+            .withCompatibleAttachment(Magazines.Saiga410Mag, ((model) -> {}))
             .withCompatibleAttachment(Attachments.Silencer12Gauge, (model) -> {
                 GL11.glTranslatef(-0.22F, -1.1F, -8.9F);
                 GL11.glScaled(1.2D, 1.2D, 1.2D);
@@ -153,8 +148,7 @@ public class Saiga410Factory  {
             })
             .withTextureName("Saiga410")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Saiga410())
+                (new WeaponRenderer.Builder()).withModel(new Saiga410())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

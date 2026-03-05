@@ -47,7 +47,8 @@ public class HudRenderer {
         this.statusBarPosition = StatusBarPosition.TOP_RIGHT;
     }
 
-    public boolean renderWeaponHud(ScaledResolution resolution, ItemStack itemStack, ItemWeaponInstance weaponInstance) {
+    public boolean renderWeaponHud(ScaledResolution resolution, ItemStack itemStack,
+        ItemWeaponInstance weaponInstance) {
         ItemWeapon weaponItem = (ItemWeapon) itemStack.getItem();
         String crosshair = weaponItem != null ? weaponItem.getCrosshair(weaponInstance) : null;
         if (crosshair == null) {
@@ -169,12 +170,15 @@ public class HudRenderer {
                 .getAmmoCapacity();
         }
 
-        if (weaponInstance.getWeapon().getAmmoCapacity() == 0 && totalCapacity == 0) {
+        if (weaponInstance.getWeapon()
+            .getAmmoCapacity() == 0 && totalCapacity == 0) {
             return StatCollector.translateToLocalFormatted("gui.noMagazine");
         }
         return StatCollector.translateToLocalFormatted(
             "gui.ammoCounter",
-            weaponInstance.getWeapon().getCurrentAmmo() + "/" + totalCapacity);
+            weaponInstance.getWeapon()
+                .getCurrentAmmo() + "/"
+                + totalCapacity);
     }
 
     private boolean isInModifyingState(ItemWeaponInstance weaponInstance) {
@@ -183,8 +187,7 @@ public class HudRenderer {
     }
 
     private int getStatusBarXPosition(int width, String text, FontRenderer fontRender) {
-        if (statusBarPosition == StatusBarPosition.BOTTOM_RIGHT
-            || statusBarPosition == StatusBarPosition.TOP_RIGHT) {
+        if (statusBarPosition == StatusBarPosition.BOTTOM_RIGHT || statusBarPosition == StatusBarPosition.TOP_RIGHT) {
             int x = width - 80;
             int stringWidth = fontRender.getStringWidth(text);
             if (stringWidth > 80) {

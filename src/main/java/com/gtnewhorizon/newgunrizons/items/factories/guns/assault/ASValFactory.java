@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -33,11 +32,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class ASValFactory  {
+public class ASValFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("ASVal")
+        return (new ItemWeapon.Builder()).withName("ASVal")
             .withFireRate(0.5F)
             .withRecoil(2.8F)
 
@@ -61,15 +59,15 @@ public class ASValFactory  {
                 CommonProxy.MetalComponents,
                 "ingotSteel")
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Suppressed Assault Rifle",
                     "Damage: 7.5",
                     "Caliber: 9x39mm",
                     "Magazines:",
                     "10rnd 9x39mm Magazine",
                     "20rnd 9x39mm Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(AuxiliaryAttachments.VSSVintorezAction, true, (model) -> {})
             .withCompatibleAttachment(Attachments.PSO1, (player, stack) -> {
                 GL11.glTranslatef(0.14F, -0.9F, -1.2F);
@@ -139,8 +137,7 @@ public class ASValFactory  {
             })
             .withTextureName("ASVal")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new ASVal())
+                (new WeaponRenderer.Builder()).withModel(new ASVal())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -180,19 +177,11 @@ public class ASValFactory  {
 
                     })
                     .withFirstPersonCustomPositioning(Magazines.VSSVintorezMag, (renderContext) -> {})
-                    .withFirstPersonPositioningCustomRecoiled(
-                        Magazines.VSSVintorezMag,
-                        (renderContext) -> {})
-                    .withFirstPersonPositioningCustomZoomingRecoiled(
-                        Magazines.VSSVintorezMag,
-                        (renderContext) -> {})
+                    .withFirstPersonPositioningCustomRecoiled(Magazines.VSSVintorezMag, (renderContext) -> {})
+                    .withFirstPersonPositioningCustomZoomingRecoiled(Magazines.VSSVintorezMag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(Magazines.ASValMag, (renderContext) -> {})
-                    .withFirstPersonPositioningCustomRecoiled(
-                        Magazines.ASValMag,
-                        (renderContext) -> {})
-                    .withFirstPersonPositioningCustomZoomingRecoiled(
-                        Magazines.ASValMag,
-                        (renderContext) -> {})
+                    .withFirstPersonPositioningCustomRecoiled(Magazines.ASValMag, (renderContext) -> {})
+                    .withFirstPersonPositioningCustomZoomingRecoiled(Magazines.ASValMag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(
                         AuxiliaryAttachments.VSSVintorezAction.getRenderablePart(),
                         (renderContext) -> {})

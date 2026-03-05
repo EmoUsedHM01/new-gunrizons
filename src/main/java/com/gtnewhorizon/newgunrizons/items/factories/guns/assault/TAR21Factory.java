@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -41,11 +40,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class TAR21Factory  {
+public class TAR21Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("TAR21")
+        return (new ItemWeapon.Builder()).withName("TAR21")
             .withFireRate(0.6F)
             .withRecoil(3.5F)
 
@@ -64,14 +62,14 @@ public class TAR21Factory  {
             .withFlashOffsetY(() -> { return 0.18F; })
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Assault Rifle",
                     "Damage: 7",
                     "Caliber: 5.56x45mm NATO",
                     "Magazines:",
                     "30rnd 5.56x45mm NATO Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.NATOMag1, ((model) -> {
                 GL11.glTranslatef(-0.32F, 0.35F, 1.45F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -234,8 +232,7 @@ public class TAR21Factory  {
             })
             .withTextureName("TAR21")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new TAR21())
+                (new WeaponRenderer.Builder()).withModel(new TAR21())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

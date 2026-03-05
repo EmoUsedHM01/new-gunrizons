@@ -13,7 +13,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -34,11 +33,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class DragonuvFactory  {
+public class DragonuvFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("Dragunov")
+        return (new ItemWeapon.Builder()).withName("Dragunov")
             .withFireRate(0.6F)
             .withRecoil(3.0F)
 
@@ -62,14 +60,14 @@ public class DragonuvFactory  {
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents,
                 Blocks.planks)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Sniper rifle/Designated marksmen rifle",
                     "Damage: 15",
                     "Caliber: 7.62x54mm",
                     "Magazines:",
                     "11rnd 7.62x54mm Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Attachments.PSO1, (player, stack) -> {
                 GL11.glTranslatef(0.14F, -0.95F, -1.2F);
                 GL11.glScaled(1.2D, 1.2D, 1.2D);
@@ -141,8 +139,7 @@ public class DragonuvFactory  {
             })
             .withTextureName("Dragunov")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Dragunov())
+                (new WeaponRenderer.Builder()).withModel(new Dragunov())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

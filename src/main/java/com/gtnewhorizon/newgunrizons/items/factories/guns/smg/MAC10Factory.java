@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -31,11 +30,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class MAC10Factory  {
+public class MAC10Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("MAC-10")
+        return (new ItemWeapon.Builder()).withName("MAC-10")
             .withFireRate(0.9F)
             .withRecoil(2.7F)
 
@@ -55,14 +53,14 @@ public class MAC10Factory  {
             .withInaccuracy(2.0F)
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Machine pistol",
                     "Damage: 5.5",
                     "Caliber: .45 ACP",
                     "Magazines:",
                     "26rnd .45 ACP Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(AuxiliaryAttachments.Extra, true, (model) -> {
                 if (model instanceof M4Iron1) {
                     GL11.glTranslatef(0.162F, -1.75F, 1.0F);
@@ -107,17 +105,14 @@ public class MAC10Factory  {
                 }
 
             })
-            .withCompatibleAttachment(
-                Magazines.VectorMag,
-                ((model) -> { GL11.glTranslatef(-0.32F, 0.2F, 1.12F); }))
+            .withCompatibleAttachment(Magazines.VectorMag, ((model) -> { GL11.glTranslatef(-0.32F, 0.2F, 1.12F); }))
             .withCompatibleAttachment(Attachments.Silencer45ACP, (model) -> {
                 GL11.glTranslatef(-0.25F, -1.1F, -3.8F);
                 GL11.glScaled(1.5D, 1.5D, 1.5D);
             })
             .withTextureName("AK12")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new MAC10())
+                (new WeaponRenderer.Builder()).withModel(new MAC10())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

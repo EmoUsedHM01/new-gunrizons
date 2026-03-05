@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -31,11 +30,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class SPAS12Factory  {
+public class SPAS12Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("SPAS-12")
+        return (new ItemWeapon.Builder()).withName("SPAS-12")
             .withAmmoCapacity(9)
             .withMaxBulletsPerReload(8)
             .withFireRate(0.35F)
@@ -60,13 +58,13 @@ public class SPAS12Factory  {
             .withFlashOffsetY(() -> 0.1F)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
             .withCreativeTab(NewGunrizonsMod.ShotgunsTab)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Combat Shotgun",
                     "Damage per Pellet: 7",
                     "Pellets per Shot: 10",
                     "Ammo: 12 Gauge Shotgun Shell",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleBullet(Bullets.ShotgunShell, (model) -> {})
             .withCompatibleAttachment(Attachments.Silencer12Gauge, (model) -> {
                 GL11.glTranslatef(0.107F, -1.34F, -5.9F);
@@ -124,8 +122,7 @@ public class SPAS12Factory  {
                 GL11.glScaled(1.4D, 1.4D, 1.4D);
             })
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Spas12())
+                (new WeaponRenderer.Builder()).withModel(new Spas12())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

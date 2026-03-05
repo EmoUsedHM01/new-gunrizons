@@ -36,6 +36,7 @@ import com.gtnewhorizon.newgunrizons.entities.EntityShellCasing;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceFactory;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.network.WeaponActionMessage;
+import com.gtnewhorizon.newgunrizons.registry.Sounds;
 import com.gtnewhorizon.newgunrizons.util.Updatable;
 import com.gtnewhorizon.newgunrizons.weapon.*;
 
@@ -317,9 +318,9 @@ public class ItemWeapon extends Item
 
         this.modContext.getStatusMessageCenter()
             .addMessage(StatCollector.translateToLocalFormatted("gui.firearmMode", message), 1000L);
-        if (this.modContext.getChangeFireModeSound() != null) {
+        if (Sounds.FIRE_MODE_SWITCH != null) {
             instance.getPlayer()
-                .playSound(this.modContext.getChangeFireModeSound(), 1.0F, 1.0F);
+                .playSound(Sounds.FIRE_MODE_SWITCH, 1.0F, 1.0F);
         }
 
         this.modContext.getChannel()
@@ -390,9 +391,9 @@ public class ItemWeapon extends Item
                 .addMessage(
                     StatCollector.translateToLocalFormatted("gui.currentZoom", Math.round(ratio * 100.0F)),
                     800L);
-            if (this.modContext.getZoomSound() != null) {
+            if (Sounds.ZOOM != null) {
                 instance.getPlayer()
-                    .playSound(this.modContext.getZoomSound(), 1.0F, 1.0F);
+                    .playSound(Sounds.ZOOM, 1.0F, 1.0F);
             }
 
             this.modContext.getChannel()
@@ -420,9 +421,9 @@ public class ItemWeapon extends Item
                 .addMessage(
                     StatCollector.translateToLocalFormatted("gui.currentZoom", Math.round(ratio * 100.0F)),
                     800L);
-            if (this.modContext.getZoomSound() != null) {
+            if (Sounds.ZOOM != null) {
                 instance.getPlayer()
-                    .playSound(this.modContext.getZoomSound(), 1.0F, 1.0F);
+                    .playSound(Sounds.ZOOM, 1.0F, 1.0F);
             }
 
             this.modContext.getChannel()
@@ -579,12 +580,18 @@ public class ItemWeapon extends Item
         }
 
         public ItemWeapon.Builder withCrosshairRunning(String crosshairRunning) {
-            this.crosshairRunning = NewGunrizonsMod.MODID + ":" + "textures/crosshairs/" + crosshairRunning.toLowerCase() + ".png";
+            this.crosshairRunning = NewGunrizonsMod.MODID + ":"
+                + "textures/crosshairs/"
+                + crosshairRunning.toLowerCase()
+                + ".png";
             return this;
         }
 
         public ItemWeapon.Builder withCrosshairZoomed(String crosshairZoomed) {
-            this.crosshairZoomed = NewGunrizonsMod.MODID + ":" + "textures/crosshairs/" + crosshairZoomed.toLowerCase() + ".png";
+            this.crosshairZoomed = NewGunrizonsMod.MODID + ":"
+                + "textures/crosshairs/"
+                + crosshairZoomed.toLowerCase()
+                + ".png";
             return this;
         }
 
@@ -825,18 +832,18 @@ public class ItemWeapon extends Item
             }
 
             ItemWeapon weapon = new ItemWeapon(this, modContext);
-            weapon.shootSound = modContext.registerSound(this.shootSound);
+            weapon.shootSound = Sounds.resolve(this.shootSound);
             if (this.endOfShootSound != null) {
-                weapon.endOfShootSound = modContext.registerSound(this.endOfShootSound);
+                weapon.endOfShootSound = Sounds.resolve(this.endOfShootSound);
             }
 
-            weapon.reloadSound = modContext.registerSound(this.reloadSound);
-            weapon.reloadIterationSound = modContext.registerSound(this.reloadIterationSound);
-            weapon.allReloadIterationsCompletedSound = modContext.registerSound(this.allReloadIterationsCompletedSound);
-            weapon.unloadSound = modContext.registerSound(this.unloadSound);
-            weapon.silencedShootSound = modContext.registerSound(this.silencedShootSound);
+            weapon.reloadSound = Sounds.resolve(this.reloadSound);
+            weapon.reloadIterationSound = Sounds.resolve(this.reloadIterationSound);
+            weapon.allReloadIterationsCompletedSound = Sounds.resolve(this.allReloadIterationsCompletedSound);
+            weapon.unloadSound = Sounds.resolve(this.unloadSound);
+            weapon.silencedShootSound = Sounds.resolve(this.silencedShootSound);
             if (this.ejectSpentRoundSound != null) {
-                weapon.ejectSpentRoundSound = modContext.registerSound(this.ejectSpentRoundSound);
+                weapon.ejectSpentRoundSound = Sounds.resolve(this.ejectSpentRoundSound);
             }
 
             weapon.setCreativeTab(this.creativeTab);

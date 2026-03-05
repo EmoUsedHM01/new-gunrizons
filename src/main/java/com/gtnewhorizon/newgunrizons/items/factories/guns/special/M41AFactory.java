@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -31,11 +30,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class M41AFactory  {
+public class M41AFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("M41A")
+        return (new ItemWeapon.Builder()).withName("M41A")
             .withFireRate(1.0F)
             .withRecoil(1.7F)
 
@@ -57,7 +55,8 @@ public class M41AFactory  {
                 CommonProxy.MetalComponents,
                 CommonProxy.MiniSteelPlate,
                 "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "--ALIEN was a good movie--",
                     "",
                     "Type: Pulse rifle",
@@ -65,8 +64,7 @@ public class M41AFactory  {
                     "Caliber: 10x24mm",
                     "Magazines:",
                     "99rnd 10x24mm Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.M41AMag, ((model) -> {}))
             .withTextureName("M41A")
             .withCompatibleAttachment(AuxiliaryAttachments.Extra, true, (model) -> {
@@ -113,8 +111,7 @@ public class M41AFactory  {
 
             })
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new M41A())
+                (new WeaponRenderer.Builder()).withModel(new M41A())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

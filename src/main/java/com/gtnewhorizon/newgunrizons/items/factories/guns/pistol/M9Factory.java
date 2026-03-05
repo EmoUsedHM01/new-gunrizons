@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.action.M9Top;
 import com.gtnewhorizon.newgunrizons.model.sight.M9rearsight;
 import com.gtnewhorizon.newgunrizons.model.sight.m9frontsight;
@@ -21,11 +20,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class M9Factory  {
+public class M9Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("M9")
+        return (new ItemWeapon.Builder()).withName("M9")
             .withFireRate(0.4F)
             .withRecoil(5.0F)
 
@@ -45,14 +43,14 @@ public class M9Factory  {
             .withInaccuracy(3.0F)
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Pistol",
                     "Damage: 5",
                     "Caliber: 9mm",
                     "Magazines:",
                     "15rnd 9mm Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.M9Top, true, (model) -> {
                 if (model instanceof M9Top) {
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -65,17 +63,14 @@ public class M9Factory  {
                 }
 
             })
-            .withCompatibleAttachment(
-                Magazines.M9BerettaMag,
-                ((model) -> { GL11.glTranslatef(0.0F, 0.1F, 0.1F); }))
+            .withCompatibleAttachment(Magazines.M9BerettaMag, ((model) -> { GL11.glTranslatef(0.0F, 0.1F, 0.1F); }))
             .withCompatibleAttachment(Attachments.Silencer9mm, (model) -> {
                 GL11.glTranslatef(-0.22F, -1.22F, -4.2F);
                 GL11.glScaled(1.3D, 1.3D, 1.3D);
             })
             .withTextureName("M9")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new M9())
+                (new WeaponRenderer.Builder()).withModel(new M9())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -186,7 +181,7 @@ public class M9Factory  {
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L))
+                        new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonPositioningZooming((renderContext) -> {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);

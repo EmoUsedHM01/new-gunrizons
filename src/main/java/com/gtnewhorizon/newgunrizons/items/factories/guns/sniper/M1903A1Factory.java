@@ -2,7 +2,6 @@ package com.gtnewhorizon.newgunrizons.items.factories.guns.sniper;
 
 import java.util.Arrays;
 
-
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 
@@ -35,11 +34,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class M1903A1Factory  {
+public class M1903A1Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("M1903A1")
+        return (new ItemWeapon.Builder()).withName("M1903A1")
             .withAmmoCapacity(5)
             .withFireRate(0.16F)
             .withIteratedLoad()
@@ -72,13 +70,13 @@ public class M1903A1Factory  {
                 Blocks.planks,
                 'F',
                 CommonProxy.SteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Bolt-action rifle",
                     "Damage: 27",
                     "Cartridge:",
                     ".30-06 Springfield Bullet",
-                    "Fire Rate: Bolt Action")
-            )
+                    "Fire Rate: Bolt Action"))
             .withCompatibleAttachment(AuxiliaryAttachments.SpringfieldAction, true, (model) -> {
                 if (model instanceof SpringfieldAction) {}
 
@@ -132,24 +130,26 @@ public class M1903A1Factory  {
                 }
 
             })
-            .withCompatibleAttachment(Attachments.Unertl, true, true, (player, stack) -> {
-                GL11.glScaled(1.0D, 1.0D, 1.0D);
-            }, (model) -> {
-                if (model instanceof UnertlReticle) {
-                    GL11.glTranslatef(-0.157F, -1.599F, -0.569F);
-                    GL11.glScaled(0.012D, 0.012D, 0.012D);
-                } else if (model instanceof M1903A1scope) {
-                    GL11.glScaled(1.0D, 1.0D, 1.0D);
-                } else if (model instanceof M1903A1scope2) {
-                    GL11.glTranslatef(-0.2F, -1.56F, -1.5F);
-                    GL11.glScaled(0.37D, 0.37D, 0.6D);
-                }
+            .withCompatibleAttachment(
+                Attachments.Unertl,
+                true,
+                true,
+                (player, stack) -> { GL11.glScaled(1.0D, 1.0D, 1.0D); },
+                (model) -> {
+                    if (model instanceof UnertlReticle) {
+                        GL11.glTranslatef(-0.157F, -1.599F, -0.569F);
+                        GL11.glScaled(0.012D, 0.012D, 0.012D);
+                    } else if (model instanceof M1903A1scope) {
+                        GL11.glScaled(1.0D, 1.0D, 1.0D);
+                    } else if (model instanceof M1903A1scope2) {
+                        GL11.glTranslatef(-0.2F, -1.56F, -1.5F);
+                        GL11.glScaled(0.37D, 0.37D, 0.6D);
+                    }
 
-            })
+                })
             .withTextureName("M1903A1")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new M1903A1())
+                (new WeaponRenderer.Builder()).withModel(new M1903A1())
                     .withPrepareFirstLoadIterationAnimationDuration(1100)
                     .withAllLoadIterationAnimationsCompletedDuration(1000)
                     .withEntityPositioning((itemStack) -> {

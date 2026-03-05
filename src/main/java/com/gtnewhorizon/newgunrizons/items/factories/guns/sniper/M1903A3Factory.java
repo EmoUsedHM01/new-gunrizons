@@ -2,7 +2,6 @@ package com.gtnewhorizon.newgunrizons.items.factories.guns.sniper;
 
 import java.util.Arrays;
 
-
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 
@@ -33,11 +32,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class M1903A3Factory  {
+public class M1903A3Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("M1903A3")
+        return (new ItemWeapon.Builder()).withName("M1903A3")
             .withAmmoCapacity(5)
             .withFireRate(0.16F)
             .withIteratedLoad()
@@ -66,13 +64,13 @@ public class M1903A3Factory  {
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents,
                 Blocks.planks)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Bolt-action rifle",
                     "Damage: 27",
                     "Cartridge:",
                     ".30-06 Springfield Bullet",
-                    "Fire Rate: Bolt Action")
-            )
+                    "Fire Rate: Bolt Action"))
             .withCompatibleAttachment(AuxiliaryAttachments.SpringfieldAction, true, (model) -> {
                 if (model instanceof SpringfieldAction) {}
 
@@ -128,8 +126,7 @@ public class M1903A3Factory  {
             })
             .withTextureName("M1903A3")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Springfield())
+                (new WeaponRenderer.Builder()).withModel(new Springfield())
                     .withPrepareFirstLoadIterationAnimationDuration(1100)
                     .withAllLoadIterationAnimationsCompletedDuration(1000)
                     .withEntityPositioning((itemStack) -> {

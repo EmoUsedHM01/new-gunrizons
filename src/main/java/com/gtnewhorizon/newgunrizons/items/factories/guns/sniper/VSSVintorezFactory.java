@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -33,11 +32,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class VSSVintorezFactory  {
+public class VSSVintorezFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("VSSVintorez")
+        return (new ItemWeapon.Builder()).withName("VSSVintorez")
             .withFireRate(0.4F)
             .withRecoil(2.5F)
 
@@ -60,15 +58,15 @@ public class VSSVintorezFactory  {
                 CommonProxy.MetalComponents,
                 "ingotSteel")
             .withCreativeTab(NewGunrizonsMod.SnipersTab)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Suppressed Sniper Rifle",
                     "Damage: 7.5",
                     "Caliber: 9x39mm",
                     "Magazines:",
                     "10rnd 9x39mm Magazine",
                     "20rnd 9x39mm Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.VSSVintorezAction, true, (model) -> {})
             .withCompatibleAttachment(Attachments.PSO1, (player, stack) -> {
                 GL11.glTranslatef(0.14F, -0.9F, -1.2F);
@@ -138,8 +136,7 @@ public class VSSVintorezFactory  {
             })
             .withTextureName("VSSVintorez")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new VSSVintorez())
+                (new WeaponRenderer.Builder()).withModel(new VSSVintorez())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -179,19 +176,11 @@ public class VSSVintorezFactory  {
 
                     })
                     .withFirstPersonCustomPositioning(Magazines.VSSVintorezMag, (renderContext) -> {})
-                    .withFirstPersonPositioningCustomRecoiled(
-                        Magazines.VSSVintorezMag,
-                        (renderContext) -> {})
-                    .withFirstPersonPositioningCustomZoomingRecoiled(
-                        Magazines.VSSVintorezMag,
-                        (renderContext) -> {})
+                    .withFirstPersonPositioningCustomRecoiled(Magazines.VSSVintorezMag, (renderContext) -> {})
+                    .withFirstPersonPositioningCustomZoomingRecoiled(Magazines.VSSVintorezMag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(Magazines.ASValMag, (renderContext) -> {})
-                    .withFirstPersonPositioningCustomRecoiled(
-                        Magazines.ASValMag,
-                        (renderContext) -> {})
-                    .withFirstPersonPositioningCustomZoomingRecoiled(
-                        Magazines.ASValMag,
-                        (renderContext) -> {})
+                    .withFirstPersonPositioningCustomRecoiled(Magazines.ASValMag, (renderContext) -> {})
+                    .withFirstPersonPositioningCustomZoomingRecoiled(Magazines.ASValMag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(
                         AuxiliaryAttachments.VSSVintorezAction.getRenderablePart(),
                         (renderContext) -> {})

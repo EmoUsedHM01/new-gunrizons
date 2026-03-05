@@ -16,6 +16,7 @@ import com.gtnewhorizon.newgunrizons.attachment.AttachmentBuilder;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.attachment.Part;
 import com.gtnewhorizon.newgunrizons.config.ModContext;
+import com.gtnewhorizon.newgunrizons.registry.Sounds;
 import com.gtnewhorizon.newgunrizons.config.Tags;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceFactory;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemMagazineInstance;
@@ -122,7 +123,7 @@ public class ItemMagazine extends ItemAttachment
             ItemMagazine magazine = new ItemMagazine(this.ammo);
             magazine.compatibleBullets = new ArrayList<>(this.compatibleBullets);
             if (this.reloadSound != null) {
-                magazine.reloadSound = modContext.registerSound(this.reloadSound);
+                magazine.reloadSound = Sounds.resolve(this.reloadSound);
             }
 
             magazine.modContext = modContext;

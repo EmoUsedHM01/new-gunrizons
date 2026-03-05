@@ -13,17 +13,15 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.weapon.Duplet;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class DupletFactory  {
+public class DupletFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("Duplet")
+        return (new ItemWeapon.Builder()).withName("Duplet")
             .withAmmoCapacity(7)
             .withMaxBulletsPerReload(2)
             .withFireRate(0.6F)
@@ -50,19 +48,18 @@ public class DupletFactory  {
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents,
                 Blocks.planks)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Double Barrel Shotgun",
                     "Damage per Pellet: 10",
                     "Pellets per Shot: 10",
                     "Ammo: 12 Gauge Shotgun Shell",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.DupletBarrels, true, (model) -> {})
             .withCompatibleBullet(Bullets.ShotgunShell, (model) -> {})
             .withTextureName("Duplet")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Duplet())
+                (new WeaponRenderer.Builder()).withModel(new Duplet())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

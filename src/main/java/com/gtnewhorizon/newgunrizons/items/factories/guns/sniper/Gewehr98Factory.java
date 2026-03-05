@@ -2,7 +2,6 @@ package com.gtnewhorizon.newgunrizons.items.factories.guns.sniper;
 
 import java.util.Arrays;
 
-
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 
@@ -41,11 +40,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class Gewehr98Factory  {
+public class Gewehr98Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("Gewehr98")
+        return (new ItemWeapon.Builder()).withName("Gewehr98")
             .withAmmoCapacity(5)
             .withFireRate(0.16F)
             .withEjectRoundRequired()
@@ -73,13 +71,13 @@ public class Gewehr98Factory  {
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents,
                 Blocks.planks)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Bolt-action rifle",
                     "Damage: 35",
                     "Cartridge:",
                     "7.92x57mm Mauser Bullet",
-                    "Fire Rate: Bolt Action")
-            )
+                    "Fire Rate: Bolt Action"))
             .withCompatibleAttachment(AuxiliaryAttachments.Gewehr98Action, true, (model) -> {
                 if (model instanceof Gewehr98Action) {}
 
@@ -180,8 +178,7 @@ public class Gewehr98Factory  {
             })
             .withTextureName("Gewehr98")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Gewehr98())
+                (new WeaponRenderer.Builder()).withModel(new Gewehr98())
                     .withPrepareFirstLoadIterationAnimationDuration(1100)
                     .withAllLoadIterationAnimationsCompletedDuration(1000)
                     .withEntityPositioning((itemStack) -> {

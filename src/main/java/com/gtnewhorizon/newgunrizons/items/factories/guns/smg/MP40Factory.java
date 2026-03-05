@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -31,11 +30,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class MP40Factory  {
+public class MP40Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("MP40")
+        return (new ItemWeapon.Builder()).withName("MP40")
             .withFireRate(0.6F)
             .withRecoil(3.0F)
 
@@ -56,14 +54,14 @@ public class MP40Factory  {
             .withShellCasingVerticalOffset(-0.02F)
             .withCreativeTab(NewGunrizonsMod.SMGTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Submachine gun",
                     "Damage: 5",
                     "Caliber: 9mm",
                     "Magazines:",
                     "32rnd 9mm Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.MP40Mag, ((model) -> {
                 GL11.glTranslatef(-0.365F, 0.4F, -1.52F);
                 GL11.glScaled(1.2D, 1.0D, 1.0D);
@@ -119,8 +117,7 @@ public class MP40Factory  {
             .withCompatibleAttachment(AuxiliaryAttachments.MP40action, true, (model) -> {})
             .withTextureName("MP40")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new MP40())
+                (new WeaponRenderer.Builder()).withModel(new MP40())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -159,12 +156,8 @@ public class MP40Factory  {
 
                     })
                     .withFirstPersonCustomPositioning(Magazines.MP40Mag, (renderContext) -> {})
-                    .withFirstPersonPositioningCustomRecoiled(
-                        Magazines.MP40Mag,
-                        (renderContext) -> {})
-                    .withFirstPersonPositioningCustomZoomingRecoiled(
-                        Magazines.MP40Mag,
-                        (renderContext) -> {})
+                    .withFirstPersonPositioningCustomRecoiled(Magazines.MP40Mag, (renderContext) -> {})
+                    .withFirstPersonPositioningCustomZoomingRecoiled(Magazines.MP40Mag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(
                         AuxiliaryAttachments.MP40action.getRenderablePart(),
                         (renderContext) -> {})

@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.sniper;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -37,11 +35,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class SVT40Factory  {
+public class SVT40Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("SVT40")
+        return (new ItemWeapon.Builder()).withName("SVT40")
             .withFireRate(0.4F)
             .withRecoil(4.0F)
 
@@ -65,14 +62,14 @@ public class SVT40Factory  {
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents,
                 Blocks.planks)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Semi-automatic Battle Rifle",
                     "Damage: 13",
                     "Caliber: 7.62x54mm",
                     "Magazines:",
                     "10rnd 7.62x54mm Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(Attachments.PUscope, (player, stack) -> {
                 GL11.glTranslatef(0.4F, -1.2F, 0.2F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -97,9 +94,7 @@ public class SVT40Factory  {
                 GL11.glRotatef(-5.0F, 1.0F, 0.0F, 0.0F);
             })
             .withCompatibleAttachment(AuxiliaryAttachments.SVT40action, true, (model) -> {})
-            .withCompatibleAttachment(
-                Magazines.SVT40mag,
-                ((model) -> { GL11.glTranslatef(0.0F, -0.17F, 0.05F); }))
+            .withCompatibleAttachment(Magazines.SVT40mag, ((model) -> { GL11.glTranslatef(0.0F, -0.17F, 0.05F); }))
             .withCompatibleAttachment(Attachments.Silencer762x54, (model) -> {
                 GL11.glTranslatef(-0.2F, -0.7F, -8.3F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -149,8 +144,7 @@ public class SVT40Factory  {
             })
             .withTextureName("svt40")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new SVT40())
+                (new WeaponRenderer.Builder()).withModel(new SVT40())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

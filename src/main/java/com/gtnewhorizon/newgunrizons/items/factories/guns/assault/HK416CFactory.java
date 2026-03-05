@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -40,11 +39,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class HK416CFactory  {
+public class HK416CFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("HK416C")
+        return (new ItemWeapon.Builder()).withName("HK416C")
             .withFireRate(0.7F)
             .withRecoil(2.8F)
 
@@ -63,7 +61,8 @@ public class HK416CFactory  {
             .withFlashOffsetY(() -> { return 0.1F; })
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Assault rifle/Carbine",
                     "Damage: 7",
                     "Caliber: 5.56x45mm NATO",
@@ -72,8 +71,7 @@ public class HK416CFactory  {
                     "20rnd 5.56x45mm NATO Magazine",
                     "30rnd 5.56x45mm NATO PMAG Magazine",
                     "100rnd 5.56x45mm NATO Beta-C Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.NATOMag1, ((model) -> {
                 GL11.glTranslatef(-0.35F, 0.5F, -1.25F);
                 GL11.glScaled(1.15D, 1.2D, 1.15D);
@@ -301,8 +299,7 @@ public class HK416CFactory  {
             })
             .withTextureName("AK12")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new HK416C())
+                (new WeaponRenderer.Builder()).withModel(new HK416C())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -334,8 +331,7 @@ public class HK416CFactory  {
                         GL11.glScalef(3.0F, 3.0F, 3.0F);
                         GL11.glTranslatef(0.35F, 1.0F, -0.4F);
                         GL11.glRotatef(-0.5F, 1.0F, 0.0F, 0.0F);
-                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.AKMIron)) {
-                        }
+                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.AKMIron)) {}
 
                         if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.ACOG)) {
                             GL11.glTranslatef(0.001F, -0.005F, 0.67F);
@@ -512,8 +508,7 @@ public class HK416CFactory  {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScalef(3.0F, 3.0F, 3.0F);
                         GL11.glTranslatef(0.35F, 1.0F, -0.525F);
-                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.AKMIron)) {
-                        }
+                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.AKMIron)) {}
 
                         if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.ACOG)) {
                             GL11.glTranslatef(0.001F, -0.005F, 0.75F);

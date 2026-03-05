@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -32,11 +31,10 @@ import com.gtnewhorizon.newgunrizons.model.weapon.KN44;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 
-public class KN44Factory  {
+public class KN44Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("KN44")
+        return (new ItemWeapon.Builder()).withName("KN44")
             .withFireRate(0.6F)
             .withRecoil(2.3F)
 
@@ -55,15 +53,15 @@ public class KN44Factory  {
             .withFlashOffsetY(() -> { return 0.12F; })
             .withCreativeTab(NewGunrizonsMod.FunGunsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Assault Rifle",
                     "Damage: 7.7",
                     "Caliber: 5.56x39mm",
                     "Magazines:",
                     "30rnd 5.56x39mm Magazine (Type 2)",
                     "45rnd 5.56x39mm Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(AuxiliaryAttachments.Extra, true, (model) -> {
                 if (model instanceof G36CIron1) {
                     GL11.glTranslatef(-0.17F, -1.155F, -0.1F);
@@ -142,8 +140,7 @@ public class KN44Factory  {
             })
             .withTextureName("KN44")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new KN44())
+                (new WeaponRenderer.Builder()).withModel(new KN44())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.6D, 0.6D, 0.6D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

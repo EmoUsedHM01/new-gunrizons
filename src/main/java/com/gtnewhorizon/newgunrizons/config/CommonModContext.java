@@ -1,8 +1,5 @@
 package com.gtnewhorizon.newgunrizons.config;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -65,16 +62,8 @@ public class CommonModContext implements ModContext {
     protected MagazineReloadAspect magazineReloadAspect;
     @Getter
     protected ItemInstanceRegistry itemInstanceRegistry;
-    private final Map<ResourceLocation, String> registeredSounds = new HashMap<>();
     @Getter
     private RecipeManager recipeManager;
-    private String changeZoomSound;
-    @Getter
-    private String changeFireModeSound;
-    @Getter
-    private String noAmmoSound;
-    @Getter
-    private String explosionSound;
     private int modEntityID = 256;
     @Getter
     private GrenadeAttackAspect grenadeAttackAspect;
@@ -135,24 +124,6 @@ public class CommonModContext implements ModContext {
         return false;
     }
 
-    public String registerSound(String sound) {
-        if (sound == null) {
-            return null;
-        } else {
-            ResourceLocation soundResourceLocation = new ResourceLocation(NewGunrizonsMod.MODID, sound);
-            return this.registerSound(soundResourceLocation);
-        }
-    }
-
-    protected String registerSound(ResourceLocation soundResourceLocation) {
-        String result = this.registeredSounds.get(soundResourceLocation);
-        if (result == null) {
-            result = soundResourceLocation.toString();
-            this.registeredSounds.put(soundResourceLocation, result);
-        }
-
-        return result;
-    }
 
     public void registerWeapon(String name, ItemWeapon weapon, WeaponRenderer renderer) {
         GameRegistry.registerItem(weapon, name);
@@ -178,25 +149,6 @@ public class CommonModContext implements ModContext {
         throw new IllegalStateException();
     }
 
-    public void setChangeZoomSound(String sound) {
-        this.changeZoomSound = this.registerSound(sound.toLowerCase());
-    }
-
-    public String getZoomSound() {
-        return this.changeZoomSound;
-    }
-
-    public void setChangeFireModeSound(String sound) {
-        this.changeFireModeSound = this.registerSound(sound.toLowerCase());
-    }
-
-    public void setNoAmmoSound(String sound) {
-        this.noAmmoSound = this.registerSound(sound.toLowerCase());
-    }
-
-    public void setExplosionSound(String sound) {
-        this.explosionSound = this.registerSound(sound.toLowerCase());
-    }
 
     public void registerGrenadeWeapon(String name, ItemGrenade itemMelee, GrenadeRenderer renderer) {
         GameRegistry.registerItem(itemMelee, name);

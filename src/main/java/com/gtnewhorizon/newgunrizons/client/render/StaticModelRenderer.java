@@ -104,7 +104,8 @@ public class StaticModelRenderer implements IItemRenderer {
 
     private void renderAttachmentModels(RenderContext renderContext, ItemStack itemStack, ItemRenderType type) {
         if (!(itemStack.getItem() instanceof ItemAttachment)) {
-            throw new IllegalArgumentException("StaticModelRenderer requires an ItemAttachment, got: " + itemStack.getItem());
+            throw new IllegalArgumentException(
+                "StaticModelRenderer requires an ItemAttachment, got: " + itemStack.getItem());
         }
 
         ItemAttachment attachment = (ItemAttachment) itemStack.getItem();

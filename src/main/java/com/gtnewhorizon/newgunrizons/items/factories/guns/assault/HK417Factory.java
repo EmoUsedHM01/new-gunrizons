@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.assault;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.item.Item;
 
@@ -44,11 +42,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class HK417Factory  {
+public class HK417Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("HK417")
+        return (new ItemWeapon.Builder()).withName("HK417")
             .withFireRate(0.5F)
             .withRecoil(7.0F)
 
@@ -67,17 +64,15 @@ public class HK417Factory  {
             .withFlashOffsetY(() -> { return 0.101F; })
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Battle Rifle",
                     "Damage: 8",
                     "Caliber: 7.62x51mm NATO",
                     "Magazines:",
                     "10rnd 7.62x51mm NATO Magazine",
-                    "Fire Rate: Semi")
-            )
-            .withCompatibleAttachment(Magazines.HK417Mag, ((model) -> {
-                GL11.glScaled(1.0D, 1.0D, 1.0D);
-            }))
+                    "Fire Rate: Semi"))
+            .withCompatibleAttachment(Magazines.HK417Mag, ((model) -> { GL11.glScaled(1.0D, 1.0D, 1.0D); }))
             .withCompatibleAttachment(AuxiliaryAttachments.AR15Action, true, (model) -> {
                 GL11.glTranslatef(-0.175F, -1.28F, -0.67F);
                 GL11.glScaled(0.7D, 0.4D, 0.7D);
@@ -300,8 +295,7 @@ public class HK417Factory  {
             })
             .withTextureName("AK12")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new HK417())
+                (new WeaponRenderer.Builder()).withModel(new HK417())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -447,7 +441,7 @@ public class HK417Factory  {
                         new Transition((renderContext) -> {}, 250L, 1000L),
                         new Transition((renderContext) -> {}, 250L, 1000L),
                         new Transition((renderContext) -> {}, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L),
+                        new Transition((renderContext) -> {}, 250L, 1000L),
                         new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonCustomPositioningReloading(Magazines.HK417Mag, new Transition((renderContext) -> {
                         GL11.glTranslatef(0.3F, 1.7F, 0.1F);

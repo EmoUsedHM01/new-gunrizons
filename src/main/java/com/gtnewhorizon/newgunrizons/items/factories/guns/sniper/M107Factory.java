@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.misc.AKRail;
 import com.gtnewhorizon.newgunrizons.model.misc.AKRail2;
 import com.gtnewhorizon.newgunrizons.model.misc.AKRail3;
@@ -42,11 +41,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class M107Factory  {
+public class M107Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("M107")
+        return (new ItemWeapon.Builder()).withName("M107")
             .withFireRate(0.5F)
             .withRecoil(4.0F)
 
@@ -69,14 +67,14 @@ public class M107Factory  {
                 CommonProxy.SteelPlate,
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.BigSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Anti-materiel sniper rifle",
                     "Damage: 50",
                     "Caliber: .50 BMG",
                     "Magazines:",
                     "10rnd .50 BMG Magazine (Type 2)",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(Magazines.M107BMag, ((model) -> {
                 GL11.glTranslatef(-0.42F, 0.8F, -1.4F);
                 GL11.glScaled(1.5D, 1.5D, 1.5D);
@@ -205,13 +203,13 @@ public class M107Factory  {
                 }
 
             })
-            .withCompatibleAttachment(AuxiliaryAttachments.M107action, true, (model) -> {
-                GL11.glScaled(1.0D, 1.0D, 1.0D);
-            })
+            .withCompatibleAttachment(
+                AuxiliaryAttachments.M107action,
+                true,
+                (model) -> { GL11.glScaled(1.0D, 1.0D, 1.0D); })
             .withTextureName("M107")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new M107())
+                (new WeaponRenderer.Builder()).withModel(new M107())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -261,12 +259,8 @@ public class M107Factory  {
 
                     })
                     .withFirstPersonCustomPositioning(Magazines.M107BMag, (renderContext) -> {})
-                    .withFirstPersonPositioningCustomZoomingRecoiled(
-                        Magazines.M107BMag,
-                        (renderContext) -> {})
-                    .withFirstPersonPositioningCustomRecoiled(
-                        Magazines.M107BMag,
-                        (renderContext) -> {})
+                    .withFirstPersonPositioningCustomZoomingRecoiled(Magazines.M107BMag, (renderContext) -> {})
+                    .withFirstPersonPositioningCustomRecoiled(Magazines.M107BMag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(
                         AuxiliaryAttachments.AUGRail.getRenderablePart(),
                         (renderContext) -> {})

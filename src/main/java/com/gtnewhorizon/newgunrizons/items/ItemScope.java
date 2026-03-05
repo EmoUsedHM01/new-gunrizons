@@ -2,7 +2,6 @@ package com.gtnewhorizon.newgunrizons.items;
 
 import java.util.function.BiConsumer;
 
-import lombok.Getter;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 
@@ -12,6 +11,8 @@ import com.gtnewhorizon.newgunrizons.attachment.AttachmentBuilder;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.client.scope.ScopeRenderer;
 import com.gtnewhorizon.newgunrizons.config.ModContext;
+
+import lombok.Getter;
 
 /**
  * A scope attachment that provides zoom capabilities.

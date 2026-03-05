@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -40,11 +39,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class FamasFactory  {
+public class FamasFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("Famas")
+        return (new ItemWeapon.Builder()).withName("Famas")
             .withFireRate(0.75F)
             .withRecoil(3.5F)
 
@@ -64,14 +62,14 @@ public class FamasFactory  {
             .withShellCasingForwardOffset(-0.1F)
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Bullpup assault rifle",
                     "Damage: 7",
                     "Caliber: 5.56x45mm NATO",
                     "Magazines:",
                     "30rnd 5.56x45mm NATO Magazine (Type 2)",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.NATOFamasMag, ((model) -> {
                 GL11.glTranslatef(-0.355F, 0.9F, 1.6F);
                 GL11.glScaled(1.2D, 1.5D, 1.5D);
@@ -210,8 +208,7 @@ public class FamasFactory  {
             })
             .withTextureName("AK12")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Felin())
+                (new WeaponRenderer.Builder()).withModel(new Felin())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

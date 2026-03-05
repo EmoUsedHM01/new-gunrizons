@@ -12,18 +12,16 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.LPscope;
 import com.gtnewhorizon.newgunrizons.model.weapon.AUG;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class AUGFactory  {
+public class AUGFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("AUG")
+        return (new ItemWeapon.Builder()).withName("AUG")
             .withFireRate(0.7F)
             .withRecoil(3.5F)
 
@@ -43,14 +41,14 @@ public class AUGFactory  {
             .withShellCasingForwardOffset(-0.1F)
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Assault rifle",
                     "Damage: 7",
                     "Caliber: 5.56x45mm NATO",
                     "Magazines:",
                     "30rnd 5.56x45mm NATO Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(AuxiliaryAttachments.AUGAction, true, (model) -> {})
             .withCompatibleAttachment(Attachments.AUGScope, true, true, (player, stack) -> {
                 GL11.glTranslatef(-0.165F, -1.4F, -1.05F);
@@ -73,8 +71,7 @@ public class AUGFactory  {
             })
             .withTextureName("AUG")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new AUG())
+                (new WeaponRenderer.Builder()).withModel(new AUG())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -111,8 +108,7 @@ public class AUGFactory  {
                         GL11.glTranslatef(0.0F, 0.0F, 0.05F);
                         if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.AUGScope)) {
                             GL11.glTranslatef(0.39F, 0.77F, -0.225F);
-                        } else {
-                        }
+                        } else {}
 
                     })
                     .withFirstPersonCustomPositioning(Magazines.NATOMag1, (renderContext) -> {})
@@ -212,8 +208,7 @@ public class AUGFactory  {
                         GL11.glScaled(2.0D, 2.0D, 2.0D);
                         if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.AUGScope)) {
                             GL11.glTranslatef(0.39F, 0.77F, -0.225F);
-                        } else {
-                        }
+                        } else {}
 
                     })
                     .withFirstPersonPositioningRunning((renderContext) -> {

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentProtection;
@@ -26,6 +27,7 @@ import com.google.common.collect.Sets;
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 import com.gtnewhorizon.newgunrizons.client.particle.ParticleManager;
 import com.gtnewhorizon.newgunrizons.config.ModContext;
+import com.gtnewhorizon.newgunrizons.registry.Sounds;
 import com.gtnewhorizon.newgunrizons.network.ExplosionMessage;
 
 import lombok.Getter;
@@ -33,7 +35,7 @@ import lombok.Getter;
 public class Explosion {
 
     private static final ResourceLocation SMOKE_TEXTURE = new ResourceLocation(
-        "newgunrizons",
+        NewGunrizonsMod.MODID,
         "textures/effect/large-smoke.png");
     private final ModContext modContext;
     private final boolean isFlaming;
@@ -224,7 +226,7 @@ public class Explosion {
     }
 
     public void doExplosionB(boolean spawnParticles) {
-        String sound = this.modContext.getExplosionSound();
+        String sound = Sounds.EXPLOSION;
         if (sound != null) {
             this.world.playSoundEffect(
                 this.explosionX,

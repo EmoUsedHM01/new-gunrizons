@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.lmg;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.item.Item;
 
@@ -44,11 +42,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class Mk48MOD1Factory  {
+public class Mk48MOD1Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("Mk48MOD1")
+        return (new ItemWeapon.Builder()).withName("Mk48MOD1")
             .withFireRate(0.75F)
             .withRecoil(3.5F)
 
@@ -71,14 +68,14 @@ public class Mk48MOD1Factory  {
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents,
                 "ingotAluminium")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: General-Purpose Machine Gun",
                     "Damage: 12",
                     "Caliber: 7.62x51mm",
                     "Magazines:",
                     "100rnd 7.62x51mm Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.Mk48Mag, ((model) -> {}))
             .withCompatibleAttachment(
                 AuxiliaryAttachments.M249Action,
@@ -239,8 +236,7 @@ public class Mk48MOD1Factory  {
             })
             .withTextureName("Mk48MOD1")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Mk48MOD1())
+                (new WeaponRenderer.Builder()).withModel(new Mk48MOD1())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

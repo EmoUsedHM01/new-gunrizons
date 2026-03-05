@@ -13,7 +13,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -32,11 +31,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class M1GarandFactory  {
+public class M1GarandFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("M1Garand")
+        return (new ItemWeapon.Builder()).withName("M1Garand")
             .withFireRate(0.35F)
             .withAmmoCapacity(8)
             .withRecoil(3.0F)
@@ -61,13 +59,13 @@ public class M1GarandFactory  {
                 CommonProxy.MiniSteelPlate,
                 "ingotSteel",
                 Blocks.planks)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Semi-automatic Rifle",
                     "Damage: 15",
                     "Cartridge:",
                     ".30-06 Springfield Bullet",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleBullet(Bullets.BulletSpringfield3006, (model) -> {})
             .withCompatibleAttachment(AuxiliaryAttachments.Extra, true, (model) -> {
                 if (model instanceof G36CIron1) {
@@ -121,8 +119,7 @@ public class M1GarandFactory  {
             })
             .withTextureName("M1Garand")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new M1Garand())
+                (new WeaponRenderer.Builder()).withModel(new M1Garand())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.45D, 0.45D, 0.45D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

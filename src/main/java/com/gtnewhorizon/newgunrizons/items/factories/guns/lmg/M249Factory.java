@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.action.M249Cover;
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
@@ -43,11 +42,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class M249Factory  {
+public class M249Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("M249")
+        return (new ItemWeapon.Builder()).withName("M249")
             .withFireRate(0.8F)
             .withRecoil(2.5F)
 
@@ -70,14 +68,14 @@ public class M249Factory  {
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents,
                 "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Light machine gun",
                     "Damage: 7",
                     "Caliber: 5.56x45mm NATO",
                     "Magazines:",
                     "200rnd 5.56x45mm NATO Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.M249Mag, ((model) -> {}))
             .withCompatibleAttachment(
                 AuxiliaryAttachments.M249Action,
@@ -238,8 +236,7 @@ public class M249Factory  {
             })
             .withTextureName("M249")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new M249())
+                (new WeaponRenderer.Builder()).withModel(new M249())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

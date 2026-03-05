@@ -12,17 +12,15 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.weapon.Glock;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class Glock18Factory  {
+public class Glock18Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("Glock18")
+        return (new ItemWeapon.Builder()).withName("Glock18")
             .withFireRate(0.8F)
             .withRecoil(3.0F)
 
@@ -43,18 +41,16 @@ public class Glock18Factory  {
             .withInaccuracy(3.0F)
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Pistol",
                     "Damage: 5",
                     "Caliber: 9mm",
                     "Magazines:",
                     "20rnd 9mm Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.G18Top, true, (model) -> {})
-            .withCompatibleAttachment(
-                Magazines.G18Mag,
-                ((model) -> { GL11.glTranslatef(0.0F, 0.1F, 0.0F); }))
+            .withCompatibleAttachment(Magazines.G18Mag, ((model) -> { GL11.glTranslatef(0.0F, 0.1F, 0.0F); }))
             .withCompatibleAttachment(Attachments.Laser, (p, s) -> {
                 GL11.glTranslatef(0.01F, -0.7F, -2.3F);
                 GL11.glScaled(1.1D, 1.1D, 1.1D);
@@ -66,8 +62,7 @@ public class Glock18Factory  {
             })
             .withTextureName("G18")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Glock())
+                (new WeaponRenderer.Builder()).withModel(new Glock())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -178,7 +173,7 @@ public class Glock18Factory  {
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L))
+                        new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonPositioningZooming((renderContext) -> {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);

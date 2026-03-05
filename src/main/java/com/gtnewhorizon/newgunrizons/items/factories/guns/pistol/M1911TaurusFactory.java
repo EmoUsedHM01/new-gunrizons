@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.pistol;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.item.Item;
 
@@ -22,11 +20,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class M1911TaurusFactory  {
+public class M1911TaurusFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("M1911Taurus")
+        return (new ItemWeapon.Builder()).withName("M1911Taurus")
             .withFireRate(0.5F)
             .withRecoil(5.0F)
 
@@ -46,14 +43,14 @@ public class M1911TaurusFactory  {
             .withInaccuracy(3.0F)
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Pistol",
                     "Damage: 5.5",
                     "Caliber: .45 ACP",
                     "Magazines:",
                     "10rnd .45 ACP Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.Taurus1911Slide, true, (model) -> {
                 if (model instanceof Taurus1911Slide) {
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -66,17 +63,14 @@ public class M1911TaurusFactory  {
                 }
 
             })
-            .withCompatibleAttachment(
-                Magazines.ColtM1911Mag,
-                ((model) -> { GL11.glTranslatef(0.0F, 0.2F, 0.12F); }))
+            .withCompatibleAttachment(Magazines.ColtM1911Mag, ((model) -> { GL11.glTranslatef(0.0F, 0.2F, 0.12F); }))
             .withCompatibleAttachment(Attachments.Silencer45ACP, (model) -> {
                 GL11.glTranslatef(-0.23F, -1.14F, -4.92F);
                 GL11.glScaled(1.5D, 1.5D, 1.5D);
             })
             .withTextureName("Taurus1911")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Taurus1911())
+                (new WeaponRenderer.Builder()).withModel(new Taurus1911())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -188,7 +182,7 @@ public class M1911TaurusFactory  {
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L))
+                        new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonPositioningZooming((renderContext) -> {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);

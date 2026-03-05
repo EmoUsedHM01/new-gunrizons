@@ -51,8 +51,7 @@ public class Bullets {
     public static ItemBullet Bullet303British;
 
     public static void init() {
-        ShotgunShell = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        ShotgunShell = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("ShotgunShell")
             .withModel(new ShotgunShell(), "ShotgunShell.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -75,8 +74,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        ShotgunShell410 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        ShotgunShell410 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("ShotgunShell410")
             .withModel(new ShotgunShell(), "ShotgunShell.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -99,8 +97,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet9x39mm = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet9x39mm = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet9x39mm")
             .withModel(new BulletBig(), "gold.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -123,8 +120,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet8mm = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet8mm = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet8mm")
             .withModel(new BulletBig(), "gold.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -147,8 +143,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        SMAWRocket = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        SMAWRocket = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("SMAWRocket")
             .withMaxStackSize(1)
             .withModel(new SMAWRocket(), "SMAW.png")
@@ -172,8 +167,7 @@ public class Bullets {
             .withTextureName("Dummy.png")
             .withCraftingRecipe("AXX", 'X', CommonProxy.SteelPlate, 'A', Blocks.tnt)
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet10x24 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.FunGunsTab)
+        Bullet10x24 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.FunGunsTab)
             .withName("Bullet10x24")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -196,8 +190,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet762x21 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet762x21 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet762x21")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -220,8 +213,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet303British = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet303British = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet303British")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -244,8 +236,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet792x33 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet792x33 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet792x33")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -268,8 +259,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet792x57 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet792x57 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet792x57")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -292,8 +282,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Magnum44Ammo = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Magnum44Ammo = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Magnum44Ammo")
             .withModel(new Bullet44(), "Bullet44.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -316,8 +305,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet455 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet455 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet455")
             .withModel(new Bullet44(), "Bullet44.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -340,8 +328,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet380200 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet380200 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet380200")
             .withModel(new Bullet44(), "Bullet44.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -364,8 +351,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Carbine30 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Carbine30 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Carbine30")
             .withModel(new Bullet44(), "Bullet44.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -388,8 +374,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        BulletSpringfield3006 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        BulletSpringfield3006 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("BulletSpringfield3006")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -412,8 +397,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet357 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet357 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet357")
             .withModel(new Bullet44(), "Bullet44.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -436,8 +420,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet50 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet50 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet50AE")
             .withModel(new Bullet44(), "Bullet44.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -460,8 +443,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet9mm = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet9mm = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet9mm")
             .withModel(new Bullet44(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -484,8 +466,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet10mm = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet10mm = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet10mm")
             .withModel(new Bullet44(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -508,8 +489,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet45ACP = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet45ACP = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet45ACP")
             .withModel(new Bullet44(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -532,8 +512,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet762x39 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet762x39 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet762x39")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -556,8 +535,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet46x30 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet46x30 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet46x30")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -580,8 +558,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet57x28 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet57x28 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet57x28")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -604,8 +581,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet556x39 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet556x39 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet556x39")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -628,8 +604,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet545x39 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet545x39 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet545x39")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -652,8 +627,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet762x25 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet762x25 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet762x25")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -676,8 +650,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet556x45 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet556x45 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet556x45")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -700,8 +673,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet762x54 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet762x54 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet762x54")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -724,8 +696,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet762x51 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet762x51 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet762x51")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -748,8 +719,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet308 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet308 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet308")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -772,8 +742,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet300Blackout = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet300Blackout = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet300Blackout")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)
@@ -796,8 +765,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        BMG50 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        BMG50 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("BMG50")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.MEDIUM, "ingotCopper", Items.gunpowder)
@@ -820,8 +788,7 @@ public class Bullets {
             })
             .withTextureName("Dummy.png")
             .build(NewGunrizonsMod.MOD_CONTEXT, ItemBullet.class);
-        Bullet65x39 = (new ItemBullet.Builder())
-            .withCreativeTab(NewGunrizonsMod.AmmoTab)
+        Bullet65x39 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet65x39")
             .withModel(new BulletBig(), "Bullet.png")
             .withCrafting(8, CraftingComplexity.LOW, "ingotCopper", Items.gunpowder)

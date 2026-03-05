@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -40,11 +39,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class G36CFactory  {
+public class G36CFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("G36C")
+        return (new ItemWeapon.Builder()).withName("G36C")
             .withFireRate(0.7F)
             .withRecoil(3.2F)
 
@@ -63,14 +61,14 @@ public class G36CFactory  {
             .withFlashOffsetY(() -> { return 0.1F; })
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Assault rifle/Carbine",
                     "Damage: 7",
                     "Caliber: 5.56x45mm NATO",
                     "Magazines:",
                     "30rnd 5.56x45mm NATO Magazine (Type 3)",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.NATOG36Mag, ((model) -> {
                 GL11.glTranslatef(-0.37F, 0.8F, -1.7F);
                 GL11.glScaled(1.25D, 1.7D, 1.7D);
@@ -234,8 +232,7 @@ public class G36CFactory  {
             })
             .withTextureName("AK12")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new G36C())
+                (new WeaponRenderer.Builder()).withModel(new G36C())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

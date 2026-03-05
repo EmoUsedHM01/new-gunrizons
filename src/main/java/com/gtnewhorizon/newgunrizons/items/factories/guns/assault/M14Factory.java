@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.action.M14Action;
 import com.gtnewhorizon.newgunrizons.model.action.M14Action2;
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
@@ -34,11 +33,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class M14Factory  {
+public class M14Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("M14")
+        return (new ItemWeapon.Builder()).withName("M14")
             .withFireRate(0.4F)
             .withRecoil(2.0F)
 
@@ -57,14 +55,14 @@ public class M14Factory  {
             .withFlashOffsetY(() -> { return 0.06F; })
             .withCreativeTab(NewGunrizonsMod.SnipersTab)
             .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Designated Marksmen Rifle",
                     "Damage: 14",
                     "Caliber: 7.62x51mm NATO",
                     "Magazines:",
                     "21rnd 7.62x51mm NATO Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(Magazines.M14DMRMag, ((model) -> {
                 GL11.glTranslatef(-0.4F, 0.9F, -2.1F);
                 GL11.glScaled(1.4D, 1.5D, 1.5D);
@@ -143,8 +141,7 @@ public class M14Factory  {
             })
             .withTextureName("M14DMR")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new M14DMR())
+                (new WeaponRenderer.Builder()).withModel(new M14DMR())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

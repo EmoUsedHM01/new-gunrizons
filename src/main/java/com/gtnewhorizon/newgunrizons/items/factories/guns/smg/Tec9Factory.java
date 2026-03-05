@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.smg;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.item.Item;
 
@@ -19,11 +17,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class Tec9Factory  {
+public class Tec9Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("Tec9")
+        return (new ItemWeapon.Builder()).withName("Tec9")
             .withFireRate(0.75F)
             .withRecoil(2.8F)
 
@@ -43,26 +40,23 @@ public class Tec9Factory  {
             .withInaccuracy(3.0F)
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Pistol",
                     "Damage: 5.5",
                     "Caliber: .45 ACP",
                     "Magazines:",
                     "10rnd .45 ACP Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.Tec9Action, true, (model) -> {})
-            .withCompatibleAttachment(
-                Magazines.Tec9Mag,
-                ((model) -> { GL11.glTranslatef(0.0F, 0.15F, 0.0F); }))
+            .withCompatibleAttachment(Magazines.Tec9Mag, ((model) -> { GL11.glTranslatef(0.0F, 0.15F, 0.0F); }))
             .withCompatibleAttachment(Attachments.Silencer45ACP, (model) -> {
                 GL11.glTranslatef(-0.25F, -1.2F, -4.6F);
                 GL11.glScaled(1.5D, 1.5D, 1.5D);
             })
             .withTextureName("AK12")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Tec9())
+                (new WeaponRenderer.Builder()).withModel(new Tec9())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -164,15 +158,15 @@ public class Tec9Factory  {
                         new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonCustomPositioningUnloading(
                         AuxiliaryAttachments.Tec9Action.getRenderablePart(),
-                        new Transition((renderContext) -> {  }, 250L, 1000L))
+                        new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonCustomPositioningReloading(
                         AuxiliaryAttachments.Tec9Action.getRenderablePart(),
-                        new Transition((renderContext) -> {  }, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L),
+                        new Transition((renderContext) -> {}, 250L, 1000L),
+                        new Transition((renderContext) -> {}, 250L, 1000L),
+                        new Transition((renderContext) -> {}, 250L, 1000L),
+                        new Transition((renderContext) -> {}, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L))
+                        new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonPositioningZooming((renderContext) -> {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);

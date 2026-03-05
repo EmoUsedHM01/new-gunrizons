@@ -12,18 +12,16 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.weapon.Python;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class PythonFactory  {
+public class PythonFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("Python")
+        return (new ItemWeapon.Builder()).withName("Python")
             .withFireRate(0.2F)
             .withRecoil(5.0F)
 
@@ -47,14 +45,11 @@ public class PythonFactory  {
                     return Arrays.asList("Type: Revolver", "Damage: 6", "Ammo: .357 Bullet", "Fire Rate: Semi");
                 })
             .withCompatibleAttachment(AuxiliaryAttachments.PythonCase, true, (model) -> {})
-            .withCompatibleAttachment(
-                Magazines.PythonClip,
-                ((model) -> { GL11.glScaled(0.0D, 0.0D, 0.0D); }))
+            .withCompatibleAttachment(Magazines.PythonClip, ((model) -> { GL11.glScaled(0.0D, 0.0D, 0.0D); }))
             .withCompatibleBullet(Bullets.Bullet357, (model) -> {})
             .withTextureName("Python")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Python())
+                (new WeaponRenderer.Builder()).withModel(new Python())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -99,12 +94,8 @@ public class PythonFactory  {
                         AuxiliaryAttachments.PythonCase.getRenderablePart(),
                         (renderContext) -> {})
                     .withFirstPersonCustomPositioning(Magazines.PythonClip, (renderContext) -> {})
-                    .withFirstPersonPositioningCustomRecoiled(
-                        Magazines.PythonClip,
-                        (renderContext) -> {})
-                    .withFirstPersonPositioningCustomZoomingRecoiled(
-                        Magazines.PythonClip,
-                        (renderContext) -> {})
+                    .withFirstPersonPositioningCustomRecoiled(Magazines.PythonClip, (renderContext) -> {})
+                    .withFirstPersonPositioningCustomZoomingRecoiled(Magazines.PythonClip, (renderContext) -> {})
                     .withFirstPersonCustomPositioningUnloading(
                         Magazines.PythonClip,
                         new Transition((renderContext) -> {}, 250L, 1000L),
@@ -148,24 +139,14 @@ public class PythonFactory  {
                     .withFirstPersonCustomPositioningReloading(
                         AuxiliaryAttachments.PythonCase.getRenderablePart(),
                         new Transition((renderContext) -> {}, 250L, 50L),
-                        new Transition((renderContext) -> {
-                            GL11.glRotatef(15.0F, 0.0F, 0.0F, 1.0F);
-                        }, 250L, 50L),
-                        new Transition((renderContext) -> {
-                            GL11.glRotatef(15.0F, 0.0F, 0.0F, 1.0F);
-                        }, 250L, 50L),
-                        new Transition((renderContext) -> {
-                            GL11.glRotatef(15.0F, 0.0F, 0.0F, 1.0F);
-                        }, 250L, 50L),
+                        new Transition((renderContext) -> { GL11.glRotatef(15.0F, 0.0F, 0.0F, 1.0F); }, 250L, 50L),
+                        new Transition((renderContext) -> { GL11.glRotatef(15.0F, 0.0F, 0.0F, 1.0F); }, 250L, 50L),
+                        new Transition((renderContext) -> { GL11.glRotatef(15.0F, 0.0F, 0.0F, 1.0F); }, 250L, 50L),
                         new Transition((renderContext) -> {}, 250L, 50L))
                     .withFirstPersonCustomPositioningUnloading(
                         AuxiliaryAttachments.PythonCase.getRenderablePart(),
-                        new Transition((renderContext) -> {
-                            GL11.glRotatef(15.0F, 0.0F, 0.0F, 1.0F);
-                        }, 250L, 1000L),
-                        new Transition((renderContext) -> {
-                            GL11.glRotatef(15.0F, 0.0F, 0.0F, 1.0F);
-                        }, 250L, 1000L))
+                        new Transition((renderContext) -> { GL11.glRotatef(15.0F, 0.0F, 0.0F, 1.0F); }, 250L, 1000L),
+                        new Transition((renderContext) -> { GL11.glRotatef(15.0F, 0.0F, 0.0F, 1.0F); }, 250L, 1000L))
                     .withFirstPersonPositioningUnloading(new Transition((renderContext) -> {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);

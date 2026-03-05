@@ -8,12 +8,11 @@ import java.util.function.Function;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-
-import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
+import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.attachment.CompatibleAttachment;
 import com.gtnewhorizon.newgunrizons.attachment.Part;
@@ -97,8 +96,7 @@ public class ItemAttachment extends Item {
         this.texturedModels = new ArrayList<>();
         this.attachments = new ArrayList<>();
         this.category = category;
-        this.crosshair = crosshair != null
-            ? NewGunrizonsMod.MODID + ":textures/crosshairs/" + crosshair + ".png"
+        this.crosshair = crosshair != null ? NewGunrizonsMod.MODID + ":textures/crosshairs/" + crosshair + ".png"
             : null;
     }
 

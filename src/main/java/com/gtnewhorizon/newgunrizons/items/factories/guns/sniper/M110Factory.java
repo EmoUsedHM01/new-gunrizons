@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -43,11 +42,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class M110Factory  {
+public class M110Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("M110")
+        return (new ItemWeapon.Builder()).withName("M110")
             .withFireRate(0.7F)
             .withRecoil(3.5F)
 
@@ -66,14 +64,14 @@ public class M110Factory  {
             .withFlashOffsetY(() -> { return 0.101F; })
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Designated Marksmen Rifle",
                     "Damage: 8",
                     "Caliber: 7.62x51mm NATO",
                     "Magazines:",
                     "10rnd 7.62x51mm NATO Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(Magazines.M110Mag, ((model) -> {
                 GL11.glTranslatef(-0.33F, 0.5F, -1.3F);
                 GL11.glScaled(1.05D, 1.2D, 1.0D);
@@ -296,8 +294,7 @@ public class M110Factory  {
             })
             .withTextureName("M110")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new M110())
+                (new WeaponRenderer.Builder()).withModel(new M110())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -441,7 +438,7 @@ public class M110Factory  {
                         new Transition((renderContext) -> {}, 250L, 1000L),
                         new Transition((renderContext) -> {}, 250L, 1000L),
                         new Transition((renderContext) -> {}, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L),
+                        new Transition((renderContext) -> {}, 250L, 1000L),
                         new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonCustomPositioningReloading(Magazines.M110Mag, new Transition((renderContext) -> {
                         GL11.glTranslatef(0.3F, 1.7F, 0.1F);

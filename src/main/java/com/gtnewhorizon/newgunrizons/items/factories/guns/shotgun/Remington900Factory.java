@@ -12,17 +12,15 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.weapon.Remington870;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class Remington900Factory  {
+public class Remington900Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("Remington870")
+        return (new ItemWeapon.Builder()).withName("Remington870")
             .withAmmoCapacity(5)
             .withMaxBulletsPerReload(4)
             .withFireRate(0.5F)
@@ -52,13 +50,13 @@ public class Remington900Factory  {
             .withFlashOffsetY(() -> { return 0.06F; })
             .withCreativeTab(NewGunrizonsMod.ShotgunsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Shotgun",
                     "Damage per Pellet: 5",
                     "Pellets per Shot: 10",
                     "Cartridge: 12 Gauge Shotgun Shell",
-                    "Fire Rate: Pump-Action")
-            )
+                    "Fire Rate: Pump-Action"))
             .withCompatibleAttachment(AuxiliaryAttachments.R870Pump, true, (model) -> {
                 GL11.glTranslatef(0.02F, 0.07F, 0.55F);
                 GL11.glScalef(1.3F, 1.2F, 1.2F);
@@ -70,8 +68,7 @@ public class Remington900Factory  {
             .withCompatibleBullet(Bullets.ShotgunShell, (model) -> {})
             .withTextureName("Remington870")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Remington870())
+                (new WeaponRenderer.Builder()).withModel(new Remington870())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

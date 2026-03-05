@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.sniper;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -34,11 +32,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class LeeEnfieldNo4MkI  {
+public class LeeEnfieldNo4MkI {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("LeeEnfieldNo4MkI")
+        return (new ItemWeapon.Builder()).withName("LeeEnfieldNo4MkI")
             .withFireRate(0.16F)
             .withEjectRoundRequired()
             .withEjectSpentRoundSound("springfieldboltaction")
@@ -65,20 +62,18 @@ public class LeeEnfieldNo4MkI  {
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents,
                 Blocks.planks)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Bolt-action rifle",
                     "Damage: 27",
                     "Cartridge:",
                     ".303 British Bullet",
-                    "Fire Rate: Bolt Action")
-            )
+                    "Fire Rate: Bolt Action"))
             .withCompatibleAttachment(AuxiliaryAttachments.LeeEnfieldSMLEaction, true, (model) -> {
                 if (model instanceof LeeEnfieldSMLEAction) {}
 
             })
-            .withCompatibleAttachment(
-                Magazines.LeeEnfieldMag,
-                ((model) -> { GL11.glScaled(1.0D, 1.0D, 1.0D); }))
+            .withCompatibleAttachment(Magazines.LeeEnfieldMag, ((model) -> { GL11.glScaled(1.0D, 1.0D, 1.0D); }))
             .withCompatibleAttachment(AuxiliaryAttachments.M1CarbineRearSight, true, (model) -> {
                 GL11.glTranslatef(-0.183F, -1.39F, -1.15F);
                 GL11.glScaled(0.14D, 0.15D, 0.06D);
@@ -138,8 +133,7 @@ public class LeeEnfieldNo4MkI  {
             })
             .withTextureName("LeeEnfieldNo4")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new LeeEnfieldNo4())
+                (new WeaponRenderer.Builder()).withModel(new LeeEnfieldNo4())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

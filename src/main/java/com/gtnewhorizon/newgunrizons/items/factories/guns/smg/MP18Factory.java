@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.smg;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.item.Item;
 
@@ -32,11 +30,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class MP18Factory  {
+public class MP18Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("MP18")
+        return (new ItemWeapon.Builder()).withName("MP18")
             .withFireRate(0.55F)
             .withRecoil(3.0F)
 
@@ -57,14 +54,14 @@ public class MP18Factory  {
             .withShellCasingVerticalOffset(-0.02F)
             .withCreativeTab(NewGunrizonsMod.SMGTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Submachine gun",
                     "Damage: 7.1",
                     "Caliber: 7.62x25mm",
                     "Magazines:",
                     "32rnd 7.62x25mm Drum Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.MP18mag, ((model) -> {}))
             .withCompatibleAttachment(AuxiliaryAttachments.Extra, true, (model) -> {
                 if (model instanceof G36CIron1) {
@@ -114,8 +111,7 @@ public class MP18Factory  {
             .withCompatibleAttachment(AuxiliaryAttachments.MP18action, true, (model) -> {})
             .withTextureName("mp18")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new MP18())
+                (new WeaponRenderer.Builder()).withModel(new MP18())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -154,12 +150,8 @@ public class MP18Factory  {
 
                     })
                     .withFirstPersonCustomPositioning(Magazines.MP18mag, (renderContext) -> {})
-                    .withFirstPersonPositioningCustomRecoiled(
-                        Magazines.MP18mag,
-                        (renderContext) -> {})
-                    .withFirstPersonPositioningCustomZoomingRecoiled(
-                        Magazines.MP18mag,
-                        (renderContext) -> {})
+                    .withFirstPersonPositioningCustomRecoiled(Magazines.MP18mag, (renderContext) -> {})
+                    .withFirstPersonPositioningCustomZoomingRecoiled(Magazines.MP18mag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(
                         AuxiliaryAttachments.MP18action.getRenderablePart(),
                         (renderContext) -> {})

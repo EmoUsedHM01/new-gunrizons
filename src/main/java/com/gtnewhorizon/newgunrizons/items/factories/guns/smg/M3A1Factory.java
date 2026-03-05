@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.smg;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.item.Item;
 
@@ -21,11 +19,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class M3A1Factory  {
+public class M3A1Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("M3A1")
+        return (new ItemWeapon.Builder()).withName("M3A1")
             .withFireRate(0.42F)
             .withRecoil(3.0F)
 
@@ -46,14 +43,14 @@ public class M3A1Factory  {
             .withShellCasingVerticalOffset(-0.02F)
             .withCreativeTab(NewGunrizonsMod.SMGTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Submachine gun",
                     "Damage: 6.5",
                     "Caliber: .45 ACP",
                     "Magazines:",
                     "31rnd .45 ACP Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.M3A1Mag, ((model) -> { GL11.glScaled(1.0D, 1.0D, 1.0D); }))
             .withCompatibleAttachment(AuxiliaryAttachments.M3A1sight, true, (model) -> {
                 if (model instanceof M3A1rearsight) {
@@ -72,8 +69,7 @@ public class M3A1Factory  {
             .withCompatibleAttachment(AuxiliaryAttachments.M3A1action, true, (model) -> {})
             .withTextureName("M3A1GreaseGun")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new M3A1GreaseGun())
+                (new WeaponRenderer.Builder()).withModel(new M3A1GreaseGun())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -111,12 +107,8 @@ public class M3A1Factory  {
 
                     })
                     .withFirstPersonCustomPositioning(Magazines.M3A1Mag, (renderContext) -> {})
-                    .withFirstPersonPositioningCustomRecoiled(
-                        Magazines.M3A1Mag,
-                        (renderContext) -> {})
-                    .withFirstPersonPositioningCustomZoomingRecoiled(
-                        Magazines.M3A1Mag,
-                        (renderContext) -> {})
+                    .withFirstPersonPositioningCustomRecoiled(Magazines.M3A1Mag, (renderContext) -> {})
+                    .withFirstPersonPositioningCustomZoomingRecoiled(Magazines.M3A1Mag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(
                         AuxiliaryAttachments.M3A1action.getRenderablePart(),
                         (renderContext) -> {})

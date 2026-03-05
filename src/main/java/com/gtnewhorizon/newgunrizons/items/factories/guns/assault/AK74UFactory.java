@@ -13,7 +13,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -32,11 +31,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class AK74UFactory  {
+public class AK74UFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("AKS74U")
+        return (new ItemWeapon.Builder()).withName("AKS74U")
             .withFireRate(0.6F)
             .withRecoil(3.0F)
 
@@ -61,14 +59,14 @@ public class AK74UFactory  {
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents,
                 Blocks.planks)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Assault rifle",
                     "Damage: 6.9",
                     "Caliber: 5.45x39mm",
                     "Magazines:",
                     "30rnd 5.45x39mm Magazine (Type 2)",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Attachments.Silencer556x39, (model) -> {
                 GL11.glTranslatef(-0.2F, -1.06F, -6.13F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -127,8 +125,7 @@ public class AK74UFactory  {
             })
             .withTextureName("AKS74U")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new AKS74U())
+                (new WeaponRenderer.Builder()).withModel(new AKS74U())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

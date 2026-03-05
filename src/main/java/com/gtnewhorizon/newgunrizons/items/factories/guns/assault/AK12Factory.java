@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK12IronSight;
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
@@ -43,11 +42,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class AK12Factory  {
+public class AK12Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("AK12")
+        return (new ItemWeapon.Builder()).withName("AK12")
             .withFireRate(0.75F)
             .withRecoil(3.5F)
 
@@ -70,13 +68,14 @@ public class AK12Factory  {
                 CommonProxy.SteelPlate,
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents)
-            .withInformationProvider((stack) -> Arrays.asList(
-                "Type: Assault rifle",
-                "Damage: 7.3",
-                "Caliber: 5.45x39mm",
-                "Magazines:",
-                "31rnd 5.45x39mm Magazine",
-                "Fire Rate: Auto"))
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
+                    "Type: Assault rifle",
+                    "Damage: 7.3",
+                    "Caliber: 5.45x39mm",
+                    "Magazines:",
+                    "31rnd 5.45x39mm Magazine",
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.AK12Mag, ((model) -> {}))
             .withCompatibleAttachment(AuxiliaryAttachments.Extra, true, (model) -> {
                 if (model instanceof G36CIron1) {
@@ -248,8 +247,7 @@ public class AK12Factory  {
             .withCompatibleAttachment(AuxiliaryAttachments.AK12action, true, (model) -> {})
             .withTextureName("AK12kal")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new AK12())
+                (new WeaponRenderer.Builder()).withModel(new AK12())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -341,12 +339,8 @@ public class AK12Factory  {
                     .withFirstPersonPositioningCustomZoomingRecoiled(
                         AuxiliaryAttachments.AK12IronSight.getRenderablePart(),
                         (renderContext) -> {})
-                    .withFirstPersonPositioningCustomRecoiled(
-                        Magazines.AK12Mag,
-                        (renderContext) -> {})
-                    .withFirstPersonPositioningCustomZoomingRecoiled(
-                        Magazines.AK12Mag,
-                        (renderContext) -> {})
+                    .withFirstPersonPositioningCustomRecoiled(Magazines.AK12Mag, (renderContext) -> {})
+                    .withFirstPersonPositioningCustomZoomingRecoiled(Magazines.AK12Mag, (renderContext) -> {})
                     .withFirstPersonPositioningReloading(new Transition((renderContext) -> {
                         GL11.glRotatef(35.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScalef(3.0F, 3.0F, 3.0F);

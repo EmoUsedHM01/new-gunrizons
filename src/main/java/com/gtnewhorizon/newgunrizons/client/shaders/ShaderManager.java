@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.function.UnaryOperator;
 
+import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.ITextureObject;
@@ -168,10 +169,10 @@ public class ShaderManager {
     private static ResourceLocation fixMangledDomain(ResourceLocation rl) {
         String domain = rl.getResourceDomain();
         if ("shaders/program/newgunrizons".equals(domain)) {
-            return new ResourceLocation("newgunrizons", "shaders/program/" + rl.getResourcePath());
+            return new ResourceLocation(NewGunrizonsMod.MODID, "shaders/program/" + rl.getResourcePath());
         }
         if ("textures/effect/newgunrizons".equals(domain)) {
-            return new ResourceLocation("newgunrizons", "textures/effect/" + rl.getResourcePath());
+            return new ResourceLocation(NewGunrizonsMod.MODID, "textures/effect/" + rl.getResourcePath());
         }
         return rl;
     }

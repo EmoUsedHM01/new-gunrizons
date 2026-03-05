@@ -12,17 +12,15 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.weapon.Glock;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class G21Factory  {
+public class G21Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("Glock21")
+        return (new ItemWeapon.Builder()).withName("Glock21")
             .withFireRate(0.8F)
             .withRecoil(5.5F)
 
@@ -42,18 +40,16 @@ public class G21Factory  {
             .withInaccuracy(3.0F)
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Pistol",
                     "Damage: 5.5",
                     "Caliber: .45 ACP",
                     "Magazines:",
                     "13rnd .45 ACP Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.Glock21Slide, true, (model) -> {})
-            .withCompatibleAttachment(
-                Magazines.Glock21Mag,
-                ((model) -> { GL11.glTranslatef(0.0F, 0.1F, 0.1F); }))
+            .withCompatibleAttachment(Magazines.Glock21Mag, ((model) -> { GL11.glTranslatef(0.0F, 0.1F, 0.1F); }))
             .withCompatibleAttachment(Attachments.Laser, (p, s) -> {
                 GL11.glTranslatef(0.01F, -0.7F, -2.3F);
                 GL11.glScaled(1.1D, 1.1D, 1.1D);
@@ -65,8 +61,7 @@ public class G21Factory  {
             })
             .withTextureName("G21")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Glock())
+                (new WeaponRenderer.Builder()).withModel(new Glock())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -177,7 +172,7 @@ public class G21Factory  {
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.5F); }, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L))
+                        new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonPositioningZooming((renderContext) -> {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);

@@ -2,7 +2,6 @@ package com.gtnewhorizon.newgunrizons.items.factories.guns.sniper;
 
 import java.util.Arrays;
 
-
 import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
@@ -19,11 +18,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class Remington700Factory  {
+public class Remington700Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("Remington700")
+        return (new ItemWeapon.Builder()).withName("Remington700")
             .withAmmoCapacity(6)
             .withMaxBulletsPerReload(6)
             .withFireRate(0.5F)
@@ -77,8 +75,7 @@ public class Remington700Factory  {
             .withCompatibleBullet(Bullets.Bullet308, (model) -> {})
             .withTextureName("Remington700")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Remington700())
+                (new WeaponRenderer.Builder()).withModel(new Remington700())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

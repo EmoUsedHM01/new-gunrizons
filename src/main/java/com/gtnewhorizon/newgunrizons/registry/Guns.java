@@ -2,7 +2,6 @@ package com.gtnewhorizon.newgunrizons.registry;
 
 import net.minecraft.item.Item;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.items.factories.guns.assault.ACRFactory;
 import com.gtnewhorizon.newgunrizons.items.factories.guns.assault.AK12Factory;
 import com.gtnewhorizon.newgunrizons.items.factories.guns.assault.AK15Factory;
@@ -170,7 +169,6 @@ public class Guns {
     public static Item QBS09;
     public static Item PP19;
     public static Item Glock32;
-    public static Item Minimi;
     public static Item Glock18;
     public static Item HecateII;
     public static Item Deagle44;

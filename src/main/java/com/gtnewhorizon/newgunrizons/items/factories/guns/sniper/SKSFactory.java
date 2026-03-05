@@ -2,7 +2,6 @@ package com.gtnewhorizon.newgunrizons.items.factories.guns.sniper;
 
 import java.util.Arrays;
 
-
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 
@@ -40,11 +39,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class SKSFactory  {
+public class SKSFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("SKS")
+        return (new ItemWeapon.Builder()).withName("SKS")
             .withFireRate(0.3F)
             .withRecoil(4.0F)
             .withAmmoCapacity(10)
@@ -178,8 +176,7 @@ public class SKSFactory  {
                 (model) -> { GL11.glTranslatef(-0.1F, 1.1F, 2.0F); })
             .withTextureName("sks")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new SKS())
+                (new WeaponRenderer.Builder()).withModel(new SKS())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

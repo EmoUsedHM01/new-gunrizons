@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.smg;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.item.Item;
 
@@ -44,11 +42,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class UDP9Factory  {
+public class UDP9Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("UDP9")
+        return (new ItemWeapon.Builder()).withName("UDP9")
             .withFireRate(0.8F)
             .withRecoil(2.5F)
 
@@ -67,15 +64,15 @@ public class UDP9Factory  {
             .withFlashOffsetY(() -> { return 0.1F; })
             .withCreativeTab(NewGunrizonsMod.SMGTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Personal Defense Weapon",
                     "Damage: 5",
                     "Caliber: 9mm",
                     "Magazines:",
                     "15rnd 9mm Magazine",
                     "50rnd 9mm Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.M9BerettaMag, ((model) -> {
                 GL11.glTranslatef(-0.01F, 0.3F, -1.08F);
                 GL11.glScaled(0.95D, 1.2D, 0.8D);
@@ -274,8 +271,7 @@ public class UDP9Factory  {
             })
             .withTextureName("udp9")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new UDP9())
+                (new WeaponRenderer.Builder()).withModel(new UDP9())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

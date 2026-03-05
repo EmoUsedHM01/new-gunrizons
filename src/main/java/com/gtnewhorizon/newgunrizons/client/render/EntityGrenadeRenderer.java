@@ -21,9 +21,7 @@ public class EntityGrenadeRenderer extends Render {
         if (itemGrenade != null) {
             GrenadeRenderer renderer = itemGrenade.getRenderer();
             Minecraft.getMinecraft().renderEngine.bindTexture(
-                new ResourceLocation(
-                    NewGunrizonsMod.MODID,
-                    "textures/models/" + itemGrenade.getTextureName()));
+                new ResourceLocation(NewGunrizonsMod.MODID, "textures/models/" + itemGrenade.getTextureName()));
             ModelBase model = renderer.getModel();
             GL11.glPushMatrix();
             GL11.glTranslated(x, y, z);

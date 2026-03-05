@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -41,11 +40,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class M1014Factory  {
+public class M1014Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("M1014")
+        return (new ItemWeapon.Builder()).withName("M1014")
             .withAmmoCapacity(8)
             .withMaxBulletsPerReload(7)
             .withIteratedLoad()
@@ -71,13 +69,13 @@ public class M1014Factory  {
             .withShellCasingEjectEnabled(false)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
             .withCreativeTab(NewGunrizonsMod.ShotgunsTab)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Combat shotgun",
                     "Damage per Pellet: 7",
                     "Pellets per Shot: 10",
                     "Ammo: 12 Gauge Shotgun Shell",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleBullet(Bullets.ShotgunShell, (model) -> {})
             .withTextureName("M1014")
             .withCompatibleAttachment(AuxiliaryAttachments.Extra, true, (model) -> {
@@ -201,8 +199,7 @@ public class M1014Factory  {
                 GL11.glScaled(1.4D, 1.4D, 1.4D);
             })
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new M1014())
+                (new WeaponRenderer.Builder()).withModel(new M1014())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

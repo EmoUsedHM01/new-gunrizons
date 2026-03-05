@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -31,11 +30,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class RPK74MFactory  {
+public class RPK74MFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("RPK74M")
+        return (new ItemWeapon.Builder()).withName("RPK74M")
             .withFireRate(0.6F)
             .withRecoil(4.0F)
 
@@ -59,14 +57,14 @@ public class RPK74MFactory  {
                 CommonProxy.SteelPlate,
                 CommonProxy.MetalComponents,
                 CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Light machine gun",
                     "Damage: 7.2",
                     "Caliber: 7.62x39mm",
                     "Magazines:",
                     "75rnd 7.62x39mm Drum Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Attachments.Silencer762x39, (model) -> {
                 GL11.glTranslatef(-0.2F, -1.06F, -8.8F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -130,8 +128,7 @@ public class RPK74MFactory  {
             })
             .withTextureName("RPK74M")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new RPK74M())
+                (new WeaponRenderer.Builder()).withModel(new RPK74M())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

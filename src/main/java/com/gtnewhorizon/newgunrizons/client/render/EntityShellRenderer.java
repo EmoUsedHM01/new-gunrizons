@@ -1,5 +1,6 @@
 package com.gtnewhorizon.newgunrizons.client.render;
 
+import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
@@ -14,7 +15,7 @@ import com.gtnewhorizon.newgunrizons.model.ModelShell;
 public class EntityShellRenderer extends Render {
 
     private static final ResourceLocation DEFAULT_TEXTURE = new ResourceLocation(
-        "newgunrizons",
+        NewGunrizonsMod.MODID,
         "textures/effect/shell.png");
 
     private static final ModelShell DEFAULT_MODEL = new ModelShell();

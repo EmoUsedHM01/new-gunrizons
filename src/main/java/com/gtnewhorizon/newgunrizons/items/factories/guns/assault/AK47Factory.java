@@ -13,7 +13,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -32,11 +31,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class AK47Factory  {
+public class AK47Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("AK47")
+        return (new ItemWeapon.Builder()).withName("AK47")
             .withFireRate(0.6F)
             .withRecoil(3.0F)
 
@@ -80,9 +78,7 @@ public class AK47Factory  {
                 GL11.glScaled(0.5D, 0.5D, 3.0D);
             })
             .withCompatibleAttachment(AuxiliaryAttachments.AKaction, true, (model) -> {})
-            .withCompatibleAttachment(
-                Magazines.Magazine762x39,
-                ((model) -> GL11.glTranslatef(0.0F, -0.17F, 0.05F)))
+            .withCompatibleAttachment(Magazines.Magazine762x39, ((model) -> GL11.glTranslatef(0.0F, -0.17F, 0.05F)))
             .withCompatibleAttachment(Magazines.Mag75rnd762x39, ((model) -> {
                 GL11.glRotatef(-15.0F, 1.0F, 0.0F, 0.0F);
                 GL11.glTranslatef(0.011F, 0.59F, 0.05F);
@@ -138,8 +134,7 @@ public class AK47Factory  {
             })
             .withTextureName("AK47")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new AK47())
+                (new WeaponRenderer.Builder()).withModel(new AK47())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

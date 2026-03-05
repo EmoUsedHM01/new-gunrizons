@@ -13,7 +13,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.action.MosinBolt;
 import com.gtnewhorizon.newgunrizons.model.action.MosinBolt2;
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
@@ -34,11 +33,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class MosinNagantFactory  {
+public class MosinNagantFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("MosinNagantM91-30")
+        return (new ItemWeapon.Builder()).withName("MosinNagantM91-30")
             .withAmmoCapacity(5)
             .withFireRate(0.16F)
             .withIteratedLoad()
@@ -67,13 +65,13 @@ public class MosinNagantFactory  {
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents,
                 Blocks.planks)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Bolt-action rifle",
                     "Damage: 20",
                     "Cartridge:",
                     "7.62x54mm Bullet",
-                    "Fire Rate: Bolt Action")
-            )
+                    "Fire Rate: Bolt Action"))
             .withCompatibleAttachment(AuxiliaryAttachments.MosinBolt, true, (model) -> {
                 if (model instanceof MosinBolt) {
                     GL11.glTranslatef(0.85F, -1.29F, -0.03F);
@@ -135,8 +133,7 @@ public class MosinNagantFactory  {
             })
             .withTextureName("MosinNagant")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new MosinNagant())
+                (new WeaponRenderer.Builder()).withModel(new MosinNagant())
                     .withPrepareFirstLoadIterationAnimationDuration(1300)
                     .withAllLoadIterationAnimationsCompletedDuration(1100)
                     .withEntityPositioning((itemStack) -> {

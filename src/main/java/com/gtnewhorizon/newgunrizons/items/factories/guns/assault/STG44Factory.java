@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.assault;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.item.Item;
 
@@ -32,11 +30,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class STG44Factory  {
+public class STG44Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("STG44")
+        return (new ItemWeapon.Builder()).withName("STG44")
             .withFireRate(0.6F)
             .withRecoil(3.5F)
 
@@ -57,14 +54,14 @@ public class STG44Factory  {
             .withShellCasingVerticalOffset(-0.02F)
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Assault Rifle",
                     "Damage: 8.5",
                     "Caliber: 7.92x33mm Kurz",
                     "Magazines:",
                     "30rnd 7.92x33mm Kurz Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.STG44Mag, ((model) -> { GL11.glScaled(1.0D, 1.0D, 1.0D); }))
             .withCompatibleAttachment(AuxiliaryAttachments.Extra, true, (model) -> {
                 if (model instanceof G36CIron1) {
@@ -113,8 +110,7 @@ public class STG44Factory  {
             .withCompatibleAttachment(AuxiliaryAttachments.STG44Action, true, (model) -> {})
             .withTextureName("STG44")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new STG44())
+                (new WeaponRenderer.Builder()).withModel(new STG44())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -152,12 +148,8 @@ public class STG44Factory  {
 
                     })
                     .withFirstPersonCustomPositioning(Magazines.STG44Mag, (renderContext) -> {})
-                    .withFirstPersonPositioningCustomRecoiled(
-                        Magazines.STG44Mag,
-                        (renderContext) -> {})
-                    .withFirstPersonPositioningCustomZoomingRecoiled(
-                        Magazines.STG44Mag,
-                        (renderContext) -> {})
+                    .withFirstPersonPositioningCustomRecoiled(Magazines.STG44Mag, (renderContext) -> {})
+                    .withFirstPersonPositioningCustomZoomingRecoiled(Magazines.STG44Mag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(
                         AuxiliaryAttachments.STG44Action.getRenderablePart(),
                         (renderContext) -> {})

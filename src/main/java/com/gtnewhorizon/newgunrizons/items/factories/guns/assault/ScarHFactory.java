@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -43,11 +42,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class ScarHFactory  {
+public class ScarHFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("ScarH")
+        return (new ItemWeapon.Builder()).withName("ScarH")
             .withFireRate(0.7F)
             .withRecoil(3.6F)
 
@@ -66,15 +64,15 @@ public class ScarHFactory  {
             .withFlashOffsetY(() -> { return 0.15F; })
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Battle rifle",
                     "Damage: 7.4",
                     "Nickname: Scar-H",
                     "Caliber: .300 AAC Blackout",
                     "Magazines:",
                     "30rnd .300 AAC Blackout Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.ScarHMag, ((model) -> {
                 GL11.glTranslatef(-0.342F, 0.6F, -1.43F);
                 GL11.glScaled(1.1D, 1.5D, 1.5D);
@@ -253,8 +251,7 @@ public class ScarHFactory  {
             })
             .withTextureName("Scar")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Scar())
+                (new WeaponRenderer.Builder()).withModel(new Scar())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -288,8 +285,7 @@ public class ScarHFactory  {
                         GL11.glScalef(3.0F, 3.0F, 3.0F);
                         GL11.glTranslatef(0.35F, 1.35F, -1.4F);
                         GL11.glRotatef(-0.5F, 1.0F, 0.0F, 0.0F);
-                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.AKMIron)) {
-                        }
+                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.AKMIron)) {}
 
                         if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.ACOG)) {
                             GL11.glTranslatef(-0.005F, 0.115F, 1.8F);
@@ -427,8 +423,7 @@ public class ScarHFactory  {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScalef(3.0F, 3.0F, 3.0F);
                         GL11.glTranslatef(0.35F, 1.35F, -1.5F);
-                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.AKMIron)) {
-                        }
+                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.AKMIron)) {}
 
                         if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.ACOG)) {
                             GL11.glTranslatef(-0.005F, 0.115F, 1.85F);

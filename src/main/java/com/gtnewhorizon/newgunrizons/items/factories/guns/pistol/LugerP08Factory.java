@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.pistol;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.item.Item;
 
@@ -24,11 +22,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class LugerP08Factory  {
+public class LugerP08Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("LugerP08")
+        return (new ItemWeapon.Builder()).withName("LugerP08")
             .withFireRate(0.35F)
             .withRecoil(5.0F)
 
@@ -48,14 +45,14 @@ public class LugerP08Factory  {
             .withInaccuracy(3.0F)
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Pistol",
                     "Damage: 7",
                     "Caliber: 7.62x21mm",
                     "Magazines:",
                     "8rnd 7.62x21mm Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.LugerAction1, true, (model) -> {
                 if (model instanceof LugerAction1) {
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -80,13 +77,10 @@ public class LugerP08Factory  {
                 }
 
             })
-            .withCompatibleAttachment(
-                Magazines.LugerP08Mag,
-                ((model) -> {  }))
+            .withCompatibleAttachment(Magazines.LugerP08Mag, ((model) -> {}))
             .withTextureName("LugerP08")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new LugerP08())
+                (new WeaponRenderer.Builder()).withModel(new LugerP08())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -243,7 +237,7 @@ public class LugerP08Factory  {
                             GL11.glTranslatef(0.0F, -0.5F, -0.6F);
                             GL11.glRotatef(-45.0F, 1.0F, 0.0F, 0.0F);
                         }, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L))
+                        new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonCustomPositioningUnloading(
                         AuxiliaryAttachments.LugerAction2.getRenderablePart(),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.4F); }, 250L, 1000L))
@@ -253,7 +247,7 @@ public class LugerP08Factory  {
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.4F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.4F); }, 250L, 1000L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.4F); }, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L))
+                        new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonCustomPositioningUnloading(
                         AuxiliaryAttachments.MakarovTop.getRenderablePart(),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, -0.0F, -0.0F); }, 250L, 1000L))

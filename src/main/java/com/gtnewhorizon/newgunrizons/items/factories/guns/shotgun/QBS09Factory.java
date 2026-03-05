@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -31,11 +30,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class QBS09Factory  {
+public class QBS09Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("QBS09")
+        return (new ItemWeapon.Builder()).withName("QBS09")
             .withAmmoCapacity(6)
             .withMaxBulletsPerReload(5)
             .withIteratedLoad()
@@ -60,13 +58,13 @@ public class QBS09Factory  {
             .withShellCasingEjectEnabled(false)
             .withCreativeTab(NewGunrizonsMod.ShotgunsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Combat shotgun",
                     "Damage per Pellet: 5",
                     "Pellets per Shot: 11",
                     "Ammo: 12 Gauge Shotgun Shell",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleBullet(Bullets.ShotgunShell, (model) -> {})
             .withTextureName("QBS09")
             .withCompatibleAttachment(AuxiliaryAttachments.Extra, true, (model) -> {
@@ -117,8 +115,7 @@ public class QBS09Factory  {
                 GL11.glScaled(1.4D, 1.4D, 1.4D);
             })
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new QBS09())
+                (new WeaponRenderer.Builder()).withModel(new QBS09())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

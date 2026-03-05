@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.smg;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.item.Item;
 
@@ -44,11 +42,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class MPXFactory  {
+public class MPXFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("MPX")
+        return (new ItemWeapon.Builder()).withName("MPX")
             .withFireRate(0.7F)
             .withRecoil(3.0F)
 
@@ -67,17 +64,15 @@ public class MPXFactory  {
             .withFlashOffsetY(() -> { return 0.1F; })
             .withCreativeTab(NewGunrizonsMod.SMGTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Submachine Gun",
                     "Damage: 5",
                     "Caliber: 5.56x45mm NATO",
                     "Magazines:",
                     "30rnd 9mm Magazine",
-                    "Fire Rate: Auto")
-            )
-            .withCompatibleAttachment(Magazines.MPXmag, ((model) -> {
-                GL11.glScaled(1.0D, 1.0D, 1.0D);
-            }))
+                    "Fire Rate: Auto"))
+            .withCompatibleAttachment(Magazines.MPXmag, ((model) -> { GL11.glScaled(1.0D, 1.0D, 1.0D); }))
             .withCompatibleAttachment(AuxiliaryAttachments.AR15Action, true, (model) -> {
                 GL11.glTranslatef(-0.175F, -1.31F, -0.67F);
                 GL11.glScaled(0.7D, 0.4D, 0.7D);
@@ -270,8 +265,7 @@ public class MPXFactory  {
             })
             .withTextureName("AK12")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new MPX())
+                (new WeaponRenderer.Builder()).withModel(new MPX())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glTranslatef(0.0F, 0.0F, 3.0F);
@@ -306,8 +300,7 @@ public class MPXFactory  {
                         GL11.glScalef(3.0F, 3.0F, 3.0F);
                         GL11.glTranslatef(0.35F, 1.0F, -0.4F);
                         GL11.glRotatef(-0.5F, 1.0F, 0.0F, 0.0F);
-                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.AKMIron)) {
-                        }
+                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.AKMIron)) {}
 
                         if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.ACOG)) {
                             GL11.glTranslatef(0.001F, -0.005F, 0.67F);
@@ -423,7 +416,7 @@ public class MPXFactory  {
                         new Transition((renderContext) -> {}, 250L, 1000L),
                         new Transition((renderContext) -> {}, 250L, 1000L),
                         new Transition((renderContext) -> {}, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L),
+                        new Transition((renderContext) -> {}, 250L, 1000L),
                         new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonCustomPositioningUnloading(
                         Magazines.NATO40rnd,
@@ -503,8 +496,7 @@ public class MPXFactory  {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScalef(3.0F, 3.0F, 3.0F);
                         GL11.glTranslatef(0.35F, 1.0F, -0.525F);
-                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.AKMIron)) {
-                        }
+                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.AKMIron)) {}
 
                         if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.ACOG)) {
                             GL11.glTranslatef(0.001F, -0.005F, 0.75F);

@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.FNP90Sight;
 import com.gtnewhorizon.newgunrizons.model.sight.Reflex2;
 import com.gtnewhorizon.newgunrizons.model.weapon.FNP90;
@@ -20,11 +19,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class FNP90Factory  {
+public class FNP90Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("FNP90")
+        return (new ItemWeapon.Builder()).withName("FNP90")
             .withFireRate(0.75F)
             .withRecoil(2.8F)
 
@@ -42,14 +40,14 @@ public class FNP90Factory  {
             .withFlashOffsetY(() -> { return 0.3F; })
             .withCreativeTab(NewGunrizonsMod.SMGTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Personal defense weapon",
                     "Damage: 6.5",
                     "Caliber: 5.7x28mm",
                     "Magazines:",
                     "50rnd 5.7x28mm Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.FNP90Mag, ((model) -> {}))
             .withCompatibleAttachment(AuxiliaryAttachments.FNP90Sight, true, (model) -> {
                 if (model instanceof FNP90Sight) {
@@ -71,8 +69,7 @@ public class FNP90Factory  {
             })
             .withTextureName("ak12")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new FNP90())
+                (new WeaponRenderer.Builder()).withModel(new FNP90())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

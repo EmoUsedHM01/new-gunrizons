@@ -13,7 +13,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -32,11 +31,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class AKMFactory  {
+public class AKMFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("AKM")
+        return (new ItemWeapon.Builder()).withName("AKM")
             .withFireRate(0.6F)
             .withRecoil(3.0F)
 
@@ -61,7 +59,8 @@ public class AKMFactory  {
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents,
                 Blocks.planks)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Assault rifle",
                     "Damage: 7.2",
                     "Caliber: 7.62x39mm",
@@ -69,8 +68,7 @@ public class AKMFactory  {
                     "30rnd 7.62x39mm Magazine",
                     "30rnd 7.62x39mm PMAG Magazine",
                     "75rnd 7.62x39mm Drum Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(AuxiliaryAttachments.AKIron, true, (model) -> {
                 GL11.glTranslatef(-0.175F, -1.06F, -5.96F);
                 GL11.glScaled(0.6D, 0.55D, 0.5D);
@@ -138,8 +136,7 @@ public class AKMFactory  {
             })
             .withTextureName("AKM")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new AKM())
+                (new WeaponRenderer.Builder()).withModel(new AKM())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

@@ -2,7 +2,6 @@ package com.gtnewhorizon.newgunrizons.items.factories.guns.pistol;
 
 import java.util.Arrays;
 
-
 import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
@@ -18,11 +17,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class EnfieldNo2Factory  {
+public class EnfieldNo2Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("EnfieldNo2")
+        return (new ItemWeapon.Builder()).withName("EnfieldNo2")
             .withAmmoCapacity(6)
             .withMaxBulletsPerReload(6)
             .withFireRate(0.3F)
@@ -46,12 +44,12 @@ public class EnfieldNo2Factory  {
             .withFlashOffsetY(() -> { return 0.06F; })
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Service Revolver",
                     "Damage: 7",
                     "Cartridge: .380/200 Bullet",
-                    "Fire Rate: Double Action Revolver")
-            )
+                    "Fire Rate: Double Action Revolver"))
             .withCompatibleAttachment(
                 AuxiliaryAttachments.WebleyCylinder,
                 true,
@@ -63,8 +61,7 @@ public class EnfieldNo2Factory  {
             .withCompatibleBullet(Bullets.Bullet380200, (model) -> {})
             .withTextureName("EnfieldNo2")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Webley())
+                (new WeaponRenderer.Builder()).withModel(new Webley())
                     .withPrepareFirstLoadIterationAnimationDuration(900)
                     .withAllLoadIterationAnimationsCompletedDuration(400)
                     .withEntityPositioning((itemStack) -> {

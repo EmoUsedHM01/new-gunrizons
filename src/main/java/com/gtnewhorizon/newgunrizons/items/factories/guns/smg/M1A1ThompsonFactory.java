@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -32,11 +31,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class M1A1ThompsonFactory  {
+public class M1A1ThompsonFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("M1A1Thompson")
+        return (new ItemWeapon.Builder()).withName("M1A1Thompson")
             .withFireRate(0.75F)
             .withRecoil(3.0F)
 
@@ -58,14 +56,14 @@ public class M1A1ThompsonFactory  {
             .withShellCasingVerticalOffset(-0.02F)
             .withCreativeTab(NewGunrizonsMod.SMGTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Submachine gun",
                     "Damage: 5.8",
                     "Caliber: .45 ACP",
                     "Magazines:",
                     ".45 ACP 30rnd Box Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.M1A1mag, ((model) -> {}))
             .withCompatibleAttachment(AuxiliaryAttachments.Extra, true, (model) -> {
                 if (model instanceof G36CIron1) {
@@ -129,8 +127,7 @@ public class M1A1ThompsonFactory  {
                 (model) -> { GL11.glTranslatef(0.0F, 0.0F, 1.0F); })
             .withTextureName("M1A1Thompson")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new M1A1Thompson())
+                (new WeaponRenderer.Builder()).withModel(new M1A1Thompson())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -168,12 +165,8 @@ public class M1A1ThompsonFactory  {
 
                     })
                     .withFirstPersonCustomPositioning(Magazines.M1A1mag, (renderContext) -> {})
-                    .withFirstPersonPositioningCustomRecoiled(
-                        Magazines.M1A1mag,
-                        (renderContext) -> {})
-                    .withFirstPersonPositioningCustomZoomingRecoiled(
-                        Magazines.M1A1mag,
-                        (renderContext) -> {})
+                    .withFirstPersonPositioningCustomRecoiled(Magazines.M1A1mag, (renderContext) -> {})
+                    .withFirstPersonPositioningCustomZoomingRecoiled(Magazines.M1A1mag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(
                         AuxiliaryAttachments.M1A1action.getRenderablePart(),
                         (renderContext) -> {

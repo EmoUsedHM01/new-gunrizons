@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.assault;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.item.Item;
 
@@ -33,11 +31,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class M16A1Factory  {
+public class M16A1Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("M16A1")
+        return (new ItemWeapon.Builder()).withName("M16A1")
             .withFireRate(0.55F)
             .withRecoil(4.0F)
 
@@ -56,7 +53,8 @@ public class M16A1Factory  {
             .withFlashOffsetY(() -> { return 0.101F; })
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Assault Rifle",
                     "Damage: 6.8",
                     "Caliber: 5.56x45mm NATO",
@@ -67,8 +65,7 @@ public class M16A1Factory  {
                     "40rnd 5.56x45mm NATO Magazine",
                     "30rnd 5.56x45mm NATO PMAG Magazine",
                     "100rnd 5.56x45mm NATO Beta-C Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.NATOMag1, ((model) -> {
                 GL11.glTranslatef(-0.35F, 0.5F, -1.25F);
                 GL11.glScaled(1.15D, 1.2D, 1.15D);
@@ -165,8 +162,7 @@ public class M16A1Factory  {
             })
             .withTextureName("AK12")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new M16A1())
+                (new WeaponRenderer.Builder()).withModel(new M16A1())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -339,7 +335,7 @@ public class M16A1Factory  {
                         new Transition((renderContext) -> {}, 250L, 1000L),
                         new Transition((renderContext) -> {}, 250L, 1000L),
                         new Transition((renderContext) -> {}, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L),
+                        new Transition((renderContext) -> {}, 250L, 1000L),
                         new Transition((renderContext) -> {}, 250L, 1000L),
                         new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonCustomPositioningUnloading(
@@ -434,8 +430,7 @@ public class M16A1Factory  {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScalef(3.0F, 3.0F, 3.0F);
                         GL11.glTranslatef(0.35F, 1.0F, -0.525F);
-                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.AKMIron)) {
-                        }
+                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.AKMIron)) {}
 
                         if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.ACOG)) {
                             GL11.glTranslatef(0.001F, -0.005F, 0.75F);

@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -32,11 +31,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class PPSh41Factory  {
+public class PPSh41Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("PPSh41")
+        return (new ItemWeapon.Builder()).withName("PPSh41")
             .withFireRate(0.8F)
             .withRecoil(3.0F)
 
@@ -57,14 +55,14 @@ public class PPSh41Factory  {
             .withShellCasingVerticalOffset(-0.02F)
             .withCreativeTab(NewGunrizonsMod.SMGTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Submachine gun",
                     "Damage: 7.1",
                     "Caliber: 7.52x25mm Tokarev",
                     "Magazines:",
                     "71rnd 7.62x25mm Tokarev Drum Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.PPSH41DrumMag, ((model) -> {}))
             .withCompatibleAttachment(AuxiliaryAttachments.Extra, true, (model) -> {
                 if (model instanceof G36CIron1) {
@@ -120,8 +118,7 @@ public class PPSh41Factory  {
             .withCompatibleAttachment(AuxiliaryAttachments.PPSH41action, true, (model) -> {})
             .withTextureName("PPSH41")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new PPSH41())
+                (new WeaponRenderer.Builder()).withModel(new PPSH41())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -159,12 +156,8 @@ public class PPSh41Factory  {
 
                     })
                     .withFirstPersonCustomPositioning(Magazines.PPSH41DrumMag, (renderContext) -> {})
-                    .withFirstPersonPositioningCustomRecoiled(
-                        Magazines.PPSH41DrumMag,
-                        (renderContext) -> {})
-                    .withFirstPersonPositioningCustomZoomingRecoiled(
-                        Magazines.PPSH41DrumMag,
-                        (renderContext) -> {})
+                    .withFirstPersonPositioningCustomRecoiled(Magazines.PPSH41DrumMag, (renderContext) -> {})
+                    .withFirstPersonPositioningCustomZoomingRecoiled(Magazines.PPSH41DrumMag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(
                         AuxiliaryAttachments.PPSH41action.getRenderablePart(),
                         (renderContext) -> {})

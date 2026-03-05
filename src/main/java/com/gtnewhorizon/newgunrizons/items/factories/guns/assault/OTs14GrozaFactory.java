@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.assault;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -33,11 +31,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class OTs14GrozaFactory  {
+public class OTs14GrozaFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("OTs14Groza")
+        return (new ItemWeapon.Builder()).withName("OTs14Groza")
             .withFireRate(0.7F)
             .withRecoil(3.3F)
 
@@ -62,7 +59,8 @@ public class OTs14GrozaFactory  {
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents,
                 Blocks.planks)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Assault rifle",
                     "Damage: 7.2",
                     "Caliber: 7.62x39mm",
@@ -70,8 +68,7 @@ public class OTs14GrozaFactory  {
                     "30rnd 7.62x39mm Magazine",
                     "30rnd 7.62x39mm PMAG Magazine",
                     "75rnd 7.62x39mm Drum Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(AuxiliaryAttachments.AKaction, true, (model) -> {})
             .withCompatibleAttachment(Magazines.Magazine762x39, ((model) -> {
                 GL11.glTranslatef(0.0F, -0.5F, 0.05F);
@@ -136,8 +133,7 @@ public class OTs14GrozaFactory  {
             })
             .withTextureName("OTs14Groza")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Ots14Groza())
+                (new WeaponRenderer.Builder()).withModel(new Ots14Groza())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

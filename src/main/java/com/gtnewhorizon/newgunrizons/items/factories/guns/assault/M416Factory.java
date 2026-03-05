@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.assault;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.item.Item;
 
@@ -44,11 +42,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class M416Factory  {
+public class M416Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("M416")
+        return (new ItemWeapon.Builder()).withName("M416")
             .withFireRate(0.7F)
             .withRecoil(3.5F)
 
@@ -67,7 +64,8 @@ public class M416Factory  {
             .withFlashOffsetY(() -> { return 0.1F; })
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Carbine",
                     "Damage: 7",
                     "Caliber: 5.56x45mm NATO",
@@ -77,8 +75,7 @@ public class M416Factory  {
                     "40rnd 5.56x45mm NATO Magazine",
                     "30rnd 5.56x45mm NATO PMAG Magazine",
                     "100rnd 5.56x45mm NATO Beta-C Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.NATOMag1, ((model) -> {
                 GL11.glTranslatef(-0.35F, 0.5F, -1.25F);
                 GL11.glScaled(1.15D, 1.2D, 1.15D);
@@ -322,8 +319,7 @@ public class M416Factory  {
             })
             .withTextureName("AK12")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new M416())
+                (new WeaponRenderer.Builder()).withModel(new M416())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -473,7 +469,7 @@ public class M416Factory  {
                         new Transition((renderContext) -> {}, 250L, 1000L),
                         new Transition((renderContext) -> {}, 250L, 1000L),
                         new Transition((renderContext) -> {}, 250L, 1000L),
-                        new Transition((renderContext) -> {  }, 250L, 1000L),
+                        new Transition((renderContext) -> {}, 250L, 1000L),
                         new Transition((renderContext) -> {}, 250L, 1000L))
                     .withFirstPersonCustomPositioningUnloading(
                         Magazines.NATO40rnd,

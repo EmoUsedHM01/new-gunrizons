@@ -14,8 +14,7 @@ import com.gtnewhorizon.newgunrizons.model.misc.ImpactGrenade;
 public class ImpactGrenadeFactory {
 
     public ItemGrenade createGrenade() {
-        return (new ItemGrenade.Builder())
-            .withName("ImpactGrenade")
+        return (new ItemGrenade.Builder()).withName("ImpactGrenade")
             .withCreativeTab(NewGunrizonsMod.GrenadesTab)
             .withTextureNames("ImpactGrenade")
             .withExplosionSound("grenadeexplosion")
@@ -40,8 +39,7 @@ public class ImpactGrenadeFactory {
                 'F',
                 Items.gunpowder)
             .withRenderer(
-                (new GrenadeRenderer.Builder())
-                    .withModel(new ImpactGrenade())
+                (new GrenadeRenderer.Builder()).withModel(new ImpactGrenade())
                     .withAnimationDuration(500)
                     .withThrownEntityPositioning(() -> {
                         GL11.glScalef(0.2F, 0.2F, 0.2F);

@@ -13,7 +13,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -33,11 +32,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class M1CarbineFactory  {
+public class M1CarbineFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("M1Carbine")
+        return (new ItemWeapon.Builder()).withName("M1Carbine")
             .withFireRate(0.3F)
             .withRecoil(2.5F)
 
@@ -61,14 +59,14 @@ public class M1CarbineFactory  {
                 CommonProxy.MiniSteelPlate,
                 "ingotSteel",
                 Blocks.planks)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Semi-automatic carbine",
                     "Damage: 7",
                     "Caliber: .30 Carbine",
                     "Magazines:",
                     "15rnd .30 Carbine Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(
                 AuxiliaryAttachments.M1CarbineAction,
                 true,
@@ -129,8 +127,7 @@ public class M1CarbineFactory  {
             })
             .withTextureName("m1carbine")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new m1carbine())
+                (new WeaponRenderer.Builder()).withModel(new m1carbine())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.45D, 0.45D, 0.45D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -237,16 +234,16 @@ public class M1CarbineFactory  {
                     .withFirstPersonCustomPositioningReloading(
                         AuxiliaryAttachments.M1CarbineAction.getRenderablePart(),
                         new Transition((renderContext) -> {}, 250L, 200L),
-                        new Transition((renderContext) -> {  }, 350L, 150L),
-                        new Transition((renderContext) -> {  }, 350L, 150L),
+                        new Transition((renderContext) -> {}, 350L, 150L),
+                        new Transition((renderContext) -> {}, 350L, 150L),
                         new Transition((renderContext) -> {}, 400L, 80L),
                         new Transition((renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 0.7F); }, 100L, 200L),
-                        new Transition((renderContext) -> {  }, 100L, 200L))
+                        new Transition((renderContext) -> {}, 100L, 200L))
                     .withFirstPersonCustomPositioningReloading(
                         AuxiliaryAttachments.M1CarbineRearSight.getRenderablePart(),
                         new Transition((renderContext) -> {}, 250L, 200L),
-                        new Transition((renderContext) -> {  }, 350L, 150L),
-                        new Transition((renderContext) -> {  }, 350L, 150L),
+                        new Transition((renderContext) -> {}, 350L, 150L),
+                        new Transition((renderContext) -> {}, 350L, 150L),
                         new Transition((renderContext) -> {}, 400L, 80L),
                         new Transition((renderContext) -> {}, 100L, 200L),
                         new Transition((renderContext) -> {}, 100L, 200L))

@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.factories.guns.shotgun;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
-
 
 import net.minecraft.item.Item;
 
@@ -43,11 +41,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class VEPR12Factory  {
+public class VEPR12Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("VEPR12")
+        return (new ItemWeapon.Builder()).withName("VEPR12")
             .withFireRate(0.4F)
             .withRecoil(8.0F)
 
@@ -73,23 +70,21 @@ public class VEPR12Factory  {
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents,
                 "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Shotgun",
                     "Damage per Pellet: 7",
                     "Pellets per Shot: 11",
                     "Cartridge: 12 Gauge Shotgun Shell",
                     "Magazines:",
                     "5rnd 12 Gauge Shell Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.AKaction, true, (model) -> {})
             .withCompatibleAttachment(AuxiliaryAttachments.AKIron, true, (model) -> {
                 GL11.glTranslatef(-0.175F, -1.06F, -4.9F);
                 GL11.glScaled(0.6D, 0.55D, 0.5D);
             })
-            .withCompatibleAttachment(
-                Magazines.VEPR12Mag,
-                ((model) -> {  }))
+            .withCompatibleAttachment(Magazines.VEPR12Mag, ((model) -> {}))
             .withCompatibleAttachment(Attachments.Silencer12Gauge, (model) -> {
                 GL11.glTranslatef(-0.22F, -1.1F, -8.3F);
                 GL11.glScaled(1.2D, 1.2D, 1.2D);
@@ -232,8 +227,7 @@ public class VEPR12Factory  {
             })
             .withTextureName("VEPR12")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new VEPR12())
+                (new WeaponRenderer.Builder()).withModel(new VEPR12())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

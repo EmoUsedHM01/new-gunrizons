@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -31,11 +30,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class PP19Factory  {
+public class PP19Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("PP19")
+        return (new ItemWeapon.Builder()).withName("PP19")
             .withFireRate(0.75F)
             .withRecoil(2.5F)
 
@@ -54,14 +52,14 @@ public class PP19Factory  {
             .withFlashOffsetY(() -> { return 0.1F; })
             .withCreativeTab(NewGunrizonsMod.SMGTab)
             .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Submachine gun",
                     "Damage: 5",
                     "Caliber: 9mm",
                     "Magazines:",
                     "65rnd 9mm Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(AuxiliaryAttachments.AKaction, true, (model) -> {})
             .withCompatibleAttachment(Magazines.PP19Mag, ((model) -> {
                 GL11.glTranslatef(-0.38F, 0.85F, -1.62F);
@@ -116,8 +114,7 @@ public class PP19Factory  {
             })
             .withTextureName("ppbizon")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new PPBizon())
+                (new WeaponRenderer.Builder()).withModel(new PPBizon())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
@@ -165,12 +162,8 @@ public class PP19Factory  {
                     .withFirstPersonPositioningCustomZoomingRecoiled(
                         AuxiliaryAttachments.AKaction.getRenderablePart(),
                         (renderContext) -> { GL11.glTranslatef(0.0F, 0.0F, 1.0F); })
-                    .withFirstPersonPositioningCustomRecoiled(
-                        Magazines.PP19Mag,
-                        (renderContext) -> {})
-                    .withFirstPersonPositioningCustomZoomingRecoiled(
-                        Magazines.PP19Mag,
-                        (renderContext) -> {})
+                    .withFirstPersonPositioningCustomRecoiled(Magazines.PP19Mag, (renderContext) -> {})
+                    .withFirstPersonPositioningCustomZoomingRecoiled(Magazines.PP19Mag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(Magazines.PP19Mag, (renderContext) -> {})
                     .withFirstPersonPositioningReloading(new Transition((renderContext) -> {
                         GL11.glScalef(3.0F, 3.0F, 3.0F);

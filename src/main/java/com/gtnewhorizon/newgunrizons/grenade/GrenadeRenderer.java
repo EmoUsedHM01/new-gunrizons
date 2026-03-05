@@ -839,194 +839,194 @@ public class GrenadeRenderer implements IItemRenderer {
             }
 
             if (this.inventoryPositioning == null) {
-                    this.inventoryPositioning = (itemStack) -> { GL11.glTranslatef(0.0F, 0.12F, 0.0F); };
-                }
+                this.inventoryPositioning = (itemStack) -> { GL11.glTranslatef(0.0F, 0.12F, 0.0F); };
+            }
 
-                if (this.entityPositioning == null) {
-                    this.entityPositioning = (itemStack) -> {};
-                }
+            if (this.entityPositioning == null) {
+                this.entityPositioning = (itemStack) -> {};
+            }
 
-                if (this.firstPersonPositioning == null) {
-                    this.firstPersonPositioning = (renderContext) -> {};
-                }
+            if (this.firstPersonPositioning == null) {
+                this.firstPersonPositioning = (renderContext) -> {};
+            }
 
-                if (this.firstPersonPositioningSafetyPinOff == null) {
-                    this.firstPersonPositioningSafetyPinOff = Collections
-                        .singletonList(new Transition(this.firstPersonPositioning, this.animationDuration));
-                }
+            if (this.firstPersonPositioningSafetyPinOff == null) {
+                this.firstPersonPositioningSafetyPinOff = Collections
+                    .singletonList(new Transition(this.firstPersonPositioning, this.animationDuration));
+            }
 
-                if (this.firstPersonPositioningThrowing == null) {
-                    this.firstPersonPositioningThrowing = Collections
-                        .singletonList(new Transition(this.firstPersonPositioning, this.animationDuration));
-                }
+            if (this.firstPersonPositioningThrowing == null) {
+                this.firstPersonPositioningThrowing = Collections
+                    .singletonList(new Transition(this.firstPersonPositioning, this.animationDuration));
+            }
 
-                Iterator var2;
-                Transition t;
+            Iterator var2;
+            Transition t;
 
-                for (var2 = this.firstPersonPositioningThrowing.iterator(); var2
-                    .hasNext(); this.totalThrowingDuration += t.getPause()) {
-                    t = (Transition) var2.next();
-                    this.totalThrowingDuration += t.getDuration();
-                }
+            for (var2 = this.firstPersonPositioningThrowing.iterator(); var2
+                .hasNext(); this.totalThrowingDuration += t.getPause()) {
+                t = (Transition) var2.next();
+                this.totalThrowingDuration += t.getDuration();
+            }
 
-                if (this.firstPersonPositioningRunning == null) {
-                    this.firstPersonPositioningRunning = this.firstPersonPositioning;
+            if (this.firstPersonPositioningRunning == null) {
+                this.firstPersonPositioningRunning = this.firstPersonPositioning;
+            }
+
+            if (this.firstPersonPositioningStrikerLeverOff == null) {
+                if (this.firstPersonPositioningSafetyPinOff != null
+                    && !this.firstPersonPositioningSafetyPinOff.isEmpty()) {
+                    this.firstPersonPositioningStrikerLeverOff = this.firstPersonPositioningSafetyPinOff
+                        .get(this.firstPersonPositioningSafetyPinOff.size() - 1)
+                        .getItemPositioning();
                 }
 
                 if (this.firstPersonPositioningStrikerLeverOff == null) {
-                    if (this.firstPersonPositioningSafetyPinOff != null
-                        && !this.firstPersonPositioningSafetyPinOff.isEmpty()) {
-                        this.firstPersonPositioningStrikerLeverOff = this.firstPersonPositioningSafetyPinOff
-                            .get(this.firstPersonPositioningSafetyPinOff.size() - 1)
-                            .getItemPositioning();
-                    }
+                    this.firstPersonPositioningStrikerLeverOff = this.firstPersonPositioning;
+                }
+            }
 
-                    if (this.firstPersonPositioningStrikerLeverOff == null) {
-                        this.firstPersonPositioningStrikerLeverOff = this.firstPersonPositioning;
-                    }
+            if (this.firstPersonPositioningThrown == null) {
+                if (this.firstPersonPositioningThrowing != null && !this.firstPersonPositioningThrowing.isEmpty()) {
+                    this.firstPersonPositioningThrown = this.firstPersonPositioningThrowing
+                        .get(this.firstPersonPositioningThrowing.size() - 1)
+                        .getItemPositioning();
                 }
 
                 if (this.firstPersonPositioningThrown == null) {
-                    if (this.firstPersonPositioningThrowing != null && !this.firstPersonPositioningThrowing.isEmpty()) {
-                        this.firstPersonPositioningThrown = this.firstPersonPositioningThrowing
-                            .get(this.firstPersonPositioningThrowing.size() - 1)
-                            .getItemPositioning();
-                    }
-
-                    if (this.firstPersonPositioningThrown == null) {
-                        this.firstPersonPositioningThrown = this.firstPersonPositioning;
-                    }
+                    this.firstPersonPositioningThrown = this.firstPersonPositioning;
                 }
+            }
 
-                if (this.thirdPersonPositioning == null) {
-                    this.thirdPersonPositioning = (context) -> {
-                        GL11.glTranslatef(-0.4F, 0.2F, 0.4F);
-                        GL11.glRotatef(-45.0F, 0.0F, 1.0F, 0.0F);
-                        GL11.glRotatef(70.0F, 1.0F, 0.0F, 0.0F);
-                    };
-                }
+            if (this.thirdPersonPositioning == null) {
+                this.thirdPersonPositioning = (context) -> {
+                    GL11.glTranslatef(-0.4F, 0.2F, 0.4F);
+                    GL11.glRotatef(-45.0F, 0.0F, 1.0F, 0.0F);
+                    GL11.glRotatef(70.0F, 1.0F, 0.0F, 0.0F);
+                };
+            }
 
-                if (this.firstPersonLeftHandPositioning == null) {
-                    this.firstPersonLeftHandPositioning = (context) -> {};
-                }
+            if (this.firstPersonLeftHandPositioning == null) {
+                this.firstPersonLeftHandPositioning = (context) -> {};
+            }
 
-                if (this.firstPersonLeftHandPositioningSafetyPinOff == null) {
-                    this.firstPersonLeftHandPositioningSafetyPinOff = this.firstPersonPositioningSafetyPinOff.stream()
-                        .map((tx) -> new Transition((c) -> {}, 0L))
-                        .collect(Collectors.toList());
-                }
+            if (this.firstPersonLeftHandPositioningSafetyPinOff == null) {
+                this.firstPersonLeftHandPositioningSafetyPinOff = this.firstPersonPositioningSafetyPinOff.stream()
+                    .map((tx) -> new Transition((c) -> {}, 0L))
+                    .collect(Collectors.toList());
+            }
 
-                if (this.firstPersonLeftHandPositioningThrowing == null) {
-                    this.firstPersonLeftHandPositioningThrowing = this.firstPersonPositioningThrowing.stream()
-                        .map((tx) -> new Transition((c) -> {}, 0L))
-                        .collect(Collectors.toList());
-                }
+            if (this.firstPersonLeftHandPositioningThrowing == null) {
+                this.firstPersonLeftHandPositioningThrowing = this.firstPersonPositioningThrowing.stream()
+                    .map((tx) -> new Transition((c) -> {}, 0L))
+                    .collect(Collectors.toList());
+            }
 
-                if (this.firstPersonRightHandPositioningThrowing == null) {
-                    this.firstPersonRightHandPositioningThrowing = this.firstPersonPositioningThrowing.stream()
-                        .map((tx) -> new Transition((c) -> {}, 0L))
-                        .collect(Collectors.toList());
-                }
+            if (this.firstPersonRightHandPositioningThrowing == null) {
+                this.firstPersonRightHandPositioningThrowing = this.firstPersonPositioningThrowing.stream()
+                    .map((tx) -> new Transition((c) -> {}, 0L))
+                    .collect(Collectors.toList());
+            }
 
-                if (this.firstPersonLeftHandPositioningRunning == null) {
-                    this.firstPersonLeftHandPositioningRunning = this.firstPersonLeftHandPositioning;
+            if (this.firstPersonLeftHandPositioningRunning == null) {
+                this.firstPersonLeftHandPositioningRunning = this.firstPersonLeftHandPositioning;
+            }
+
+            if (this.firstPersonLeftHandPositioningStrikerLeverOff == null) {
+                if (!this.firstPersonLeftHandPositioningSafetyPinOff.isEmpty()) {
+                    this.firstPersonLeftHandPositioningStrikerLeverOff = this.firstPersonLeftHandPositioningSafetyPinOff
+                        .get(this.firstPersonLeftHandPositioningSafetyPinOff.size() - 1)
+                        .getItemPositioning();
                 }
 
                 if (this.firstPersonLeftHandPositioningStrikerLeverOff == null) {
-                    if (!this.firstPersonLeftHandPositioningSafetyPinOff.isEmpty()) {
-                        this.firstPersonLeftHandPositioningStrikerLeverOff = this.firstPersonLeftHandPositioningSafetyPinOff
-                            .get(this.firstPersonLeftHandPositioningSafetyPinOff.size() - 1)
-                            .getItemPositioning();
-                    }
+                    this.firstPersonLeftHandPositioningStrikerLeverOff = this.firstPersonLeftHandPositioning;
+                }
+            }
 
-                    if (this.firstPersonLeftHandPositioningStrikerLeverOff == null) {
-                        this.firstPersonLeftHandPositioningStrikerLeverOff = this.firstPersonLeftHandPositioning;
-                    }
+            if (this.firstPersonLeftHandPositioningThrown == null) {
+                if (!this.firstPersonLeftHandPositioningThrowing.isEmpty()) {
+                    this.firstPersonLeftHandPositioningThrown = this.firstPersonLeftHandPositioningThrowing
+                        .get(this.firstPersonLeftHandPositioningThrowing.size() - 1)
+                        .getItemPositioning();
                 }
 
                 if (this.firstPersonLeftHandPositioningThrown == null) {
-                    if (!this.firstPersonLeftHandPositioningThrowing.isEmpty()) {
-                        this.firstPersonLeftHandPositioningThrown = this.firstPersonLeftHandPositioningThrowing
-                            .get(this.firstPersonLeftHandPositioningThrowing.size() - 1)
-                            .getItemPositioning();
-                    }
-
-                    if (this.firstPersonLeftHandPositioningThrown == null) {
-                        this.firstPersonLeftHandPositioningThrown = this.firstPersonLeftHandPositioning;
-                    }
+                    this.firstPersonLeftHandPositioningThrown = this.firstPersonLeftHandPositioning;
                 }
+            }
 
-                if (this.firstPersonRightHandPositioning == null) {
-                    this.firstPersonRightHandPositioning = (context) -> {};
-                }
+            if (this.firstPersonRightHandPositioning == null) {
+                this.firstPersonRightHandPositioning = (context) -> {};
+            }
 
-                if (this.firstPersonRightHandPositioningSafetyPinOff == null) {
-                    this.firstPersonRightHandPositioningSafetyPinOff = this.firstPersonPositioningSafetyPinOff.stream()
-                        .map((tx) -> new Transition((c) -> {}, 0L))
-                        .collect(Collectors.toList());
-                }
+            if (this.firstPersonRightHandPositioningSafetyPinOff == null) {
+                this.firstPersonRightHandPositioningSafetyPinOff = this.firstPersonPositioningSafetyPinOff.stream()
+                    .map((tx) -> new Transition((c) -> {}, 0L))
+                    .collect(Collectors.toList());
+            }
 
-                if (this.firstPersonRightHandPositioningRunning == null) {
-                    this.firstPersonRightHandPositioningRunning = this.firstPersonRightHandPositioning;
+            if (this.firstPersonRightHandPositioningRunning == null) {
+                this.firstPersonRightHandPositioningRunning = this.firstPersonRightHandPositioning;
+            }
+
+            if (this.firstPersonRightHandPositioningStrikerLeverOff == null) {
+                if (!this.firstPersonRightHandPositioningSafetyPinOff.isEmpty()) {
+                    this.firstPersonRightHandPositioningStrikerLeverOff = this.firstPersonRightHandPositioningSafetyPinOff
+                        .get(this.firstPersonRightHandPositioningSafetyPinOff.size() - 1)
+                        .getItemPositioning();
                 }
 
                 if (this.firstPersonRightHandPositioningStrikerLeverOff == null) {
-                    if (!this.firstPersonRightHandPositioningSafetyPinOff.isEmpty()) {
-                        this.firstPersonRightHandPositioningStrikerLeverOff = this.firstPersonRightHandPositioningSafetyPinOff
-                            .get(this.firstPersonRightHandPositioningSafetyPinOff.size() - 1)
-                            .getItemPositioning();
-                    }
+                    this.firstPersonRightHandPositioningStrikerLeverOff = this.firstPersonRightHandPositioning;
+                }
+            }
 
-                    if (this.firstPersonRightHandPositioningStrikerLeverOff == null) {
-                        this.firstPersonRightHandPositioningStrikerLeverOff = this.firstPersonRightHandPositioning;
-                    }
+            if (this.firstPersonRightHandPositioningThrown == null) {
+                if (!this.firstPersonRightHandPositioningThrowing.isEmpty()) {
+                    this.firstPersonRightHandPositioningThrown = this.firstPersonRightHandPositioningThrowing
+                        .get(this.firstPersonRightHandPositioningThrowing.size() - 1)
+                        .getItemPositioning();
                 }
 
                 if (this.firstPersonRightHandPositioningThrown == null) {
-                    if (!this.firstPersonRightHandPositioningThrowing.isEmpty()) {
-                        this.firstPersonRightHandPositioningThrown = this.firstPersonRightHandPositioningThrowing
-                            .get(this.firstPersonRightHandPositioningThrowing.size() - 1)
-                            .getItemPositioning();
-                    }
-
-                    if (this.firstPersonRightHandPositioningThrown == null) {
-                        this.firstPersonRightHandPositioningThrown = this.firstPersonRightHandPositioning;
-                    }
+                    this.firstPersonRightHandPositioningThrown = this.firstPersonRightHandPositioning;
                 }
+            }
 
-                this.firstPersonCustomPositioningSafetyPinOff.forEach((p, tx) -> {
-                    if (tx.size() != this.firstPersonPositioningSafetyPinOff.size()) {
-                        throw new IllegalStateException(
-                            "Custom reloading transition number mismatch. Expected "
-                                + this.firstPersonPositioningSafetyPinOff.size()
-                                + ", actual: "
-                                + tx.size());
-                    }
+            this.firstPersonCustomPositioningSafetyPinOff.forEach((p, tx) -> {
+                if (tx.size() != this.firstPersonPositioningSafetyPinOff.size()) {
+                    throw new IllegalStateException(
+                        "Custom reloading transition number mismatch. Expected "
+                            + this.firstPersonPositioningSafetyPinOff.size()
+                            + ", actual: "
+                            + tx.size());
+                }
+            });
+            this.firstPersonCustomPositioningThrowing.forEach((p, tx) -> {
+                if (tx.size() != this.firstPersonPositioningThrowing.size()) {
+                    throw new IllegalStateException(
+                        "Custom reloading transition number mismatch. Expected "
+                            + this.firstPersonPositioningThrowing.size()
+                            + ", actual: "
+                            + tx.size());
+                }
+            });
+            if (!this.firstPersonCustomPositioning.isEmpty()
+                && this.firstPersonCustomPositioningStrikerLeverOff.isEmpty()) {
+                this.firstPersonCustomPositioning.forEach((part, pos) -> {
+                    this.firstPersonCustomPositioningStrikerLeverOff
+                        .put(part, new GrenadeRenderer.SimplePositioning(null, pos.positioning));
                 });
-                this.firstPersonCustomPositioningThrowing.forEach((p, tx) -> {
-                    if (tx.size() != this.firstPersonPositioningThrowing.size()) {
-                        throw new IllegalStateException(
-                            "Custom reloading transition number mismatch. Expected "
-                                + this.firstPersonPositioningThrowing.size()
-                                + ", actual: "
-                                + tx.size());
-                    }
-                });
-                if (!this.firstPersonCustomPositioning.isEmpty()
-                    && this.firstPersonCustomPositioningStrikerLeverOff.isEmpty()) {
-                    this.firstPersonCustomPositioning.forEach((part, pos) -> {
-                        this.firstPersonCustomPositioningStrikerLeverOff
+            }
+
+            if (!this.firstPersonCustomPositioning.isEmpty() && this.firstPersonCustomPositioningThrown.isEmpty()) {
+                this.firstPersonCustomPositioning.forEach(
+                    (part, pos) -> {
+                        this.firstPersonCustomPositioningThrown
                             .put(part, new GrenadeRenderer.SimplePositioning(null, pos.positioning));
                     });
-                }
-
-                if (!this.firstPersonCustomPositioning.isEmpty() && this.firstPersonCustomPositioningThrown.isEmpty()) {
-                    this.firstPersonCustomPositioning.forEach(
-                        (part, pos) -> {
-                            this.firstPersonCustomPositioningThrown
-                                .put(part, new GrenadeRenderer.SimplePositioning(null, pos.positioning));
-                        });
-                }
+            }
 
             GrenadeRenderer renderer = new GrenadeRenderer(this);
             return renderer;

@@ -12,16 +12,14 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.weapon.Pistol10mm;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class Pistol10mmFactory  {
+public class Pistol10mmFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("10mmPistol")
+        return (new ItemWeapon.Builder()).withName("10mmPistol")
             .withFireRate(0.6F)
             .withRecoil(6.0F)
 
@@ -41,7 +39,8 @@ public class Pistol10mmFactory  {
             .withInaccuracy(3.0F)
             .withCreativeTab(NewGunrizonsMod.FunGunsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MetalComponents)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "--Fallout 4's starting pistol--",
                     "",
                     "Type: Pistol",
@@ -49,8 +48,7 @@ public class Pistol10mmFactory  {
                     "Caliber: 10mm",
                     "Magazines:",
                     "10rnd 10mm Magazine",
-                    "Fire Rate: Semi")
-            )
+                    "Fire Rate: Semi"))
             .withCompatibleAttachment(Magazines.Mag10mm, ((model) -> {
                 GL11.glTranslatef(0.0F, -0.2F, 0.14F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -58,8 +56,7 @@ public class Pistol10mmFactory  {
             }))
             .withTextureName("Pistol10mm")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new Pistol10mm())
+                (new WeaponRenderer.Builder()).withModel(new Pistol10mm())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

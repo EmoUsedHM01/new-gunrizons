@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -42,11 +41,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
-public class KSG12Factory  {
+public class KSG12Factory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("KSG12")
+        return (new ItemWeapon.Builder()).withName("KSG12")
             .withAmmoCapacity(15)
             .withMaxBulletsPerReload(7)
             .withFireRate(0.5F)
@@ -74,17 +72,14 @@ public class KSG12Factory  {
             .withShellCasingEjectEnabled(false)
             .withCreativeTab(NewGunrizonsMod.ShotgunsTab)
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Bullpup pump-action shotgun",
                     "Damage per Pellet: 5",
                     "Pellets per Shot: 10",
                     "Ammo: 12 Gauge Shotgun Shell",
-                    "Fire Rate: Pump-Action")
-            )
-            .withCompatibleAttachment(
-                AuxiliaryAttachments.KSGPump,
-                true,
-                (model) -> {  })
+                    "Fire Rate: Pump-Action"))
+            .withCompatibleAttachment(AuxiliaryAttachments.KSGPump, true, (model) -> {})
             .withCompatibleBullet(Bullets.ShotgunShell, (model) -> {})
             .withCompatibleAttachment(Attachments.AKMIron, true, (model) -> {
                 if (model instanceof M4Iron1) {
@@ -211,8 +206,7 @@ public class KSG12Factory  {
             })
             .withTextureName("AK12")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new KSG12())
+                (new WeaponRenderer.Builder()).withModel(new KSG12())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

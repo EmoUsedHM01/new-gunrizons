@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.action.ACRAction;
 import com.gtnewhorizon.newgunrizons.model.misc.AKRail;
 import com.gtnewhorizon.newgunrizons.model.misc.AKRail2;
@@ -49,11 +48,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class ACRFactory  {
+public class ACRFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("ACR")
+        return (new ItemWeapon.Builder()).withName("ACR")
             .withFireRate(0.7F)
             .withRecoil(3.5F)
 
@@ -72,7 +70,8 @@ public class ACRFactory  {
             .withFlashOffsetY(() -> { return 0.12F; })
             .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Assault rifle",
                     "Damage: 7.2",
                     "Caliber: 5.56x45mm NATO",
@@ -82,8 +81,7 @@ public class ACRFactory  {
                     "40rnd 5.56x45mm NATO Magazine",
                     "30rnd 5.56x45mm NATO PMAG Magazine",
                     "100rnd 5.56x45mm NATO Beta-C Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.NATOMag1, ((model) -> {
                 GL11.glTranslatef(-0.35F, 0.3F, -1.31F);
                 GL11.glScaled(1.15D, 1.2D, 1.2D);
@@ -295,8 +293,7 @@ public class ACRFactory  {
             })
             .withTextureName("ACR")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new BushmasterACR())
+                (new WeaponRenderer.Builder()).withModel(new BushmasterACR())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

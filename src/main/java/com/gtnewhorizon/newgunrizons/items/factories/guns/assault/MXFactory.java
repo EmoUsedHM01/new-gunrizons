@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -40,11 +39,10 @@ import com.gtnewhorizon.newgunrizons.model.weapon.MX;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class MXFactory  {
+public class MXFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("MX")
+        return (new ItemWeapon.Builder()).withName("MX")
             .withFireRate(0.55F)
             .withRecoil(3.0F)
 
@@ -67,16 +65,14 @@ public class MXFactory  {
                 CommonProxy.SteelPlate,
                 CommonProxy.MiniSteelPlate,
                 CommonProxy.MetalComponents)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Assault rifle",
                     "Damage: 8",
                     "Caliber: 6.5x39mm NATO",
                     "Magazines:",
-                    "30rnd 6.5x39mm NATO Magazine")
-            )
-            .withCompatibleAttachment(
-                Magazines.MXMag,
-                ((model) -> { GL11.glTranslatef(0.0F, 0.0F, 0.07F); }))
+                    "30rnd 6.5x39mm NATO Magazine"))
+            .withCompatibleAttachment(Magazines.MXMag, ((model) -> { GL11.glTranslatef(0.0F, 0.0F, 0.07F); }))
             .withCompatibleAttachment(Attachments.AKMIron, true, (model) -> {
                 if (model instanceof ScarIron1) {
                     GL11.glTranslatef(0.17F, -1.61F, 1.3F);
@@ -230,8 +226,7 @@ public class MXFactory  {
             })
             .withTextureName("MX")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new MX())
+                (new WeaponRenderer.Builder()).withModel(new MX())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

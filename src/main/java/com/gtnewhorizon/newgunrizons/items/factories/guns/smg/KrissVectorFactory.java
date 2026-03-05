@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
@@ -41,11 +40,10 @@ import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
-public class KrissVectorFactory  {
+public class KrissVectorFactory {
 
     public Item createGun() {
-        return (new ItemWeapon.Builder())
-            .withName("KrissVector")
+        return (new ItemWeapon.Builder()).withName("KrissVector")
             .withFireRate(0.8F)
             .withRecoil(3.0F)
 
@@ -70,14 +68,14 @@ public class KrissVectorFactory  {
                 "ingotSteel",
                 CommonProxy.BigSteelPlate)
             .withCreativeTab(NewGunrizonsMod.SMGTab)
-            .withInformationProvider((stack) -> Arrays.asList(
+            .withInformationProvider(
+                (stack) -> Arrays.asList(
                     "Type: Submachine gun",
                     "Damage: 6.8",
                     "Caliber: .45 ACP",
                     "Magazines:",
                     "26rnd .45 ACP Magazine",
-                    "Fire Rate: Auto")
-            )
+                    "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.VectorMag, ((model) -> {
                 GL11.glTranslatef(-0.43F, 0.8F, 0.2F);
                 GL11.glScaled(1.5D, 1.5D, 1.5D);
@@ -245,8 +243,7 @@ public class KrissVectorFactory  {
             })
             .withTextureName("KrissVector")
             .withRenderer(
-                (new WeaponRenderer.Builder())
-                    .withModel(new KrissVector())
+                (new WeaponRenderer.Builder()).withModel(new KrissVector())
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.3D, 0.3D, 0.3D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);
