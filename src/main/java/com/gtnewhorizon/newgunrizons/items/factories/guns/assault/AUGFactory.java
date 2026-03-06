@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.sight.LPscope;
 import com.gtnewhorizon.newgunrizons.model.weapon.AUG;
@@ -40,7 +38,6 @@ public class AUGFactory {
             .withFlashOffsetY(() -> { return 0.08F; })
             .withShellCasingForwardOffset(-0.1F)
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Assault rifle",
@@ -375,6 +372,6 @@ public class AUGFactory {
                     .build())
             .withSpawnEntityDamage(7.0F)
             .withSpawnEntityGravityVelocity(0.0118F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

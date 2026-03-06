@@ -15,11 +15,11 @@ import net.minecraft.world.World;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentBuilder;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.attachment.Part;
-import com.gtnewhorizon.newgunrizons.config.ModContext;
-import com.gtnewhorizon.newgunrizons.registry.Sounds;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceFactory;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemMagazineInstance;
+import com.gtnewhorizon.newgunrizons.registry.Sounds;
+import com.gtnewhorizon.newgunrizons.weapon.MagazineReloadAspect;
 import com.gtnewhorizon.newgunrizons.weapon.MagazineState;
 import com.gtnewhorizon.newgunrizons.weapon.Reloadable;
 
@@ -40,7 +40,6 @@ public class ItemMagazine extends ItemAttachment
     private List<ItemBullet> compatibleBullets;
     @Getter
     private String reloadSound;
-    private ModContext modContext;
 
     ItemMagazine(int ammo) {
         super(AttachmentCategory.MAGAZINE, null);
@@ -74,6 +73,19 @@ public class ItemMagazine extends ItemAttachment
     }
 
     @Override
+    public boolean showDurabilityBar(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public double getDurabilityForDisplay(ItemStack stack) {
+        if (this.ammo <= 0) {
+            return 0.0;
+        }
+        return 1.0 - (double) ItemInstance.getAmmo(stack) / (double) this.ammo;
+    }
+
+    @Override
     public Part getRenderablePart() {
         return this;
     }
@@ -85,13 +97,11 @@ public class ItemMagazine extends ItemAttachment
     }
 
     public void update(EntityPlayer player) {
-        this.modContext.getMagazineReloadAspect()
-            .updateHeldItem(player);
+        MagazineReloadAspect.INSTANCE.updateHeldItem(player);
     }
 
     public void reloadHeldItem(EntityPlayer player) {
-        this.modContext.getMagazineReloadAspect()
-            .reloadHeldItem(player);
+        MagazineReloadAspect.INSTANCE.reloadHeldItem(player);
     }
 
     public static final class Builder extends AttachmentBuilder {
@@ -115,14 +125,14 @@ public class ItemMagazine extends ItemAttachment
             return this;
         }
 
-        public ItemAttachment createAttachment(ModContext modContext) {
+        @Override
+        protected ItemAttachment createAttachment() {
             ItemMagazine magazine = new ItemMagazine(this.ammo);
             magazine.compatibleBullets = new ArrayList<>(this.compatibleBullets);
             if (this.reloadSound != null) {
                 magazine.reloadSound = Sounds.resolve(this.reloadSound);
             }
 
-            magazine.modContext = modContext;
             this.withInformationProvider((stack) -> "Ammo: " + ItemInstance.getAmmo(stack) + "/" + this.ammo);
             return magazine;
         }

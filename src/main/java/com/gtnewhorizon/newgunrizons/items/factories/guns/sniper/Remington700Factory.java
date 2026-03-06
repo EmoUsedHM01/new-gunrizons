@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.sight.LeupoldReticle;
 import com.gtnewhorizon.newgunrizons.model.weapon.Remington700;
@@ -49,7 +47,6 @@ public class Remington700Factory {
             .withFlashOffsetX(() -> { return 0.11F; })
             .withFlashOffsetY(() -> { return 0.06F; })
             .withCreativeTab(NewGunrizonsMod.SnipersTab)
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
             .withInformationProvider(
                 (stack) -> {
                     return Arrays.asList(
@@ -576,6 +573,6 @@ public class Remington700Factory {
                     .build())
             .withSpawnEntityDamage(27.0F)
             .withSpawnEntityGravityVelocity(0.0F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

@@ -10,14 +10,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
+import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
-import com.gtnewhorizon.newgunrizons.config.ModContext;
-import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.items.ItemBullet;
 import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
+import com.gtnewhorizon.newgunrizons.network.StatusMessageManager;
 import com.gtnewhorizon.newgunrizons.network.WeaponActionMessage;
 import com.gtnewhorizon.newgunrizons.state.Aspect;
 import com.gtnewhorizon.newgunrizons.state.StateManager;
@@ -43,7 +45,8 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
             && InventoryUtils.inventoryHasFreeSlots((EntityPlayer) weaponInstance.getPlayer());
 
     private final Predicate<ItemStack> magazineNotEmpty = (magazineStack) -> ItemInstance.getAmmo(magazineStack) > 0;
-    private final ModContext modContext;
+    public static final WeaponReloadAspect INSTANCE = new WeaponReloadAspect();
+
     private StateManager<WeaponState, ? super ItemWeaponInstance> stateManager;
 
     /** Client-side guard: checks if player has compatible ammo or magazine in inventory. */
@@ -68,9 +71,7 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
         return weapon.getAmmo() != null && player.inventory.hasItem(weapon.getAmmo());
     };
 
-    public WeaponReloadAspect(ModContext modContext) {
-        this.modContext = modContext;
-    }
+    public WeaponReloadAspect() {}
 
     public void setStateManager(StateManager<WeaponState, ? super ItemWeaponInstance> stateManager) {
         this.stateManager = stateManager.in(this)
@@ -140,7 +141,7 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
     }
 
     public void reloadMainHeldItem(EntityPlayer player) {
-        ItemWeaponInstance instance = this.modContext.getItemInstanceRegistry()
+        ItemWeaponInstance instance = ItemInstanceRegistry.INSTANCE
             .getMainHandItemInstance(player, ItemWeaponInstance.class);
         if (instance != null) {
             this.stateManager.changeState(this, instance, WeaponState.LOAD, WeaponState.UNLOAD, WeaponState.ALERT);
@@ -149,7 +150,7 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
     }
 
     public void updateMainHeldItem(EntityPlayer player) {
-        ItemWeaponInstance instance = this.modContext.getItemInstanceRegistry()
+        ItemWeaponInstance instance = ItemInstanceRegistry.INSTANCE
             .getMainHandItemInstance(player, ItemWeaponInstance.class);
         if (instance != null) {
             this.stateManager.changeStateFromAnyOf(this, instance, allowedUpdateFromStates);
@@ -202,9 +203,8 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
         }
 
         // Send action to server for authoritative inventory operations
-        this.modContext.getChannel()
-            .sendToServer(
-                new WeaponActionMessage(WeaponActionMessage.WEAPON_LOAD, weaponInstance.getItemInventoryIndex()));
+        NewGunrizonsMod.CHANNEL.sendToServer(
+            new WeaponActionMessage(WeaponActionMessage.WEAPON_LOAD, weaponInstance.getItemInventoryIndex()));
     }
 
     /** Finds the first compatible magazine stack in player inventory (prefers non-empty, falls back to any). */
@@ -260,13 +260,12 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
         weaponInstance.setAmmo(0);
 
         // Send action to server for authoritative inventory operations
-        this.modContext.getChannel()
-            .sendToServer(
-                new WeaponActionMessage(WeaponActionMessage.WEAPON_UNLOAD, weaponInstance.getItemInventoryIndex()));
+        NewGunrizonsMod.CHANNEL.sendToServer(
+            new WeaponActionMessage(WeaponActionMessage.WEAPON_UNLOAD, weaponInstance.getItemInventoryIndex()));
     }
 
     public void inventoryFullAlert(ItemWeaponInstance weaponInstance) {
-        this.modContext.getStatusMessageCenter()
+        StatusMessageManager.INSTANCE
             .addAlertMessage(StatCollector.translateToLocalFormatted("gui.inventoryFull"), 3, 250L, 200L);
     }
 

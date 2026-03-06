@@ -9,13 +9,14 @@ import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderLivingEvent.Pre;
 import net.minecraftforge.client.event.TextureStitchEvent;
 
+import com.gtnewhorizon.newgunrizons.client.scope.ScopeManager;
 import com.gtnewhorizon.newgunrizons.client.scope.ScopePerspective;
 import com.gtnewhorizon.newgunrizons.client.shaders.ShaderContext;
 import com.gtnewhorizon.newgunrizons.client.shaders.ShaderManager;
 import com.gtnewhorizon.newgunrizons.client.shaders.ShaderPhase;
-import com.gtnewhorizon.newgunrizons.config.ClientModContext;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.weapon.WeaponState;
 
@@ -27,11 +28,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class WeaponRenderHandler {
 
-    private final ClientModContext modContext;
     private final ShaderManager shaderManager;
 
-    public WeaponRenderHandler(ClientModContext modContext) {
-        this.modContext = modContext;
+    public WeaponRenderHandler() {
         this.shaderManager = new ShaderManager();
     }
 
@@ -47,11 +46,10 @@ public class WeaponRenderHandler {
         EntityPlayer player = minecraft.thePlayer;
         if (event.phase == TickEvent.Phase.START) {
             if (player != null) {
-                ItemWeaponInstance weaponInstance = this.modContext.getMainHeldWeapon();
+                ItemWeaponInstance weaponInstance = ItemInstanceRegistry.getMainHeldWeapon();
                 if (weaponInstance != null) {
                     if (weaponInstance.isAimed()) {
-                        ScopePerspective view = this.modContext.getScopeManager()
-                            .getPerspective(weaponInstance, true);
+                        ScopePerspective view = ScopeManager.INSTANCE.getPerspective(weaponInstance, true);
                         if (view != null) {
                             view.update(event, weaponInstance);
                         }
@@ -59,8 +57,7 @@ public class WeaponRenderHandler {
                         // Trigger scope deactivation when no longer aiming.
                         // ScopeManager.getPerspective with init=true cleans up
                         // the perspective and frees the FBO.
-                        this.modContext.getScopeManager()
-                            .getPerspective(weaponInstance, true);
+                        ScopeManager.INSTANCE.getPerspective(weaponInstance, true);
                     }
                 }
             }
@@ -82,7 +79,7 @@ public class WeaponRenderHandler {
         }
         Minecraft minecraft = Minecraft.getMinecraft();
         if (minecraft.gameSettings.thirdPersonView == 0) {
-            ItemWeaponInstance weaponInstance = this.modContext.getMainHeldWeapon();
+            ItemWeaponInstance weaponInstance = ItemInstanceRegistry.getMainHeldWeapon();
             ShaderContext shaderContext = new ShaderContext(
                 ShaderPhase.ITEM_RENDER,
                 null,
@@ -95,7 +92,7 @@ public class WeaponRenderHandler {
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onFovUpdate(FOVUpdateEvent event) {
-        ItemWeaponInstance instance = this.modContext.getMainHeldWeapon();
+        ItemWeaponInstance instance = ItemInstanceRegistry.getMainHeldWeapon();
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
         if (instance != null) {
             float fov;
@@ -119,8 +116,7 @@ public class WeaponRenderHandler {
             ItemStack itemStack = event.entity.getHeldItem();
             if (itemStack != null && itemStack.getItem() instanceof ItemWeapon) {
                 RenderPlayer rp = (RenderPlayer) event.renderer;
-                ItemInstance<?> instance = this.modContext.getItemInstanceRegistry()
-                    .getItemInstance(event.entity, itemStack);
+                ItemInstance<?> instance = ItemInstanceRegistry.INSTANCE.getItemInstance(event.entity, itemStack);
                 if (instance instanceof ItemWeaponInstance weaponInstance) {
                     rp.modelBipedMain.aimedBow = weaponInstance.isAimed()
                         || weaponInstance.getState() == WeaponState.FIRING
@@ -135,7 +131,8 @@ public class WeaponRenderHandler {
     @SubscribeEvent
     public void onTextureStitch(TextureStitchEvent.Pre event) {
         event.map.registerIcon(
-            this.modContext.getNamedResource("particle/blood")
-                .toString());
+            new net.minecraft.util.ResourceLocation(
+                com.gtnewhorizon.newgunrizons.NewGunrizonsMod.MODID,
+                "particle/blood").toString());
     }
 }

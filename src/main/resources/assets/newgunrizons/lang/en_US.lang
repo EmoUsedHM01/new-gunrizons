@@ -161,6 +161,7 @@ item.LeeEnfieldSMLEMkIII.name=Lee Enfield SMLE MkIII
 item.LeeEnfieldNo4MkI.name=Lee Enfield No.4 MkI
 item.Saiga410.name=Saiga-410
 item.OTs14Groza.name=OTs-14 Groza
+item.VEPR12.name=VEPR 12
 
 item.Mk48MOD1.name=Mk48 MOD 1
 item.newgunrizons_Mk48Mag.name=100rnd 7.62x51mm Magazine
@@ -243,6 +244,8 @@ item.newgunrizons_LugerP08Mag.name=8rnd 7.62x21mm Magazine
 item.newgunrizons_M3A1Mag.name=31rnd .45 ACP Magazine
 item.newgunrizons_STG44Mag.name=30rnd 7.92x33mm Kurz Magazine
 item.newgunrizons_LeeEnfieldMag.name=10rnd .303 British Magazine
+item.newgunrizons_PythonClip.name=6rnd .357 Clip
+item.newgunrizons_VEPR12Mag.name=5rnd 12 Gauge Shell Magazine
 
 item.newgunrizons_ShotgunShell.name=12 Gauge Shotgun Shell
 item.newgunrizons_ShotgunShell410.name=.410 Shotgun Shell
@@ -251,6 +254,7 @@ item.newgunrizons_Bullet762x39.name=7.62x39mm Bullet
 item.newgunrizons_Bullet556x39.name=5.56x39mm Bullet
 item.newgunrizons_Bullet556x45.name=5.56x45mm NATO Bullet
 item.newgunrizons_Bullet545x39.name=5.45x39mm Bullet
+item.newgunrizons_Bullet762x25.name=7.62x25mm Bullet
 item.newgunrizons_Bullet762x54.name=7.62x54mm Bullet
 item.newgunrizons_Bullet762x51.name=7.62x51mm NATO Bullet
 item.newgunrizons_Bullet45ACP.name=.45 ACP Bullet
@@ -316,106 +320,32 @@ item.newgunrizons_PUscope.name=PU Scope
 item.newgunrizons_Unertl.name=Unertl Scope
 item.newgunrizons_PriscopicScope.name=Priscopic Prism Scope
 
-item.newgunrizons_LaserPointer.name=Laser Cell
-item.newgunrizons_Electronics.name=Electronic Circuit
-item.newgunrizons_Bullets.name=Bullets
-item.newgunrizons_CGrip.name=Grip
-item.newgunrizons_OpticGlass.name=Optic Glass
-item.newgunrizons_Cloth.name=Cloth
-item.newgunrizons_TanCloth.name=Tan Cloth
-item.newgunrizons_GreenCloth.name=Green Cloth
-
-tile.newgunrizons_CopperOre.name=Copper Ore
-item.newgunrizons_CopperIngot.name=Copper Ingot
-
-tile.newgunrizons_TitaniumOre.name=Titanium Ore
-item.newgunrizons_TitaniumIngot.name=Titanium Ingot
-
-tile.newgunrizons_ZincOre.name=Zinc Ore
-item.newgunrizons_ZincIngot.name=Zinc Ingot
-
-tile.newgunrizons_LeadOre.name=Lead Ore
-item.newgunrizons_LeadIngot.name=Lead Ingot
-
-tile.newgunrizons_TinOre.name=Tin Ore
-item.newgunrizons_TinIngot.name=Tin Ingot
-
-tile.newgunrizons_SulfurOre.name=Sulfur Ore
-item.newgunrizons_SulfurDust.name=Sulfur Dust
-
-tile.newgunrizons_BauxiteOre.name=Bauxite Ore
-item.newgunrizons_AluminumIngot.name=Aluminum Ingot
-item.newgunrizons_AluminumPlate.name=Aluminum Plate
-
-tile.newgunrizons_SiliconOre.name=Silicon Ore
-item.newgunrizons_Silicon.name=Silicon Ingot
-
-tile.newgunrizons_TantalumOre.name=Tantalum Ore
-item.newgunrizons_TantalumIngot.name=Tantalum Ingot
-
-tile.newgunrizons_RubyOre.name=Ruby Ore
-item.newgunrizons_Ruby.name=Ruby
-
-item.newgunrizons_SteelDust.name=Steel Dust
-item.newgunrizons_SteelIngot.name=Steel Ingot
-item.newgunrizons_SteelPlate.name=Steel Plate
-item.newgunrizons_MiniSteelPlate.name=Small Steel Plate
-item.newgunrizons_BigSteelPlate.name=Big Steel Plate
-item.newgunrizons_MetalComponents.name=Metal Components
-
-item.newgunrizons_Transistor.name=Transistor
-item.newgunrizons_Diode.name=Diode
-item.newgunrizons_Inductor.name=Inductor
-item.newgunrizons_Resistor.name=Resistor
-item.newgunrizons_CopperWiring.name=Copper Wiring
-item.newgunrizons_Capacitor.name=Capacitor
-item.newgunrizons_Plastic.name=Plastic
-item.newgunrizons_Piston.name=Piston
-
 item.newgunrizons_AKMIron.name=Standard Iron-Sight
 item.newgunrizons_AR15Iron.name=AR Carry Handle
 
-itemGroup.guns_tab=Vic's Modern Warfare Resources
+itemGroup.guns_tab=NewGunrizons Resources
+itemGroup.AssaultRifles_tab=NewGunrizons Assault Rifles/Carbines
+itemGroup.ShotgunsTab=NewGunrizons Shotguns/Heavy/LMGs
+itemGroup.SnipersTab=NewGunrizons Snipers/Marksmen Rifles
+itemGroup.Pistols_tab=NewGunrizons Pistols/Machine Pistols
+itemGroup.SMG_tab=NewGunrizons SMGs/PDWs
+itemGroup.AmmoTab=NewGunrizons Ammunition
+itemGroup.AttachmentsTab=NewGunrizons Attachments
+itemGroup.GrenadesTab=NewGunrizons Grenades
 
-itemGroup.AssaultRifles_tab=VMW Assault Rifles/Carbines
-
-itemGroup.ShotgunsTab=VMW Shotguns/Heavy/LMGs
-
-itemGroup.SnipersTab=VMW Snipers/Marksmen Rifles
-
-itemGroup.Pistols_tab=VMW Pistols/Machine Pistols
-
-itemGroup.SMG_tab=VMW SMGs/PDWs
-
-itemGroup.AmmoTab=VMW Ammunition
-
-itemGroup.AttachmentsTab=VMW Attachments
-
-itemGroup.GrenadesTab=VMW Grenades
-
-key.categories.newgunrizons=Modern Warfare
-
+key.categories.newgunrizons=NewGunrizons
 key.texture_change=Right Arrow (Debug)
-
 key.fire_mode=Selective Fire
-
 key.reload=Reload Gun
-
 key.attachment=Attachment Mode
-
 key.recoil_fitter=Grip Catagory
-
 key.scope=Scope Catagory
-
 key.silencer=Barrel Catagory
-
-key.categories.futuristicarsenal=Modern Warfare
-
+key.categories.futuristicarsenal=NewGunrizons
 key.laser=Switch Laser
-
 key.add=Zoom In
-
 key.subtract=Zoom Out
+key.muzzle_debug=Muzzle Debug (F8)
 
 gui.attachmentMode.changeScope=Press [%s] to change scope
 gui.attachmentMode.changeBarrelRig=Press [%s] to change barrel rig

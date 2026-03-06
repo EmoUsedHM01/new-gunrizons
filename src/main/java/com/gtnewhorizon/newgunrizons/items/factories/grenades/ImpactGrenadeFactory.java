@@ -1,10 +1,7 @@
 package com.gtnewhorizon.newgunrizons.items.factories.grenades;
 
-import net.minecraft.init.Items;
-
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.grenade.GrenadeRenderer;
@@ -29,16 +26,6 @@ public class ImpactGrenadeFactory {
             .withGravityVelocity(() -> 0.06F)
             .withRotationSlowdownFactor(() -> 0.99F)
             .withExplosionOnImpact()
-            .withCraftingRecipe(
-                " X ",
-                "XFX",
-                " E ",
-                'X',
-                CommonProxy.SteelPlate,
-                'E',
-                Items.flint_and_steel,
-                'F',
-                Items.gunpowder)
             .withRenderer(
                 (new GrenadeRenderer.Builder()).withModel(new ImpactGrenade())
                     .withAnimationDuration(500)
@@ -135,6 +122,6 @@ public class ImpactGrenadeFactory {
                         GL11.glTranslatef(0.1F, -0.725F, 0.7F);
                     }, (context) -> {})
                     .build())
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

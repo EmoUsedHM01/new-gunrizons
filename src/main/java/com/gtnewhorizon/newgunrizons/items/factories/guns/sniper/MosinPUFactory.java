@@ -33,7 +33,6 @@ import com.gtnewhorizon.newgunrizons.model.weapon.MosinNagant;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
-import com.gtnewhorizon.newgunrizons.registry.Guns;
 
 public class MosinPUFactory {
 
@@ -61,7 +60,6 @@ public class MosinPUFactory {
             .withFlashOffsetX(() -> { return 0.1F; })
             .withFlashOffsetY(() -> { return 0.1F; })
             .withCreativeTab(NewGunrizonsMod.SnipersTab)
-            .withCraftingRecipe("A", "F", 'A', Attachments.PUscope, 'F', Guns.MosinNagant)
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Bolt-action rifle",
@@ -768,6 +766,6 @@ public class MosinPUFactory {
                     .build())
             .withSpawnEntityDamage(20.0F)
             .withSpawnEntityGravityVelocity(0.0F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

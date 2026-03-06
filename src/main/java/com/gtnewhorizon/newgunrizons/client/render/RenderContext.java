@@ -11,8 +11,8 @@ import org.lwjgl.util.vector.Matrix4f;
 
 import com.gtnewhorizon.newgunrizons.attachment.Part;
 import com.gtnewhorizon.newgunrizons.client.animation.MatrixHelper;
-import com.gtnewhorizon.newgunrizons.config.ModContext;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.state.RenderableState;
 
@@ -52,15 +52,12 @@ public class RenderContext {
     @Setter
     @Getter
     private RenderableState toState;
-    @Getter
-    private final ModContext modContext;
     @Setter
     @Getter
     private ItemInstance<?> itemInstance;
     private final Map<Part, Matrix4f> attachablePartPositions;
 
-    public RenderContext(ModContext modContext, EntityLivingBase player, ItemStack itemStack) {
-        this.modContext = modContext;
+    public RenderContext(EntityLivingBase player, ItemStack itemStack) {
         this.player = player;
         this.itemStack = itemStack;
         this.attachablePartPositions = new HashMap<>();
@@ -90,8 +87,7 @@ public class RenderContext {
         if (this.itemInstance instanceof ItemWeaponInstance) {
             return (ItemWeaponInstance) this.itemInstance;
         } else {
-            ItemInstance<?> itemInstance = this.modContext.getItemInstanceRegistry()
-                .getItemInstance(this.player, this.itemStack);
+            ItemInstance<?> itemInstance = ItemInstanceRegistry.INSTANCE.getItemInstance(this.player, this.itemStack);
             return itemInstance instanceof ItemWeaponInstance ? (ItemWeaponInstance) itemInstance : null;
         }
     }
@@ -100,7 +96,7 @@ public class RenderContext {
         this.attachablePartPositions.put(part, MatrixHelper.captureMatrix());
     }
 
-    public Matrix4f getPartPosition(Object part) {
+    public Matrix4f getPartPosition(Part part) {
         if (part == null) {
             part = Part.MAIN_ITEM;
         }

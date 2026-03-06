@@ -23,7 +23,7 @@ public interface Aspect<T extends ManagedState<T>, E extends ItemInstance<T>> {
 
     /**
      * Injects the state manager and configures transition rules for this aspect.
-     * Called once during initialization from {@code CommonModContext.init()}.
+     * Called once during initialization from {@code CommonProxy.init()}.
      */
     void setStateManager(StateManager<T, ? super E> stateManager);
 }

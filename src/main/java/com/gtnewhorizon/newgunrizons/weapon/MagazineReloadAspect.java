@@ -8,10 +8,11 @@ import java.util.function.Predicate;
 
 import net.minecraft.entity.player.EntityPlayer;
 
-import com.gtnewhorizon.newgunrizons.config.ModContext;
-import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
+import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.items.ItemBullet;
 import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemMagazineInstance;
 import com.gtnewhorizon.newgunrizons.network.WeaponActionMessage;
 import com.gtnewhorizon.newgunrizons.state.Aspect;
@@ -23,7 +24,8 @@ public class MagazineReloadAspect implements Aspect<MagazineState, ItemMagazineI
     private static final Set<MagazineState> allowedUpdateFromStates;
     private static final long reloadAnimationDuration;
     private static final Predicate<ItemMagazineInstance> reloadAnimationCompleted;
-    private final ModContext modContext;
+    public static final MagazineReloadAspect INSTANCE = new MagazineReloadAspect();
+
     private StateManager<MagazineState, ? super ItemMagazineInstance> stateManager;
     private final Predicate<ItemMagazineInstance> notFull = (instance) -> ItemInstance.getAmmo(instance.getItemStack())
         < instance.getMagazine()
@@ -42,9 +44,7 @@ public class MagazineReloadAspect implements Aspect<MagazineState, ItemMagazineI
         return InventoryUtils.hasCompatibleItem(compatibleBullets, player, (s) -> true);
     };
 
-    public MagazineReloadAspect(ModContext modContext) {
-        this.modContext = modContext;
-    }
+    public MagazineReloadAspect() {}
 
     public void setStateManager(StateManager<MagazineState, ? super ItemMagazineInstance> stateManager) {
         this.stateManager = stateManager.in(this)
@@ -61,13 +61,13 @@ public class MagazineReloadAspect implements Aspect<MagazineState, ItemMagazineI
     }
 
     public void reloadHeldItem(EntityPlayer player) {
-        ItemMagazineInstance instance = this.modContext.getItemInstanceRegistry()
+        ItemMagazineInstance instance = ItemInstanceRegistry.INSTANCE
             .getMainHandItemInstance(player, ItemMagazineInstance.class);
         this.stateManager.changeState(this, instance, MagazineState.LOAD);
     }
 
     public void updateHeldItem(EntityPlayer player) {
-        ItemMagazineInstance instance = this.modContext.getItemInstanceRegistry()
+        ItemMagazineInstance instance = ItemInstanceRegistry.INSTANCE
             .getMainHandItemInstance(player, ItemMagazineInstance.class);
         if (instance != null) {
             this.stateManager.changeStateFromAnyOf(this, instance, allowedUpdateFromStates);
@@ -77,9 +77,8 @@ public class MagazineReloadAspect implements Aspect<MagazineState, ItemMagazineI
 
     private void performLoad(ItemMagazineInstance magazineInstance) {
         // Send action to server for authoritative inventory operations (bullet consumption)
-        this.modContext.getChannel()
-            .sendToServer(
-                new WeaponActionMessage(WeaponActionMessage.MAGAZINE_LOAD, magazineInstance.getItemInventoryIndex()));
+        NewGunrizonsMod.CHANNEL.sendToServer(
+            new WeaponActionMessage(WeaponActionMessage.MAGAZINE_LOAD, magazineInstance.getItemInventoryIndex()));
     }
 
     static {

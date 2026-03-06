@@ -3,7 +3,6 @@ package com.gtnewhorizon.newgunrizons.weapon;
 import com.gtnewhorizon.newgunrizons.network.TypeRegistry;
 import com.gtnewhorizon.newgunrizons.state.ManagedState;
 
-import io.netty.buffer.ByteBuf;
 import lombok.Getter;
 
 public enum MagazineState implements ManagedState<MagazineState> {

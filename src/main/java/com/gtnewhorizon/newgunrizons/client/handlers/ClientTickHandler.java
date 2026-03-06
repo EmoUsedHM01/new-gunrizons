@@ -9,9 +9,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import com.gtnewhorizon.newgunrizons.config.ClientModContext;
-import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.items.Updatable;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceRegistry;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
@@ -27,11 +27,7 @@ public class ClientTickHandler {
         -0.5D,
         2).setSaved(false);
 
-    private final ClientModContext modContext;
-
-    public ClientTickHandler(ClientModContext modContext) {
-        this.modContext = modContext;
-    }
+    public ClientTickHandler() {}
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
@@ -46,9 +42,8 @@ public class ClientTickHandler {
             }
         } else if (event.phase == TickEvent.Phase.END) {
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-            this.modContext.getItemInstanceRegistry()
-                .update(player);
-            ItemWeaponInstance weaponInstance = this.modContext.getMainHeldWeapon();
+            ItemInstanceRegistry.INSTANCE.update(player);
+            ItemWeaponInstance weaponInstance = ItemInstanceRegistry.getMainHeldWeapon();
             if (weaponInstance != null) {
                 if (player.isSprinting()) {
                     weaponInstance.setAimed(false);

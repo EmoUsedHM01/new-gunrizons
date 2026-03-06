@@ -1,16 +1,11 @@
 package com.gtnewhorizon.newgunrizons.registry;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentBuilder;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.client.render.EntityLaserBeamRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.items.ItemScope;
 import com.gtnewhorizon.newgunrizons.model.grip.AngledGrip;
@@ -167,21 +162,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe(
-                "A  ",
-                "ORX",
-                "AXX",
-                'R',
-                CommonProxy.ElectronicCircuitBoard,
-                'A',
-                CommonProxy.MiniSteelPlate,
-                'X',
-                "ingotSteel",
-                'O',
-                CommonProxy.OpticGlass)
             .withName("Reflex")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         ColtRearSight = (new AttachmentBuilder()).withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new M4Iron1(), "AK12.png")
@@ -220,10 +203,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe("XA", 'A', "ingotSteel", 'X', CommonProxy.SteelPlate)
             .withName("ColtRearSight")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         OKP7 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new OKP7(), "ak12.png")
@@ -270,21 +252,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe(
-                "O  ",
-                "ARX",
-                "A X",
-                'R',
-                CommonProxy.ElectronicCircuitBoard,
-                'A',
-                CommonProxy.MiniSteelPlate,
-                'X',
-                "ingotSteel",
-                'O',
-                CommonProxy.OpticGlass)
             .withName("okp7")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         ACOG = (new ItemScope.Builder()).withOpticalZoom()
             .withZoomRange(0.22F, 0.1F)
             .withViewfinderPositioning((p, s) -> {
@@ -346,25 +316,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe(
-                "FXA",
-                "ORG",
-                "AXX",
-                'R',
-                CommonProxy.ElectronicCircuitBoard,
-                'A',
-                CommonProxy.MiniSteelPlate,
-                'X',
-                "ingotSteel",
-                'O',
-                CommonProxy.OpticGlass,
-                'G',
-                Blocks.glass_pane,
-                'F',
-                CommonProxy.CopperWiring)
             .withName("Acog")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Specter = (new ItemScope.Builder()).withOpticalZoom()
             .withZoomRange(0.22F, 0.1F)
             .withViewfinderPositioning((p, s) -> {
@@ -417,25 +371,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe(
-                "FXA",
-                "ORG",
-                "XAX",
-                'R',
-                CommonProxy.ElectronicCircuitBoard,
-                'A',
-                CommonProxy.MiniSteelPlate,
-                'X',
-                "ingotSteel",
-                'O',
-                CommonProxy.OpticGlass,
-                'G',
-                Blocks.glass_pane,
-                'F',
-                CommonProxy.CopperWiring)
             .withName("Specter")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Holo2 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Holographic(), "Holographic.png")
@@ -482,21 +420,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe(
-                "  A",
-                "XRO",
-                "AXX",
-                'R',
-                CommonProxy.ElectronicCircuitBoard,
-                'A',
-                CommonProxy.MiniSteelPlate,
-                'X',
-                "ingotSteel",
-                'O',
-                CommonProxy.OpticGlass)
             .withName("Holographic")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Holographic2 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withRenderablePart()
@@ -543,21 +469,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe(
-                "  A",
-                "XRO",
-                "AXX",
-                'R',
-                CommonProxy.ElectronicCircuitBoard,
-                'A',
-                CommonProxy.MiniSteelPlate,
-                'X',
-                "ingotSteel",
-                'O',
-                CommonProxy.OpticGlass)
             .withName("Holographic2")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         MicroT1 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withRenderablePart()
@@ -604,10 +518,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe("XXX", "GGG", "XXX", 'X', "ingotSteel", 'G', Blocks.glass_pane)
             .withName("MicroT1")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Kobra = (new AttachmentBuilder()).withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Kobra(), "Kobra.png")
@@ -654,23 +567,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe(
-                "X  ",
-                "OGX",
-                "ARX",
-                'R',
-                CommonProxy.ElectronicCircuitBoard,
-                'A',
-                CommonProxy.MiniSteelPlate,
-                'X',
-                "ingotSteel",
-                'O',
-                CommonProxy.OpticGlass,
-                'G',
-                Blocks.glass_pane)
             .withName("Kobra")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         G36Scope = (new ItemScope.Builder()).withOpticalZoom()
             .withZoomRange(0.22F, 0.1F)
             .withViewfinderPositioning((p, s) -> {
@@ -722,10 +621,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe()
             .withName("G36Scope")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         AUGScope = (new ItemScope.Builder()).withOpticalZoom()
             .withZoomRange(0.22F, 0.1F)
             .withViewfinderPositioning((p, s) -> {
@@ -778,7 +676,7 @@ public class Attachments {
             })
             .withName("AUGScope")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Scope = (new ItemScope.Builder()).withOpticalZoom()
             .withZoomRange(0.22F, 0.06F)
             .withViewfinderPositioning((p, s) -> {
@@ -832,23 +730,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe(
-                "A R",
-                "OGO",
-                "XXX",
-                'R',
-                CommonProxy.ElectronicCircuitBoard,
-                'A',
-                CommonProxy.MiniSteelPlate,
-                'X',
-                "ingotSteel",
-                'O',
-                CommonProxy.OpticGlass,
-                'G',
-                Blocks.glass_pane)
             .withName("LPScope")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Leupold = (new ItemScope.Builder()).withOpticalZoom()
             .withZoomRange(0.22F, 0.04F)
             .withViewfinderPositioning((p, s) -> {
@@ -902,23 +786,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe(
-                "ARR",
-                "OGO",
-                "XXX",
-                'R',
-                CommonProxy.ElectronicCircuitBoard,
-                'A',
-                CommonProxy.MiniSteelPlate,
-                'X',
-                "ingotSteel",
-                'O',
-                CommonProxy.OpticGlass,
-                'G',
-                Blocks.glass_pane)
             .withName("Leupold")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         PSO1 = (new ItemScope.Builder()).withOpticalZoom()
             .withZoomRange(0.22F, 0.06F)
             .withViewfinderPositioning((p, s) -> {
@@ -982,18 +852,8 @@ public class Attachments {
 
             })
             .withName("PSO1")
-            .withCraftingRecipe(
-                "XXX",
-                "OGO",
-                "  X",
-                'X',
-                "ingotSteel",
-                'O',
-                CommonProxy.OpticGlass,
-                'G',
-                Blocks.glass_pane)
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         PUscope = (new ItemScope.Builder()).withOpticalZoom()
             .withZoomRange(0.22F, 0.06F)
             .withViewfinderPositioning((p, s) -> {
@@ -1066,20 +926,8 @@ public class Attachments {
 
             })
             .withName("PUscope")
-            .withCraftingRecipe(
-                "XXA",
-                "OGO",
-                " XX",
-                'A',
-                CommonProxy.MiniSteelPlate,
-                'X',
-                "ingotSteel",
-                'O',
-                CommonProxy.OpticGlass,
-                'G',
-                CommonProxy.ElectronicCircuitBoard)
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         PriscopicScope = (new ItemScope.Builder()).withOpticalZoom()
             .withZoomRange(0.22F, 0.03F)
             .withViewfinderPositioning((p, s) -> {
@@ -1135,22 +983,8 @@ public class Attachments {
 
             })
             .withName("PriscopicScope")
-            .withCraftingRecipe(
-                "FXA",
-                "OGO",
-                " XF",
-                'A',
-                CommonProxy.MiniSteelPlate,
-                'X',
-                "ingotSteel",
-                'O',
-                CommonProxy.OpticGlass,
-                'F',
-                Items.gold_ingot,
-                'G',
-                CommonProxy.ElectronicCircuitBoard)
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         HP = (new ItemScope.Builder()).withOpticalZoom()
             .withZoomRange(0.22F, 0.02F)
             .withViewfinderPositioning((p, s) -> {
@@ -1203,21 +1037,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe(
-                "ARX",
-                "ORO",
-                "AXX",
-                'R',
-                CommonProxy.ElectronicCircuitBoard,
-                'A',
-                CommonProxy.MiniSteelPlate,
-                'X',
-                "ingotSteel",
-                'O',
-                CommonProxy.OpticGlass)
             .withName("HPScope")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Unertl = (new ItemScope.Builder()).withOpticalZoom()
             .withZoomRange(0.22F, 0.01F)
             .withViewfinderPositioning((p, s) -> {
@@ -1285,21 +1107,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe(
-                "AXX",
-                "ORO",
-                "AXX",
-                'R',
-                CommonProxy.ElectronicCircuitBoard,
-                'A',
-                CommonProxy.MiniSteelPlate,
-                'X',
-                "ingotSteel",
-                'O',
-                CommonProxy.OpticGlass)
             .withName("Unertl")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Silencer556x45 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Suppressor556x45(), "AK12.png")
@@ -1336,10 +1146,10 @@ public class Attachments {
                 }
 
             })
-            .withCrafting(CraftingComplexity.MEDIUM, "ingotSteel", CommonProxy.SteelPlate)
+
             .withName("Silencer556x45")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Silencer762x39 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Suppressor762x39(), "AK12.png")
@@ -1376,10 +1186,10 @@ public class Attachments {
                 }
 
             })
-            .withCrafting(CraftingComplexity.MEDIUM, "ingotSteel", CommonProxy.SteelPlate)
+
             .withName("Silencer762x39")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Silencer9mm = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Suppressor(), "GunmetalTexture.png")
@@ -1416,10 +1226,10 @@ public class Attachments {
                 }
 
             })
-            .withCrafting(CraftingComplexity.MEDIUM, "ingotSteel", CommonProxy.SteelPlate)
+
             .withName("Silencer9mm")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Silencer45ACP = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Suppressor45ACP(), "AK12.png")
@@ -1456,10 +1266,10 @@ public class Attachments {
                 }
 
             })
-            .withCrafting(CraftingComplexity.MEDIUM, "ingotSteel", CommonProxy.SteelPlate)
+
             .withName("Silencer45ACP")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Silencer762x54 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Suppressor(), "AK12.png")
@@ -1496,10 +1306,10 @@ public class Attachments {
                 }
 
             })
-            .withCrafting(CraftingComplexity.MEDIUM, "ingotSteel", CommonProxy.SteelPlate)
+
             .withName("Silencer762x54")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Silencer762x51 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Suppressor762x51(), "AK12.png")
@@ -1536,10 +1346,10 @@ public class Attachments {
                 }
 
             })
-            .withCrafting(CraftingComplexity.MEDIUM, "ingotSteel", CommonProxy.SteelPlate)
+
             .withName("Silencer762x51")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Silencer50BMG = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Suppressor(), "GunmetalTexture.png")
@@ -1576,10 +1386,10 @@ public class Attachments {
                 }
 
             })
-            .withCrafting(CraftingComplexity.MEDIUM, "ingotSteel", CommonProxy.SteelPlate)
+
             .withName("Silencer50BMG")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Silencer556x39 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Suppressor556x39(), "AK12.png")
@@ -1616,10 +1426,10 @@ public class Attachments {
                 }
 
             })
-            .withCrafting(CraftingComplexity.MEDIUM, "ingotSteel", CommonProxy.SteelPlate)
+
             .withName("Silencer556x39")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         AKMIron = (new AttachmentBuilder()).withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new AKMiron1(), "AK12.png")
@@ -1669,10 +1479,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe("AAA", 'A', "ingotSteel")
             .withName("AKMIron")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         SilencerMP7 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Suppressor(), "AK12.png")
@@ -1709,10 +1518,10 @@ public class Attachments {
                 }
 
             })
-            .withCrafting(CraftingComplexity.MEDIUM, "ingotSteel", CommonProxy.SteelPlate)
+
             .withName("SilencerMP7")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Silencer357 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Suppressor(), "GunmetalTexture.png")
@@ -1749,10 +1558,10 @@ public class Attachments {
                 }
 
             })
-            .withCrafting(CraftingComplexity.MEDIUM, "ingotSteel", CommonProxy.SteelPlate)
+
             .withName("Silencer357")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Silencer57x38 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Suppressor(), "AK12.png")
@@ -1789,10 +1598,10 @@ public class Attachments {
                 }
 
             })
-            .withCrafting(CraftingComplexity.MEDIUM, "ingotSteel", CommonProxy.SteelPlate)
+
             .withName("Silencer57x38")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Silencer12Gauge = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Suppressor45ACP(), "GunmetalTexture.png")
@@ -1829,10 +1638,10 @@ public class Attachments {
                 }
 
             })
-            .withCrafting(CraftingComplexity.MEDIUM, "ingotSteel", CommonProxy.SteelPlate)
+
             .withName("Silencer12Gauge")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Silencer300AACBlackout = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Suppressor300AACBlackout(), "AK12.png")
@@ -1869,10 +1678,10 @@ public class Attachments {
                 }
 
             })
-            .withCrafting(CraftingComplexity.MEDIUM, "ingotSteel", CommonProxy.SteelPlate)
+
             .withName("Silencer300AACBlackout")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Silencer65x39 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Suppressor556x39(), "AK12.png")
@@ -1909,10 +1718,10 @@ public class Attachments {
                 }
 
             })
-            .withCrafting(CraftingComplexity.MEDIUM, "ingotSteel", CommonProxy.SteelPlate)
+
             .withName("Silencer65x39")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Laser = (new AttachmentBuilder()).withCategory(AttachmentCategory.GRIP)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Laser(), "AK12.png")
@@ -1956,21 +1765,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe(
-                " X ",
-                "ARE",
-                "AXX",
-                'X',
-                "ingotSteel",
-                'A',
-                CommonProxy.MiniSteelPlate,
-                'R',
-                CommonProxy.LaserPointer,
-                'E',
-                CommonProxy.ElectronicCircuitBoard)
             .withName("Laser")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Laser2 = (new AttachmentBuilder()).withCategory(AttachmentCategory.GRIP)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Laser2(), "AK12.png")
@@ -2008,21 +1805,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe(
-                "AXA",
-                "XRE",
-                "AXX",
-                'X',
-                "ingotSteel",
-                'A',
-                CommonProxy.MiniSteelPlate,
-                'R',
-                CommonProxy.LaserPointer,
-                'E',
-                CommonProxy.ElectronicCircuitBoard)
             .withName("Laser2")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Grip2 = (new AttachmentBuilder()).withCategory(AttachmentCategory.GRIP)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Grip2(), "AK12.png")
@@ -2065,10 +1850,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe("AXX", " X ", " X ", 'X', "ingotSteel", 'A', CommonProxy.MiniSteelPlate)
             .withName("Grip2")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Grip = (new AttachmentBuilder()).withCategory(AttachmentCategory.GRIP)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new AngledGrip(), "AK12.png")
@@ -2117,10 +1901,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe("X A", " XX", 'X', "ingotSteel", 'A', CommonProxy.MiniSteelPlate)
             .withName("AngledGrip")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         StubbyGrip = (new AttachmentBuilder()).withCategory(AttachmentCategory.GRIP)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new StubbyGrip(), "AK12.png")
@@ -2169,10 +1952,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe("AXA", " X ", 'X', "ingotSteel", 'A', CommonProxy.MiniSteelPlate)
             .withName("StubbyGrip")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         VGrip = (new AttachmentBuilder()).withCategory(AttachmentCategory.GRIP)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new VGrip(), "AK12.png")
@@ -2215,10 +1997,9 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe("XAX", " X ", " X ", 'X', "ingotSteel", 'A', CommonProxy.MiniSteelPlate)
             .withName("VGrip")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         Bipod = (new AttachmentBuilder()).withCategory(AttachmentCategory.GRIP)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withModel(new Bipod(), "AK12.png")
@@ -2261,9 +2042,8 @@ public class Attachments {
                 }
 
             })
-            .withCraftingRecipe(" X ", "A A", "X X", 'X', "ingotSteel", 'A', CommonProxy.MiniSteelPlate)
             .withName("Bipod")
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

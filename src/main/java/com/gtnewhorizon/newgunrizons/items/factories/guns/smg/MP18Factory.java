@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
@@ -53,7 +51,6 @@ public class MP18Factory {
             .withShellCasingForwardOffset(0.23F)
             .withShellCasingVerticalOffset(-0.02F)
             .withCreativeTab(NewGunrizonsMod.SMGTab)
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Submachine gun",
@@ -370,6 +367,6 @@ public class MP18Factory {
                     .build())
             .withSpawnEntityDamage(7.1F)
             .withSpawnEntityGravityVelocity(0.028F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

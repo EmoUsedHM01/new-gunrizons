@@ -6,14 +6,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.MouseEvent;
 
+import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
+import com.gtnewhorizon.newgunrizons.client.debug.MuzzleDebug;
 import com.gtnewhorizon.newgunrizons.client.input.KeyBindings;
-import com.gtnewhorizon.newgunrizons.config.ModContext;
 import com.gtnewhorizon.newgunrizons.items.ItemGrenade;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.network.WeaponActionMessage;
 import com.gtnewhorizon.newgunrizons.weapon.Reloadable;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponAttachmentAspect;
 import com.gtnewhorizon.newgunrizons.weapon.WeaponState;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -26,13 +29,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class WeaponInputHandler {
 
-    private final ModContext modContext;
     private boolean leftMouseButtonPressed;
     private int lastItemIndex = -1;
 
-    public WeaponInputHandler(ModContext modContext) {
-        this.modContext = modContext;
-    }
+    public WeaponInputHandler() {}
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
@@ -93,6 +93,10 @@ public class WeaponInputHandler {
             return;
         }
         ItemStack itemStack = player.getHeldItem();
+        if (KeyBindings.muzzleDebugKey.isPressed()) {
+            MuzzleDebug.toggle();
+            return;
+        }
         if (KeyBindings.reloadKey.isPressed()) {
             if (itemStack != null) {
                 Item item = itemStack.getItem();
@@ -103,17 +107,15 @@ public class WeaponInputHandler {
         } else {
             ItemWeaponInstance instance;
             if (KeyBindings.laserSwitchKey.isPressed()) {
-                instance = this.modContext.getItemInstanceRegistry()
-                    .getMainHandItemInstance(player, ItemWeaponInstance.class);
+                instance = ItemInstanceRegistry.INSTANCE.getMainHandItemInstance(player, ItemWeaponInstance.class);
                 if (instance != null
                     && (instance.getState() == WeaponState.READY || instance.getState() == WeaponState.MODIFYING)) {
                     instance.setLaserOn(!instance.isLaserOn());
-                    this.modContext.getChannel()
-                        .sendToServer(
-                            new WeaponActionMessage(WeaponActionMessage.TOGGLE_LASER, player.inventory.currentItem));
+                    NewGunrizonsMod.CHANNEL.sendToServer(
+                        new WeaponActionMessage(WeaponActionMessage.TOGGLE_LASER, player.inventory.currentItem));
                 }
             } else if (KeyBindings.nightVisionSwitchKey.isPressed()) {
-                ItemWeaponInstance nvInstance = this.modContext.getItemInstanceRegistry()
+                ItemWeaponInstance nvInstance = ItemInstanceRegistry.INSTANCE
                     .getMainHandItemInstance(player, ItemWeaponInstance.class);
                 if (nvInstance != null
                     && (nvInstance.getState() == WeaponState.READY || nvInstance.getState() == WeaponState.MODIFYING
@@ -125,45 +127,36 @@ public class WeaponInputHandler {
                     ((ItemWeapon) itemStack.getItem()).toggleClientAttachmentSelectionMode(player);
                 }
             } else if (KeyBindings.upArrowKey.isPressed()) {
-                instance = this.modContext.getItemInstanceRegistry()
-                    .getMainHandItemInstance(player, ItemWeaponInstance.class);
+                instance = ItemInstanceRegistry.INSTANCE.getMainHandItemInstance(player, ItemWeaponInstance.class);
                 if (instance != null && instance.getState() == WeaponState.MODIFYING) {
-                    this.modContext.getWeaponAttachmentAspect()
-                        .changeAttachment(AttachmentCategory.SCOPE, instance);
+                    WeaponAttachmentAspect.INSTANCE.changeAttachment(AttachmentCategory.SCOPE, instance);
                 }
             } else {
                 if (KeyBindings.downArrowKey.isPressed()) {
-                    instance = this.modContext.getItemInstanceRegistry()
-                        .getMainHandItemInstance(player, ItemWeaponInstance.class);
+                    instance = ItemInstanceRegistry.INSTANCE.getMainHandItemInstance(player, ItemWeaponInstance.class);
                     if (instance != null && instance.getState() == WeaponState.MODIFYING) {
-                        this.modContext.getWeaponAttachmentAspect()
-                            .changeAttachment(AttachmentCategory.GRIP, instance);
+                        WeaponAttachmentAspect.INSTANCE.changeAttachment(AttachmentCategory.GRIP, instance);
                     }
                 } else if (KeyBindings.leftArrowKey.isPressed()) {
-                    instance = this.modContext.getItemInstanceRegistry()
-                        .getMainHandItemInstance(player, ItemWeaponInstance.class);
+                    instance = ItemInstanceRegistry.INSTANCE.getMainHandItemInstance(player, ItemWeaponInstance.class);
                     if (instance != null && instance.getState() == WeaponState.MODIFYING) {
-                        this.modContext.getWeaponAttachmentAspect()
-                            .changeAttachment(AttachmentCategory.SILENCER, instance);
+                        WeaponAttachmentAspect.INSTANCE.changeAttachment(AttachmentCategory.SILENCER, instance);
                     }
                 } else if (KeyBindings.fireModeKey.isPressed()) {
-                    instance = this.modContext.getItemInstanceRegistry()
-                        .getMainHandItemInstance(player, ItemWeaponInstance.class);
+                    instance = ItemInstanceRegistry.INSTANCE.getMainHandItemInstance(player, ItemWeaponInstance.class);
                     if (instance != null && instance.getState() == WeaponState.READY) {
                         instance.getWeapon()
                             .changeFireMode(instance);
                     }
                 } else if (KeyBindings.addKey.isPressed()) {
-                    instance = this.modContext.getItemInstanceRegistry()
-                        .getMainHandItemInstance(player, ItemWeaponInstance.class);
+                    instance = ItemInstanceRegistry.INSTANCE.getMainHandItemInstance(player, ItemWeaponInstance.class);
                     if (instance != null && (instance.getState() == WeaponState.READY
                         || instance.getState() == WeaponState.EJECT_REQUIRED)) {
                         instance.getWeapon()
                             .incrementZoom(instance);
                     }
                 } else if (KeyBindings.subtractKey.isPressed()) {
-                    instance = this.modContext.getItemInstanceRegistry()
-                        .getMainHandItemInstance(player, ItemWeaponInstance.class);
+                    instance = ItemInstanceRegistry.INSTANCE.getMainHandItemInstance(player, ItemWeaponInstance.class);
                     if (instance != null && (instance.getState() == WeaponState.READY
                         || instance.getState() == WeaponState.EJECT_REQUIRED)) {
                         instance.getWeapon()
@@ -191,6 +184,9 @@ public class WeaponInputHandler {
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onClientTick(ClientTickEvent event) {
+        if (event.phase == TickEvent.Phase.START) {
+            MuzzleDebug.tick();
+        }
         if (event.phase == TickEvent.Phase.START && this.leftMouseButtonPressed) {
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
             if (player != null) {

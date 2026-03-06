@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
@@ -56,7 +54,6 @@ public class SPAS12Factory {
             .withFlashScale(() -> 0.8F)
             .withFlashOffsetX(() -> 0.1F)
             .withFlashOffsetY(() -> 0.1F)
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
             .withCreativeTab(NewGunrizonsMod.ShotgunsTab)
             .withInformationProvider(
                 (stack) -> Arrays.asList(
@@ -436,6 +433,6 @@ public class SPAS12Factory {
                     .build())
             .withSpawnEntityDamage(7.0F)
             .withSpawnEntityGravityVelocity(0.8F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

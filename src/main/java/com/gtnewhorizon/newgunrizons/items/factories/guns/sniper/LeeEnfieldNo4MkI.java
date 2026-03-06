@@ -2,16 +2,13 @@ package com.gtnewhorizon.newgunrizons.items.factories.guns.sniper;
 
 import java.util.Arrays;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.action.LeeEnfieldSMLEAction;
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
@@ -56,12 +53,6 @@ public class LeeEnfieldNo4MkI {
             .withFlashOffsetY(() -> { return 0.1F; })
             .withShellCasingEjectEnabled(false)
             .withCreativeTab(NewGunrizonsMod.SnipersTab)
-            .withCrafting(
-                CraftingComplexity.MEDIUM,
-                CommonProxy.SteelPlate,
-                CommonProxy.MiniSteelPlate,
-                CommonProxy.MetalComponents,
-                Blocks.planks)
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Bolt-action rifle",
@@ -582,6 +573,6 @@ public class LeeEnfieldNo4MkI {
                     .build())
             .withSpawnEntityDamage(27.0F)
             .withSpawnEntityGravityVelocity(0.0F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

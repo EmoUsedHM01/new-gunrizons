@@ -2,16 +2,13 @@ package com.gtnewhorizon.newgunrizons.items.factories.guns.assault;
 
 import java.util.Arrays;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
@@ -53,12 +50,6 @@ public class M1CarbineFactory {
             .withFlashOffsetY(() -> { return 0.08F; })
             .withInaccuracy(1.0F)
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
-            .withCrafting(
-                CraftingComplexity.MEDIUM,
-                CommonProxy.SteelPlate,
-                CommonProxy.MiniSteelPlate,
-                "ingotSteel",
-                Blocks.planks)
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Semi-automatic carbine",
@@ -432,6 +423,6 @@ public class M1CarbineFactory {
                     .build())
             .withSpawnEntityDamage(7.0F)
             .withSpawnEntityGravityVelocity(0.0118F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

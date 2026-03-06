@@ -13,8 +13,8 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
-import com.gtnewhorizon.newgunrizons.config.ModContext;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.util.Pair;
 
 import cpw.mods.fml.relauncher.Side;
@@ -30,7 +30,6 @@ public class StaticModelRenderer implements IItemRenderer {
     private static final float MODEL_AGE_IN_TICKS = -0.4F;
     private static final float MODEL_SCALE = 0.08F;
 
-    private final ModContext modContext;
     private final Consumer<ItemStack> entityPositioning;
     private final Consumer<ItemStack> inventoryPositioning;
     private final BiConsumer<EntityPlayer, ItemStack> thirdPersonPositioning;
@@ -43,7 +42,6 @@ public class StaticModelRenderer implements IItemRenderer {
     private final Consumer<RenderContext> firstPersonRightHandPositioning;
 
     private StaticModelRenderer(Builder builder) {
-        this.modContext = builder.modContext;
         this.entityPositioning = builder.entityPositioning;
         this.inventoryPositioning = builder.inventoryPositioning;
         this.thirdPersonPositioning = builder.thirdPersonPositioning;
@@ -74,7 +72,7 @@ public class StaticModelRenderer implements IItemRenderer {
         GL11.glPushMatrix();
         GL11.glScaled(-1.0, -1.0, 1.0);
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-        RenderContext renderContext = new RenderContext(this.modContext, player, itemStack);
+        RenderContext renderContext = new RenderContext(player, itemStack);
 
         switch (type) {
             case ENTITY:
@@ -130,9 +128,8 @@ public class StaticModelRenderer implements IItemRenderer {
             renderContext.setAgeInTicks(MODEL_AGE_IN_TICKS);
             renderContext.setScale(MODEL_SCALE);
             renderContext.setTransformType(TransformType.fromItemRenderType(type));
-            renderContext.setItemInstance(
-                this.modContext.getItemInstanceRegistry()
-                    .getItemInstance(renderContext.getPlayer(), itemStack));
+            renderContext
+                .setItemInstance(ItemInstanceRegistry.INSTANCE.getItemInstance(renderContext.getPlayer(), itemStack));
             GL11.glPushMatrix();
             GL11.glPushAttrib(GL11.GL_ENABLE_BIT | GL11.GL_CURRENT_BIT);
             postRenderer.render(renderContext);
@@ -181,12 +178,6 @@ public class StaticModelRenderer implements IItemRenderer {
         private Consumer<RenderContext> firstPersonLeftHandPositioning;
         @Getter
         private Consumer<RenderContext> firstPersonRightHandPositioning;
-        private ModContext modContext;
-
-        public Builder withModContext(ModContext modContext) {
-            this.modContext = modContext;
-            return this;
-        }
 
         public Builder withFirstPersonPositioning(BiConsumer<EntityPlayer, ItemStack> firstPersonPositioning) {
             this.firstPersonPositioning = firstPersonPositioning;

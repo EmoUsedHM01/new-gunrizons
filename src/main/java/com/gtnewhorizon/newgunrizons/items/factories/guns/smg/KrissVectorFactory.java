@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
@@ -61,12 +59,6 @@ public class KrissVectorFactory {
             .withFlashOffsetX(() -> { return 0.15F; })
             .withFlashOffsetY(() -> { return 0.2F; })
             .withInaccuracy(2.0F)
-            .withCrafting(
-                CraftingComplexity.LOW,
-                CommonProxy.SteelPlate,
-                CommonProxy.MiniSteelPlate,
-                "ingotSteel",
-                CommonProxy.BigSteelPlate)
             .withCreativeTab(NewGunrizonsMod.SMGTab)
             .withInformationProvider(
                 (stack) -> Arrays.asList(
@@ -285,7 +277,7 @@ public class KrissVectorFactory {
 
                         if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Kobra)) {}
 
-                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Holo2)) {}
+
 
                         if (ItemWeapon
                             .isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Holographic2)) {}
@@ -368,7 +360,7 @@ public class KrissVectorFactory {
 
                         if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Kobra)) {}
 
-                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Holo2)) {}
+
 
                         if (ItemWeapon
                             .isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Holographic2)) {}
@@ -516,6 +508,6 @@ public class KrissVectorFactory {
                     .build())
             .withSpawnEntityDamage(6.8F)
             .withSpawnEntityGravityVelocity(0.0118F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentProtection;
@@ -25,10 +24,10 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
+import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.particle.ParticleManager;
-import com.gtnewhorizon.newgunrizons.config.ModContext;
-import com.gtnewhorizon.newgunrizons.registry.Sounds;
 import com.gtnewhorizon.newgunrizons.network.ExplosionMessage;
+import com.gtnewhorizon.newgunrizons.registry.Sounds;
 
 import lombok.Getter;
 
@@ -57,17 +56,9 @@ public class Explosion {
     @Getter
     private final Vec3 position;
 
-    public static void createServerSideExplosion(ModContext modContext, World world, Entity entity, double posX,
-        double posY, double posZ, float explosionStrength, boolean isFlaming, boolean isSmoking) {
-        Explosion explosion = new Explosion(
-            world,
-            entity,
-            posX,
-            posY,
-            posZ,
-            explosionStrength,
-            isFlaming,
-            isSmoking);
+    public static void createServerSideExplosion(World world, Entity entity, double posX, double posY, double posZ,
+        float explosionStrength, boolean isFlaming, boolean isSmoking) {
+        Explosion explosion = new Explosion(world, entity, posX, posY, posZ, explosionStrength, isFlaming, isSmoking);
         explosion.doExplosionA();
         explosion.doExplosionB(false);
         if (!isSmoking) {
@@ -76,17 +67,16 @@ public class Explosion {
 
         for (Entity player : world.playerEntities) {
             if (player.getDistanceSq(posX, posY, posZ) < 4096.0D) {
-                modContext.getChannel()
-                    .sendTo(
-                        new ExplosionMessage(
-                            posX,
-                            posY,
-                            posZ,
-                            explosionStrength,
-                            explosion.getAffectedBlockPositions(),
-                            explosion.getPlayerKnockbackMap()
-                                .get(player)),
-                        (EntityPlayerMP) player);
+                NewGunrizonsMod.CHANNEL.sendTo(
+                    new ExplosionMessage(
+                        posX,
+                        posY,
+                        posZ,
+                        explosionStrength,
+                        explosion.getAffectedBlockPositions(),
+                        explosion.getPlayerKnockbackMap()
+                            .get(player)),
+                    (EntityPlayerMP) player);
             }
         }
 
@@ -97,14 +87,14 @@ public class Explosion {
         this(worldIn, entityIn, x, y, z, size, false, true, affectedPositions);
     }
 
-    public Explosion(World worldIn, Entity entityIn, double x, double y, double z, float size,
-        boolean flaming, boolean smoking, List<BlockPos> affectedPositions) {
+    public Explosion(World worldIn, Entity entityIn, double x, double y, double z, float size, boolean flaming,
+        boolean smoking, List<BlockPos> affectedPositions) {
         this(worldIn, entityIn, x, y, z, size, flaming, smoking);
         this.affectedBlockPositions.addAll(affectedPositions);
     }
 
-    public Explosion(World worldIn, Entity entityIn, double x, double y, double z, float size,
-        boolean flaming, boolean smoking) {
+    public Explosion(World worldIn, Entity entityIn, double x, double y, double z, float size, boolean flaming,
+        boolean smoking) {
         this.explosionRNG = new Random();
         this.affectedBlockPositions = Lists.newArrayList();
         this.playerKnockbackMap = Maps.newHashMap();

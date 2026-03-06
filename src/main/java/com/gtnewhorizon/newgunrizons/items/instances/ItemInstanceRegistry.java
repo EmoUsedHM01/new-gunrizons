@@ -26,6 +26,8 @@ import com.gtnewhorizon.newgunrizons.util.InventoryUtils;
  */
 public class ItemInstanceRegistry {
 
+    public static final ItemInstanceRegistry INSTANCE = new ItemInstanceRegistry();
+
     /** Primary registry: player UUID → (inventory slot → instance). */
     private final Map<UUID, Map<Integer, ItemInstance<?>>> registry = new HashMap<>();
 
@@ -35,6 +37,12 @@ public class ItemInstanceRegistry {
      * ItemStack uses identity equality, so this works as an identity cache.
      */
     private final WeakHashMap<ItemStack, ItemInstance<?>> itemStackCache = new WeakHashMap<>();
+
+    /** Client-side convenience: gets the main-hand weapon instance for the local player. */
+    public static ItemWeaponInstance getMainHeldWeapon() {
+        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        return INSTANCE.getMainHandItemInstance(player, ItemWeaponInstance.class);
+    }
 
     public <T extends ItemInstance<S>, S extends ManagedState<S>> T getMainHandItemInstance(EntityPlayer player,
         Class<T> targetClass) {

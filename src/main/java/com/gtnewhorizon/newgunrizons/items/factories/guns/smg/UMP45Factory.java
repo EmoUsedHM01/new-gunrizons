@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
@@ -62,7 +60,6 @@ public class UMP45Factory {
             .withFlashOffsetY(() -> { return 0.18F; })
             .withInaccuracy(2.0F)
             .withCreativeTab(NewGunrizonsMod.SMGTab)
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Submachine gun",
@@ -504,6 +501,6 @@ public class UMP45Factory {
                     .build())
             .withSpawnEntityDamage(6.8F)
             .withSpawnEntityGravityVelocity(0.028F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

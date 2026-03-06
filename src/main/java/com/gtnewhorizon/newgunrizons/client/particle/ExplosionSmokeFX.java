@@ -172,7 +172,9 @@ public class ExplosionSmokeFX extends EntityFX {
             .bindTexture(this.smokeTexture);
         GL11.glPushMatrix();
         GL11.glPushAttrib(
-            GL11.GL_TEXTURE_BIT | GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_ENABLE_BIT | GL11.GL_COLOR_BUFFER_BIT
+            GL11.GL_TEXTURE_BIT | GL11.GL_DEPTH_BUFFER_BIT
+                | GL11.GL_ENABLE_BIT
+                | GL11.GL_COLOR_BUFFER_BIT
                 | GL11.GL_CURRENT_BIT);
 
         // Restrict to main color attachment only — see SmokeFX for full explanation.

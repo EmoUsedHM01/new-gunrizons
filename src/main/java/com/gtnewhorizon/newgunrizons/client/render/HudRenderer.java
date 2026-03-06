@@ -1,6 +1,5 @@
 package com.gtnewhorizon.newgunrizons.client.render;
 
-import com.gtnewhorizon.newgunrizons.config.ClientModContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
@@ -13,9 +12,9 @@ import org.lwjgl.opengl.GL11;
 
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.client.input.KeyBindings;
-import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
 import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.network.StatusMessageManager;
 import com.gtnewhorizon.newgunrizons.weapon.WeaponAttachmentAspect;
@@ -37,12 +36,10 @@ public class HudRenderer {
     private static final int COLOR_YELLOW = 0xFFFF00;
     private static final int COLOR_RED = 0xFF0000;
 
-    private final ClientModContext modContext;
     private final StatusBarPosition statusBarPosition;
 
-    public HudRenderer(ClientModContext modContext) {
-        this.modContext = modContext;
-        this.statusBarPosition = StatusBarPosition.TOP_RIGHT;
+    public HudRenderer() {
+        this.statusBarPosition = StatusBarPosition.BOTTOM_RIGHT;
     }
 
     public boolean renderWeaponHud(ScaledResolution resolution, ItemStack itemStack,
@@ -94,8 +91,7 @@ public class HudRenderer {
         FontRenderer fontRender = mc.fontRenderer;
         mc.entityRenderer.setupOverlayRendering();
 
-        StatusMessageManager.Message message = modContext.getStatusMessageCenter()
-            .nextMessage();
+        StatusMessageManager.Message message = StatusMessageManager.INSTANCE.nextMessage();
         if (message == null) {
             return false;
         }
@@ -139,8 +135,7 @@ public class HudRenderer {
         int color = COLOR_WHITE;
         String messageText;
 
-        StatusMessageManager.Message message = modContext.getStatusMessageCenter()
-            .nextMessage();
+        StatusMessageManager.Message message = StatusMessageManager.INSTANCE.nextMessage();
         if (message != null) {
             messageText = message.getMessage();
             if (message.isAlert()) {

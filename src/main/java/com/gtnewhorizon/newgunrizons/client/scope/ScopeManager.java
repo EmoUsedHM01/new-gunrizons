@@ -3,20 +3,15 @@ package com.gtnewhorizon.newgunrizons.client.scope;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EffectRenderer;
 
-import com.gtnewhorizon.newgunrizons.config.ClientModContext;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
 
 public class ScopeManager {
 
-    private final ClientModContext clientModContext;
+    public static final ScopeManager INSTANCE = new ScopeManager();
 
     private ScopePerspective perspective;
     private ScopeWorldRenderer worldRenderer;
     private EffectRenderer effectRenderer;
-
-    public ScopeManager(ClientModContext clientModContext) {
-        this.clientModContext = clientModContext;
-    }
 
     public ScopePerspective getPerspective(ItemInstance<?> currentInstance, boolean init) {
         if (currentInstance != null && (this.perspective != null || init)) {
@@ -24,7 +19,7 @@ public class ScopeManager {
             if (needsPerspective) {
                 if (this.perspective == null) {
                     this.perspective = new ScopePerspective();
-                    this.perspective.activate(this.clientModContext, this);
+                    this.perspective.activate(this);
                 }
             } else if (this.perspective != null && init) {
                 this.perspective.deactivate();

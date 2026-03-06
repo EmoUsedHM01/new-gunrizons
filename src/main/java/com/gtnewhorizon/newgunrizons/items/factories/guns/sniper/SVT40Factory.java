@@ -2,16 +2,13 @@ package com.gtnewhorizon.newgunrizons.items.factories.guns.sniper;
 
 import java.util.Arrays;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.misc.PUmount;
 import com.gtnewhorizon.newgunrizons.model.misc.SVTmount;
@@ -56,12 +53,6 @@ public class SVT40Factory {
             .withFlashOffsetX(() -> { return 0.14F; })
             .withFlashOffsetY(() -> { return 0.08F; })
             .withCreativeTab(NewGunrizonsMod.SnipersTab)
-            .withCrafting(
-                CraftingComplexity.MEDIUM,
-                CommonProxy.SteelPlate,
-                CommonProxy.MiniSteelPlate,
-                CommonProxy.MetalComponents,
-                Blocks.planks)
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Semi-automatic Battle Rifle",
@@ -486,6 +477,6 @@ public class SVT40Factory {
                     .build())
             .withSpawnEntityDamage(13.0F)
             .withSpawnEntityGravityVelocity(0.0118F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

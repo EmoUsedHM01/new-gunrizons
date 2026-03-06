@@ -32,11 +32,11 @@ import com.gtnewhorizon.newgunrizons.client.render.CustomRenderer;
 import com.gtnewhorizon.newgunrizons.client.render.Framebuffers;
 import com.gtnewhorizon.newgunrizons.client.render.RenderContext;
 import com.gtnewhorizon.newgunrizons.client.render.TransformType;
-import com.gtnewhorizon.newgunrizons.config.ClientModContext;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.items.ItemGrenade;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemGrenadeInstance;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.state.RenderableState;
 import com.gtnewhorizon.newgunrizons.util.Pair;
 
@@ -44,7 +44,6 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import lombok.Getter;
-import lombok.Setter;
 
 public class GrenadeRenderer implements IItemRenderer {
 
@@ -57,10 +56,6 @@ public class GrenadeRenderer implements IItemRenderer {
 
     private final Map<StateManagerKey, MultipartRenderStateManager> firstPersonStateManagers;
     private final MultipartTransitionProvider grenadeTransitionProvider;
-    @Getter
-    @Setter
-    protected ClientModContext clientModContext;
-
     @Getter
     private final ModelBase model;
     @Getter
@@ -144,11 +139,9 @@ public class GrenadeRenderer implements IItemRenderer {
 
     protected StateDescriptor getStateDescriptor(EntityLivingBase player, ItemStack itemStack) {
         RenderableState currentState = null;
-        ItemInstance<?> itemInstance = this.clientModContext.getItemInstanceRegistry()
-            .getItemInstance(player, itemStack);
+        ItemInstance<?> itemInstance = ItemInstanceRegistry.INSTANCE.getItemInstance(player, itemStack);
         ItemGrenadeInstance itemGrenadeInstance = null;
-        if (itemInstance instanceof ItemGrenadeInstance
-            && itemInstance.getItem() == itemStack.getItem()) {
+        if (itemInstance instanceof ItemGrenadeInstance && itemInstance.getItem() == itemStack.getItem()) {
             itemGrenadeInstance = (ItemGrenadeInstance) itemInstance;
         }
 
@@ -190,7 +183,10 @@ public class GrenadeRenderer implements IItemRenderer {
         }
 
         return new StateDescriptor(
-            itemGrenadeInstance, stateManager, this.normalRandomizingRate, this.normalRandomizingAmplitude);
+            itemGrenadeInstance,
+            stateManager,
+            this.normalRandomizingRate,
+            this.normalRandomizingAmplitude);
     }
 
     private GrenadeStateTimed getNextNonExpiredState(ItemGrenadeInstance playerWeaponState) {
@@ -231,8 +227,7 @@ public class GrenadeRenderer implements IItemRenderer {
             MultipartTransition t = new MultipartTransition(p.getDuration(), p.getPause())
                 .withPartPositionFunction(Part.MAIN_ITEM, p.getAttachedTo(), this.createWeaponPartPositionFunction(p))
                 .withPartPositionFunction(Part.LEFT_HAND, l.getAttachedTo(), this.createWeaponPartPositionFunction(l))
-                .withPartPositionFunction(
-                    Part.RIGHT_HAND, r.getAttachedTo(), this.createWeaponPartPositionFunction(r));
+                .withPartPositionFunction(Part.RIGHT_HAND, r.getAttachedTo(), this.createWeaponPartPositionFunction(r));
 
             for (Entry<Part, List<Transition>> entry : custom.entrySet()) {
                 List<Transition> partTransitions = entry.getValue();
@@ -260,7 +255,9 @@ public class GrenadeRenderer implements IItemRenderer {
             .withPartPositionFunction(Part.RIGHT_HAND, null, this.createWeaponPartPositionFunction(rh));
         custom.forEach(
             (part, position) -> mt.withPartPositionFunction(
-                part, position.attachedTo, this.createWeaponPartPositionFunction(position.positioning)));
+                part,
+                position.attachedTo,
+                this.createWeaponPartPositionFunction(position.positioning)));
         return Collections.singletonList(mt);
     }
 
@@ -315,8 +312,7 @@ public class GrenadeRenderer implements IItemRenderer {
         for (Pair<ModelBase, String> texturedModel : compatibleAttachment.getAttachment()
             .getTexturedModels()) {
             Minecraft.getMinecraft().renderEngine
-                .bindTexture(
-                    new ResourceLocation(NewGunrizonsMod.MODID + ":textures/models/" + texturedModel.getV()));
+                .bindTexture(new ResourceLocation(NewGunrizonsMod.MODID + ":textures/models/" + texturedModel.getV()));
             GL11.glPushMatrix();
             GL11.glPushAttrib(ATTRIB_ENABLE_CURRENT);
             if (compatibleAttachment.getModelPositioning() != null) {
@@ -382,7 +378,7 @@ public class GrenadeRenderer implements IItemRenderer {
             player = Minecraft.getMinecraft().thePlayer;
         }
 
-        RenderContext renderContext = new RenderContext(this.getClientModContext(), player, weaponItemStack);
+        RenderContext renderContext = new RenderContext(player, weaponItemStack);
         renderContext.setAgeInTicks(-0.4F);
         renderContext.setScale(0.08F);
         renderContext.setTransformType(TransformType.fromItemRenderType(type));
@@ -643,8 +639,7 @@ public class GrenadeRenderer implements IItemRenderer {
             return this;
         }
 
-        public Builder withFirstPersonPositioningRunning(
-            Consumer<RenderContext> firstPersonPositioningRunning) {
+        public Builder withFirstPersonPositioningRunning(Consumer<RenderContext> firstPersonPositioningRunning) {
             this.firstPersonPositioningRunning = firstPersonPositioningRunning;
             return this;
         }
@@ -668,8 +663,8 @@ public class GrenadeRenderer implements IItemRenderer {
             if (part instanceof StandardPart) {
                 throw new IllegalArgumentException("Part " + part + " is not custom");
             }
-            if (this.firstPersonCustomPositioningThrown
-                .put(part, new SimplePositioning(attachedTo, positioning)) != null) {
+            if (this.firstPersonCustomPositioningThrown.put(part, new SimplePositioning(attachedTo, positioning))
+                != null) {
                 throw new IllegalArgumentException("Part " + part + " already added");
             }
             return this;
@@ -746,8 +741,8 @@ public class GrenadeRenderer implements IItemRenderer {
             return this;
         }
 
-        public Builder withEntityRotationCenterOffsets(Supplier<Float> xCenterOffset,
-            Supplier<Float> yCenterOffset, Supplier<Float> zCenterOffset) {
+        public Builder withEntityRotationCenterOffsets(Supplier<Float> xCenterOffset, Supplier<Float> yCenterOffset,
+            Supplier<Float> zCenterOffset) {
             this.xCenterOffset = xCenterOffset;
             this.yCenterOffset = yCenterOffset;
             this.zCenterOffset = zCenterOffset;
@@ -755,7 +750,8 @@ public class GrenadeRenderer implements IItemRenderer {
         }
 
         public GrenadeRenderer build() {
-            if (FMLCommonHandler.instance().getSide() != Side.CLIENT) {
+            if (FMLCommonHandler.instance()
+                .getSide() != Side.CLIENT) {
                 return null;
             }
 
@@ -930,10 +926,11 @@ public class GrenadeRenderer implements IItemRenderer {
             });
             if (!this.firstPersonCustomPositioning.isEmpty()
                 && this.firstPersonCustomPositioningStrikerLeverOff.isEmpty()) {
-                this.firstPersonCustomPositioning.forEach((part, pos) -> {
-                    this.firstPersonCustomPositioningStrikerLeverOff
-                        .put(part, new SimplePositioning(null, pos.positioning));
-                });
+                this.firstPersonCustomPositioning.forEach(
+                    (part, pos) -> {
+                        this.firstPersonCustomPositioningStrikerLeverOff
+                            .put(part, new SimplePositioning(null, pos.positioning));
+                    });
             }
 
             if (!this.firstPersonCustomPositioning.isEmpty() && this.firstPersonCustomPositioningThrown.isEmpty()) {

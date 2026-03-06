@@ -3,7 +3,6 @@ package com.gtnewhorizon.newgunrizons.network;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
 import net.minecraft.util.Vec3;
 
 import com.google.common.collect.Lists;
@@ -11,6 +10,7 @@ import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
+import lombok.Getter;
 
 @Getter
 public class ExplosionMessage implements IMessage {

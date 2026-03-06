@@ -25,8 +25,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 import com.gtnewhorizon.gtnhlib.client.model.state.BlockState;
-import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
-import com.gtnewhorizon.newgunrizons.config.ModContext;
 import com.gtnewhorizon.newgunrizons.items.ItemGrenade;
 import com.gtnewhorizon.newgunrizons.util.RayCast;
 
@@ -43,7 +41,6 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
     private static final int MAX_TICKS = 2000;
     private static final String TAG_ENTITY_ITEM = "entity_item";
 
-    protected ModContext modContext;
     private float gravityVelocity;
     private float slowdownFactor = 0.5F;
     private int ticksInAir;
@@ -71,10 +68,9 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
     private float explosionStrength;
     private long activationTimestamp;
 
-    private EntityGrenade(ModContext modContext, ItemGrenade itemGrenade, EntityLivingBase thrower, float velocity,
-        float gravityVelocity, float rotationSlowdownFactor) {
+    private EntityGrenade(ItemGrenade itemGrenade, EntityLivingBase thrower, float velocity, float gravityVelocity,
+        float rotationSlowdownFactor) {
         super(thrower.worldObj);
-        this.modContext = modContext;
         this.thrower = thrower;
         this.gravityVelocity = gravityVelocity;
         this.rotationSlowdownFactor = rotationSlowdownFactor;
@@ -478,7 +474,6 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
     private void explode() {
         logger.debug("Exploding {}", this);
         Explosion.createServerSideExplosion(
-            this.getModContext(),
             this.worldObj,
             this,
             this.posX,
@@ -647,18 +642,6 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
         }
     }
 
-    /**
-     * Returns the ModContext for this grenade, falling back to the global
-     * static instance if none was provided at construction time (e.g. when
-     * the entity is reconstructed by Forge from spawn data or NBT).
-     */
-    protected ModContext getModContext() {
-        if (this.modContext == null) {
-            this.modContext = NewGunrizonsMod.MOD_CONTEXT;
-        }
-        return this.modContext;
-    }
-
     public static class Builder {
 
         private long explosionTimeout;
@@ -710,9 +693,8 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
             return this;
         }
 
-        public EntityGrenade build(ModContext modContext) {
+        public EntityGrenade build() {
             EntityGrenade entityGrenade = new EntityGrenade(
-                modContext,
                 this.itemGrenade,
                 this.thrower,
                 this.velocity,

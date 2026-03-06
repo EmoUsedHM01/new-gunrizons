@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.sight.Holo2;
 import com.gtnewhorizon.newgunrizons.model.sight.Holographic;
@@ -44,7 +42,6 @@ public class G36Factory {
             .withFlashOffsetX(() -> { return 0.1F; })
             .withFlashOffsetY(() -> { return 0.05F; })
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Assault rifle/Carbine",
@@ -413,6 +410,6 @@ public class G36Factory {
                     .build())
             .withSpawnEntityDamage(7.0F)
             .withSpawnEntityGravityVelocity(0.0118F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

@@ -1,6 +1,5 @@
 package com.gtnewhorizon.newgunrizons.client.particle;
 
-import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.RenderHelper;
@@ -11,6 +10,8 @@ import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
+
+import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 
 /**
  * Fiery debris particle used for grenade and weapon explosions.
@@ -138,7 +139,9 @@ public class ExplosionParticleFX extends EntityFX {
             .bindTexture(TEXTURE);
         GL11.glPushMatrix();
         GL11.glPushAttrib(
-            GL11.GL_TEXTURE_BIT | GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_ENABLE_BIT | GL11.GL_COLOR_BUFFER_BIT
+            GL11.GL_TEXTURE_BIT | GL11.GL_DEPTH_BUFFER_BIT
+                | GL11.GL_ENABLE_BIT
+                | GL11.GL_COLOR_BUFFER_BIT
                 | GL11.GL_CURRENT_BIT);
 
         // Restrict to main color attachment only — see SmokeFX for full explanation.

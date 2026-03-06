@@ -1,7 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,33 +19,26 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentContainer;
 import com.gtnewhorizon.newgunrizons.attachment.CompatibleAttachment;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.config.ModContext;
-import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
-import com.gtnewhorizon.newgunrizons.crafting.OptionsMetadata;
 import com.gtnewhorizon.newgunrizons.entities.EntityBullet;
 import com.gtnewhorizon.newgunrizons.entities.EntityShellCasing;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceFactory;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
+import com.gtnewhorizon.newgunrizons.network.StatusMessageManager;
 import com.gtnewhorizon.newgunrizons.network.WeaponActionMessage;
 import com.gtnewhorizon.newgunrizons.registry.Sounds;
 import com.gtnewhorizon.newgunrizons.weapon.*;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import lombok.Getter;
 
 public class ItemWeapon extends Item
     implements ItemInstanceFactory<ItemWeaponInstance, WeaponState>, AttachmentContainer, Reloadable, Updatable {
-
-    @Getter
-    private final ModContext modContext;
 
     @Getter
     private String shootSound;
@@ -129,8 +121,7 @@ public class ItemWeapon extends Item
     @Getter
     private final float shootSoundVolume;
 
-    private ItemWeapon(ItemWeapon.Builder builder, ModContext modContext) {
-        this.modContext = modContext;
+    private ItemWeapon(ItemWeapon.Builder builder) {
         this.name = builder.name;
         this.textureName = builder.textureName;
         this.ammoCapacity = builder.ammoCapacity;
@@ -180,8 +171,21 @@ public class ItemWeapon extends Item
         return true;
     }
 
+    @Override
+    public boolean showDurabilityBar(ItemStack stack) {
+        return this.getCompatibleMagazines().isEmpty();
+    }
+
+    @Override
+    public double getDurabilityForDisplay(ItemStack stack) {
+        if (this.ammoCapacity <= 0) {
+            return 0.0;
+        }
+        return 1.0 - (double) ItemInstance.getAmmo(stack) / (double) this.ammoCapacity;
+    }
+
     public void toggleAiming() {
-        ItemWeaponInstance mainHandHeldWeaponInstance = this.modContext.getMainHeldWeapon();
+        ItemWeaponInstance mainHandHeldWeaponInstance = ItemInstanceRegistry.getMainHeldWeapon();
         if (mainHandHeldWeaponInstance != null && (mainHandHeldWeaponInstance.getState() == WeaponState.READY
             || mainHandHeldWeaponInstance.getState() == WeaponState.EJECT_REQUIRED)) {
             mainHandHeldWeaponInstance.setAimed(!mainHandHeldWeaponInstance.isAimed());
@@ -214,13 +218,12 @@ public class ItemWeapon extends Item
     }
 
     public int getCurrentAmmo() {
-        ItemWeaponInstance state = this.modContext.getMainHeldWeapon();
+        ItemWeaponInstance state = ItemInstanceRegistry.getMainHeldWeapon();
         return state.getAmmo();
     }
 
     public List<CompatibleAttachment> getActiveAttachments(EntityLivingBase player, ItemStack itemStack) {
-        return this.modContext.getWeaponAttachmentAspect()
-            .getActiveAttachments(player, itemStack);
+        return WeaponAttachmentAspect.INSTANCE.getActiveAttachments(player, itemStack);
     }
 
     public boolean ejectSpentRoundRequired() {
@@ -250,27 +253,21 @@ public class ItemWeapon extends Item
     }
 
     public void reloadHeldItem(EntityPlayer player) {
-        this.modContext.getWeaponReloadAspect()
-            .reloadMainHeldItem(player);
+        WeaponReloadAspect.INSTANCE.reloadMainHeldItem(player);
     }
 
     public void update(EntityPlayer player) {
-        this.modContext.getWeaponReloadAspect()
-            .updateMainHeldItem(player);
-        this.modContext.getWeaponFireAspect()
-            .onUpdate(player);
-        this.modContext.getWeaponAttachmentAspect()
-            .updateMainHeldItem(player);
+        WeaponReloadAspect.INSTANCE.updateMainHeldItem(player);
+        WeaponFireAspect.INSTANCE.onUpdate(player);
+        WeaponAttachmentAspect.INSTANCE.updateMainHeldItem(player);
     }
 
     public void tryFire(EntityPlayer player) {
-        this.modContext.getWeaponFireAspect()
-            .onFireButtonClick(player);
+        WeaponFireAspect.INSTANCE.onFireButtonClick(player);
     }
 
     public void tryStopFire(EntityPlayer player) {
-        this.modContext.getWeaponFireAspect()
-            .onFireButtonRelease(player);
+        WeaponFireAspect.INSTANCE.onFireButtonRelease(player);
     }
 
     public ItemWeaponInstance createItemInstance(EntityLivingBase player, ItemStack itemStack, int slot) {
@@ -292,8 +289,7 @@ public class ItemWeapon extends Item
     }
 
     public void toggleClientAttachmentSelectionMode(EntityPlayer player) {
-        this.modContext.getWeaponAttachmentAspect()
-            .toggleClientAttachmentSelectionMode(player);
+        WeaponAttachmentAspect.INSTANCE.toggleClientAttachmentSelectionMode(player);
     }
 
     public boolean onDroppedByPlayer(ItemStack itemStack, EntityPlayer player) {
@@ -315,18 +311,17 @@ public class ItemWeapon extends Item
             message = StatCollector.translateToLocalFormatted("gui.firearmMode.burst");
         }
 
-        this.modContext.getStatusMessageCenter()
+        StatusMessageManager.INSTANCE
             .addMessage(StatCollector.translateToLocalFormatted("gui.firearmMode", message), 1000L);
         if (Sounds.FIRE_MODE_SWITCH != null) {
             instance.getPlayer()
                 .playSound(Sounds.FIRE_MODE_SWITCH, 1.0F, 1.0F);
         }
 
-        this.modContext.getChannel()
-            .sendToServer(
-                new WeaponActionMessage(
-                    WeaponActionMessage.CHANGE_FIRE_MODE,
-                    ((EntityPlayer) instance.getPlayer()).inventory.currentItem));
+        NewGunrizonsMod.CHANNEL.sendToServer(
+            new WeaponActionMessage(
+                WeaponActionMessage.CHANGE_FIRE_MODE,
+                ((EntityPlayer) instance.getPlayer()).inventory.currentItem));
     }
 
     public void spawnBullet(EntityLivingBase player) {
@@ -386,20 +381,18 @@ public class ItemWeapon extends Item
 
             instance.setZoom(zoom);
             float ratio = (minZoom - zoom) / (minZoom - maxZoom);
-            this.modContext.getStatusMessageCenter()
-                .addMessage(
-                    StatCollector.translateToLocalFormatted("gui.currentZoom", Math.round(ratio * 100.0F)),
-                    800L);
+            StatusMessageManager.INSTANCE.addMessage(
+                StatCollector.translateToLocalFormatted("gui.currentZoom", Math.round(ratio * 100.0F)),
+                800L);
             if (Sounds.ZOOM != null) {
                 instance.getPlayer()
                     .playSound(Sounds.ZOOM, 1.0F, 1.0F);
             }
 
-            this.modContext.getChannel()
-                .sendToServer(
-                    new WeaponActionMessage(
-                        WeaponActionMessage.ZOOM_IN,
-                        ((EntityPlayer) instance.getPlayer()).inventory.currentItem));
+            NewGunrizonsMod.CHANNEL.sendToServer(
+                new WeaponActionMessage(
+                    WeaponActionMessage.ZOOM_IN,
+                    ((EntityPlayer) instance.getPlayer()).inventory.currentItem));
         }
     }
 
@@ -416,20 +409,18 @@ public class ItemWeapon extends Item
 
             instance.setZoom(zoom);
             float ratio = (minZoom - zoom) / (minZoom - maxZoom);
-            this.modContext.getStatusMessageCenter()
-                .addMessage(
-                    StatCollector.translateToLocalFormatted("gui.currentZoom", Math.round(ratio * 100.0F)),
-                    800L);
+            StatusMessageManager.INSTANCE.addMessage(
+                StatCollector.translateToLocalFormatted("gui.currentZoom", Math.round(ratio * 100.0F)),
+                800L);
             if (Sounds.ZOOM != null) {
                 instance.getPlayer()
                     .playSound(Sounds.ZOOM, 1.0F, 1.0F);
             }
 
-            this.modContext.getChannel()
-                .sendToServer(
-                    new WeaponActionMessage(
-                        WeaponActionMessage.ZOOM_OUT,
-                        ((EntityPlayer) instance.getPlayer()).inventory.currentItem));
+            NewGunrizonsMod.CHANNEL.sendToServer(
+                new WeaponActionMessage(
+                    WeaponActionMessage.ZOOM_OUT,
+                    ((EntityPlayer) instance.getPlayer()).inventory.currentItem));
         }
     }
 
@@ -495,8 +486,6 @@ public class ItemWeapon extends Item
         private boolean ejectSpentRoundRequired;
         public int maxBulletsPerReload;
         private Function<ItemStack, List<String>> informationProvider;
-        private CraftingComplexity craftingComplexity;
-        private Object[] craftingMaterials;
         private float shellCasingForwardOffset = 0.1F;
         private float shellCasingVerticalOffset = 0.0F;
 
@@ -505,8 +494,6 @@ public class ItemWeapon extends Item
 
         private final float silencedShootSoundVolume;
         private final float shootSoundVolume;
-
-        private Object[] craftingRecipe;
 
         public Builder() {
             this.silencedShootSoundVolume = 0.7F;
@@ -772,24 +759,7 @@ public class ItemWeapon extends Item
             return this;
         }
 
-        public ItemWeapon.Builder withCrafting(CraftingComplexity craftingComplexity, Object... craftingMaterials) {
-            if (craftingComplexity == null) {
-                throw new IllegalArgumentException("Crafting complexity not set");
-            }
-            if (craftingMaterials.length < 2) {
-                throw new IllegalArgumentException("2 or more materials required for crafting");
-            }
-            this.craftingComplexity = craftingComplexity;
-            this.craftingMaterials = craftingMaterials;
-            return this;
-        }
-
-        public ItemWeapon.Builder withCraftingRecipe(Object... craftingRecipe) {
-            this.craftingRecipe = craftingRecipe;
-            return this;
-        }
-
-        public ItemWeapon build(ModContext modContext) {
+        public ItemWeapon build() {
             if (this.name == null) {
                 throw new IllegalStateException("Weapon name not provided");
             }
@@ -830,7 +800,7 @@ public class ItemWeapon extends Item
                 this.maxShots.add(Integer.MAX_VALUE);
             }
 
-            ItemWeapon weapon = new ItemWeapon(this, modContext);
+            ItemWeapon weapon = new ItemWeapon(this);
             weapon.shootSound = Sounds.resolve(this.shootSound);
             if (this.endOfShootSound != null) {
                 weapon.endOfShootSound = Sounds.resolve(this.endOfShootSound);
@@ -851,33 +821,7 @@ public class ItemWeapon extends Item
                 this.ammo.addCompatibleWeapon(weapon);
             }
 
-            modContext.registerWeapon(this.name, weapon, this.renderer);
-            List<Object> shape;
-            if (this.craftingRecipe != null && this.craftingRecipe.length >= 2) {
-                ItemStack itemStack = new ItemStack(weapon);
-                shape = modContext.getRecipeManager()
-                    .registerShapedRecipe(weapon, this.craftingRecipe);
-                boolean hasOres = Arrays.stream(this.craftingRecipe)
-                    .anyMatch((r) -> r instanceof String);
-                if (hasOres) {
-                    GameRegistry.addRecipe(new ShapedOreRecipe(itemStack, shape.toArray()).setMirrored(false));
-                } else {
-                    GameRegistry.addShapedRecipe(itemStack, shape.toArray());
-                }
-            } else if (this.craftingComplexity != null) {
-                OptionsMetadata optionsMetadata = (new OptionsMetadata.OptionMetadataBuilder()).withSlotCount(9)
-                    .build(
-                        this.craftingComplexity,
-                        Arrays.copyOf(this.craftingMaterials, this.craftingMaterials.length));
-                shape = modContext.getRecipeManager()
-                    .createShapedRecipe(weapon, weapon.getName(), optionsMetadata);
-                if (optionsMetadata.hasOres()) {
-                    GameRegistry
-                        .addRecipe(new ShapedOreRecipe(new ItemStack(weapon), shape.toArray()).setMirrored(false));
-                } else {
-                    GameRegistry.addShapedRecipe(new ItemStack(weapon), shape.toArray());
-                }
-            }
+            NewGunrizonsMod.proxy.registerItem(this.name, weapon, this.renderer);
 
             return weapon;
         }

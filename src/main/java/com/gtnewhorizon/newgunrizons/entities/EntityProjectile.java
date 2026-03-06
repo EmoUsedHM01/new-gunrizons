@@ -20,8 +20,6 @@ import com.gtnewhorizon.newgunrizons.util.RayCast;
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import io.netty.buffer.ByteBuf;
 
-import static net.minecraft.realms.RealmsMth.clamp;
-
 public abstract class EntityProjectile extends Entity implements IProjectile, IEntityAdditionalSpawnData {
 
     private static final float DEG_TO_RAD = (float) Math.PI / 180.0F;
@@ -191,8 +189,7 @@ public abstract class EntityProjectile extends Entity implements IProjectile, IE
         }
 
         startPos = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
-        endPos = Vec3
-            .createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+        endPos = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
         MovingObjectPosition blockHit = RayCast
             .rayCastBlocks(this.worldObj, startPos, endPos, this::canCollideWithBlock);
         startPos = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);

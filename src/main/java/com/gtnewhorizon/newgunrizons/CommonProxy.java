@@ -1,97 +1,196 @@
 package com.gtnewhorizon.newgunrizons;
 
 import net.minecraft.item.Item;
+import net.minecraftforge.client.IItemRenderer;
 
-import com.gtnewhorizon.newgunrizons.items.materials.ItemAluminumPlate;
-import com.gtnewhorizon.newgunrizons.items.materials.ItemBigSteelPlate;
-import com.gtnewhorizon.newgunrizons.items.materials.ItemCapacitor;
-import com.gtnewhorizon.newgunrizons.items.materials.ItemCopperWiring;
-import com.gtnewhorizon.newgunrizons.items.materials.ItemDiode;
-import com.gtnewhorizon.newgunrizons.items.materials.ItemElectronics;
-import com.gtnewhorizon.newgunrizons.items.materials.ItemInductor;
-import com.gtnewhorizon.newgunrizons.items.materials.ItemLaserPointer;
-import com.gtnewhorizon.newgunrizons.items.materials.ItemMetalComponents;
-import com.gtnewhorizon.newgunrizons.items.materials.ItemMiniSteelPlate;
-import com.gtnewhorizon.newgunrizons.items.materials.ItemOpticGlass;
-import com.gtnewhorizon.newgunrizons.items.materials.ItemPlastic;
-import com.gtnewhorizon.newgunrizons.items.materials.ItemResistor;
-import com.gtnewhorizon.newgunrizons.items.materials.ItemSteelPlate;
-import com.gtnewhorizon.newgunrizons.items.materials.ItemTransistor;
+import com.gtnewhorizon.newgunrizons.entities.EntityBullet;
+import com.gtnewhorizon.newgunrizons.entities.EntityGrenade;
+import com.gtnewhorizon.newgunrizons.entities.EntityShellCasing;
+import com.gtnewhorizon.newgunrizons.grenade.GrenadeAttackAspect;
+import com.gtnewhorizon.newgunrizons.items.components.ItemBulletCasingLarge;
+import com.gtnewhorizon.newgunrizons.items.components.ItemBulletCasingMedium;
+import com.gtnewhorizon.newgunrizons.items.components.ItemBulletCasingSmall;
+import com.gtnewhorizon.newgunrizons.items.components.ItemFiringMechanism;
+import com.gtnewhorizon.newgunrizons.items.components.ItemFiringMechanismAdvanced;
+import com.gtnewhorizon.newgunrizons.items.components.ItemGunBarrelStainless;
+import com.gtnewhorizon.newgunrizons.items.components.ItemGunBarrelSteel;
+import com.gtnewhorizon.newgunrizons.items.components.ItemGunBarrelTitanium;
+import com.gtnewhorizon.newgunrizons.items.components.ItemGunBarrelTungstenSteel;
+import com.gtnewhorizon.newgunrizons.items.components.ItemGunReceiverStainless;
+import com.gtnewhorizon.newgunrizons.items.components.ItemGunReceiverSteel;
+import com.gtnewhorizon.newgunrizons.items.components.ItemGunReceiverTitanium;
+import com.gtnewhorizon.newgunrizons.items.components.ItemGunReceiverTungstenSteel;
+import com.gtnewhorizon.newgunrizons.items.components.ItemGunStockCarbon;
+import com.gtnewhorizon.newgunrizons.items.components.ItemGunStockPlastic;
+import com.gtnewhorizon.newgunrizons.items.components.ItemGunStockWood;
+import com.gtnewhorizon.newgunrizons.items.components.ItemPrecisionLens;
+import com.gtnewhorizon.newgunrizons.items.components.ItemWeaponPartKit;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemGrenadeInstance;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemMagazineInstance;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
+import com.gtnewhorizon.newgunrizons.network.BlockHitMessage;
+import com.gtnewhorizon.newgunrizons.network.BlockHitMessageHandler;
+import com.gtnewhorizon.newgunrizons.network.ExplosionMessage;
+import com.gtnewhorizon.newgunrizons.network.ExplosionMessageHandler;
+import com.gtnewhorizon.newgunrizons.network.GrenadeMessage;
+import com.gtnewhorizon.newgunrizons.network.GrenadeMessageHandler;
+import com.gtnewhorizon.newgunrizons.network.SpawnParticleMessage;
+import com.gtnewhorizon.newgunrizons.network.SpawnParticleMessageHandler;
+import com.gtnewhorizon.newgunrizons.network.TypeRegistry;
+import com.gtnewhorizon.newgunrizons.network.WeaponActionMessage;
+import com.gtnewhorizon.newgunrizons.network.WeaponActionMessageHandler;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 import com.gtnewhorizon.newgunrizons.registry.Grenades;
 import com.gtnewhorizon.newgunrizons.registry.Guns;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
-import com.gtnewhorizon.newgunrizons.registry.Ores;
+import com.gtnewhorizon.newgunrizons.state.StateManager;
+import com.gtnewhorizon.newgunrizons.weapon.MagazineReloadAspect;
+import com.gtnewhorizon.newgunrizons.weapon.MagazineState;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponAttachmentAspect;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponFireAspect;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponReloadAspect;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponState;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
 
 public class CommonProxy {
 
-    public static Item ElectronicCircuitBoard;
-    public static Item OpticGlass;
-    public static Item Inductor;
-    public static Item Transistor;
-    public static Item Resistor;
-    public static Item Diode;
-    public static Item Capacitor;
-    public static Item CopperWiring;
-    public static Item LaserPointer;
-    public static Item AluminumPlate;
-    public static Item SteelPlate;
-    public static Item BigSteelPlate;
-    public static Item MiniSteelPlate;
-    public static Item MetalComponents;
-    public static Item Plastic;
+    // Gun component items
+    public static Item GunBarrelSteel;
+    public static Item GunBarrelStainless;
+    public static Item GunBarrelTitanium;
+    public static Item GunBarrelTungstenSteel;
+    public static Item GunReceiverSteel;
+    public static Item GunReceiverStainless;
+    public static Item GunReceiverTitanium;
+    public static Item GunReceiverTungstenSteel;
+    public static Item FiringMechanism;
+    public static Item FiringMechanismAdvanced;
+    public static Item GunStockWood;
+    public static Item GunStockPlastic;
+    public static Item GunStockCarbon;
+    public static Item BulletCasingSmall;
+    public static Item BulletCasingMedium;
+    public static Item BulletCasingLarge;
+    public static Item PrecisionLens;
+    public static Item WeaponPartKit;
 
-    protected boolean isClient() {
-        return false;
-    }
+    private int modEntityID = 256;
 
     public void init(Object mod, FMLPreInitializationEvent event) {
+        SimpleNetworkWrapper channel = NewGunrizonsMod.CHANNEL;
 
-        NewGunrizonsMod.MOD_CONTEXT.init(mod, NewGunrizonsMod.CHANNEL);
+        GrenadeAttackAspect.INSTANCE.setStateManager(new StateManager<>((s1, s2) -> s1 == s2));
+        MagazineReloadAspect.INSTANCE.setStateManager(new StateManager<>((s1, s2) -> s1 == s2));
 
-        ElectronicCircuitBoard = new ItemElectronics();
-        OpticGlass = new ItemOpticGlass();
-        Inductor = new ItemInductor();
-        Resistor = new ItemResistor();
-        Transistor = new ItemTransistor();
-        Diode = new ItemDiode();
-        Capacitor = new ItemCapacitor();
-        CopperWiring = new ItemCopperWiring();
-        LaserPointer = new ItemLaserPointer();
-        Plastic = new ItemPlastic();
-        AluminumPlate = new ItemAluminumPlate();
-        SteelPlate = new ItemSteelPlate();
-        BigSteelPlate = new ItemBigSteelPlate();
-        MiniSteelPlate = new ItemMiniSteelPlate();
-        MetalComponents = new ItemMetalComponents();
+        StateManager<WeaponState, ItemWeaponInstance> weaponStateManager = new StateManager<>((s1, s2) -> s1 == s2);
+        WeaponReloadAspect.INSTANCE.setStateManager(weaponStateManager);
+        WeaponFireAspect.INSTANCE.setStateManager(weaponStateManager);
+        WeaponAttachmentAspect.INSTANCE.setStateManager(weaponStateManager);
 
-        GameRegistry.registerItem(ElectronicCircuitBoard, "Electronics");
-        GameRegistry.registerItem(OpticGlass, "OpticGlass");
-        GameRegistry.registerItem(AluminumPlate, "AluminumPlate");
-        GameRegistry.registerItem(SteelPlate, "SteelPlate");
-        GameRegistry.registerItem(BigSteelPlate, "BigSteelPlate");
-        GameRegistry.registerItem(MiniSteelPlate, "MiniSteelPlate");
-        GameRegistry.registerItem(MetalComponents, "MetalComponents");
-        GameRegistry.registerItem(Transistor, "Transistor");
-        GameRegistry.registerItem(Resistor, "Resistor");
-        GameRegistry.registerItem(Inductor, "Inductor");
-        GameRegistry.registerItem(Diode, "Diode");
-        GameRegistry.registerItem(Capacitor, "Capacitor");
-        GameRegistry.registerItem(CopperWiring, "CopperWiring");
-        GameRegistry.registerItem(LaserPointer, "LaserPointer");
-        GameRegistry.registerItem(Plastic, "plastic");
+        channel.registerMessage(
+            new WeaponActionMessageHandler(WeaponFireAspect.INSTANCE),
+            WeaponActionMessage.class,
+            15,
+            Side.SERVER);
+        channel.registerMessage(new SpawnParticleMessageHandler(), SpawnParticleMessage.class, 18, Side.CLIENT);
+        channel.registerMessage(new BlockHitMessageHandler(), BlockHitMessage.class, 19, Side.CLIENT);
+        channel.registerMessage(
+            new GrenadeMessageHandler(GrenadeAttackAspect.INSTANCE),
+            GrenadeMessage.class,
+            20,
+            Side.SERVER);
+        channel.registerMessage(new ExplosionMessageHandler(), ExplosionMessage.class, 21, Side.CLIENT);
 
-        Ores.init();
+        EntityRegistry
+            .registerModEntity(EntityBullet.class, "Ammo" + this.modEntityID, this.modEntityID++, mod, 64, 3, true);
+        EntityRegistry.registerModEntity(
+            EntityShellCasing.class,
+            "ShellCasing" + this.modEntityID,
+            this.modEntityID++,
+            mod,
+            64,
+            500,
+            true);
+        EntityRegistry.registerModEntity(
+            EntityGrenade.class,
+            "Grenade" + this.modEntityID,
+            this.modEntityID++,
+            mod,
+            64,
+            10000,
+            false);
+
+        // Register gun component items
+        GunBarrelSteel = new ItemGunBarrelSteel();
+        GunBarrelStainless = new ItemGunBarrelStainless();
+        GunBarrelTitanium = new ItemGunBarrelTitanium();
+        GunBarrelTungstenSteel = new ItemGunBarrelTungstenSteel();
+        GunReceiverSteel = new ItemGunReceiverSteel();
+        GunReceiverStainless = new ItemGunReceiverStainless();
+        GunReceiverTitanium = new ItemGunReceiverTitanium();
+        GunReceiverTungstenSteel = new ItemGunReceiverTungstenSteel();
+        FiringMechanism = new ItemFiringMechanism();
+        FiringMechanismAdvanced = new ItemFiringMechanismAdvanced();
+        GunStockWood = new ItemGunStockWood();
+        GunStockPlastic = new ItemGunStockPlastic();
+        GunStockCarbon = new ItemGunStockCarbon();
+        BulletCasingSmall = new ItemBulletCasingSmall();
+        BulletCasingMedium = new ItemBulletCasingMedium();
+        BulletCasingLarge = new ItemBulletCasingLarge();
+        PrecisionLens = new ItemPrecisionLens();
+        WeaponPartKit = new ItemWeaponPartKit();
+
+        GameRegistry.registerItem(GunBarrelSteel, "GunBarrelSteel");
+        GameRegistry.registerItem(GunBarrelStainless, "GunBarrelStainless");
+        GameRegistry.registerItem(GunBarrelTitanium, "GunBarrelTitanium");
+        GameRegistry.registerItem(GunBarrelTungstenSteel, "GunBarrelTungstenSteel");
+        GameRegistry.registerItem(GunReceiverSteel, "GunReceiverSteel");
+        GameRegistry.registerItem(GunReceiverStainless, "GunReceiverStainless");
+        GameRegistry.registerItem(GunReceiverTitanium, "GunReceiverTitanium");
+        GameRegistry.registerItem(GunReceiverTungstenSteel, "GunReceiverTungstenSteel");
+        GameRegistry.registerItem(FiringMechanism, "FiringMechanism");
+        GameRegistry.registerItem(FiringMechanismAdvanced, "FiringMechanismAdvanced");
+        GameRegistry.registerItem(GunStockWood, "GunStockWood");
+        GameRegistry.registerItem(GunStockPlastic, "GunStockPlastic");
+        GameRegistry.registerItem(GunStockCarbon, "GunStockCarbon");
+        GameRegistry.registerItem(BulletCasingSmall, "BulletCasingSmall");
+        GameRegistry.registerItem(BulletCasingMedium, "BulletCasingMedium");
+        GameRegistry.registerItem(BulletCasingLarge, "BulletCasingLarge");
+        GameRegistry.registerItem(PrecisionLens, "PrecisionLens");
+        GameRegistry.registerItem(WeaponPartKit, "WeaponPartKit");
+
         Attachments.init();
         AuxiliaryAttachments.init();
         Bullets.init();
         Magazines.init();
         Guns.init();
         Grenades.init();
+    }
+
+    public void registerItem(String name, Item item, IItemRenderer renderer) {
+        GameRegistry.registerItem(item, name);
+    }
+
+    static {
+        TypeRegistry.getInstance()
+            .register(MagazineState.class);
+        TypeRegistry.getInstance()
+            .register(ItemInstance.class);
+        TypeRegistry.getInstance()
+            .register(ItemWeaponInstance.class);
+        TypeRegistry.getInstance()
+            .register(ItemMagazineInstance.class);
+        TypeRegistry.getInstance()
+            .register(WeaponState.class);
+        TypeRegistry.getInstance()
+            .register(ItemGrenadeInstance.class);
     }
 }

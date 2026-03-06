@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.weapon.Python;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
@@ -39,10 +37,14 @@ public class PythonFactory {
             .withFlashOffsetY(() -> { return 0.1F; })
             .withInaccuracy(4.0F)
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
             .withInformationProvider(
                 (stack) -> {
-                    return Arrays.asList("Type: Revolver", "Damage: 6", "Ammo: .357 Bullet", "Fire Rate: Semi");
+                    return Arrays.asList(
+                        "Type: Revolver",
+                        "Damage: 6",
+                        "Magazines: 6rnd .357 Clip",
+                        "Fire Rate: Semi"
+                    );
                 })
             .withCompatibleAttachment(AuxiliaryAttachments.PythonCase, true, (model) -> {})
             .withCompatibleAttachment(Magazines.PythonClip, ((model) -> { GL11.glScaled(0.0D, 0.0D, 0.0D); }))
@@ -87,8 +89,6 @@ public class PythonFactory {
                         GL11.glScaled(3.0D, 3.0D, 3.0D);
                         GL11.glTranslatef(0.35F, 0.59F, -2.5F);
                         GL11.glRotatef(-3.0F, 1.0F, 0.0F, 0.0F);
-                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Holo2)) {}
-
                     })
                     .withFirstPersonCustomPositioning(
                         AuxiliaryAttachments.PythonCase.getRenderablePart(),
@@ -164,8 +164,6 @@ public class PythonFactory {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);
                         GL11.glTranslatef(0.35F, 0.75F, -2.8F);
-                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Holo2)) {}
-
                     })
                     .withFirstPersonPositioningRunning((renderContext) -> {
                         GL11.glScaled(3.0D, 3.0D, 3.0D);
@@ -303,6 +301,6 @@ public class PythonFactory {
                     .build())
             .withSpawnEntityDamage(6.0F)
             .withSpawnEntityGravityVelocity(0.016F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

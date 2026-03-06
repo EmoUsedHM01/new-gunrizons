@@ -1,9 +1,8 @@
 package com.gtnewhorizon.newgunrizons.tabs;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-
-import com.gtnewhorizon.newgunrizons.registry.Ores;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -16,6 +15,6 @@ public class GunsTab extends CreativeTabs {
 
     @SideOnly(Side.CLIENT)
     public Item getTabIconItem() {
-        return Ores.CopperIngot;
+        return Items.iron_ingot;
     }
 }

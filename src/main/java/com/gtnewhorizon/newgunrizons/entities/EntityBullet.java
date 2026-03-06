@@ -15,6 +15,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
+import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.network.BlockHitMessage;
 import com.gtnewhorizon.newgunrizons.network.SpawnParticleMessage;
@@ -79,7 +80,6 @@ public class EntityBullet extends EntityProjectile {
 
     private void handleExplosiveImpact(MovingObjectPosition position) {
         Explosion.createServerSideExplosion(
-            weapon.getModContext(),
             worldObj,
             this,
             position.hitVec.xCoord,
@@ -102,24 +102,28 @@ public class EntityBullet extends EntityProjectile {
 
     private void spawnBlockHitParticles(MovingObjectPosition position) {
         NetworkRegistry.TargetPoint broadcastPoint = new NetworkRegistry.TargetPoint(
-            dimension, posX, posY, posZ, PARTICLE_BROADCAST_RANGE);
-        weapon.getModContext()
-            .getChannel()
-            .sendToAllAround(
-                new BlockHitMessage(position.blockX, position.blockY, position.blockZ, position.sideHit),
-                broadcastPoint);
+            dimension,
+            posX,
+            posY,
+            posZ,
+            PARTICLE_BROADCAST_RANGE);
+        NewGunrizonsMod.CHANNEL.sendToAllAround(
+            new BlockHitMessage(position.blockX, position.blockY, position.blockZ, position.sideHit),
+            broadcastPoint);
     }
 
     @Override
     protected void onWaterImpact(double x, double y, double z) {
         if (weapon == null) return;
         NetworkRegistry.TargetPoint broadcastPoint = new NetworkRegistry.TargetPoint(
-            dimension, x, y, z, PARTICLE_BROADCAST_RANGE);
-        weapon.getModContext()
-            .getChannel()
-            .sendToAllAround(
-                new SpawnParticleMessage(SpawnParticleMessage.ParticleType.WATER_SPLASH, 8, x, y, z),
-                broadcastPoint);
+            dimension,
+            x,
+            y,
+            z,
+            PARTICLE_BROADCAST_RANGE);
+        NewGunrizonsMod.CHANNEL.sendToAllAround(
+            new SpawnParticleMessage(SpawnParticleMessage.ParticleType.WATER_SPLASH, 8, x, y, z),
+            broadcastPoint);
     }
 
     private void spawnBloodParticles(Entity target) {
@@ -135,11 +139,9 @@ public class EntityBullet extends EntityProjectile {
             posY,
             posZ,
             PARTICLE_BROADCAST_RANGE);
-        weapon.getModContext()
-            .getChannel()
-            .sendToAllAround(
-                new SpawnParticleMessage(SpawnParticleMessage.ParticleType.BLOOD, count, hitX, hitY, hitZ),
-                broadcastPoint);
+        NewGunrizonsMod.CHANNEL.sendToAllAround(
+            new SpawnParticleMessage(SpawnParticleMessage.ParticleType.BLOOD, count, hitX, hitY, hitZ),
+            broadcastPoint);
     }
 
     private int getParticleCount() {

@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.sight.AK12IronSight;
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
@@ -63,11 +61,6 @@ public class AK12Factory {
             .withFlashOffsetX(() -> 0.14F)
             .withFlashOffsetY(() -> 0.12F)
             .withCreativeTab(NewGunrizonsMod.AssaultRiflesTab)
-            .withCrafting(
-                CraftingComplexity.MEDIUM,
-                CommonProxy.SteelPlate,
-                CommonProxy.MiniSteelPlate,
-                CommonProxy.MetalComponents)
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Assault rifle",
@@ -614,6 +607,6 @@ public class AK12Factory {
                     .build())
             .withSpawnEntityDamage(7.3F)
             .withSpawnEntityGravityVelocity(0.028F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

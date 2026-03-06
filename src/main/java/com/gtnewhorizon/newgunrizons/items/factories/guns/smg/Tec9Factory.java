@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.weapon.Tec9;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
@@ -39,14 +37,13 @@ public class Tec9Factory {
             .withFlashOffsetY(() -> { return 0.1F; })
             .withInaccuracy(3.0F)
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Pistol",
                     "Damage: 5.5",
                     "Caliber: .45 ACP",
                     "Magazines:",
-                    "10rnd .45 ACP Magazine",
+                    "20rnd Tec-9 9mm Magazine",
                     "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.Tec9Action, true, (model) -> {})
             .withCompatibleAttachment(Magazines.Tec9Mag, ((model) -> { GL11.glTranslatef(0.0F, 0.15F, 0.0F); }))
@@ -98,7 +95,7 @@ public class Tec9Factory {
                         GL11.glScaled(3.0D, 3.0D, 3.0D);
                         GL11.glTranslatef(0.35F, 0.6F, -2.3F);
                         GL11.glRotatef(-5.0F, 1.0F, 0.0F, 0.0F);
-                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Holo2)) {}
+
 
                     })
                     .withFirstPersonCustomPositioning(Magazines.Tec9Mag, (renderContext) -> {})
@@ -171,7 +168,7 @@ public class Tec9Factory {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);
                         GL11.glTranslatef(0.35F, 0.7F, -2.8F);
-                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Holo2)) {}
+
 
                     })
                     .withFirstPersonPositioningRunning((renderContext) -> {
@@ -318,6 +315,6 @@ public class Tec9Factory {
                     .build())
             .withSpawnEntityDamage(5.5F)
             .withSpawnEntityGravityVelocity(0.02F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

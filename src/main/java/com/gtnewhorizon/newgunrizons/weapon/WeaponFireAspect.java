@@ -11,13 +11,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
+import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.client.particle.ParticleManager;
-import com.gtnewhorizon.newgunrizons.config.CommonModContext;
-import com.gtnewhorizon.newgunrizons.config.ModContext;
-import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
+import com.gtnewhorizon.newgunrizons.network.StatusMessageManager;
 import com.gtnewhorizon.newgunrizons.network.WeaponActionMessage;
 import com.gtnewhorizon.newgunrizons.registry.Sounds;
 import com.gtnewhorizon.newgunrizons.state.Aspect;
@@ -45,12 +46,11 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
         .isSprinting();
     private static final Set<WeaponState> allowedFireOrEjectFromStates;
     private static final Set<WeaponState> allowedUpdateFromStates;
-    private final ModContext modContext;
+    public static final WeaponFireAspect INSTANCE = new WeaponFireAspect();
+
     private StateManager<WeaponState, ? super ItemWeaponInstance> stateManager;
 
-    public WeaponFireAspect(CommonModContext modContext) {
-        this.modContext = modContext;
-    }
+    public WeaponFireAspect() {}
 
     public void setStateManager(StateManager<WeaponState, ? super ItemWeaponInstance> stateManager) {
         this.stateManager = stateManager;
@@ -114,7 +114,7 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
     }
 
     public void onFireButtonClick(EntityPlayer player) {
-        ItemWeaponInstance weaponInstance = this.modContext.getItemInstanceRegistry()
+        ItemWeaponInstance weaponInstance = ItemInstanceRegistry.INSTANCE
             .getMainHandItemInstance(player, ItemWeaponInstance.class);
         if (weaponInstance != null) {
             this.stateManager.changeStateFromAnyOf(
@@ -129,7 +129,7 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
     }
 
     public void onFireButtonRelease(EntityPlayer player) {
-        ItemWeaponInstance weaponInstance = this.modContext.getItemInstanceRegistry()
+        ItemWeaponInstance weaponInstance = ItemInstanceRegistry.INSTANCE
             .getMainHandItemInstance(player, ItemWeaponInstance.class);
         if (weaponInstance != null) {
             this.stateManager.changeState(this, weaponInstance, WeaponState.EJECT_REQUIRED, WeaponState.READY);
@@ -138,7 +138,7 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
     }
 
     public void onUpdate(EntityPlayer player) {
-        ItemWeaponInstance weaponInstance = this.modContext.getItemInstanceRegistry()
+        ItemWeaponInstance weaponInstance = ItemInstanceRegistry.INSTANCE
             .getMainHandItemInstance(player, ItemWeaponInstance.class);
         if (weaponInstance != null) {
             this.stateManager.changeStateFromAnyOf(this, weaponInstance, allowedUpdateFromStates);
@@ -151,15 +151,14 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
             String message;
             if (weaponInstance.getWeapon()
                 .getAmmoCapacity() == 0
-                && this.modContext.getWeaponAttachmentAspect()
-                    .getActiveAttachment(weaponInstance, AttachmentCategory.MAGAZINE) == null) {
+                && WeaponAttachmentAspect.INSTANCE.getActiveAttachment(weaponInstance, AttachmentCategory.MAGAZINE)
+                    == null) {
                 message = StatCollector.translateToLocalFormatted("gui.noMagazine");
             } else {
                 message = StatCollector.translateToLocalFormatted("gui.noAmmo");
             }
 
-            this.modContext.getStatusMessageCenter()
-                .addAlertMessage(message, 3, 250L, 200L);
+            StatusMessageManager.INSTANCE.addAlertMessage(message, 3, 250L, 200L);
             if (weaponInstance.getPlayer() instanceof EntityPlayer) {
                 if (Sounds.DRY_FIRE != null) {
                     weaponInstance.getPlayer()
@@ -174,11 +173,9 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
         EntityLivingBase player = weaponInstance.getPlayer();
         ItemWeapon weapon = (ItemWeapon) weaponInstance.getItem();
         Random random = player.getRNG();
-        this.modContext.getChannel()
-            .sendToServer(
-                new WeaponActionMessage(WeaponActionMessage.FIRE, ((EntityPlayer) player).inventory.currentItem));
-        boolean silencerOn = this.modContext.getWeaponAttachmentAspect()
-            .isSilencerOn(weaponInstance);
+        NewGunrizonsMod.CHANNEL.sendToServer(
+            new WeaponActionMessage(WeaponActionMessage.FIRE, ((EntityPlayer) player).inventory.currentItem));
+        boolean silencerOn = WeaponAttachmentAspect.INSTANCE.isSilencerOn(weaponInstance);
         {
             String snd = silencerOn ? weapon.getSilencedShootSound() : weapon.getShootSound();
             if (snd != null) {
@@ -196,6 +193,16 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
         float rotationYawFactor = -1.0F + random.nextFloat() * 2.0F;
         player.rotationYaw += weaponInstance.getRecoil() * rotationYawFactor;
 
+        ParticleManager.spawnSmokeParticle(
+            player,
+            weapon.getSmokeOffsetX()
+                .get(),
+            weapon.getSmokeOffsetY()
+                .get());
+
+        // Flash must be spawned after smoke so it renders on top.
+        // Flash uses additive blending (adds brightness), smoke uses standard alpha blending
+        // (dims the framebuffer by 1-alpha). If smoke renders after flash, it erases it.
         if (weapon.getFlashIntensity() > 0.0F) {
             ParticleManager.spawnFlashParticle(
                 player,
@@ -208,13 +215,6 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
                 weapon.getFlashOffsetY()
                     .get());
         }
-
-        ParticleManager.spawnSmokeParticle(
-            player,
-            weapon.getSmokeOffsetX()
-                .get(),
-            weapon.getSmokeOffsetY()
-                .get());
 
         weaponInstance.setSeriesShotCount(weaponInstance.getSeriesShotCount() + 1);
         weaponInstance.setLastFireTimestamp(System.currentTimeMillis());
@@ -265,8 +265,7 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
         }
 
         // Play sound for other players
-        boolean silencerOn = this.modContext.getWeaponAttachmentAspect()
-            .isSilencerOn(instance);
+        boolean silencerOn = WeaponAttachmentAspect.INSTANCE.isSilencerOn(instance);
         String snd = silencerOn ? weapon.getSilencedShootSound() : weapon.getShootSound();
         float vol = silencerOn ? weapon.getSilencedShootSoundVolume() : weapon.getShootSoundVolume();
         if (player instanceof EntityPlayer) {

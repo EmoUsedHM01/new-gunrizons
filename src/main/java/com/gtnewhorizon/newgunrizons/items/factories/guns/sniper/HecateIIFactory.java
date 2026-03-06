@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.sight.LPscope;
 import com.gtnewhorizon.newgunrizons.model.weapon.HecateII;
@@ -43,11 +41,6 @@ public class HecateIIFactory {
             .withFlashOffsetY(() -> { return 0.1F; })
             .withCreativeTab(NewGunrizonsMod.SnipersTab)
             .withShellCasingEjectEnabled(false)
-            .withCrafting(
-                CraftingComplexity.HIGH,
-                CommonProxy.SteelPlate,
-                CommonProxy.MiniSteelPlate,
-                CommonProxy.BigSteelPlate)
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Sniper rifle",
@@ -484,6 +477,6 @@ public class HecateIIFactory {
                     .build())
             .withSpawnEntityDamage(35.0F)
             .withSpawnEntityGravityVelocity(0.0F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

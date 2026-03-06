@@ -1,6 +1,5 @@
 package com.gtnewhorizon.newgunrizons.client.particle;
 
-import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.RenderHelper;
@@ -11,6 +10,8 @@ import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
+
+import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 
 /**
  * Gun muzzle smoke particle. Spawned at the barrel after each shot.
@@ -100,10 +101,16 @@ public class SmokeFX extends EntityFX {
         this.motionY *= VERTICAL_DRAG;
         this.motionZ *= HORIZONTAL_DRAG;
 
-        // Sine-based alpha: offset by PI/4 so the particle is already partially visible
-        // on its first frame, peaks at PEAK_ALPHA, then fades to zero at end of life.
-        double alphaRadians = ALPHA_PHASE_OFFSET + Math.PI * (double) this.particleAge / (double) this.particleMaxAge;
-        this.particleAlpha = PEAK_ALPHA * (float) Math.sin(Math.min(alphaRadians, Math.PI));
+        // Skip the first tick so the co-spawned muzzle flash gets a clean frame.
+        // FlashFX uses additive blending and only lives 1 tick — if smoke is visible
+        // on that same frame, its standard alpha blend dims the flash.
+        if (this.particleAge <= 1) {
+            this.particleAlpha = 0.0F;
+        } else {
+            double alphaRadians = ALPHA_PHASE_OFFSET
+                + Math.PI * (double) (this.particleAge - 1) / (double) this.particleMaxAge;
+            this.particleAlpha = PEAK_ALPHA * (float) Math.sin(Math.min(alphaRadians, Math.PI));
+        }
 
         this.particleScale *= SCALE_GROWTH_PER_TICK;
         if (this.onGround) {
@@ -136,7 +143,9 @@ public class SmokeFX extends EntityFX {
             .bindTexture(SMOKE_TEXTURE);
         GL11.glPushMatrix();
         GL11.glPushAttrib(
-            GL11.GL_TEXTURE_BIT | GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_ENABLE_BIT | GL11.GL_COLOR_BUFFER_BIT
+            GL11.GL_TEXTURE_BIT | GL11.GL_DEPTH_BUFFER_BIT
+                | GL11.GL_ENABLE_BIT
+                | GL11.GL_COLOR_BUFFER_BIT
                 | GL11.GL_CURRENT_BIT);
 
         // When inside a shader FBO, restrict output to the main color attachment only.

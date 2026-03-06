@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.action.LugerAction1;
 import com.gtnewhorizon.newgunrizons.model.action.LugerAction2;
@@ -44,7 +42,6 @@ public class LugerP08Factory {
             .withFlashOffsetY(() -> { return 0.1F; })
             .withInaccuracy(3.0F)
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Pistol",
@@ -140,7 +137,7 @@ public class LugerP08Factory {
                         GL11.glScaled(3.0D, 3.0D, 3.0D);
                         GL11.glTranslatef(0.345F, 0.4F, -2.3F);
                         GL11.glRotatef(-10.0F, 1.0F, 0.0F, 0.0F);
-                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Holo2)) {}
+
 
                     })
                     .withFirstPersonCustomPositioning(Magazines.LugerP08Mag, (renderContext) -> {})
@@ -394,6 +391,6 @@ public class LugerP08Factory {
                     .build())
             .withSpawnEntityDamage(7.0F)
             .withSpawnEntityGravityVelocity(0.02F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

@@ -2,9 +2,7 @@ package com.gtnewhorizon.newgunrizons.registry;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
 import com.gtnewhorizon.newgunrizons.model.magazine.AK12Magazine;
 import com.gtnewhorizon.newgunrizons.model.magazine.AS50Mag;
@@ -152,14 +150,14 @@ public class Magazines {
                 GL11.glScaled(0.7D, 0.7D, 0.7D);
             })
             .withInventoryPositioning((itemStack) -> {
-                GL11.glTranslatef(-0.8F, 0.5F, -1.4F);
+                GL11.glTranslatef(0.4F, 3.5F, -1.4F);
                 GL11.glRotatef(-120.0F, 0.0F, 1.0F, 0.0F);
                 GL11.glRotatef(-10.0F, 1.0F, 0.0F, 0.0F);
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
-                GL11.glScaled(0.7D, 0.7D, 0.7D);
+                GL11.glScaled(2.2D, 2.2D, 2.2D);
             })
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         Magazine762x39 = (new ItemMagazine.Builder()).withAmmo(30)
             .withCompatibleBullet(Bullets.Bullet762x39)
             .withName("Magazine762x39")
@@ -184,8 +182,8 @@ public class Magazines {
                 GL11.glScaled(0.7D, 0.7D, 0.7D);
             })
             .withTextureName("Dummy.png")
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+
+            .build(ItemMagazine.class);
         STG44Mag = (new ItemMagazine.Builder()).withAmmo(30)
             .withCompatibleBullet(Bullets.Bullet762x39)
             .withName("STG44Mag")
@@ -210,8 +208,8 @@ public class Magazines {
                 GL11.glScaled(0.7D, 0.7D, 0.7D);
             })
             .withTextureName("Dummy.png")
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+
+            .build(ItemMagazine.class);
         SVT40mag = (new ItemMagazine.Builder()).withAmmo(10)
             .withCompatibleBullet(Bullets.Bullet762x54)
             .withName("SVT40Mag")
@@ -236,8 +234,8 @@ public class Magazines {
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
             .withTextureName("Dummy.png")
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+
+            .build(ItemMagazine.class);
         LeeEnfieldMag = (new ItemMagazine.Builder()).withAmmo(10)
             .withCompatibleBullet(Bullets.Bullet762x54)
             .withName("LeeEnfieldMag")
@@ -262,8 +260,8 @@ public class Magazines {
                 GL11.glScaled(1.2D, 1.2D, 1.2D);
             })
             .withTextureName("Dummy.png")
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+
+            .build(ItemMagazine.class);
         Saiga12mag = (new ItemMagazine.Builder()).withAmmo(5)
             .withCompatibleBullet(Bullets.ShotgunShell)
             .withName("Saiga12mag")
@@ -288,8 +286,8 @@ public class Magazines {
                 GL11.glScaled(0.7D, 0.7D, 0.7D);
             })
             .withTextureName("Dummy.png")
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, "ingotSteel")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+
+            .build(ItemMagazine.class);
         VEPR12Mag = (new ItemMagazine.Builder()).withAmmo(8)
             .withCompatibleBullet(Bullets.ShotgunShell)
             .withName("VEPR12Mag")
@@ -314,8 +312,8 @@ public class Magazines {
                 GL11.glScaled(0.7D, 0.7D, 0.7D);
             })
             .withTextureName("Dummy.png")
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, "ingotSteel")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+
+            .build(ItemMagazine.class);
         Saiga410Mag = (new ItemMagazine.Builder()).withAmmo(7)
             .withCompatibleBullet(Bullets.ShotgunShell410)
             .withName("Saiga410Mag")
@@ -340,8 +338,8 @@ public class Magazines {
                 GL11.glScaled(0.7D, 0.7D, 0.7D);
             })
             .withTextureName("Dummy.png")
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, "ingotSteel")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+
+            .build(ItemMagazine.class);
         Type100Mag = (new ItemMagazine.Builder()).withAmmo(30)
             .withCompatibleBullet(Bullets.Bullet8mm)
             .withName("Type100Mag")
@@ -364,8 +362,8 @@ public class Magazines {
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
             .withTextureName("Dummy.png")
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+
+            .build(ItemMagazine.class);
         MP18mag = (new ItemMagazine.Builder()).withAmmo(32)
             .withCompatibleBullet(Bullets.Bullet762x25)
             .withName("MP18mag")
@@ -388,8 +386,8 @@ public class Magazines {
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
             .withTextureName("Dummy.png")
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+
+            .build(ItemMagazine.class);
         M1A1mag = (new ItemMagazine.Builder()).withAmmo(30)
             .withCompatibleBullet(Bullets.Bullet45ACP)
             .withName("M1A1mag")
@@ -414,8 +412,8 @@ public class Magazines {
                 GL11.glScaled(0.7D, 0.7D, 0.7D);
             })
             .withTextureName("Dummy.png")
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+
+            .build(ItemMagazine.class);
         PPSH41DrumMag = (new ItemMagazine.Builder()).withAmmo(71)
             .withCompatibleBullet(Bullets.Bullet762x25)
             .withName("PPSH41Mag")
@@ -440,8 +438,8 @@ public class Magazines {
                 GL11.glScaled(0.7D, 0.7D, 0.7D);
             })
             .withTextureName("Dummy.png")
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, "ingotSteel")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+
+            .build(ItemMagazine.class);
         Mag75rnd762x39 = (new ItemMagazine.Builder()).withAmmo(75)
             .withCompatibleBullet(Bullets.Bullet762x39)
             .withName("Mag75rnd762x39")
@@ -466,8 +464,8 @@ public class Magazines {
                 GL11.glScaled(0.9D, 0.9D, 0.9D);
             })
             .withTextureName("Dummy.png")
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+
+            .build(ItemMagazine.class);
         M8A7Mag = (new ItemMagazine.Builder()).withAmmo(32)
             .withCompatibleBullet(Bullets.Bullet300Blackout)
             .withName("M8A7Mag")
@@ -492,8 +490,8 @@ public class Magazines {
                 GL11.glScaled(0.9D, 0.9D, 0.9D);
             })
             .withTextureName("Dummy.png")
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, "ingotSteel")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+
+            .build(ItemMagazine.class);
         PMAG762x39 = (new ItemMagazine.Builder()).withAmmo(30)
             .withCompatibleBullet(Bullets.Bullet762x39)
             .withName("PMAG762x39")
@@ -518,8 +516,8 @@ public class Magazines {
                 GL11.glScaled(0.7D, 0.7D, 0.7D);
             })
             .withTextureName("Dummy.png")
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+
+            .build(ItemMagazine.class);
         AK15Mag = (new ItemMagazine.Builder()).withAmmo(30)
             .withCompatibleBullet(Bullets.Bullet762x39)
             .withName("AK15Mag")
@@ -544,8 +542,8 @@ public class Magazines {
                 GL11.glScaled(0.7D, 0.7D, 0.7D);
             })
             .withTextureName("Dummy.png")
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+
+            .build(ItemMagazine.class);
         AK12Mag = (new ItemMagazine.Builder()).withAmmo(31)
             .withCompatibleBullet(Bullets.Bullet556x39)
             .withName("AK12Mag")
@@ -569,9 +567,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(0.9D, 0.9D, 0.9D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         RPK74MMag = (new ItemMagazine.Builder()).withAmmo(40)
             .withCompatibleBullet(Bullets.Bullet762x39)
             .withName("RPK74MMag")
@@ -595,9 +593,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(0.8D, 0.8D, 0.8D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         AK74MMag = (new ItemMagazine.Builder()).withAmmo(30)
             .withCompatibleBullet(Bullets.Bullet545x39)
             .withName("AK74MMag")
@@ -621,9 +619,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(0.7D, 0.7D, 0.7D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         AKS74UMag = (new ItemMagazine.Builder()).withAmmo(30)
             .withCompatibleBullet(Bullets.Bullet545x39)
             .withName("AKS74UMag")
@@ -647,9 +645,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(0.7D, 0.7D, 0.7D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         NATOMag1 = (new ItemMagazine.Builder()).withAmmo(30)
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("NATOMag1")
@@ -673,9 +671,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         MPXmag = (new ItemMagazine.Builder()).withAmmo(30)
             .withCompatibleBullet(Bullets.Bullet9mm)
             .withName("MPXmag")
@@ -699,9 +697,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(0.7D, 0.7D, 0.7D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         Mag308 = (new ItemMagazine.Builder()).withAmmo(10)
             .withCompatibleBullet(Bullets.Bullet308)
             .withName("Mag308")
@@ -725,9 +723,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         NATO20rnd = (new ItemMagazine.Builder()).withAmmo(20)
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("NATO20rnd")
@@ -751,9 +749,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         M16A1Mag = (new ItemMagazine.Builder()).withAmmo(20)
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("M16A1Mag")
@@ -777,9 +775,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         NATO40rnd = (new ItemMagazine.Builder()).withAmmo(40)
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("NATO40rnd")
@@ -803,9 +801,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(0.9D, 0.9D, 0.9D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         NATOMag2 = (new ItemMagazine.Builder()).withAmmo(30)
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("NATOMag2")
@@ -829,9 +827,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         NATOFamasMag = (new ItemMagazine.Builder()).withAmmo(30)
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("NATOFamasMag")
@@ -855,9 +853,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         NATOG36Mag = (new ItemMagazine.Builder()).withAmmo(30)
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("NATOG36Mag")
@@ -881,9 +879,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         DragunovMag = (new ItemMagazine.Builder()).withAmmo(11)
             .withCompatibleBullet(Bullets.Bullet762x54)
             .withName("DragunovMag")
@@ -907,9 +905,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         FALMag = (new ItemMagazine.Builder()).withAmmo(20)
             .withCompatibleBullet(Bullets.Bullet762x51)
             .withName("FALMag")
@@ -933,9 +931,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         M110Mag = (new ItemMagazine.Builder()).withAmmo(10)
             .withCompatibleBullet(Bullets.Bullet762x51)
             .withName("M110Mag")
@@ -959,9 +957,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         HK417Mag = (new ItemMagazine.Builder()).withAmmo(10)
             .withCompatibleBullet(Bullets.Bullet762x51)
             .withName("HK417Mag")
@@ -985,9 +983,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         M14DMRMag = (new ItemMagazine.Builder()).withAmmo(21)
             .withCompatibleBullet(Bullets.Bullet762x51)
             .withName("M14DMRMag")
@@ -1011,9 +1009,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         Glock21Mag = (new ItemMagazine.Builder()).withAmmo(13)
             .withCompatibleBullet(Bullets.Bullet45ACP)
             .withName("Glock21Mag")
@@ -1037,9 +1035,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.LOW, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         LugerP08Mag = (new ItemMagazine.Builder()).withAmmo(8)
             .withCompatibleBullet(Bullets.Bullet762x21)
             .withName("LugerP08Mag")
@@ -1063,9 +1061,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(0.8D, 0.8D, 0.8D);
             })
-            .withCrafting(CraftingComplexity.LOW, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         Tec9Mag = (new ItemMagazine.Builder()).withAmmo(20)
             .withCompatibleBullet(Bullets.Bullet9mm)
             .withName("Tec9Mag")
@@ -1089,9 +1087,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(0.6D, 0.6D, 0.6D);
             })
-            .withCrafting(CraftingComplexity.LOW, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         G18Mag = (new ItemMagazine.Builder()).withAmmo(20)
             .withCompatibleBullet(Bullets.Bullet9mm)
             .withName("G18Mag")
@@ -1115,9 +1113,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(0.9D, 0.9D, 0.9D);
             })
-            .withCrafting(CraftingComplexity.LOW, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         Glock32Mag = (new ItemMagazine.Builder()).withAmmo(14)
             .withCompatibleBullet(Bullets.Bullet357)
             .withName("Glock32Mag")
@@ -1141,9 +1139,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.LOW, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         M9BerettaMag = (new ItemMagazine.Builder()).withAmmo(15)
             .withCompatibleBullet(Bullets.Bullet9mm)
             .withName("M9BerettaMag")
@@ -1167,9 +1165,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.LOW, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         Mag10mm = (new ItemMagazine.Builder()).withAmmo(10)
             .withCompatibleBullet(Bullets.Bullet10mm)
             .withName("Mag10mm")
@@ -1193,9 +1191,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.LOW, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         Magazine9mm = (new ItemMagazine.Builder()).withAmmo(10)
             .withCompatibleBullet(Bullets.Bullet9mm)
             .withName("Magazine9mm")
@@ -1219,9 +1217,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.LOW, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         NATODrum100 = (new ItemMagazine.Builder()).withAmmo(100)
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("NATODrum100")
@@ -1244,9 +1242,9 @@ public class Magazines {
                 GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                 GL11.glScaled(0.9D, 0.9D, 0.9D);
             })
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         MP40Mag = (new ItemMagazine.Builder()).withAmmo(32)
             .withCompatibleBullet(Bullets.Bullet9mm)
             .withName("MP40Mag")
@@ -1270,9 +1268,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(0.9D, 0.9D, 0.9D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         M3A1Mag = (new ItemMagazine.Builder()).withAmmo(31)
             .withCompatibleBullet(Bullets.Bullet45ACP)
             .withName("M3A1Mag")
@@ -1296,9 +1294,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(0.6D, 0.6D, 0.6D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         VectorMag = (new ItemMagazine.Builder()).withAmmo(26)
             .withCompatibleBullet(Bullets.Bullet45ACP)
             .withName("VectorMag")
@@ -1322,9 +1320,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(0.9D, 0.9D, 0.9D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         MP5KMag = (new ItemMagazine.Builder()).withAmmo(25)
             .withCompatibleBullet(Bullets.Bullet9mm)
             .withName("MP5KMag")
@@ -1348,9 +1346,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(0.8D, 0.8D, 0.8D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         Deagle50Mag = (new ItemMagazine.Builder()).withAmmo(7)
             .withCompatibleBullet(Bullets.Bullet50)
             .withName("Deagle50Mag")
@@ -1374,9 +1372,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         VSSVintorezMag = (new ItemMagazine.Builder()).withAmmo(10)
             .withCompatibleBullet(Bullets.Bullet9x39mm)
             .withName("VSSVintorezMag")
@@ -1400,9 +1398,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         ASValMag = (new ItemMagazine.Builder()).withAmmo(20)
             .withCompatibleBullet(Bullets.Bullet9x39mm)
             .withName("ASValMag")
@@ -1426,9 +1424,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         AS50Mag = (new ItemMagazine.Builder()).withAmmo(5)
             .withCompatibleBullet(Bullets.BMG50)
             .withName("AS50Mag")
@@ -1452,9 +1450,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         HecateIIMag = (new ItemMagazine.Builder()).withAmmo(7)
             .withCompatibleBullet(Bullets.BMG50)
             .withName("HecateIIMag")
@@ -1478,9 +1476,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 0.9D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         FNP90Mag = (new ItemMagazine.Builder()).withAmmo(50)
             .withCompatibleBullet(Bullets.Bullet57x28)
             .withName("FNP90Mag")
@@ -1503,9 +1501,9 @@ public class Magazines {
                 GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                 GL11.glScaled(0.9D, 0.9D, 0.9D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         M107BMag = (new ItemMagazine.Builder()).withAmmo(10)
             .withCompatibleBullet(Bullets.BMG50)
             .withName("M107BMag")
@@ -1529,9 +1527,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         HKMP7Mag = (new ItemMagazine.Builder()).withAmmo(20)
             .withCompatibleBullet(Bullets.Bullet46x30)
             .withName("HKMP7Mag")
@@ -1555,9 +1553,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(0.9D, 0.9D, 0.9D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         M1CarbineMag = (new ItemMagazine.Builder()).withAmmo(15)
             .withCompatibleBullet(Bullets.Carbine30)
             .withName("M1CarbineMag")
@@ -1581,9 +1579,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         M2CarbineMag = (new ItemMagazine.Builder()).withAmmo(30)
             .withCompatibleBullet(Bullets.Carbine30)
             .withName("M2CarbineMag")
@@ -1607,9 +1605,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(0.8D, 0.8D, 0.8D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         L115Mag = (new ItemMagazine.Builder()).withAmmo(10)
             .withCompatibleBullet(Bullets.Bullet308)
             .withName("L115Mag")
@@ -1633,9 +1631,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.2D, 1.2D, 1.2D);
             })
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         SV98Mag = (new ItemMagazine.Builder()).withAmmo(10)
             .withCompatibleBullet(Bullets.Bullet762x54)
             .withName("SV98Mag")
@@ -1659,9 +1657,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.2D, 1.2D, 1.2D);
             })
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         ColtM1911Mag = (new ItemMagazine.Builder()).withAmmo(10)
             .withCompatibleBullet(Bullets.Bullet45ACP)
             .withName("ColtM1911Mag")
@@ -1685,9 +1683,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.LOW, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         M249Mag = (new ItemMagazine.Builder()).withAmmo(200)
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("M249Mag")
@@ -1711,9 +1709,9 @@ public class Magazines {
                 GL11.glRotatef(-10.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, CommonProxy.BigSteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         Mk48Mag = (new ItemMagazine.Builder()).withAmmo(100)
             .withCompatibleBullet(Bullets.Bullet762x51)
             .withName("Mk48Mag")
@@ -1737,9 +1735,9 @@ public class Magazines {
                 GL11.glRotatef(-10.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, CommonProxy.BigSteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         MXMag = (new ItemMagazine.Builder()).withAmmo(30)
             .withCompatibleBullet(Bullets.Bullet65x39)
             .withName("MXMag")
@@ -1763,9 +1761,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         M41AMag = (new ItemMagazine.Builder()).withAmmo(99)
             .withCompatibleBullet(Bullets.Bullet65x39)
             .withName("M41AMag")
@@ -1789,9 +1787,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.3D, 1.3D, 1.3D);
             })
-            .withCrafting(CraftingComplexity.HIGH, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         ScarHMag = (new ItemMagazine.Builder()).withAmmo(30)
             .withCompatibleBullet(Bullets.Bullet300Blackout)
             .withName("ScarHMag")
@@ -1815,9 +1813,9 @@ public class Magazines {
                 GL11.glRotatef(-30.0F, 0.0F, 0.0F, 1.0F);
                 GL11.glScaled(1.1D, 1.1D, 1.1D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
         PP19Mag = (new ItemMagazine.Builder()).withAmmo(65)
             .withCompatibleBullet(Bullets.Bullet9mm)
             .withName("PP19Mag")
@@ -1840,8 +1838,8 @@ public class Magazines {
                 GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                 GL11.glScaled(0.9D, 0.9D, 0.9D);
             })
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, "ingotSteel")
+
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT, ItemMagazine.class);
+            .build(ItemMagazine.class);
     }
 }

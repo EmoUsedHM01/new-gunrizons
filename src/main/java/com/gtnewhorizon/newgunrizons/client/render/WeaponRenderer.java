@@ -37,10 +37,10 @@ import com.gtnewhorizon.newgunrizons.client.animation.MultipartRenderStateManage
 import com.gtnewhorizon.newgunrizons.client.animation.MultipartTransition;
 import com.gtnewhorizon.newgunrizons.client.animation.MultipartTransitionProvider;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
-import com.gtnewhorizon.newgunrizons.config.ClientModContext;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.model.ModelWithAttachments;
 import com.gtnewhorizon.newgunrizons.state.RenderableState;
@@ -52,7 +52,6 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import lombok.Getter;
-import lombok.Setter;
 
 public class WeaponRenderer implements IItemRenderer {
 
@@ -78,9 +77,6 @@ public class WeaponRenderer implements IItemRenderer {
 
     private final Map<EntityLivingBase, MultipartRenderStateManager> firstPersonStateManagers;
     private final MultipartTransitionProvider weaponTransitionProvider;
-    @Setter
-    protected ClientModContext clientModContext;
-
     private final ModelBase model;
     private final String textureName;
     private final Consumer<ItemStack> entityPositioning;
@@ -228,16 +224,11 @@ public class WeaponRenderer implements IItemRenderer {
         this.hasRecoilPositioningDefined = builder.hasRecoilPositioningDefined;
     }
 
-    protected ClientModContext getClientModContext() {
-        return this.clientModContext;
-    }
-
     protected StateDescriptor getStateDescriptor(EntityLivingBase player, ItemStack itemStack) {
         float amplitude = this.normalRandomizingAmplitude;
         float rate = this.normalRandomizingRate;
         RenderableState currentState = null;
-        ItemInstance<?> itemInstance = this.clientModContext.getItemInstanceRegistry()
-            .getItemInstance(player, itemStack);
+        ItemInstance<?> itemInstance = ItemInstanceRegistry.INSTANCE.getItemInstance(player, itemStack);
         ItemWeaponInstance itemWeaponInstance = null;
         if (itemInstance instanceof ItemWeaponInstance && itemInstance.getItem() == itemStack.getItem()) {
             itemWeaponInstance = (ItemWeaponInstance) itemInstance;
@@ -402,8 +393,7 @@ public class WeaponRenderer implements IItemRenderer {
             .withPartPositionFunction(Part.LEFT_HAND, this.createWeaponPartPositionFunction(lh))
             .withPartPositionFunction(Part.RIGHT_HAND, this.createWeaponPartPositionFunction(rh));
         custom.forEach(
-            (part, position) ->
-                mt.withPartPositionFunction(part, this.createWeaponPartPositionFunction(position)));
+            (part, position) -> mt.withPartPositionFunction(part, this.createWeaponPartPositionFunction(position)));
         return Collections.singletonList(mt);
     }
 
@@ -715,8 +705,7 @@ public class WeaponRenderer implements IItemRenderer {
             return this;
         }
 
-        public Builder withPrepareFirstLoadIterationAnimationDuration(
-            int prepareFirstLoadIterationAnimationDuration) {
+        public Builder withPrepareFirstLoadIterationAnimationDuration(int prepareFirstLoadIterationAnimationDuration) {
             this.prepareFirstLoadIterationAnimationDuration = prepareFirstLoadIterationAnimationDuration;
             return this;
         }
@@ -752,20 +741,17 @@ public class WeaponRenderer implements IItemRenderer {
             return this;
         }
 
-        public Builder withFirstPersonPositioningRunning(
-            Consumer<RenderContext> firstPersonPositioningRunning) {
+        public Builder withFirstPersonPositioningRunning(Consumer<RenderContext> firstPersonPositioningRunning) {
             this.firstPersonPositioningRunning = firstPersonPositioningRunning;
             return this;
         }
 
-        public Builder withFirstPersonPositioningZooming(
-            Consumer<RenderContext> firstPersonPositioningZooming) {
+        public Builder withFirstPersonPositioningZooming(Consumer<RenderContext> firstPersonPositioningZooming) {
             this.firstPersonPositioningZooming = firstPersonPositioningZooming;
             return this;
         }
 
-        public Builder withFirstPersonPositioningRecoiled(
-            Consumer<RenderContext> firstPersonPositioningRecoiled) {
+        public Builder withFirstPersonPositioningRecoiled(Consumer<RenderContext> firstPersonPositioningRecoiled) {
             this.hasRecoilPositioningDefined = true;
             this.firstPersonPositioningRecoiled = firstPersonPositioningRecoiled;
             return this;
@@ -798,8 +784,7 @@ public class WeaponRenderer implements IItemRenderer {
             return this;
         }
 
-        public Builder withFirstPersonPositioningAllLoadIterationsCompleted(
-            Transition... transitions) {
+        public Builder withFirstPersonPositioningAllLoadIterationsCompleted(Transition... transitions) {
             this.firstPersonPositioningAllLoadIterationsCompleted = Arrays.asList(transitions);
             return this;
         }
@@ -809,8 +794,7 @@ public class WeaponRenderer implements IItemRenderer {
             return this;
         }
 
-        public Builder withFirstPersonPositioningModifying(
-            Consumer<RenderContext> firstPersonPositioningModifying) {
+        public Builder withFirstPersonPositioningModifying(Consumer<RenderContext> firstPersonPositioningModifying) {
             this.firstPersonPositioningModifying = firstPersonPositioningModifying;
             return this;
         }
@@ -836,8 +820,8 @@ public class WeaponRenderer implements IItemRenderer {
             return this;
         }
 
-        public Builder withFirstPersonHandPositioningLoadIterationCompleted(
-            Consumer<RenderContext> leftHand, Consumer<RenderContext> rightHand) {
+        public Builder withFirstPersonHandPositioningLoadIterationCompleted(Consumer<RenderContext> leftHand,
+            Consumer<RenderContext> rightHand) {
             this.firstPersonLeftHandPositioningLoadIterationCompleted = leftHand;
             this.firstPersonRightHandPositioningLoadIterationCompleted = rightHand;
             return this;
@@ -848,8 +832,7 @@ public class WeaponRenderer implements IItemRenderer {
             return this;
         }
 
-        public Builder withFirstPersonLeftHandPositioningEjectSpentRound(
-            Transition... transitions) {
+        public Builder withFirstPersonLeftHandPositioningEjectSpentRound(Transition... transitions) {
             this.firstPersonLeftHandPositioningEjectSpentRound = Arrays.asList(transitions);
             return this;
         }
@@ -864,8 +847,7 @@ public class WeaponRenderer implements IItemRenderer {
             return this;
         }
 
-        public Builder withFirstPersonLeftHandPositioningAllLoadIterationsCompleted(
-            Transition... transitions) {
+        public Builder withFirstPersonLeftHandPositioningAllLoadIterationsCompleted(Transition... transitions) {
             this.firstPersonLeftHandPositioningAllLoadIterationsCompleted = Arrays.asList(transitions);
             return this;
         }
@@ -880,20 +862,17 @@ public class WeaponRenderer implements IItemRenderer {
             return this;
         }
 
-        public Builder withFirstPersonRightHandPositioningEjectSpentRound(
-            Transition... transitions) {
+        public Builder withFirstPersonRightHandPositioningEjectSpentRound(Transition... transitions) {
             this.firstPersonRightHandPositioningEjectSpentRound = Arrays.asList(transitions);
             return this;
         }
 
-        public Builder withFirstPersonRightHandPositioningLoadIteration(
-            Transition... transitions) {
+        public Builder withFirstPersonRightHandPositioningLoadIteration(Transition... transitions) {
             this.firstPersonRightHandPositioningLoadIteration = Arrays.asList(transitions);
             return this;
         }
 
-        public Builder withFirstPersonRightHandPositioningAllLoadIterationsCompleted(
-            Transition... transitions) {
+        public Builder withFirstPersonRightHandPositioningAllLoadIterationsCompleted(Transition... transitions) {
             this.firstPersonRightHandPositioningAllLoadIterationsCompleted = Arrays.asList(transitions);
             return this;
         }
@@ -915,8 +894,7 @@ public class WeaponRenderer implements IItemRenderer {
             return this;
         }
 
-        public Builder withFirstPersonPositioningCustomRecoiled(Part part,
-            Consumer<RenderContext> positioning) {
+        public Builder withFirstPersonPositioningCustomRecoiled(Part part, Consumer<RenderContext> positioning) {
             if (part instanceof StandardPart) {
                 throw new IllegalArgumentException("Part " + part + " is not custom");
             }
@@ -926,8 +904,7 @@ public class WeaponRenderer implements IItemRenderer {
             return this;
         }
 
-        public Builder withFirstPersonPositioningCustomZoomingRecoiled(Part part,
-            Consumer<RenderContext> positioning) {
+        public Builder withFirstPersonPositioningCustomZoomingRecoiled(Part part, Consumer<RenderContext> positioning) {
             if (part instanceof StandardPart) {
                 throw new IllegalArgumentException("Part " + part + " is not custom");
             }
@@ -937,8 +914,7 @@ public class WeaponRenderer implements IItemRenderer {
             return this;
         }
 
-        public Builder withFirstPersonCustomPositioningReloading(Part part,
-            Transition... transitions) {
+        public Builder withFirstPersonCustomPositioningReloading(Part part, Transition... transitions) {
             if (part instanceof StandardPart) {
                 throw new IllegalArgumentException("Part " + part + " is not custom");
             }
@@ -957,8 +933,7 @@ public class WeaponRenderer implements IItemRenderer {
             return this;
         }
 
-        public Builder withFirstPersonCustomPositioningUnloading(Part part,
-            Transition... transitions) {
+        public Builder withFirstPersonCustomPositioningUnloading(Part part, Transition... transitions) {
             if (part instanceof StandardPart) {
                 throw new IllegalArgumentException("Part " + part + " is not custom");
             }
@@ -966,8 +941,7 @@ public class WeaponRenderer implements IItemRenderer {
             return this;
         }
 
-        public Builder withFirstPersonCustomPositioningEjectSpentRound(Part part,
-            Transition... transitions) {
+        public Builder withFirstPersonCustomPositioningEjectSpentRound(Part part, Transition... transitions) {
             if (part instanceof StandardPart) {
                 throw new IllegalArgumentException("Part " + part + " is not custom");
             }
@@ -975,8 +949,7 @@ public class WeaponRenderer implements IItemRenderer {
             return this;
         }
 
-        public Builder withFirstPersonCustomPositioningLoadIteration(Part part,
-            Transition... transitions) {
+        public Builder withFirstPersonCustomPositioningLoadIteration(Part part, Transition... transitions) {
             if (part instanceof StandardPart) {
                 throw new IllegalArgumentException("Part " + part + " is not custom");
             }
@@ -1007,14 +980,11 @@ public class WeaponRenderer implements IItemRenderer {
                 this.entityPositioning = (itemStack) -> {};
             }
 
-            final WeaponRenderer[] rendererHolder = new WeaponRenderer[1];
             if (this.firstPersonPositioning == null) {
                 this.firstPersonPositioning = (renderContext) -> {
                     GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
-                    WeaponRenderer r = rendererHolder[0];
-                    if (r != null && r.getClientModContext() != null) {
-                        ItemWeaponInstance instance = r.getClientModContext()
-                            .getMainHeldWeapon();
+                    {
+                        ItemWeaponInstance instance = ItemInstanceRegistry.getMainHeldWeapon();
                         if (instance != null && instance.isAimed()) {
                             GL11.glTranslatef(this.xOffsetZoom, 0, 0);
                         } else {
@@ -1211,8 +1181,7 @@ public class WeaponRenderer implements IItemRenderer {
                 this.firstPersonRightHandPositioningLoadIterationCompleted = this.firstPersonLeftHandPositioning;
             }
 
-            if (!this.firstPersonCustomPositioning.isEmpty()
-                && this.firstPersonCustomPositioningRecoiled.isEmpty()) {
+            if (!this.firstPersonCustomPositioning.isEmpty() && this.firstPersonCustomPositioningRecoiled.isEmpty()) {
                 this.firstPersonCustomPositioningRecoiled.putAll(this.firstPersonCustomPositioning);
             }
 
@@ -1267,9 +1236,7 @@ public class WeaponRenderer implements IItemRenderer {
                             + tx.size());
                 }
             });
-            WeaponRenderer renderer = new WeaponRenderer(this);
-            rendererHolder[0] = renderer;
-            return renderer;
+            return new WeaponRenderer(this);
         }
 
     }
@@ -1322,10 +1289,7 @@ public class WeaponRenderer implements IItemRenderer {
             player = Minecraft.getMinecraft().thePlayer;
         }
 
-        RenderContext renderContext = new RenderContext(
-            this.getClientModContext(),
-            (EntityLivingBase) player,
-            weaponItemStack);
+        RenderContext renderContext = new RenderContext((EntityLivingBase) player, weaponItemStack);
         renderContext.setAgeInTicks(-0.4F);
         renderContext.setScale(0.08F);
         renderContext.setTransformType(TransformType.fromItemRenderType(type));

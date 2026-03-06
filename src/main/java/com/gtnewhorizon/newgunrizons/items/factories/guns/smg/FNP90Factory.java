@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.sight.FNP90Sight;
 import com.gtnewhorizon.newgunrizons.model.sight.Reflex2;
@@ -39,7 +37,6 @@ public class FNP90Factory {
             .withFlashOffsetX(() -> { return 0.29F; })
             .withFlashOffsetY(() -> { return 0.3F; })
             .withCreativeTab(NewGunrizonsMod.SMGTab)
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Personal defense weapon",
@@ -277,6 +274,6 @@ public class FNP90Factory {
                     .build())
             .withSpawnEntityDamage(6.5F)
             .withSpawnEntityGravityVelocity(0.028F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

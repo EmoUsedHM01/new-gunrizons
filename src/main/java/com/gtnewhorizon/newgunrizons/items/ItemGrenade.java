@@ -1,14 +1,12 @@
 package com.gtnewhorizon.newgunrizons.items;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,28 +14,24 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentContainer;
 import com.gtnewhorizon.newgunrizons.attachment.CompatibleAttachment;
-import com.gtnewhorizon.newgunrizons.config.ModContext;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
-import com.gtnewhorizon.newgunrizons.crafting.OptionsMetadata;
+import com.gtnewhorizon.newgunrizons.grenade.GrenadeAttackAspect;
 import com.gtnewhorizon.newgunrizons.grenade.GrenadeRenderer;
 import com.gtnewhorizon.newgunrizons.grenade.GrenadeState;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemGrenadeInstance;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceFactory;
 import com.gtnewhorizon.newgunrizons.registry.Sounds;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import lombok.Getter;
 
 public class ItemGrenade extends Item
     implements ItemInstanceFactory<ItemGrenadeInstance, GrenadeState>, AttachmentContainer, Updatable {
 
     public static final int EXPLODE_ON_IMPACT = -1;
 
-    private final ModContext modContext;
     @Getter
     private String bounceHardSound;
     @Getter
@@ -71,8 +65,7 @@ public class ItemGrenade extends Item
     @Getter
     private final int fragmentCount;
 
-    private ItemGrenade(Builder builder, ModContext modContext) {
-        this.modContext = modContext;
+    private ItemGrenade(Builder builder) {
         this.name = builder.name;
         this.renderer = builder.renderer;
         this.textureNames = new ArrayList<>(builder.textureNames);
@@ -113,18 +106,15 @@ public class ItemGrenade extends Item
     }
 
     public void attack(EntityPlayer player, boolean throwingFar) {
-        this.modContext.getGrenadeAttackAspect()
-            .onAttackButtonClick(player, throwingFar);
+        GrenadeAttackAspect.INSTANCE.onAttackButtonClick(player, throwingFar);
     }
 
     public void attackUp(EntityPlayer player, boolean throwingFar) {
-        this.modContext.getGrenadeAttackAspect()
-            .onAttackButtonUp(player, throwingFar);
+        GrenadeAttackAspect.INSTANCE.onAttackButtonUp(player, throwingFar);
     }
 
     public void update(EntityPlayer player) {
-        this.modContext.getGrenadeAttackAspect()
-            .onUpdate(player);
+        GrenadeAttackAspect.INSTANCE.onUpdate(player);
     }
 
     public long getReequipTimeout() {
@@ -163,9 +153,6 @@ public class ItemGrenade extends Item
         private int explosionTimeout = 3000;
         private float explosionStrength = 2.0F;
         protected CreativeTabs tab;
-        private CraftingComplexity craftingComplexity;
-        private Object[] craftingMaterials;
-        private int craftingCount = 1;
         private GrenadeRenderer renderer;
         List<String> textureNames = new ArrayList<>();
         private Supplier<Float> rotationSlowdownFactor = () -> 0.99F;
@@ -177,8 +164,6 @@ public class ItemGrenade extends Item
         private float effectiveRadius = 20.0F;
         private float fragmentDamage = 15.0F;
         private int fragmentCount = 100;
-        private Object[] craftingRecipe;
-
         public Builder() {}
 
         public Builder withName(String name) {
@@ -249,31 +234,6 @@ public class ItemGrenade extends Item
             return this;
         }
 
-        public Builder withCrafting(CraftingComplexity craftingComplexity, Object... craftingMaterials) {
-            return this.withCrafting(1, craftingComplexity, craftingMaterials);
-        }
-
-        public Builder withCrafting(int craftingCount, CraftingComplexity craftingComplexity,
-            Object... craftingMaterials) {
-            if (craftingComplexity == null) {
-                throw new IllegalArgumentException("Crafting complexity not set");
-            } else if (craftingMaterials.length < 2) {
-                throw new IllegalArgumentException("2 or more materials required for crafting");
-            } else if (craftingCount == 0) {
-                throw new IllegalArgumentException("Invalid item count");
-            } else {
-                this.craftingComplexity = craftingComplexity;
-                this.craftingMaterials = craftingMaterials;
-                this.craftingCount = craftingCount;
-                return this;
-            }
-        }
-
-        public Builder withCraftingRecipe(Object... craftingRecipe) {
-            this.craftingRecipe = craftingRecipe;
-            return this;
-        }
-
         public Builder withBounceHardSound(String sound) {
             this.bounceHardSound = sound;
             return this;
@@ -314,8 +274,8 @@ public class ItemGrenade extends Item
             return this;
         }
 
-        public ItemGrenade build(ModContext modContext) {
-            ItemGrenade grenade = new ItemGrenade(this, modContext);
+        public ItemGrenade build() {
+            ItemGrenade grenade = new ItemGrenade(this);
             grenade.setUnlocalizedName(NewGunrizonsMod.MODID + "_" + this.name);
             grenade.setCreativeTab(this.tab);
             grenade.maxStackSize = this.maxStackSize;
@@ -325,34 +285,7 @@ public class ItemGrenade extends Item
             grenade.safetyPinOffSound = Sounds.resolve(this.safetyPinOffSound);
             grenade.throwSound = Sounds.resolve(this.throwSound);
 
-            modContext.registerGrenadeWeapon(this.name, grenade, this.renderer);
-            List<Object> shape;
-            if (this.craftingRecipe != null && this.craftingRecipe.length >= 2) {
-                ItemStack itemStack = new ItemStack(grenade);
-                shape = modContext.getRecipeManager()
-                    .registerShapedRecipe(grenade, this.craftingRecipe);
-                boolean hasOres = Arrays.stream(this.craftingRecipe)
-                    .anyMatch((r) -> r instanceof String);
-                if (hasOres) {
-                    GameRegistry.addRecipe(new ShapedOreRecipe(itemStack, shape.toArray()).setMirrored(false));
-                } else {
-                    GameRegistry.addShapedRecipe(itemStack, shape.toArray());
-                }
-            } else if (this.craftingComplexity != null) {
-                OptionsMetadata optionsMetadata = (new OptionsMetadata.OptionMetadataBuilder()).withSlotCount(9)
-                    .build(
-                        this.craftingComplexity,
-                        Arrays.copyOf(this.craftingMaterials, this.craftingMaterials.length));
-                shape = modContext.getRecipeManager()
-                    .createShapedRecipe(grenade, this.name, optionsMetadata);
-                ItemStack itemStack = new ItemStack(grenade);
-                itemStack.stackSize = this.craftingCount;
-                if (optionsMetadata.hasOres()) {
-                    GameRegistry.addRecipe(new ShapedOreRecipe(itemStack, shape.toArray()).setMirrored(false));
-                } else {
-                    GameRegistry.addShapedRecipe(itemStack, shape.toArray());
-                }
-            }
+            NewGunrizonsMod.proxy.registerItem(this.name, grenade, this.renderer);
 
             return grenade;
         }

@@ -7,6 +7,8 @@ import lombok.Getter;
 
 public final class StatusMessageManager {
 
+    public static final StatusMessageManager INSTANCE = new StatusMessageManager();
+
     private final Deque<StatusMessageManager.Message> messageQueue = new LinkedList<>();
 
     public void addMessage(String message, long duration) {

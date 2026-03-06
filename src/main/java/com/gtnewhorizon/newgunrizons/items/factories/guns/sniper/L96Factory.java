@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
@@ -62,11 +60,6 @@ public class L96Factory {
             .withFlashOffsetY(() -> { return 0.06F; })
             .withShellCasingEjectEnabled(false)
             .withCreativeTab(NewGunrizonsMod.SnipersTab)
-            .withCrafting(
-                CraftingComplexity.HIGH,
-                CommonProxy.SteelPlate,
-                CommonProxy.MiniSteelPlate,
-                CommonProxy.BigSteelPlate)
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Sniper rifle",
@@ -588,6 +581,6 @@ public class L96Factory {
                     .build())
             .withSpawnEntityDamage(23.0F)
             .withSpawnEntityGravityVelocity(0.0F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

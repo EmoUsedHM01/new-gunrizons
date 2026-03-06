@@ -2,7 +2,6 @@ package com.gtnewhorizon.newgunrizons.items;
 
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentBuilder;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
-import com.gtnewhorizon.newgunrizons.config.ModContext;
 
 /**
  * A bullet attachment type.
@@ -22,7 +21,8 @@ public class ItemBullet extends ItemAttachment {
             withMaxStackSize(64);
         }
 
-        public ItemAttachment createAttachment(ModContext modContext) {
+        @Override
+        protected ItemAttachment createAttachment() {
             return new ItemBullet(AttachmentCategory.BULLET, null);
         }
     }

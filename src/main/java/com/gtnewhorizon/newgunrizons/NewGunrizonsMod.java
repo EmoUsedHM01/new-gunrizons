@@ -2,8 +2,7 @@ package com.gtnewhorizon.newgunrizons;
 
 import net.minecraft.creativetab.CreativeTabs;
 
-import com.gtnewhorizon.newgunrizons.config.ModContext;
-import com.gtnewhorizon.newgunrizons.registry.Recipes;
+import com.gtnewhorizon.newgunrizons.registry.GTRecipes;
 import com.gtnewhorizon.newgunrizons.tabs.AmmoTab;
 import com.gtnewhorizon.newgunrizons.tabs.AssaultRiflesTab;
 import com.gtnewhorizon.newgunrizons.tabs.AttachmentsTab;
@@ -29,11 +28,6 @@ public class NewGunrizonsMod {
 
     public static final String MODID = "newgunrizons";
     public static final String VERSION = "1.0.0";
-
-    @SidedProxy(
-        serverSide = "com.gtnewhorizon.newgunrizons.config.CommonModContext",
-        clientSide = "com.gtnewhorizon.newgunrizons.config.ClientModContext")
-    public static ModContext MOD_CONTEXT;
 
     public static final SimpleNetworkWrapper CHANNEL;
 
@@ -65,7 +59,7 @@ public class NewGunrizonsMod {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        Recipes.init(MOD_CONTEXT);
+        GTRecipes.init();
     }
 
     static {

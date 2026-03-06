@@ -1,27 +1,25 @@
 package com.gtnewhorizon.newgunrizons.client.handlers;
 
-import com.gtnewhorizon.newgunrizons.config.ClientModContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
 
+import com.gtnewhorizon.newgunrizons.client.debug.MuzzleDebug;
 import com.gtnewhorizon.newgunrizons.client.render.HudRenderer;
-import com.gtnewhorizon.newgunrizons.config.ModContext;
 import com.gtnewhorizon.newgunrizons.items.ItemGrenade;
 import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class WeaponHudHandler {
 
-    private final ModContext modContext;
     private final HudRenderer hudRenderer;
 
-    public WeaponHudHandler(ClientModContext modContext) {
-        this.modContext = modContext;
-        this.hudRenderer = new HudRenderer(modContext);
+    public WeaponHudHandler() {
+        this.hudRenderer = new HudRenderer();
     }
 
     @SubscribeEvent
@@ -30,12 +28,14 @@ public class WeaponHudHandler {
             return;
         }
 
+        MuzzleDebug.renderOverlay(event.resolution);
+
         ItemStack itemStack = Minecraft.getMinecraft().thePlayer.getHeldItem();
         if (itemStack == null) {
             return;
         }
 
-        ItemWeaponInstance weaponInstance = modContext.getMainHeldWeapon();
+        ItemWeaponInstance weaponInstance = ItemInstanceRegistry.getMainHeldWeapon();
         if (weaponInstance != null) {
             if (hudRenderer.renderWeaponHud(event.resolution, itemStack, weaponInstance)) {
                 event.setCanceled(true);

@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.misc.AKRail;
 import com.gtnewhorizon.newgunrizons.model.misc.AKRail2;
@@ -62,11 +60,6 @@ public class M107Factory {
             .withFlashOffsetX(() -> { return 0.1F; })
             .withFlashOffsetY(() -> { return 0.1F; })
             .withCreativeTab(NewGunrizonsMod.SnipersTab)
-            .withCrafting(
-                CraftingComplexity.HIGH,
-                CommonProxy.SteelPlate,
-                CommonProxy.MiniSteelPlate,
-                CommonProxy.BigSteelPlate)
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Anti-materiel sniper rifle",
@@ -498,6 +491,6 @@ public class M107Factory {
                     }, 250L, 50L))
                     .build())
             .withSpawnEntityDamage(50.0F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

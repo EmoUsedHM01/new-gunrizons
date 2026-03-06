@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
@@ -71,7 +69,6 @@ public class KSG12Factory {
             .withFlashOffsetY(() -> { return 0.15F; })
             .withShellCasingEjectEnabled(false)
             .withCreativeTab(NewGunrizonsMod.ShotgunsTab)
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Bullpup pump-action shotgun",
@@ -576,6 +573,6 @@ public class KSG12Factory {
                     .build())
             .withSpawnEntityDamage(5.0F)
             .withSpawnEntityGravityVelocity(0.8F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

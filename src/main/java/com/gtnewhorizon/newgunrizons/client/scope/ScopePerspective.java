@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.client.render.RenderContext;
 import com.gtnewhorizon.newgunrizons.client.shaders.ShaderContext;
 import com.gtnewhorizon.newgunrizons.client.shaders.ShaderManager;
 import com.gtnewhorizon.newgunrizons.client.shaders.ShaderPhase;
-import com.gtnewhorizon.newgunrizons.config.ClientModContext;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.state.RenderableState;
 
@@ -26,7 +25,6 @@ public class ScopePerspective {
     private static final long SCOPE_RENDER_INTERVAL_NS = 10_666_666L;
     private long lastScopeRenderNano;
 
-    protected ClientModContext modContext;
     protected Framebuffer framebuffer;
     private Framebuffer renderFramebuffer;
     protected ScopeWorldRenderer worldRenderer;
@@ -44,9 +42,7 @@ public class ScopePerspective {
 
     public ScopePerspective() {}
 
-    public void activate(ClientModContext modContext, ScopeManager manager) {
-        this.modContext = modContext;
-
+    public void activate(ScopeManager manager) {
         if (this.framebuffer == null) {
             this.framebuffer = new Framebuffer(SCOPE_TEXTURE_SIZE, SCOPE_TEXTURE_SIZE, true);
             this.framebuffer.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);

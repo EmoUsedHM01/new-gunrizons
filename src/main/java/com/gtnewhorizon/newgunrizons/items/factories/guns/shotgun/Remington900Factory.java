@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.weapon.Remington870;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
@@ -49,7 +47,6 @@ public class Remington900Factory {
             .withFlashOffsetX(() -> { return 0.11F; })
             .withFlashOffsetY(() -> { return 0.06F; })
             .withCreativeTab(NewGunrizonsMod.ShotgunsTab)
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate, "ingotSteel")
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Shotgun",
@@ -437,6 +434,6 @@ public class Remington900Factory {
                     .build())
             .withSpawnEntityDamage(5.0F)
             .withSpawnEntityGravityVelocity(0.8F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

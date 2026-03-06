@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.weapon.Pistol10mm;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
@@ -38,7 +36,6 @@ public class Pistol10mmFactory {
             .withFlashOffsetY(() -> { return 0.1F; })
             .withInaccuracy(3.0F)
             .withCreativeTab(NewGunrizonsMod.FunGunsTab)
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MetalComponents)
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "--Fallout 4's starting pistol--",
@@ -264,6 +261,6 @@ public class Pistol10mmFactory {
                     .build())
             .withSpawnEntityDamage(6.0F)
             .withSpawnEntityGravityVelocity(0.016F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

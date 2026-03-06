@@ -10,7 +10,6 @@ import org.lwjgl.opengl.GL11;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentBuilder;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.client.scope.ScopeRenderer;
-import com.gtnewhorizon.newgunrizons.config.ModContext;
 
 import lombok.Getter;
 
@@ -75,7 +74,8 @@ public class ItemScope extends ItemAttachment {
             return this;
         }
 
-        public ItemAttachment createAttachment(ModContext modContext) {
+        @Override
+        protected ItemAttachment createAttachment() {
             if (this.isOpticalZoom) {
                 if (this.viewfinderPositioning == null) {
                     this.viewfinderPositioning = (p, s) -> {
@@ -90,13 +90,14 @@ public class ItemScope extends ItemAttachment {
             return new ItemScope(this);
         }
 
-        public ItemAttachment build(ModContext modContext) {
+        @Override
+        public ItemAttachment build() {
             this.applyHandler = (a, instance) -> {
                 float zoom = this.minZoom + (this.maxZoom - this.minZoom) / 2.0F;
                 instance.setZoom(zoom);
             };
             this.removeHandler = (a, instance) -> instance.setZoom(1.0F);
-            return super.build(modContext);
+            return super.build();
         }
     }
 }

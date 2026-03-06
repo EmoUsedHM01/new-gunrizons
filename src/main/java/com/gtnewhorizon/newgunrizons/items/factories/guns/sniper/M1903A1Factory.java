@@ -2,12 +2,10 @@ package com.gtnewhorizon.newgunrizons.items.factories.guns.sniper;
 
 import java.util.Arrays;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
@@ -60,16 +58,6 @@ public class M1903A1Factory {
             .withFlashOffsetX(() -> { return 0.1F; })
             .withFlashOffsetY(() -> { return 0.1F; })
             .withCreativeTab(NewGunrizonsMod.SnipersTab)
-            .withCraftingRecipe(
-                " A ",
-                "GFF",
-                " GF",
-                'A',
-                Attachments.Unertl,
-                'G',
-                Blocks.planks,
-                'F',
-                CommonProxy.SteelPlate)
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Bolt-action rifle",
@@ -729,6 +717,6 @@ public class M1903A1Factory {
                     .build())
             .withSpawnEntityDamage(27.0F)
             .withSpawnEntityGravityVelocity(0.0F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

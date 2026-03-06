@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.init.Items;
 import net.minecraft.world.World;
 
-import com.gtnewhorizon.newgunrizons.config.ModContext;
+import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -18,12 +18,6 @@ import cpw.mods.fml.relauncher.Side;
 public class SpawnParticleMessageHandler implements IMessageHandler<SpawnParticleMessage, IMessage> {
 
     private static final double Y_OFFSET = 1.0D;
-
-    private final ModContext modContext;
-
-    public SpawnParticleMessageHandler(ModContext modContext) {
-        this.modContext = modContext;
-    }
 
     public IMessage onMessage(SpawnParticleMessage message, MessageContext ctx) {
         if (ctx.side != Side.CLIENT) {
@@ -55,8 +49,7 @@ public class SpawnParticleMessageHandler implements IMessageHandler<SpawnParticl
             TextureAtlasSprite sprite = Minecraft.getMinecraft()
                 .getTextureMapBlocks()
                 .getAtlasSprite(
-                    modContext.getNamedResource("particle/blood")
-                        .toString());
+                    new net.minecraft.util.ResourceLocation(NewGunrizonsMod.MODID, "particle/blood").toString());
             particle.setParticleIcon(sprite);
             Minecraft.getMinecraft().effectRenderer.addEffect(particle);
         }

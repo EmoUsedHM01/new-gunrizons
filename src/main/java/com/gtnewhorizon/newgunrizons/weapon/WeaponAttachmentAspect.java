@@ -11,12 +11,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
+import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.attachment.CompatibleAttachment;
-import com.gtnewhorizon.newgunrizons.config.ModContext;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
+import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.network.WeaponActionMessage;
 import com.gtnewhorizon.newgunrizons.state.Aspect;
@@ -24,7 +25,8 @@ import com.gtnewhorizon.newgunrizons.state.StateManager;
 
 public final class WeaponAttachmentAspect implements Aspect<WeaponState, ItemWeaponInstance> {
 
-    private final ModContext modContext;
+    public static final WeaponAttachmentAspect INSTANCE = new WeaponAttachmentAspect();
+
     private StateManager<WeaponState, ? super ItemWeaponInstance> stateManager;
     private final long clickSpammingTimeout = 150L;
     private final Predicate<ItemWeaponInstance> clickSpammingPreventer = (es) -> System.currentTimeMillis()
@@ -35,9 +37,7 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, ItemWea
     /** Tracks the attachment category for the current changeAttachment operation. */
     private AttachmentCategory pendingAttachmentCategory;
 
-    public WeaponAttachmentAspect(ModContext modContext) {
-        this.modContext = modContext;
-    }
+    public WeaponAttachmentAspect() {}
 
     public void setStateManager(StateManager<WeaponState, ? super ItemWeaponInstance> stateManager) {
         this.stateManager = stateManager.in(this)
@@ -65,7 +65,7 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, ItemWea
     }
 
     public void toggleClientAttachmentSelectionMode(EntityPlayer player) {
-        ItemWeaponInstance weaponInstance = this.modContext.getItemInstanceRegistry()
+        ItemWeaponInstance weaponInstance = ItemInstanceRegistry.INSTANCE
             .getMainHandItemInstance(player, ItemWeaponInstance.class);
         if (weaponInstance != null) {
             this.stateManager.changeState(this, weaponInstance, WeaponState.MODIFYING, WeaponState.READY);
@@ -92,8 +92,7 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, ItemWea
             itemStack.stackTagCompound = new NBTTagCompound();
         }
         List<CompatibleAttachment> activeAttachments = new ArrayList<>();
-        ItemInstance<?> itemInstance = this.modContext.getItemInstanceRegistry()
-            .getItemInstance(player, itemStack);
+        ItemInstance<?> itemInstance = ItemInstanceRegistry.INSTANCE.getItemInstance(player, itemStack);
         int[] activeAttachmentsIds;
         if (!(itemInstance instanceof ItemWeaponInstance)) {
             activeAttachmentsIds = new int[AttachmentCategory.VALUES.length];
@@ -141,12 +140,11 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, ItemWea
             return;
         }
         // Send action to server for authoritative inventory operations
-        this.modContext.getChannel()
-            .sendToServer(
-                new WeaponActionMessage(
-                    WeaponActionMessage.CHANGE_ATTACHMENT,
-                    weaponInstance.getItemInventoryIndex(),
-                    (byte) attachmentCategory.ordinal()));
+        NewGunrizonsMod.CHANNEL.sendToServer(
+            new WeaponActionMessage(
+                WeaponActionMessage.CHANGE_ATTACHMENT,
+                weaponInstance.getItemInventoryIndex(),
+                (byte) attachmentCategory.ordinal()));
         // Optimistic client-side visual update
         this.changeAttachmentInternal(attachmentCategory, weaponInstance);
     }
@@ -233,8 +231,7 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, ItemWea
 
                 ItemStack slotItemStack = ((EntityPlayer) weaponInstance.getPlayer()).inventory
                     .getStackInSlot(currentIndex);
-                if (slotItemStack != null
-                    && slotItemStack.getItem() instanceof ItemAttachment) {
+                if (slotItemStack != null && slotItemStack.getItem() instanceof ItemAttachment) {
                     ItemAttachment attachmentItemFromInventory = (ItemAttachment) slotItemStack.getItem();
                     CompatibleAttachment compatibleAttachment;
                     if (attachmentItemFromInventory.getCategory() == category

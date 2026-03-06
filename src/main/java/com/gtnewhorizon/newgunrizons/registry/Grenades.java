@@ -1,6 +1,5 @@
 package com.gtnewhorizon.newgunrizons.registry;
 
-import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentBuilder;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
@@ -21,7 +20,7 @@ public class Grenades {
             .withName("GrenadeSafetyPin")
             .withRenderablePart()
             .withTextureName("Dummy.png")
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
         FuseGrenade = (new FuseGrenadeFactory()).createGrenade();
         ImpactGrenade = (new ImpactGrenadeFactory()).createGrenade();
     }

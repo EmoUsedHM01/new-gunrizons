@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.sight.OKP7;
 import com.gtnewhorizon.newgunrizons.model.sight.OKP7reticle;
@@ -46,12 +44,6 @@ public class Saiga12Factory {
             .withInaccuracy(7.0F)
             .withPellets(11)
             .withCreativeTab(NewGunrizonsMod.ShotgunsTab)
-            .withCrafting(
-                CraftingComplexity.MEDIUM,
-                CommonProxy.SteelPlate,
-                CommonProxy.MiniSteelPlate,
-                CommonProxy.MetalComponents,
-                "ingotSteel")
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Shotgun",
@@ -449,6 +441,6 @@ public class Saiga12Factory {
                     .build())
             .withSpawnEntityDamage(6.3F)
             .withSpawnEntityGravityVelocity(0.0118F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

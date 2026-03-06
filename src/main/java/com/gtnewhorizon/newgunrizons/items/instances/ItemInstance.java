@@ -121,8 +121,7 @@ public class ItemInstance<S extends ManagedState<S>> extends UniversalObject {
     // ==================== Static NBT helpers ====================
 
     public static int getAmmo(ItemStack itemStack) {
-        return itemStack != null && itemStack.stackTagCompound != null
-            ? itemStack.stackTagCompound.getInteger(AMMO_TAG)
+        return itemStack != null && itemStack.stackTagCompound != null ? itemStack.stackTagCompound.getInteger(AMMO_TAG)
             : 0;
     }
 

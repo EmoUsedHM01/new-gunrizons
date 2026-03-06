@@ -6,11 +6,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.action.P99Slide;
 import com.gtnewhorizon.newgunrizons.model.sight.P2000rearsight;
@@ -42,7 +40,6 @@ public class P99Factory {
             .withFlashOffsetY(() -> { return 0.1F; })
             .withInaccuracy(3.0F)
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
-            .withCrafting(CraftingComplexity.MEDIUM, CommonProxy.SteelPlate, CommonProxy.MiniSteelPlate)
             .withInformationProvider(
                 (stack) -> Arrays.asList(
                     "Type: Pistol",
@@ -120,7 +117,7 @@ public class P99Factory {
                         GL11.glScaled(3.0D, 3.0D, 3.0D);
                         GL11.glTranslatef(0.35F, 0.45F, -2.0F);
                         GL11.glRotatef(-3.0F, 1.0F, 0.0F, 0.0F);
-                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Holo2)) {}
+
 
                     })
                     .withFirstPersonCustomPositioning(Magazines.M9BerettaMag, (renderContext) -> {})
@@ -192,7 +189,7 @@ public class P99Factory {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);
                         GL11.glTranslatef(0.35F, 0.5F, -2.4F);
-                        if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Holo2)) {}
+
 
                     })
                     .withFirstPersonPositioningRunning((renderContext) -> {
@@ -327,6 +324,6 @@ public class P99Factory {
                     .build())
             .withSpawnEntityDamage(5.0F)
             .withSpawnEntityGravityVelocity(0.016F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

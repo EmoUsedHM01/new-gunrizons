@@ -197,10 +197,12 @@ public class MultipartRenderStateManager {
                     fromMatrix = this.adjustToAttached(
                         fromMatrix,
                         fromMultipart.getAttachedTo(p),
-                        this.toPositioning.get(0).getAttachedTo(p),
+                        this.toPositioning.get(0)
+                            .getAttachedTo(p),
                         context);
                     pd.matrices.add(fromMatrix);
-                    pd.attachedTo = this.toPositioning.get(0).getAttachedTo(p);
+                    pd.attachedTo = this.toPositioning.get(0)
+                        .getAttachedTo(p);
 
                     // Build keyframe matrices for each segment of the target positioning
                     Matrix4f previous = fromMatrix;
@@ -220,8 +222,11 @@ public class MultipartRenderStateManager {
             } catch (Exception e) {
                 System.err.println(
                     "Failed to get data for part " + part
-                        + " for transition from [" + this.fromState
-                        + "] to [" + this.toState + "]");
+                        + " for transition from ["
+                        + this.fromState
+                        + "] to ["
+                        + this.toState
+                        + "]");
                 throw e;
             }
         }
@@ -255,10 +260,12 @@ public class MultipartRenderStateManager {
                     public void position(Part part, RenderContext context) {
                         PartData partData = getPartData(part, context);
                         applyInterpolated(
-                            part, context,
+                            part,
+                            context,
                             partData.matrices.get(currentIndex - 1),
                             partData.matrices.get(currentIndex),
-                            partData.attachedTo, 1.0F);
+                            partData.attachedTo,
+                            1.0F);
                     }
 
                     @Override
@@ -274,10 +281,12 @@ public class MultipartRenderStateManager {
                 public void position(Part part, RenderContext context) {
                     PartData partData = getPartData(part, context);
                     applyInterpolated(
-                        part, context,
+                        part,
+                        context,
                         partData.matrices.get(currentIndex),
                         partData.matrices.get(currentIndex + 1),
-                        partData.attachedTo, finalProgress);
+                        partData.attachedTo,
+                        finalProgress);
                 }
 
                 @Override
@@ -291,8 +300,8 @@ public class MultipartRenderStateManager {
          * Linearly interpolates between two keyframe matrices and applies the result
          * to the GL modelview matrix, optionally relative to an attachment parent.
          */
-        private void applyInterpolated(Part part, RenderContext context, Matrix4f beforeMatrix,
-            Matrix4f afterMatrix, Part attachedTo, float progress) {
+        private void applyInterpolated(Part part, RenderContext context, Matrix4f beforeMatrix, Matrix4f afterMatrix,
+            Part attachedTo, float progress) {
             Matrix4f currentMatrix = null;
             if (attachedTo != null) {
                 currentMatrix = context.getPartPosition(attachedTo);
@@ -359,8 +368,7 @@ public class MultipartRenderStateManager {
                             multipartTransition.position(part, context);
                         }
                     } catch (Exception e) {
-                        System.err.println(
-                            "Failed to find static position for " + part + " in " + state);
+                        System.err.println("Failed to find static position for " + part + " in " + state);
                         throw e;
                     }
                 }

@@ -4,11 +4,9 @@ import net.minecraft.item.Item;
 
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
 import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
@@ -46,11 +44,6 @@ public class SMAWFactory {
             .withCrosshairZoomed("Sight")
             .withShellCasingEjectEnabled(false)
             .withCreativeTab(NewGunrizonsMod.ShotgunsTab)
-            .withCrafting(
-                CraftingComplexity.HIGH,
-                CommonProxy.SteelPlate,
-                CommonProxy.MetalComponents,
-                CommonProxy.BigSteelPlate)
             .withCompatibleAttachment(Attachments.AKMIron, true, (model) -> {
                 if (model instanceof M4Iron1) {
                     GL11.glTranslatef(0.41F, -2.13F, 1.1F);
@@ -216,6 +209,6 @@ public class SMAWFactory {
             .withSpawnEntitySpeed(5.0F)
             .withSpawnEntityDamage(60.0F)
             .withSpawnEntityExplosionRadius(4.0F)
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

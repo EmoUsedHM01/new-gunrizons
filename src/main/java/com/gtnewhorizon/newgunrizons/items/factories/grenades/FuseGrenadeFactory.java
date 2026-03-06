@@ -1,10 +1,7 @@
 package com.gtnewhorizon.newgunrizons.items.factories.grenades;
 
-import net.minecraft.init.Items;
-
 import org.lwjgl.opengl.GL11;
 
-import com.gtnewhorizon.newgunrizons.CommonProxy;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.Part;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
@@ -35,18 +32,6 @@ public class FuseGrenadeFactory {
             .withFarVelocity(() -> { return 1.3F; })
             .withGravityVelocity(() -> { return 0.06F; })
             .withRotationSlowdownFactor(() -> { return 0.99F; })
-            .withCraftingRecipe(
-                " XG",
-                "XFX",
-                " E ",
-                'X',
-                CommonProxy.SteelPlate,
-                'E',
-                Items.flint_and_steel,
-                'F',
-                Items.gunpowder,
-                'G',
-                "ingotSteel")
             .withRenderer(
                 (new GrenadeRenderer.Builder()).withModel(new M67Frag())
                     .withAnimationDuration(500)
@@ -255,6 +240,6 @@ public class FuseGrenadeFactory {
                         GL11.glTranslatef(0.1F, -0.725F, 0.7F);
                     }, (context) -> {})
                     .build())
-            .build(NewGunrizonsMod.MOD_CONTEXT);
+            .build();
     }
 }

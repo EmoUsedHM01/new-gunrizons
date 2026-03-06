@@ -12,7 +12,6 @@ import org.lwjgl.opengl.GL11;
 import com.gtnewhorizon.newgunrizons.client.render.CustomRenderer;
 import com.gtnewhorizon.newgunrizons.client.render.RenderContext;
 import com.gtnewhorizon.newgunrizons.client.render.TransformType;
-import com.gtnewhorizon.newgunrizons.config.ClientModContext;
 
 public class ScopeRenderer implements CustomRenderer {
 
@@ -28,13 +27,7 @@ public class ScopeRenderer implements CustomRenderer {
             && renderContext.getTransformType() != TransformType.FIRST_PERSON_LEFT_HAND) {
             return;
         }
-        if (renderContext.getModContext() == null) {
-            return;
-        }
-
-        ClientModContext clientModContext = (ClientModContext) renderContext.getModContext();
-        ScopePerspective perspective = clientModContext.getScopeManager()
-            .getPerspective(renderContext.getItemInstance(), false);
+        ScopePerspective perspective = ScopeManager.INSTANCE.getPerspective(renderContext.getItemInstance(), false);
 
         if (perspective == null) {
             return;

@@ -1,7 +1,6 @@
 package com.gtnewhorizon.newgunrizons.attachment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,23 +12,16 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.minecraftforge.client.IItemRenderer;
 
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.render.CustomRenderer;
 import com.gtnewhorizon.newgunrizons.client.render.RenderContext;
 import com.gtnewhorizon.newgunrizons.client.render.StaticModelRenderer;
-import com.gtnewhorizon.newgunrizons.config.ModContext;
-import com.gtnewhorizon.newgunrizons.crafting.CraftingComplexity;
-import com.gtnewhorizon.newgunrizons.crafting.OptionsMetadata;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.util.Pair;
 
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import lombok.Getter;
 
@@ -41,8 +33,6 @@ import lombok.Getter;
  * {@code ItemBullet.Builder} to create specialized attachment types.
  */
 public class AttachmentBuilder {
-
-    private static final Logger logger = LogManager.getLogger(AttachmentBuilder.class);
 
     // ==================== Identity ====================
 
@@ -76,14 +66,6 @@ public class AttachmentBuilder {
     private AttachmentCategory category;
     private int maxStackSize = 1;
     private Function<ItemStack, String> informationProvider;
-
-    // ==================== Crafting ====================
-
-    private CraftingComplexity craftingComplexity;
-    private Object[] craftingMaterials;
-    private int craftingCount = 1;
-    /** Explicit shaped recipe; takes priority over auto-generated recipe. */
-    private Object[] craftingRecipe;
 
     // ==================== Equip/unequip handlers ====================
 
@@ -203,34 +185,6 @@ public class AttachmentBuilder {
         return this;
     }
 
-    // ==================== Builder methods: Crafting ====================
-
-    public AttachmentBuilder withCrafting(CraftingComplexity craftingComplexity, Object... craftingMaterials) {
-        return this.withCrafting(1, craftingComplexity, craftingMaterials);
-    }
-
-    public AttachmentBuilder withCrafting(int craftingCount, CraftingComplexity craftingComplexity,
-        Object... craftingMaterials) {
-        if (craftingComplexity == null) {
-            throw new IllegalArgumentException("Crafting complexity not set");
-        }
-        if (craftingMaterials.length < 2) {
-            throw new IllegalArgumentException("2 or more materials required for crafting");
-        }
-        if (craftingCount == 0) {
-            throw new IllegalArgumentException("Invalid item count");
-        }
-        this.craftingComplexity = craftingComplexity;
-        this.craftingMaterials = craftingMaterials;
-        this.craftingCount = craftingCount;
-        return this;
-    }
-
-    public AttachmentBuilder withCraftingRecipe(Object... craftingRecipe) {
-        this.craftingRecipe = craftingRecipe;
-        return this;
-    }
-
     // ==================== Builder methods: Compatible attachments ====================
 
     public AttachmentBuilder withCompatibleAttachment(ItemAttachment attachment, Consumer<ModelBase> positioner) {
@@ -295,21 +249,20 @@ public class AttachmentBuilder {
      * Creates and fully configures the {@link ItemAttachment}, including model registration,
      * renderer setup, and crafting recipe registration.
      */
-    public ItemAttachment build(ModContext modContext) {
-        ItemAttachment attachment = createAttachment(modContext);
+    public ItemAttachment build() {
+        ItemAttachment attachment = createAttachment();
 
         configureAttachment(attachment);
         registerModels(attachment);
         registerCompatibleAttachments(attachment);
-        registerRenderer(attachment, modContext);
-        registerRecipe(attachment, modContext);
+        registerRenderer(attachment);
 
         return attachment;
     }
 
     /** Convenience overload that casts the result to a specific attachment subtype. */
-    public <V extends ItemAttachment> V build(ModContext modContext, Class<V> target) {
-        return target.cast(this.build(modContext));
+    public <V extends ItemAttachment> V build(Class<V> target) {
+        return target.cast(this.build());
     }
 
     /**
@@ -317,7 +270,7 @@ public class AttachmentBuilder {
      * (ItemScope.Builder, ItemMagazine.Builder, ItemBullet.Builder) to create their
      * specific subtypes.
      */
-    protected ItemAttachment createAttachment(ModContext modContext) {
+    protected ItemAttachment createAttachment() {
         return new ItemAttachment(this.category, this.crosshair);
     }
 
@@ -356,13 +309,13 @@ public class AttachmentBuilder {
         }
     }
 
-    private void registerRenderer(ItemAttachment attachment, ModContext modContext) {
+    private void registerRenderer(ItemAttachment attachment) {
         boolean hasModels = this.model != null || !this.texturedModels.isEmpty();
         if (!hasModels) {
             return;
         }
 
-        Object renderer = null;
+        IItemRenderer renderer = null;
         if (FMLCommonHandler.instance()
             .getSide() == Side.CLIENT) {
             renderer = new StaticModelRenderer.Builder().withEntityPositioning(this.entityPositioning)
@@ -376,59 +329,13 @@ public class AttachmentBuilder {
                 .withFirstPersonHandPositioning(
                     this.firstPersonLeftHandPositioning,
                     this.firstPersonRightHandPositioning)
-                .withModContext(modContext)
                 .build();
         }
 
-        modContext.registerRenderableItem(this.name, attachment, renderer);
-    }
-
-    private void registerRecipe(ItemAttachment attachment, ModContext modContext) {
-        if (this.craftingRecipe != null && this.craftingRecipe.length >= 2) {
-            modContext.getRecipeManager()
-                .registerShapedRecipe(attachment, this.craftingRecipe);
-            return;
-        }
-
-        if (this.craftingComplexity != null) {
-            registerAutoGeneratedRecipe(attachment, modContext);
-            return;
-        }
-
-        if (isPlayerFacingCategory(attachment.getCategory())) {
-            logger.warn("No recipe defined for attachment '{}'", this.name);
-        }
-    }
-
-    private void registerAutoGeneratedRecipe(ItemAttachment attachment, ModContext modContext) {
-        OptionsMetadata optionsMetadata = new OptionsMetadata.OptionMetadataBuilder().withSlotCount(9)
-            .build(this.craftingComplexity, Arrays.copyOf(this.craftingMaterials, this.craftingMaterials.length));
-
-        List<Object> shape = modContext.getRecipeManager()
-            .createShapedRecipe(attachment, this.name, optionsMetadata);
-
-        ItemStack result = new ItemStack(attachment);
-        result.stackSize = this.craftingCount;
-
-        if (optionsMetadata.hasOres()) {
-            GameRegistry.addRecipe(new ShapedOreRecipe(result, shape.toArray()).setMirrored(false));
-        } else {
-            GameRegistry.addShapedRecipe(result, shape.toArray());
-        }
+        NewGunrizonsMod.proxy.registerItem(this.name, attachment, renderer);
     }
 
     // ==================== Utilities ====================
-
-    /**
-     * Returns true for attachment categories that the player directly interacts with
-     * and therefore should have a crafting recipe.
-     */
-    private static boolean isPlayerFacingCategory(AttachmentCategory category) {
-        return category == AttachmentCategory.GRIP || category == AttachmentCategory.SCOPE
-            || category == AttachmentCategory.MAGAZINE
-            || category == AttachmentCategory.BULLET
-            || category == AttachmentCategory.SILENCER;
-    }
 
     static String ensurePngExtension(String filename) {
         if (filename == null || filename.endsWith(".png")) {
