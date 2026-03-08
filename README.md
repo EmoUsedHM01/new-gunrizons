@@ -95,7 +95,7 @@ All crafting is done through GregTech machines — no crafting table recipes exi
 | Right Click | Aim Down Sights |
 | Left Click  | Fire |
 | R           | Reload |
-| Shift       | Selective Fire (Semi/Burst/Auto) |
+| R-Shift     | Selective Fire (Semi/Burst/Auto) |
 | M           | Attachment Mode |
 | L           | Switch Laser |
 | ] / [       | Zoom In / Out (while scoped) |
