@@ -37,6 +37,7 @@ public class EntityBullet extends EntityProjectile {
     private static final Set<Block> PASS_THROUGH_BLOCKS = Collections.unmodifiableSet(
         new HashSet<>(
             Arrays.asList(
+                Blocks.grass,
                 Blocks.air,
                 Blocks.tallgrass,
                 Blocks.leaves,
