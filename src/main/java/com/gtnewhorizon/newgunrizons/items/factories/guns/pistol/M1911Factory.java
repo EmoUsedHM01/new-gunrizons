@@ -111,7 +111,6 @@ public class M1911Factory {
                         GL11.glTranslatef(0.35F, 0.64F, -2.4F);
                         GL11.glRotatef(-3.0F, 1.0F, 0.0F, 0.0F);
 
-
                     })
                     .withFirstPersonCustomPositioning(Magazines.ColtM1911Mag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(
@@ -184,7 +183,6 @@ public class M1911Factory {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);
                         GL11.glTranslatef(0.35F, 0.64F, -2.8F);
-
 
                     })
                     .withFirstPersonPositioningRunning((renderContext) -> {

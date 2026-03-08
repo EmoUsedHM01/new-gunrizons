@@ -19,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentContainer;
@@ -33,7 +34,11 @@ import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.network.StatusMessageManager;
 import com.gtnewhorizon.newgunrizons.network.WeaponActionMessage;
 import com.gtnewhorizon.newgunrizons.registry.Sounds;
-import com.gtnewhorizon.newgunrizons.weapon.*;
+import com.gtnewhorizon.newgunrizons.weapon.Reloadable;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponAttachmentAspect;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponFireAspect;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponReloadAspect;
+import com.gtnewhorizon.newgunrizons.weapon.WeaponState;
 
 import lombok.Getter;
 
@@ -176,7 +181,8 @@ public class ItemWeapon extends Item
 
     @Override
     public boolean showDurabilityBar(ItemStack stack) {
-        return this.getCompatibleMagazines().isEmpty();
+        return this.getCompatibleMagazines()
+            .isEmpty();
     }
 
     @Override

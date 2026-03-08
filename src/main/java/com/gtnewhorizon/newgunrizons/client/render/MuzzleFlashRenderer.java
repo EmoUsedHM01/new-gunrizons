@@ -83,29 +83,37 @@ public class MuzzleFlashRenderer {
             return;
         }
 
-        float scale = weapon.getFlashScale().get();
-        float weaponOffsetX = weapon.getFlashOffsetX().get();
-        float weaponOffsetY = weapon.getFlashOffsetY().get();
-        float weaponOffsetZ = weapon.getFlashOffsetZ().get();
+        float scale = weapon.getFlashScale()
+            .get();
+        float weaponOffsetX = weapon.getFlashOffsetX()
+            .get();
+        float weaponOffsetY = weapon.getFlashOffsetY()
+            .get();
+        float weaponOffsetZ = weapon.getFlashOffsetZ()
+            .get();
         int imageIndex = Math.abs(rand.nextInt()) % IMAGES_PER_ROW;
         renderFlashQuad(alpha, scale, imageIndex, weaponOffsetX, weaponOffsetY, weaponOffsetZ);
     }
 
-    private static void renderFlashQuad(float alpha, float scale, int imageIndex,
-        float weaponOffsetX, float weaponOffsetY, float weaponOffsetZ) {
+    private static void renderFlashQuad(float alpha, float scale, int imageIndex, float weaponOffsetX,
+        float weaponOffsetY, float weaponOffsetZ) {
         // Bypass active shader program (Angelica/Iris compatibility)
         int prevProgram = GL11.glGetInteger(GL20.GL_CURRENT_PROGRAM);
         if (prevProgram != 0) {
             GL20.glUseProgram(0);
         }
 
-        Minecraft.getMinecraft().getTextureManager().bindTexture(FLASH_TEXTURE);
+        Minecraft.getMinecraft()
+            .getTextureManager()
+            .bindTexture(FLASH_TEXTURE);
 
         GL11.glPushMatrix();
         GL11.glPushAttrib(
             GL11.GL_TEXTURE_BIT | GL11.GL_DEPTH_BUFFER_BIT
-                | GL11.GL_ENABLE_BIT | GL11.GL_COLOR_BUFFER_BIT
-                | GL11.GL_CURRENT_BIT | GL11.GL_POLYGON_BIT);
+                | GL11.GL_ENABLE_BIT
+                | GL11.GL_COLOR_BUFFER_BIT
+                | GL11.GL_CURRENT_BIT
+                | GL11.GL_POLYGON_BIT);
 
         // Restrict to main color attachment only — prevents writing particle RGBA
         // into shader G-buffer auxiliary MRT attachments (normals, specular).
@@ -129,12 +137,10 @@ public class MuzzleFlashRenderer {
         float tz = modelviewBuf.get(14);
         // Extract scale from each column to preserve it
         float sx = (float) Math.sqrt(
-            modelviewBuf.get(0) * modelviewBuf.get(0)
-                + modelviewBuf.get(1) * modelviewBuf.get(1)
+            modelviewBuf.get(0) * modelviewBuf.get(0) + modelviewBuf.get(1) * modelviewBuf.get(1)
                 + modelviewBuf.get(2) * modelviewBuf.get(2));
         float sy = (float) Math.sqrt(
-            modelviewBuf.get(4) * modelviewBuf.get(4)
-                + modelviewBuf.get(5) * modelviewBuf.get(5)
+            modelviewBuf.get(4) * modelviewBuf.get(4) + modelviewBuf.get(5) * modelviewBuf.get(5)
                 + modelviewBuf.get(6) * modelviewBuf.get(6));
         GL11.glLoadIdentity();
         GL11.glTranslatef(tx, ty, tz);

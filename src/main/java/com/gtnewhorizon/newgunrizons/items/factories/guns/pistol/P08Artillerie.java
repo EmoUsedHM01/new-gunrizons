@@ -16,7 +16,6 @@ import com.gtnewhorizon.newgunrizons.model.action.MakarovTop;
 import com.gtnewhorizon.newgunrizons.model.sight.makarovfrontsight;
 import com.gtnewhorizon.newgunrizons.model.sight.makarovrearsight;
 import com.gtnewhorizon.newgunrizons.model.weapon.P08Carbine;
-import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
@@ -138,7 +137,6 @@ public class P08Artillerie {
                         GL11.glTranslatef(0.345F, 0.45F, -2.0F);
                         GL11.glRotatef(-3.0F, 1.0F, 0.0F, 0.0F);
 
-
                     })
                     .withFirstPersonCustomPositioning(Magazines.LugerP08Mag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(
@@ -259,7 +257,6 @@ public class P08Artillerie {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);
                         GL11.glTranslatef(0.345F, 0.45F, -2.4F);
-
 
                     })
                     .withFirstPersonPositioningRunning((renderContext) -> {

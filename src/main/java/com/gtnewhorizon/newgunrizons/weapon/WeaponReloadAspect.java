@@ -51,9 +51,10 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
 
     /** Client-side guard: checks if player has compatible ammo or magazine in inventory. */
     private final Predicate<ItemWeaponInstance> hasCompatibleAmmo = (weaponInstance) -> {
-        if (!(weaponInstance.getPlayer() instanceof EntityPlayer player)) {
+        if (!(weaponInstance.getPlayer() instanceof EntityPlayer)) {
             return false;
         }
+        EntityPlayer player = (EntityPlayer) weaponInstance.getPlayer();
         ItemWeapon weapon = weaponInstance.getWeapon();
         List<ItemMagazine> compatibleMagazines = weapon.getCompatibleMagazines();
         if (!compatibleMagazines.isEmpty()) {
@@ -159,9 +160,10 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
     }
 
     private void performLoad(ItemWeaponInstance weaponInstance) {
-        if (!(weaponInstance.getPlayer() instanceof EntityPlayer player)) {
+        if (!(weaponInstance.getPlayer() instanceof EntityPlayer)) {
             return;
         }
+        EntityPlayer player = (EntityPlayer) weaponInstance.getPlayer();
         ItemWeapon weapon = weaponInstance.getWeapon();
 
         // Optimistic client-side ammo update (mirrors server logic in WeaponActionMessageHandler)

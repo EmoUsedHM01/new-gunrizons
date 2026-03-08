@@ -171,7 +171,10 @@ public class SmokeFX extends EntityFX {
         // Build camera-facing quad
         tessellator.startDrawing(GL11.GL_QUADS);
         tessellator.setColorRGBA_F(
-            this.particleRed * light, this.particleGreen * light, this.particleBlue * light, this.particleAlpha);
+            this.particleRed * light,
+            this.particleGreen * light,
+            this.particleBlue * light,
+            this.particleAlpha);
 
         float size = RENDER_SCALE * this.particleScale;
         float x = (float) (this.prevPosX + (this.posX - this.prevPosX) * (double) partialTicks - interpPosX);

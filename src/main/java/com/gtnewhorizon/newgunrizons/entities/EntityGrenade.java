@@ -24,7 +24,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
-import com.gtnewhorizon.gtnhlib.client.model.state.BlockState;
 import com.gtnewhorizon.newgunrizons.items.ItemGrenade;
 import com.gtnewhorizon.newgunrizons.util.RayCast;
 
@@ -361,13 +360,11 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
                 && this.itemGrenade != null) {
                 String bounceHardSound = this.itemGrenade.getBounceHardSound();
                 if (bounceHardSound != null) {
-                    BlockState blockState = new BlockState(
-                        this.worldObj.getBlock(
-                            movingobjectposition.blockX,
-                            movingobjectposition.blockY,
-                            movingobjectposition.blockZ),
-                        0);
-                    if (madeFromHardMaterial(blockState)) {
+                    Block hitBlock = this.worldObj.getBlock(
+                        movingobjectposition.blockX,
+                        movingobjectposition.blockY,
+                        movingobjectposition.blockZ);
+                    if (madeFromHardMaterial(hitBlock)) {
                         this.worldObj
                             .playSoundAtEntity(this, bounceHardSound, 2.0F / ((float) this.bounceCount + 1.0F), 1.0F);
                     }
@@ -375,13 +372,11 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
 
                 String bounceSoftSound = this.itemGrenade.getBounceSoftSound();
                 if (bounceSoftSound != null) {
-                    BlockState blockState = new BlockState(
-                        this.worldObj.getBlock(
-                            movingobjectposition.blockX,
-                            movingobjectposition.blockY,
-                            movingobjectposition.blockZ),
-                        0);
-                    if (!madeFromHardMaterial(blockState)) {
+                    Block hitBlock = this.worldObj.getBlock(
+                        movingobjectposition.blockX,
+                        movingobjectposition.blockY,
+                        movingobjectposition.blockZ);
+                    if (!madeFromHardMaterial(hitBlock)) {
                         this.worldObj
                             .playSoundAtEntity(this, bounceSoftSound, 1.0F / ((float) this.bounceCount + 1.0F), 1.0F);
                     }
@@ -449,12 +444,9 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
                         (int) projectedPos.xCoord,
                         (int) projectedPos.yCoord,
                         (int) projectedPos.zCoord);
-                    BlockState blockState = new BlockState(
-                        this.worldObj.getBlock(blockPos.getX(), blockPos.getY(), blockPos.getZ()),
-                        0);
-                    if (blockState.block()
-                        .getMaterial() != Material.air) {
-                        logger.debug("Found non-intercept position colliding with block {}", blockState);
+                    Block collidedBlock = this.worldObj.getBlock(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+                    if (collidedBlock.getMaterial() != Material.air) {
+                        logger.debug("Found non-intercept position colliding with block {}", collidedBlock);
                         intercept = movingobjectposition;
                     } else {
                         this.posX = projectedPos.xCoord;
@@ -540,8 +532,7 @@ public class EntityGrenade extends Entity implements IEntityAdditionalSpawnData,
         this.setDead();
     }
 
-    private static boolean madeFromHardMaterial(BlockState blockState) {
-        Block block = blockState.block();
+    private static boolean madeFromHardMaterial(Block block) {
         Material material = block.getMaterial();
         return material == Material.rock || material == Material.iron
             || material == Material.ice

@@ -1,15 +1,15 @@
 package com.gtnewhorizon.newgunrizons.client.render;
 
+import net.minecraft.util.MathHelper;
+import net.minecraftforge.common.util.ForgeDirection;
+
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 import com.gtnewhorizon.gtnhlib.blockpos.IBlockPos;
 import com.gtnewhorizons.angelica.dynamiclights.DynamicLights;
 import com.gtnewhorizons.angelica.dynamiclights.IDynamicLightSource;
-import com.gtnewhorizons.angelica.dynamiclights.IDynamicLightWorldRenderer;
 
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
-import net.minecraft.util.MathHelper;
-import net.minecraftforge.common.util.ForgeDirection;
-
+import me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -80,7 +80,12 @@ public class MuzzleFlashLight implements IDynamicLightSource {
     public void angelica$dynamicLightTick() {}
 
     @Override
-    public boolean angelica$updateDynamicLight(@NotNull IDynamicLightWorldRenderer renderer) {
+    public SodiumWorldRenderer angelica$getDynamicLightWorld() {
+        return SodiumWorldRenderer.getInstance();
+    }
+
+    @Override
+    public boolean angelica$updateDynamicLight(@NotNull SodiumWorldRenderer renderer) {
         double dx = this.posX - this.prevX;
         double dy = this.posY - this.prevY;
         double dz = this.posZ - this.prevZ;
@@ -105,12 +110,12 @@ public class MuzzleFlashLight implements IDynamicLightSource {
                 DynamicLights.scheduleChunkRebuild(renderer, chunkPos);
                 DynamicLights.updateTrackedChunks(chunkPos, this.trackedChunks, newPos);
 
-                ForgeDirection dirX = ((MathHelper.floor_double(posX) & 15) >= 8)
-                    ? ForgeDirection.EAST : ForgeDirection.WEST;
-                ForgeDirection dirY = ((MathHelper.floor_double(posY) & 15) >= 8)
-                    ? ForgeDirection.UP : ForgeDirection.DOWN;
-                ForgeDirection dirZ = ((MathHelper.floor_double(posZ) & 15) >= 8)
-                    ? ForgeDirection.SOUTH : ForgeDirection.NORTH;
+                ForgeDirection dirX = ((MathHelper.floor_double(posX) & 15) >= 8) ? ForgeDirection.EAST
+                    : ForgeDirection.WEST;
+                ForgeDirection dirY = ((MathHelper.floor_double(posY) & 15) >= 8) ? ForgeDirection.UP
+                    : ForgeDirection.DOWN;
+                ForgeDirection dirZ = ((MathHelper.floor_double(posZ) & 15) >= 8) ? ForgeDirection.SOUTH
+                    : ForgeDirection.NORTH;
 
                 for (int i = 0; i < 7; i++) {
                     if (i % 4 == 0) {
@@ -139,11 +144,11 @@ public class MuzzleFlashLight implements IDynamicLightSource {
     }
 
     @Override
-    public void angelica$scheduleTrackedChunksRebuild(@NotNull IDynamicLightWorldRenderer renderer) {
+    public void angelica$scheduleTrackedChunksRebuild(@NotNull SodiumWorldRenderer renderer) {
         if (!this.trackedChunks.isEmpty()) {
-            var iter = this.trackedChunks.iterator();
+            it.unimi.dsi.fastutil.longs.LongIterator iter = this.trackedChunks.iterator();
             while (iter.hasNext()) {
-                DynamicLights.scheduleChunkRebuildForRemoval(renderer, iter.nextLong());
+                DynamicLights.scheduleChunkRebuild(renderer, iter.nextLong());
             }
         }
     }

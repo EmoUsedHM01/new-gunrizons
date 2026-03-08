@@ -176,7 +176,6 @@ public class Glock18Factory {
                         GL11.glScaled(3.0D, 3.0D, 3.0D);
                         GL11.glTranslatef(0.35F, 0.57F, -2.8F);
 
-
                     })
                     .withFirstPersonPositioningRunning((renderContext) -> {
                         GL11.glScaled(3.0D, 3.0D, 3.0D);

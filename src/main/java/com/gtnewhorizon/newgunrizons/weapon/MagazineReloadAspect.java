@@ -33,13 +33,15 @@ public class MagazineReloadAspect implements Aspect<MagazineState, ItemMagazineI
 
     /** Client-side guard: checks if player has compatible bullets in inventory. */
     private final Predicate<ItemMagazineInstance> hasCompatibleBullets = (instance) -> {
-        if (!(instance.getPlayer() instanceof EntityPlayer player)) {
+        if (!(instance.getPlayer() instanceof EntityPlayer)) {
             return false;
         }
+        EntityPlayer player = (EntityPlayer) instance.getPlayer();
         if (!(instance.getItemStack()
-            .getItem() instanceof ItemMagazine magazine)) {
+            .getItem() instanceof ItemMagazine)) {
             return false;
         }
+        ItemMagazine magazine = (ItemMagazine) instance.getItemStack().getItem();
         List<ItemBullet> compatibleBullets = magazine.getCompatibleBullets();
         return InventoryUtils.hasCompatibleItem(compatibleBullets, player, (s) -> true);
     };

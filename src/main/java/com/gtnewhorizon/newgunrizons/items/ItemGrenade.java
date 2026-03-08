@@ -164,6 +164,7 @@ public class ItemGrenade extends Item
         private float effectiveRadius = 20.0F;
         private float fragmentDamage = 15.0F;
         private int fragmentCount = 100;
+
         public Builder() {}
 
         public Builder withName(String name) {

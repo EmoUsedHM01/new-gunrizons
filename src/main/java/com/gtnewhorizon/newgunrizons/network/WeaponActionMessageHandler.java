@@ -113,9 +113,10 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
     }
 
     private void processWeaponLoad(EntityPlayerMP player, ItemStack weaponStack, int slotIndex) {
-        if (!(weaponStack.getItem() instanceof ItemWeapon weapon)) {
+        if (!(weaponStack.getItem() instanceof ItemWeapon)) {
             return;
         }
+        ItemWeapon weapon = (ItemWeapon) weaponStack.getItem();
 
         if (weaponStack.stackTagCompound == null) {
             weaponStack.stackTagCompound = new NBTTagCompound();
@@ -203,9 +204,10 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
     }
 
     private void processWeaponUnload(EntityPlayerMP player, ItemStack weaponStack, int slotIndex) {
-        if (!(weaponStack.getItem() instanceof ItemWeapon weapon)) {
+        if (!(weaponStack.getItem() instanceof ItemWeapon)) {
             return;
         }
+        ItemWeapon weapon = (ItemWeapon) weaponStack.getItem();
 
         ItemWeaponInstance instance = getOrCreateInstance(player, weaponStack, slotIndex);
         if (instance == null) {
@@ -220,7 +222,8 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
             currentMagazine = (ItemAttachment) Item.getItemById(magazineAttachmentId);
         }
 
-        if (currentMagazine instanceof ItemMagazine magazine) {
+        if (currentMagazine instanceof ItemMagazine) {
+            ItemMagazine magazine = (ItemMagazine) currentMagazine;
             // Create magazine ItemStack with current ammo and return to inventory
             ItemStack magazineItemStack = magazine.createItemStack();
             ItemInstance.setAmmo(magazineItemStack, instance.getAmmo());
@@ -239,9 +242,10 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
     }
 
     private void processMagazineLoad(EntityPlayerMP player, ItemStack magazineStack) {
-        if (!(magazineStack.getItem() instanceof ItemMagazine magazine)) {
+        if (!(magazineStack.getItem() instanceof ItemMagazine)) {
             return;
         }
+        ItemMagazine magazine = (ItemMagazine) magazineStack.getItem();
 
         List<ItemBullet> compatibleBullets = magazine.getCompatibleBullets();
         int currentAmmo = ItemInstance.getAmmo(magazineStack);
@@ -261,9 +265,10 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
 
     private void processChangeAttachment(EntityPlayerMP player, ItemStack weaponStack, byte categoryOrdinal,
         int slotIndex) {
-        if (!(weaponStack.getItem() instanceof ItemWeapon weapon)) {
+        if (!(weaponStack.getItem() instanceof ItemWeapon)) {
             return;
         }
+        ItemWeapon weapon = (ItemWeapon) weaponStack.getItem();
 
         if (categoryOrdinal < 0 || categoryOrdinal >= AttachmentCategory.VALUES.length) {
             return;
@@ -356,9 +361,10 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
     }
 
     private void processChangeFireMode(EntityPlayerMP player, ItemStack weaponStack, int slotIndex) {
-        if (!(weaponStack.getItem() instanceof ItemWeapon weapon)) {
+        if (!(weaponStack.getItem() instanceof ItemWeapon)) {
             return;
         }
+        ItemWeapon weapon = (ItemWeapon) weaponStack.getItem();
 
         ItemWeaponInstance instance = getOrCreateInstance(player, weaponStack, slotIndex);
         if (instance == null) {

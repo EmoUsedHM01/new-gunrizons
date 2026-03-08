@@ -28,102 +28,114 @@ public class GTRecipes {
     // ==================== Component Recipes ====================
 
     private static void addComponentRecipes() {
-        // --- Lathe: Gun Barrels ---
+        // --- Assembler: Gun Barrels ---
         GTValues.RA.stdBuilder()
-            .itemInputs(GTOreDictUnificator.get(OrePrefixes.stickLong, Materials.Steel, 1))
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Steel, 2),
+                GTOreDictUnificator.get(OrePrefixes.stick, Materials.Steel, 2),
+                GTUtility.getIntegratedCircuit(3))
             .itemOutputs(new ItemStack(CommonProxy.GunBarrelSteel))
             .duration(200)
             .eut(30)
-            .addTo(RecipeMaps.latheRecipes);
+            .addTo(RecipeMaps.assemblerRecipes);
 
         GTValues.RA.stdBuilder()
-            .itemInputs(GTOreDictUnificator.get(OrePrefixes.stickLong, Materials.StainlessSteel, 1))
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.StainlessSteel, 2),
+                GTOreDictUnificator.get(OrePrefixes.stick, Materials.StainlessSteel, 2),
+                GTUtility.getIntegratedCircuit(3))
             .itemOutputs(new ItemStack(CommonProxy.GunBarrelStainless))
             .duration(200)
             .eut(120)
-            .addTo(RecipeMaps.latheRecipes);
+            .addTo(RecipeMaps.assemblerRecipes);
 
         GTValues.RA.stdBuilder()
-            .itemInputs(GTOreDictUnificator.get(OrePrefixes.stickLong, Materials.Titanium, 1))
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Titanium, 2),
+                GTOreDictUnificator.get(OrePrefixes.stick, Materials.Titanium, 2),
+                GTUtility.getIntegratedCircuit(3))
             .itemOutputs(new ItemStack(CommonProxy.GunBarrelTitanium))
             .duration(300)
             .eut(480)
-            .addTo(RecipeMaps.latheRecipes);
+            .addTo(RecipeMaps.assemblerRecipes);
 
         GTValues.RA.stdBuilder()
-            .itemInputs(GTOreDictUnificator.get(OrePrefixes.stickLong, Materials.TungstenSteel, 1))
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.TungstenSteel, 2),
+                GTOreDictUnificator.get(OrePrefixes.stick, Materials.TungstenSteel, 2),
+                GTUtility.getIntegratedCircuit(3))
             .itemOutputs(new ItemStack(CommonProxy.GunBarrelTungstenSteel))
             .duration(400)
             .eut(1920)
-            .addTo(RecipeMaps.latheRecipes);
+            .addTo(RecipeMaps.assemblerRecipes);
 
-        // --- Extruder: Receivers ---
+        // --- Forming Press: Receivers ---
         GTValues.RA.stdBuilder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Steel, 4),
-                GTUtility.getIntegratedCircuit(1))
+                GTUtility.getIntegratedCircuit(3))
             .itemOutputs(new ItemStack(CommonProxy.GunReceiverSteel))
             .duration(200)
             .eut(30)
-            .addTo(RecipeMaps.extruderRecipes);
+            .addTo(RecipeMaps.formingPressRecipes);
 
         GTValues.RA.stdBuilder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.StainlessSteel, 4),
-                GTUtility.getIntegratedCircuit(1))
+                GTUtility.getIntegratedCircuit(3))
             .itemOutputs(new ItemStack(CommonProxy.GunReceiverStainless))
             .duration(200)
             .eut(120)
-            .addTo(RecipeMaps.extruderRecipes);
+            .addTo(RecipeMaps.formingPressRecipes);
 
         GTValues.RA.stdBuilder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Titanium, 4),
-                GTUtility.getIntegratedCircuit(1))
+                GTUtility.getIntegratedCircuit(3))
             .itemOutputs(new ItemStack(CommonProxy.GunReceiverTitanium))
             .duration(300)
             .eut(480)
-            .addTo(RecipeMaps.extruderRecipes);
+            .addTo(RecipeMaps.formingPressRecipes);
 
         GTValues.RA.stdBuilder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.TungstenSteel, 4),
-                GTUtility.getIntegratedCircuit(1))
+                GTUtility.getIntegratedCircuit(3))
             .itemOutputs(new ItemStack(CommonProxy.GunReceiverTungstenSteel))
             .duration(400)
             .eut(1920)
-            .addTo(RecipeMaps.extruderRecipes);
+            .addTo(RecipeMaps.formingPressRecipes);
 
-        // --- Extruder: Bullet Casings ---
+        // --- Forming Press: Bullet Casings ---
         ItemStack smallCasing = new ItemStack(CommonProxy.BulletCasingSmall, 16);
         GTValues.RA.stdBuilder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Brass, 2),
-                GTUtility.getIntegratedCircuit(2))
+                GTUtility.getIntegratedCircuit(4))
             .itemOutputs(smallCasing)
             .duration(100)
             .eut(30)
-            .addTo(RecipeMaps.extruderRecipes);
+            .addTo(RecipeMaps.formingPressRecipes);
 
         ItemStack mediumCasing = new ItemStack(CommonProxy.BulletCasingMedium, 8);
         GTValues.RA.stdBuilder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Brass, 2),
-                GTUtility.getIntegratedCircuit(3))
+                GTUtility.getIntegratedCircuit(5))
             .itemOutputs(mediumCasing)
             .duration(100)
             .eut(30)
-            .addTo(RecipeMaps.extruderRecipes);
+            .addTo(RecipeMaps.formingPressRecipes);
 
         ItemStack largeCasing = new ItemStack(CommonProxy.BulletCasingLarge, 4);
         GTValues.RA.stdBuilder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Steel, 2),
-                GTUtility.getIntegratedCircuit(4))
+                GTUtility.getIntegratedCircuit(6))
             .itemOutputs(largeCasing)
             .duration(100)
             .eut(120)
-            .addTo(RecipeMaps.extruderRecipes);
+            .addTo(RecipeMaps.formingPressRecipes);
 
         // --- Forming Press: Firing Mechanisms ---
         GTValues.RA.stdBuilder()
@@ -171,7 +183,7 @@ public class GTRecipes {
 
         GTValues.RA.stdBuilder()
             .itemInputs(
-                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Polyethylene, 4),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Plastic, 4),
                 GTOreDictUnificator.get(OrePrefixes.screw, Materials.Aluminium, 2),
                 GTUtility.getIntegratedCircuit(1))
             .itemOutputs(new ItemStack(CommonProxy.GunStockPlastic))
@@ -657,6 +669,13 @@ public class GTRecipes {
         addScope(Attachments.Leupold, 9, 1920, 400);
         addScope(Attachments.PSO1, 10, 480, 300);
         addScope(Attachments.OKP7, 12, 120, 200);
+        addScope(Attachments.G36Scope, 4, 480, 300);
+        addScope(Attachments.AUGScope, 11, 480, 300);
+        addScope(Attachments.Scope, 13, 1920, 400);
+        addScope(Attachments.HP, 14, 1920, 400);
+        addScope(Attachments.Unertl, 15, 480, 300);
+        addScope(Attachments.PUscope, 16, 120, 200);
+        addScope(Attachments.PriscopicScope, 17, 480, 300);
 
         // Grips (Assembler)
         addGrip(Attachments.Grip2, 1);
@@ -703,7 +722,7 @@ public class GTRecipes {
                 .addTo(RecipeMaps.assemblerRecipes);
         }
 
-        // Suppressors (Lathe)
+        // Suppressors (Assembler)
         addSuppressor(Attachments.Silencer9mm, Materials.Steel, 1, 120);
         addSuppressor(Attachments.Silencer762x39, Materials.Steel, 2, 120);
         addSuppressor(Attachments.Silencer556x45, Materials.StainlessSteel, 3, 480);
@@ -711,6 +730,13 @@ public class GTRecipes {
         addSuppressor(Attachments.Silencer556x39, Materials.StainlessSteel, 5, 480);
         addSuppressor(Attachments.Silencer45ACP, Materials.Steel, 6, 120);
         addSuppressor(Attachments.Silencer300AACBlackout, Materials.StainlessSteel, 7, 480);
+        addSuppressor(Attachments.Silencer50BMG, Materials.Titanium, 8, 1920);
+        addSuppressor(Attachments.Silencer762x54, Materials.StainlessSteel, 9, 480);
+        addSuppressor(Attachments.Silencer12Gauge, Materials.StainlessSteel, 10, 480);
+        addSuppressor(Attachments.Silencer65x39, Materials.StainlessSteel, 11, 480);
+        addSuppressor(Attachments.Silencer57x38, Materials.Steel, 12, 120);
+        addSuppressor(Attachments.Silencer357, Materials.Steel, 13, 120);
+        addSuppressor(Attachments.SilencerMP7, Materials.Steel, 14, 120);
     }
 
     private static void addScope(Object scope, int circuit, int eut, int dur) {
@@ -730,7 +756,7 @@ public class GTRecipes {
         if (grip == null) return;
         GTValues.RA.stdBuilder()
             .itemInputs(
-                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Polyethylene, 2),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Plastic, 2),
                 GTOreDictUnificator.get(OrePrefixes.screw, Materials.Steel, 2),
                 GTOreDictUnificator.get(OrePrefixes.stick, Materials.Steel, 1),
                 GTUtility.getIntegratedCircuit(circuit))
@@ -745,11 +771,12 @@ public class GTRecipes {
         GTValues.RA.stdBuilder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.pipeSmall, material, 1),
+                GTOreDictUnificator.get(OrePrefixes.plate, material, 2),
                 GTUtility.getIntegratedCircuit(circuit))
             .itemOutputs(new ItemStack((net.minecraft.item.Item) suppressor))
             .duration(200)
             .eut(eut)
-            .addTo(RecipeMaps.latheRecipes);
+            .addTo(RecipeMaps.assemblerRecipes);
     }
 
     // ==================== Grenade Recipes ====================

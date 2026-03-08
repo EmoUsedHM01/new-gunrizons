@@ -1,6 +1,7 @@
 package com.gtnewhorizon.newgunrizons;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
@@ -58,6 +59,9 @@ public class ClientProxy extends CommonProxy {
         super.registerItem(name, item, renderer);
         if (renderer != null) {
             MinecraftForgeClient.registerItemRenderer(item, renderer);
+        }
+        if (item.getCreativeTab() == null) {
+            codechicken.nei.api.API.hideItem(new ItemStack(item));
         }
     }
 }

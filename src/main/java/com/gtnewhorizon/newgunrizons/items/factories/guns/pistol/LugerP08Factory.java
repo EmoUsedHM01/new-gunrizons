@@ -16,7 +16,6 @@ import com.gtnewhorizon.newgunrizons.model.action.MakarovTop;
 import com.gtnewhorizon.newgunrizons.model.sight.makarovfrontsight;
 import com.gtnewhorizon.newgunrizons.model.sight.makarovrearsight;
 import com.gtnewhorizon.newgunrizons.model.weapon.LugerP08;
-import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
@@ -138,7 +137,6 @@ public class LugerP08Factory {
                         GL11.glScaled(3.0D, 3.0D, 3.0D);
                         GL11.glTranslatef(0.345F, 0.4F, -2.3F);
                         GL11.glRotatef(-10.0F, 1.0F, 0.0F, 0.0F);
-
 
                     })
                     .withFirstPersonCustomPositioning(Magazines.LugerP08Mag, (renderContext) -> {})

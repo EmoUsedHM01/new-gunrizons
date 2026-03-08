@@ -116,7 +116,6 @@ public class P226Factory {
                         GL11.glTranslatef(0.35F, 0.62F, -2.3F);
                         GL11.glRotatef(-5.0F, 1.0F, 0.0F, 0.0F);
 
-
                     })
                     .withFirstPersonCustomPositioning(Magazines.M9BerettaMag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(
@@ -187,7 +186,6 @@ public class P226Factory {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);
                         GL11.glTranslatef(0.35F, 0.62F, -2.8F);
-
 
                     })
                     .withFirstPersonPositioningRunning((renderContext) -> {

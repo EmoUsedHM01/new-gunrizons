@@ -22,7 +22,8 @@ public interface ShaderPhase {
 
         public void apply(ShaderContext context, DynamicShaderGroup shaderGroup) {
             EntityRenderer renderer = context.getRenderer();
-            if (renderer instanceof ScopeWorldRenderer entityRenderer) {
+            if (renderer instanceof ScopeWorldRenderer) {
+                ScopeWorldRenderer entityRenderer = (ScopeWorldRenderer) renderer;
                 ShaderGroup currentShaderGroup = entityRenderer.getShaderGroup();
                 if (currentShaderGroup != shaderGroup) {
                     entityRenderer.theShaderGroup = shaderGroup;
@@ -34,7 +35,8 @@ public interface ShaderPhase {
 
         public void remove(ShaderContext context, DynamicShaderGroup shaderGroup) {
             EntityRenderer renderer = context.getRenderer();
-            if (renderer instanceof ScopeWorldRenderer entityRenderer) {
+            if (renderer instanceof ScopeWorldRenderer) {
+                ScopeWorldRenderer entityRenderer = (ScopeWorldRenderer) renderer;
                 ShaderGroup currentShaderGroup = entityRenderer.getShaderGroup();
                 if (currentShaderGroup instanceof DynamicShaderGroup) {
                     currentShaderGroup.deleteShaderGroup();

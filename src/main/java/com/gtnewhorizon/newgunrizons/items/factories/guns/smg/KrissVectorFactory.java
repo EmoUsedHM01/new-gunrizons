@@ -278,8 +278,6 @@ public class KrissVectorFactory {
 
                         if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Kobra)) {}
 
-
-
                         if (ItemWeapon
                             .isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Holographic2)) {}
 
@@ -360,8 +358,6 @@ public class KrissVectorFactory {
                         if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Reflex)) {}
 
                         if (ItemWeapon.isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Kobra)) {}
-
-
 
                         if (ItemWeapon
                             .isActiveAttachment(renderContext.getWeaponInstance(), Attachments.Holographic2)) {}

@@ -11,7 +11,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.weapon.Deagle;
-import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
@@ -96,7 +95,6 @@ public class Deagle44Factory {
                         GL11.glTranslatef(0.35F, 0.6F, -2.4F);
                         GL11.glRotatef(-7.0F, 1.0F, 0.0F, 0.0F);
 
-
                     })
                     .withFirstPersonCustomPositioning(Magazines.Deagle50Mag, (renderContext) -> {})
                     .withFirstPersonCustomPositioning(
@@ -169,7 +167,6 @@ public class Deagle44Factory {
                         GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                         GL11.glScaled(3.0D, 3.0D, 3.0D);
                         GL11.glTranslatef(0.35F, 0.6F, -2.8F);
-
 
                     })
                     .withFirstPersonPositioningRunning((renderContext) -> {

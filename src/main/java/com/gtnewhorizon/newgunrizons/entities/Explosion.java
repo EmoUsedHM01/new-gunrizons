@@ -202,7 +202,8 @@ public class Explosion {
                     entity.motionX += deltaX * knockbackMultiplier;
                     entity.motionY += deltaY * knockbackMultiplier;
                     entity.motionZ += deltaZ * knockbackMultiplier;
-                    if (entity instanceof EntityPlayer entityplayer) {
+                    if (entity instanceof EntityPlayer) {
+                        EntityPlayer entityplayer = (EntityPlayer) entity;
                         if (!entityplayer.capabilities.isCreativeMode || !entityplayer.capabilities.isFlying) {
                             this.playerKnockbackMap.put(
                                 entityplayer,

@@ -11,7 +11,6 @@ import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.model.weapon.Python;
-import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
@@ -40,12 +39,7 @@ public class PythonFactory {
             .withCreativeTab(NewGunrizonsMod.PistolsTab)
             .withInformationProvider(
                 (stack) -> {
-                    return Arrays.asList(
-                        "Type: Revolver",
-                        "Damage: 6",
-                        "Magazines: 6rnd .357 Clip",
-                        "Fire Rate: Semi"
-                    );
+                    return Arrays.asList("Type: Revolver", "Damage: 6", "Magazines: 6rnd .357 Clip", "Fire Rate: Semi");
                 })
             .withCompatibleAttachment(AuxiliaryAttachments.PythonCase, true, (model) -> {})
             .withCompatibleAttachment(Magazines.PythonClip, ((model) -> { GL11.glScaled(0.0D, 0.0D, 0.0D); }))

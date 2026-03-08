@@ -69,8 +69,8 @@ public class ParticleManager {
      * @param rand     randomization factor applied to each axis
      * @return world-space {x, y, z}
      */
-    private static double[] computeMuzzlePosition(EntityLivingBase player, float distance, float xOffset,
-        float yOffset, float rand) {
+    private static double[] computeMuzzlePosition(EntityLivingBase player, float distance, float xOffset, float yOffset,
+        float rand) {
         Vec3 look = player.getLookVec();
         double lx = look.xCoord, ly = look.yCoord, lz = look.zCoord;
 
@@ -95,12 +95,9 @@ public class ParticleManager {
         double eyeZ = player.posZ;
 
         java.util.Random r = player.worldObj.rand;
-        double posX = eyeX + lx * distance + rx * xOffset - ux * yOffset
-            + (r.nextFloat() * 2.0F - 1.0F) * rand;
-        double posY = eyeY + ly * distance - uy * yOffset
-            + (r.nextFloat() * 2.0F - 1.0F) * rand;
-        double posZ = eyeZ + lz * distance + rz * xOffset - uz * yOffset
-            + (r.nextFloat() * 2.0F - 1.0F) * rand;
+        double posX = eyeX + lx * distance + rx * xOffset - ux * yOffset + (r.nextFloat() * 2.0F - 1.0F) * rand;
+        double posY = eyeY + ly * distance - uy * yOffset + (r.nextFloat() * 2.0F - 1.0F) * rand;
+        double posZ = eyeZ + lz * distance + rz * xOffset - uz * yOffset + (r.nextFloat() * 2.0F - 1.0F) * rand;
 
         return new double[] { posX, posY, posZ };
     }

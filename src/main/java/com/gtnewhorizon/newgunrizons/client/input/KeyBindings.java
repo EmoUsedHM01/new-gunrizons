@@ -18,7 +18,6 @@ public class KeyBindings {
     public static KeyBinding subtractKey;
     public static KeyBinding fireModeKey;
 
-
     public static void init() {
         reloadKey = new KeyBinding("key.reload", 19, "key.categories.newgunrizons");
         laserSwitchKey = new KeyBinding("key.laser", 38, "key.categories.newgunrizons");
