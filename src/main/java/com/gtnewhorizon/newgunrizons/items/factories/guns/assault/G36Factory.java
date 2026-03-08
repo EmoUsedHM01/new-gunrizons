@@ -10,13 +10,7 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.sight.Holo2;
-import com.gtnewhorizon.newgunrizons.model.sight.Holographic;
-import com.gtnewhorizon.newgunrizons.model.sight.Holographic2;
-import com.gtnewhorizon.newgunrizons.model.sight.Kobra;
-import com.gtnewhorizon.newgunrizons.model.sight.Reflex;
-import com.gtnewhorizon.newgunrizons.model.sight.Reflex2;
-import com.gtnewhorizon.newgunrizons.model.weapon.G36;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
@@ -55,47 +49,47 @@ public class G36Factory {
                 GL11.glTranslatef(-0.138F, -2.2F, -1.0F);
                 GL11.glScaled(0.55D, 0.55D, 0.8D);
             }, (model) -> {
-                if (model instanceof Reflex2) {
+                if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glTranslatef(0.035F, -0.065F, 1.28F);
                     GL11.glScaled(0.07D, 0.07D, 0.07D);
                 }
 
             })
             .withCompatibleAttachment(Attachments.Reflex, (model) -> {
-                if (model instanceof Reflex) {
+                if (JsonModel.is(model, "sight/reflex")) {
                     GL11.glTranslatef(-0.073F, -2.12F, -0.7F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glTranslatef(-0.125F, -2.395F, -0.95F);
                     GL11.glScaled(0.06D, 0.06D, 0.06D);
                 }
 
             })
             .withCompatibleAttachment(Attachments.Kobra, (model) -> {
-                if (model instanceof Kobra) {
+                if (JsonModel.is(model, "sight/kobra")) {
                     GL11.glTranslatef(-0.05F, -2.13F, -0.25F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glTranslatef(-0.125F, -2.415F, -0.95F);
                     GL11.glScaled(0.06D, 0.06D, 0.06D);
                 }
 
             })
             .withCompatibleAttachment(Attachments.Holo2, (model) -> {
-                if (model instanceof Holographic) {
+                if (JsonModel.is(model, "sight/holographic")) {
                     GL11.glTranslatef(-0.05F, -2.13F, -0.25F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
-                } else if (model instanceof Holo2) {
+                } else if (JsonModel.is(model, "sight/holo2")) {
                     GL11.glTranslatef(-0.125F, -2.415F, -0.95F);
                     GL11.glScaled(0.06D, 0.06D, 0.06D);
                 }
 
             })
             .withCompatibleAttachment(Attachments.Holographic2, (model) -> {
-                if (model instanceof Holographic2) {
+                if (JsonModel.is(model, "sight/holographic2")) {
                     GL11.glTranslatef(-0.05F, -2.13F, -0.4F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
-                } else if (model instanceof Holo2) {
+                } else if (JsonModel.is(model, "sight/holo2")) {
                     GL11.glTranslatef(-0.125F, -2.418F, -0.5F);
                     GL11.glScaled(0.04D, 0.04D, 0.04D);
                 }
@@ -121,7 +115,7 @@ public class G36Factory {
             })
             .withTextureName("AK12")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new G36())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/g36"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

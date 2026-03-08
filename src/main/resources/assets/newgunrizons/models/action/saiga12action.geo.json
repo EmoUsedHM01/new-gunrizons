@@ -1,0 +1,274 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.saiga12action",
+        "texture_width": 512,
+        "texture_height": 256,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.5,
+                35,
+                -33.5
+              ],
+              "size": [
+                1,
+                2,
+                23
+              ],
+              "uv": [
+                100,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -3.7,
+                36,
+                -33.5
+              ],
+              "size": [
+                1,
+                1,
+                4
+              ],
+              "uv": [
+                100,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -6,
+                36,
+                -33
+              ],
+              "size": [
+                3,
+                1,
+                1
+              ],
+              "uv": [
+                100,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "action1",
+          "pivot": [
+            -2.6,
+            39.2,
+            -33.5
+          ],
+          "rotation": [
+            0,
+            0,
+            19.1716
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.6,
+                37.2,
+                -33.5
+              ],
+              "size": [
+                1,
+                2,
+                13
+              ],
+              "uv": [
+                100,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "action3",
+          "pivot": [
+            -3.5,
+            37,
+            -33.5
+          ],
+          "rotation": [
+            0,
+            0,
+            -61.7752
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.5,
+                36,
+                -33.5
+              ],
+              "size": [
+                2,
+                1,
+                15
+              ],
+              "uv": [
+                100,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "action4",
+          "pivot": [
+            -3.6,
+            37,
+            -26.5
+          ],
+          "rotation": [
+            0,
+            0,
+            -61.7752
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.6,
+                36,
+                -26.5
+              ],
+              "size": [
+                1,
+                1,
+                7
+              ],
+              "uv": [
+                100,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "action5",
+          "pivot": [
+            -2.7,
+            39.2,
+            -26.5
+          ],
+          "rotation": [
+            0,
+            0,
+            19.1716
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.7,
+                37.2,
+                -26.5
+              ],
+              "size": [
+                1,
+                2,
+                6
+              ],
+              "uv": [
+                100,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "action7",
+          "pivot": [
+            -3.7,
+            37,
+            -29.5
+          ],
+          "rotation": [
+            0,
+            -15.1775,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.7,
+                36,
+                -29.5
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                100,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "action9",
+          "pivot": [
+            -4.7,
+            37,
+            -33
+          ],
+          "rotation": [
+            0,
+            -19.1716,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.7,
+                36,
+                -33
+              ],
+              "size": [
+                2,
+                1,
+                1
+              ],
+              "uv": [
+                100,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

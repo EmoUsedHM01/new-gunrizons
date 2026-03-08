@@ -1,0 +1,116 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.scaraction",
+        "texture_width": 512,
+        "texture_height": 256,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3,
+                42,
+                -32
+              ],
+              "size": [
+                3,
+                1,
+                18
+              ],
+              "uv": [
+                100,
+                50
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -5,
+                42.1,
+                -32
+              ],
+              "size": [
+                7,
+                1,
+                1
+              ],
+              "uv": [
+                100,
+                50
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -5,
+                41.9,
+                -32
+              ],
+              "size": [
+                7,
+                1,
+                1
+              ],
+              "uv": [
+                100,
+                50
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -5,
+                42,
+                -32.1
+              ],
+              "size": [
+                7,
+                1,
+                1
+              ],
+              "uv": [
+                100,
+                50
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -5,
+                42,
+                -31.9
+              ],
+              "size": [
+                7,
+                1,
+                1
+              ],
+              "uv": [
+                100,
+                50
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -4,62 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
-import com.gtnewhorizon.newgunrizons.model.magazine.AK12Magazine;
-import com.gtnewhorizon.newgunrizons.model.magazine.AS50Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.ASValMag;
-import com.gtnewhorizon.newgunrizons.model.magazine.DeagleMag;
-import com.gtnewhorizon.newgunrizons.model.magazine.DragunovMag;
-import com.gtnewhorizon.newgunrizons.model.magazine.FNFALMag;
-import com.gtnewhorizon.newgunrizons.model.magazine.G18Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.GlockMagazine;
-import com.gtnewhorizon.newgunrizons.model.magazine.HK417Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.HKMP5Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.L115Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.LeeEnfieldNo4Magazine;
-import com.gtnewhorizon.newgunrizons.model.magazine.LugerMag;
-import com.gtnewhorizon.newgunrizons.model.magazine.M107Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.M110Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.M14Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.M1A1mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.M249Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.M2CarbineMag;
-import com.gtnewhorizon.newgunrizons.model.magazine.M3A1GreaseGunMag;
-import com.gtnewhorizon.newgunrizons.model.magazine.M41AMag;
-import com.gtnewhorizon.newgunrizons.model.magazine.M8A7Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.M9Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.MP18mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.MP40Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.MP7Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.MPXmag;
-import com.gtnewhorizon.newgunrizons.model.magazine.MXMag;
-import com.gtnewhorizon.newgunrizons.model.magazine.Mag308;
-import com.gtnewhorizon.newgunrizons.model.magazine.Mag75rnd;
-import com.gtnewhorizon.newgunrizons.model.magazine.Magazine545x39;
-import com.gtnewhorizon.newgunrizons.model.magazine.Magazine762x39;
-import com.gtnewhorizon.newgunrizons.model.magazine.MakarovMag;
-import com.gtnewhorizon.newgunrizons.model.magazine.Mk48MOD1Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.NATO20rnd;
-import com.gtnewhorizon.newgunrizons.model.magazine.NATO40rnd;
-import com.gtnewhorizon.newgunrizons.model.magazine.NATODrum100;
-import com.gtnewhorizon.newgunrizons.model.magazine.NATOFamasMag;
-import com.gtnewhorizon.newgunrizons.model.magazine.NATOG36Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.NATOMag1;
-import com.gtnewhorizon.newgunrizons.model.magazine.NATOMag2;
-import com.gtnewhorizon.newgunrizons.model.magazine.P90Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.PMAG762x39;
-import com.gtnewhorizon.newgunrizons.model.magazine.PPBizonMag;
-import com.gtnewhorizon.newgunrizons.model.magazine.PPSHDrumMag;
-import com.gtnewhorizon.newgunrizons.model.magazine.RPK74MMag;
-import com.gtnewhorizon.newgunrizons.model.magazine.STG44Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.SV98Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.SVT40mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.Saiga12mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.ScarHMag;
-import com.gtnewhorizon.newgunrizons.model.magazine.Tec9Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.Type100Mag;
-import com.gtnewhorizon.newgunrizons.model.magazine.VEPRMag;
-import com.gtnewhorizon.newgunrizons.model.magazine.VSSVintorezMag;
-import com.gtnewhorizon.newgunrizons.model.magazine.revolverclip;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 
 public class Magazines {
 
@@ -137,7 +82,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet357)
             .withName("PythonClip")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new revolverclip(), "RevolverClip.png")
+            .withModel(new JsonModel("magazine/revolverclip"), "RevolverClip.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -162,7 +107,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x39)
             .withName("Magazine762x39")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new Magazine762x39(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/magazine762x39"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -188,7 +133,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x39)
             .withName("STG44Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new STG44Mag(), "STG44.png")
+            .withModel(new JsonModel("magazine/stg44mag"), "STG44.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -214,7 +159,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x54)
             .withName("SVT40Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new SVT40mag(), "SVT40.png")
+            .withModel(new JsonModel("magazine/svt40mag"), "SVT40.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -240,7 +185,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x54)
             .withName("LeeEnfieldMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new LeeEnfieldNo4Magazine(), "LeeEnfieldNo4.png")
+            .withModel(new JsonModel("magazine/leeenfieldno4magazine"), "LeeEnfieldNo4.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -266,7 +211,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.ShotgunShell)
             .withName("Saiga12mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new Saiga12mag(), "AK12.png")
+            .withModel(new JsonModel("magazine/saiga12mag"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -292,7 +237,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.ShotgunShell)
             .withName("VEPR12Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new VEPRMag(), "AK12.png")
+            .withModel(new JsonModel("magazine/veprmag"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -318,7 +263,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.ShotgunShell410)
             .withName("Saiga410Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new Saiga12mag(), "AK12.png")
+            .withModel(new JsonModel("magazine/saiga12mag"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -344,7 +289,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet8mm)
             .withName("Type100Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new Type100Mag(), "Type100Mag.png")
+            .withModel(new JsonModel("magazine/type100mag"), "Type100Mag.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -368,7 +313,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x25)
             .withName("MP18mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new MP18mag(), "MP18.png")
+            .withModel(new JsonModel("magazine/mp18mag"), "MP18.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -392,7 +337,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet45ACP)
             .withName("M1A1mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new M1A1mag(), "M1A1Thompson.png")
+            .withModel(new JsonModel("magazine/m1a1mag"), "M1A1Thompson.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -418,7 +363,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x25)
             .withName("PPSH41Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new PPSHDrumMag(), "PPSH41.png")
+            .withModel(new JsonModel("magazine/ppshdrummag"), "PPSH41.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -444,7 +389,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x39)
             .withName("Mag75rnd762x39")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new Mag75rnd(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/mag75rnd"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -470,7 +415,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet300Blackout)
             .withName("M8A7Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new M8A7Mag(), "AK12.png")
+            .withModel(new JsonModel("magazine/m8a7mag"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -496,7 +441,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x39)
             .withName("PMAG762x39")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new PMAG762x39(), "AK12.png")
+            .withModel(new JsonModel("magazine/pmag762x39"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -522,7 +467,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x39)
             .withName("AK15Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new PMAG762x39(), "AK15.png")
+            .withModel(new JsonModel("magazine/pmag762x39"), "AK15.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -548,7 +493,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet556x39)
             .withName("AK12Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new AK12Magazine(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/ak12magazine"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.3F, -0.6F, 1.0F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -574,7 +519,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x39)
             .withName("RPK74MMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new RPK74MMag(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/rpk74mmag"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -600,7 +545,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet545x39)
             .withName("AK74MMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new Magazine545x39(), "AK12.png")
+            .withModel(new JsonModel("magazine/magazine545x39"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -626,7 +571,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet545x39)
             .withName("AKS74UMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new Magazine545x39(), "AKS74UMag.png")
+            .withModel(new JsonModel("magazine/magazine545x39"), "AKS74UMag.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -652,7 +597,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("NATOMag1")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new NATOMag1(), "NATOMag1.png")
+            .withModel(new JsonModel("magazine/natomag1"), "NATOMag1.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -678,7 +623,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet9mm)
             .withName("MPXmag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new MPXmag(), "AK12.png")
+            .withModel(new JsonModel("magazine/mpxmag"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -704,7 +649,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet308)
             .withName("Mag308")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new Mag308(), "AK12.png")
+            .withModel(new JsonModel("magazine/mag308"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -730,7 +675,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("NATO20rnd")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new NATO20rnd(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/nato20rnd"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -756,7 +701,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("M16A1Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new M110Mag(), "NATOMag1.png")
+            .withModel(new JsonModel("magazine/m110mag"), "NATOMag1.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -782,7 +727,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("NATO40rnd")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new NATO40rnd(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/nato40rnd"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -808,7 +753,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("NATOMag2")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new NATOMag2(), "NATOMag2.png")
+            .withModel(new JsonModel("magazine/natomag2"), "NATOMag2.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -834,7 +779,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("NATOFamasMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new NATOFamasMag(), "NATOMag1.png")
+            .withModel(new JsonModel("magazine/natofamasmag"), "NATOMag1.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -860,7 +805,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("NATOG36Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new NATOG36Mag(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/natog36mag"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -886,7 +831,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x54)
             .withName("DragunovMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new DragunovMag(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/dragunovmag"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -912,7 +857,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x51)
             .withName("FALMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new FNFALMag(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/fnfalmag"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -938,7 +883,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x51)
             .withName("M110Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new M110Mag(), "NATOMag1.png")
+            .withModel(new JsonModel("magazine/m110mag"), "NATOMag1.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -964,7 +909,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x51)
             .withName("HK417Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new HK417Mag(), "HK417Mag.png")
+            .withModel(new JsonModel("magazine/hk417mag"), "HK417Mag.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -990,7 +935,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x51)
             .withName("M14DMRMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new M14Mag(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/m14mag"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1016,7 +961,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet45ACP)
             .withName("Glock21Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new GlockMagazine(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/glockmagazine"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1042,7 +987,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x21)
             .withName("LugerP08Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new LugerMag(), "AK12.png")
+            .withModel(new JsonModel("magazine/lugermag"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1068,7 +1013,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet9mm)
             .withName("Tec9Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new Tec9Mag(), "AK12.png")
+            .withModel(new JsonModel("magazine/tec9mag"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1094,7 +1039,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet9mm)
             .withName("G18Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new G18Mag(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/g18mag"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1120,7 +1065,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet357)
             .withName("Glock32Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new GlockMagazine(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/glockmagazine"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1146,7 +1091,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet9mm)
             .withName("M9BerettaMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new M9Mag(), "M9Mag.png")
+            .withModel(new JsonModel("magazine/m9mag"), "M9Mag.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1172,7 +1117,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet10mm)
             .withName("Mag10mm")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new M9Mag(), "AK12.png")
+            .withModel(new JsonModel("magazine/m9mag"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1198,7 +1143,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet9mm)
             .withName("Magazine9mm")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new MakarovMag(), "MakarovMag.png")
+            .withModel(new JsonModel("magazine/makarovmag"), "MakarovMag.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1224,7 +1169,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("NATODrum100")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new NATODrum100(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/natodrum100"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1249,7 +1194,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet9mm)
             .withName("MP40Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new MP40Mag(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/mp40mag"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1275,7 +1220,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet45ACP)
             .withName("M3A1Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new M3A1GreaseGunMag(), "AK12.png")
+            .withModel(new JsonModel("magazine/m3a1greasegunmag"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1301,7 +1246,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet45ACP)
             .withName("VectorMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new MP40Mag(), "AK12.png")
+            .withModel(new JsonModel("magazine/mp40mag"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1327,7 +1272,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet9mm)
             .withName("MP5KMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new HKMP5Mag(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/hkmp5mag"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 1.0F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1353,7 +1298,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet50)
             .withName("Deagle50Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new DeagleMag(), "Deagle44.png")
+            .withModel(new JsonModel("magazine/deaglemag"), "Deagle44.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1379,7 +1324,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet9x39mm)
             .withName("VSSVintorezMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new VSSVintorezMag(), "AK12.png")
+            .withModel(new JsonModel("magazine/vssvintorezmag"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1405,7 +1350,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet9x39mm)
             .withName("ASValMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new ASValMag(), "ASValMag.png")
+            .withModel(new JsonModel("magazine/asvalmag"), "ASValMag.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1431,7 +1376,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.BMG50)
             .withName("AS50Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new AS50Mag(), "NATOMag1.png")
+            .withModel(new JsonModel("magazine/as50mag"), "NATOMag1.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1457,7 +1402,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.BMG50)
             .withName("HecateIIMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new AS50Mag(), "NATOMag1.png")
+            .withModel(new JsonModel("magazine/as50mag"), "NATOMag1.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1483,7 +1428,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet57x28)
             .withName("FNP90Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new P90Mag(), "P90Mag.png")
+            .withModel(new JsonModel("magazine/p90mag"), "P90Mag.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.3F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1508,7 +1453,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.BMG50)
             .withName("M107BMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new M107Mag(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/m107mag"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1534,7 +1479,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet46x30)
             .withName("HKMP7Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new MP7Mag(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/mp7mag"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1560,7 +1505,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Carbine30)
             .withName("M1CarbineMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new M14Mag(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/m14mag"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1586,7 +1531,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Carbine30)
             .withName("M2CarbineMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new M2CarbineMag(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/m2carbinemag"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1612,7 +1557,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet308)
             .withName("L115Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new L115Mag(), "AK12.png")
+            .withModel(new JsonModel("magazine/l115mag"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.3F, -0.5F, 0.6F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1638,7 +1583,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x54)
             .withName("SV98Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new SV98Mag(), "AK12.png")
+            .withModel(new JsonModel("magazine/sv98mag"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.3F, -0.5F, 0.6F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1664,7 +1609,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet45ACP)
             .withName("ColtM1911Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new GlockMagazine(), "AK12.png")
+            .withModel(new JsonModel("magazine/glockmagazine"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1690,7 +1635,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet556x45)
             .withName("M249Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new M249Mag(), "M249.png")
+            .withModel(new JsonModel("magazine/m249mag"), "M249.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1716,7 +1661,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet762x51)
             .withName("Mk48Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new Mk48MOD1Mag(), "Mk48MOD1.png")
+            .withModel(new JsonModel("magazine/mk48mod1mag"), "Mk48MOD1.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1742,7 +1687,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet65x39)
             .withName("MXMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new MXMag(), "MXMag.png")
+            .withModel(new JsonModel("magazine/mxmag"), "MXMag.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1768,7 +1713,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet65x39)
             .withName("M41AMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new M41AMag(), "M41AMag.png")
+            .withModel(new JsonModel("magazine/m41amag"), "M41AMag.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(-0.1F, -1.0F, 0.2F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1794,7 +1739,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet300Blackout)
             .withName("ScarHMag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new ScarHMag(), "GunmetalTexture.png")
+            .withModel(new JsonModel("magazine/scarhmag"), "GunmetalTexture.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.7F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -1820,7 +1765,7 @@ public class Magazines {
             .withCompatibleBullet(Bullets.Bullet9mm)
             .withName("PP19Mag")
             .withCreativeTab(NewGunrizonsMod.AmmoTab)
-            .withModel(new PPBizonMag(), "AK12.png")
+            .withModel(new JsonModel("magazine/ppbizonmag"), "AK12.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -0.3F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);

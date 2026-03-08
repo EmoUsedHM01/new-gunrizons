@@ -7,8 +7,8 @@ import com.gtnewhorizon.newgunrizons.attachment.Part;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.grenade.GrenadeRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemGrenade;
-import com.gtnewhorizon.newgunrizons.model.misc.M67Frag;
 import com.gtnewhorizon.newgunrizons.registry.Grenades;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 
 public class FuseGrenadeFactory {
 
@@ -33,7 +33,7 @@ public class FuseGrenadeFactory {
             .withGravityVelocity(() -> { return 0.06F; })
             .withRotationSlowdownFactor(() -> { return 0.99F; })
             .withRenderer(
-                (new GrenadeRenderer.Builder()).withModel(new M67Frag())
+                (new GrenadeRenderer.Builder()).withModel(new JsonModel("misc/m67frag"))
                     .withAnimationDuration(500)
                     .withThrownEntityPositioning(() -> {
                         GL11.glScalef(0.2F, 0.2F, 0.2F);

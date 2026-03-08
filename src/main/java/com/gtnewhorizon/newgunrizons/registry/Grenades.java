@@ -6,7 +6,7 @@ import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.items.ItemGrenade;
 import com.gtnewhorizon.newgunrizons.items.factories.grenades.FuseGrenadeFactory;
 import com.gtnewhorizon.newgunrizons.items.factories.grenades.ImpactGrenadeFactory;
-import com.gtnewhorizon.newgunrizons.model.misc.Pin;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 
 public class Grenades {
 
@@ -16,7 +16,7 @@ public class Grenades {
 
     public static void init() {
         GrenadeSafetyPin = (new AttachmentBuilder()).withCategory(AttachmentCategory.EXTRA)
-            .withModel(new Pin(), "AK12.png")
+            .withModel(new JsonModel("misc/pin"), "AK12.png")
             .withName("GrenadeSafetyPin")
             .withRenderablePart()
             .withTextureName("Dummy.png")

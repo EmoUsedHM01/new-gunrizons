@@ -10,10 +10,7 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.action.MakarovTop;
-import com.gtnewhorizon.newgunrizons.model.sight.makarovfrontsight;
-import com.gtnewhorizon.newgunrizons.model.sight.makarovrearsight;
-import com.gtnewhorizon.newgunrizons.model.weapon.MakarovPM;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
@@ -49,12 +46,12 @@ public class MakarovPMFactory {
                     "10rnd 9mm Magazine",
                     "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.MakarovTop, true, (model) -> {
-                if (model instanceof MakarovTop) {
+                if (JsonModel.is(model, "action/makarovtop")) {
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
-                } else if (model instanceof makarovrearsight) {
+                } else if (JsonModel.is(model, "sight/makarovrearsight")) {
                     GL11.glTranslatef(-0.149F, -1.07F, -0.13F);
                     GL11.glScaled(0.25D, 0.25D, 0.3D);
-                } else if (model instanceof makarovfrontsight) {
+                } else if (JsonModel.is(model, "sight/makarovfrontsight")) {
                     GL11.glTranslatef(-0.1393F, -1.06F, -1.7F);
                     GL11.glScaled(0.15D, 0.25D, 0.2D);
                 }
@@ -63,7 +60,7 @@ public class MakarovPMFactory {
             .withCompatibleAttachment(Magazines.Magazine9mm, ((model) -> { GL11.glTranslatef(0.0F, 0.0F, 0.1F); }))
             .withTextureName("MakarovPM")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new MakarovPM())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/makarovpm"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

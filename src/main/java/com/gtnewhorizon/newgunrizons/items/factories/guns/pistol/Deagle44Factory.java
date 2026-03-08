@@ -10,9 +10,9 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.weapon.Deagle;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 
 public class Deagle44Factory {
 
@@ -52,7 +52,7 @@ public class Deagle44Factory {
             }))
             .withTextureName("Deagle44")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new Deagle())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/deagle"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

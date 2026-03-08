@@ -1,0 +1,325 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.akaction",
+        "texture_width": 128,
+        "texture_height": 64,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.5,
+                35,
+                -33.5
+              ],
+              "size": [
+                1,
+                2,
+                7
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -3.2,
+                35,
+                -26.5
+              ],
+              "size": [
+                1,
+                2,
+                6
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -3,
+                35,
+                -20.5
+              ],
+              "size": [
+                1,
+                2,
+                11
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -7,
+                35.2,
+                -33.5
+              ],
+              "size": [
+                4,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -7,
+                35.8,
+                -33.5
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -6,
+                35.8,
+                -33.5
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "Action1",
+          "pivot": [
+            -2.5,
+            39,
+            -33.5
+          ],
+          "rotation": [
+            0,
+            0,
+            10.6509
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.5,
+                37,
+                -33.5
+              ],
+              "size": [
+                1,
+                2,
+                13
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "Action5",
+          "pivot": [
+            -3.5,
+            37,
+            -26.5
+          ],
+          "rotation": [
+            0,
+            -10.6509,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.5,
+                35,
+                -26.5
+              ],
+              "size": [
+                1,
+                2,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "Action7",
+          "pivot": [
+            -3.5,
+            37,
+            -33.5
+          ],
+          "rotation": [
+            0,
+            0,
+            -29.8225
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.5,
+                36,
+                -33.5
+              ],
+              "size": [
+                1,
+                1,
+                7
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "Action8",
+          "pivot": [
+            -3.2,
+            37,
+            -26.5
+          ],
+          "rotation": [
+            0,
+            0,
+            -48.9941
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.2,
+                36,
+                -26.5
+              ],
+              "size": [
+                1,
+                1,
+                6
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "Action9",
+          "pivot": [
+            -2.9,
+            37.6,
+            -33.5
+          ],
+          "rotation": [
+            0,
+            0,
+            -31.9527
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.9,
+                36.6,
+                -33.5
+              ],
+              "size": [
+                1,
+                1,
+                13
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "Action12",
+          "pivot": [
+            -5,
+            36.8,
+            -33.5
+          ],
+          "rotation": [
+            0,
+            0,
+            42.6035
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -5,
+                35.8,
+                -33.5
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

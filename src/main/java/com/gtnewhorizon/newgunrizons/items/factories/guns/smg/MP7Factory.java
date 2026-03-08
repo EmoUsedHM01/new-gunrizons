@@ -10,17 +10,7 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.sight.Acog2;
-import com.gtnewhorizon.newgunrizons.model.sight.AcogReticle;
-import com.gtnewhorizon.newgunrizons.model.sight.AcogScope2;
-import com.gtnewhorizon.newgunrizons.model.sight.Holo2;
-import com.gtnewhorizon.newgunrizons.model.sight.Holographic;
-import com.gtnewhorizon.newgunrizons.model.sight.Holographic2;
-import com.gtnewhorizon.newgunrizons.model.sight.Kobra;
-import com.gtnewhorizon.newgunrizons.model.sight.MicroT1;
-import com.gtnewhorizon.newgunrizons.model.sight.Reflex;
-import com.gtnewhorizon.newgunrizons.model.sight.Reflex2;
-import com.gtnewhorizon.newgunrizons.model.weapon.MP7;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
@@ -59,10 +49,10 @@ public class MP7Factory {
                 GL11.glTranslatef(0.01F, -1.66F, 1.0F);
                 GL11.glScaled(0.8D, 0.8D, 0.8D);
             }, (model) -> {
-                if (model instanceof AcogScope2) {
+                if (JsonModel.is(model, "sight/acogscope2")) {
                     GL11.glTranslatef(-0.018F, -0.25F, 0.13F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof AcogReticle) {
+                } else if (JsonModel.is(model, "sight/acogreticle")) {
                     GL11.glTranslatef(0.243F, -0.23F, 0.68F);
                     GL11.glScaled(0.03D, 0.03D, 0.03D);
                 }
@@ -72,57 +62,57 @@ public class MP7Factory {
                 GL11.glTranslatef(0.125F, -1.35F, 0.7F);
                 GL11.glScaled(0.45D, 0.45D, 0.45D);
             }, (model) -> {
-                if (model instanceof Acog2) {
+                if (JsonModel.is(model, "sight/acog2")) {
                     GL11.glTranslatef(0.15F, -1.035F, 1.513F);
                     GL11.glScaled(0.1D, 0.1D, 0.1D);
                 }
 
             })
             .withCompatibleAttachment(Attachments.Reflex, (model) -> {
-                if (model instanceof Reflex) {
+                if (JsonModel.is(model, "sight/reflex")) {
                     GL11.glTranslatef(0.27F, -1.48F, 0.2F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glTranslatef(0.202F, -1.81F, 0.2F);
                     GL11.glScaled(0.1D, 0.1D, 0.1D);
                 }
 
             })
             .withCompatibleAttachment(Attachments.Holo2, (model) -> {
-                if (model instanceof Holographic) {
+                if (JsonModel.is(model, "sight/holographic")) {
                     GL11.glTranslatef(0.27F, -1.53F, 0.6F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
-                } else if (model instanceof Holo2) {
+                } else if (JsonModel.is(model, "sight/holo2")) {
                     GL11.glTranslatef(0.196F, -1.82F, 0.45F);
                     GL11.glScaled(0.06D, 0.06D, 0.06D);
                 }
 
             })
             .withCompatibleAttachment(Attachments.Holographic2, (model) -> {
-                if (model instanceof Holographic2) {
+                if (JsonModel.is(model, "sight/holographic2")) {
                     GL11.glTranslatef(0.27F, -1.53F, 0.6F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
-                } else if (model instanceof Holo2) {
+                } else if (JsonModel.is(model, "sight/holo2")) {
                     GL11.glTranslatef(0.196F, -1.82F, 0.45F);
                     GL11.glScaled(0.06D, 0.06D, 0.06D);
                 }
 
             })
             .withCompatibleAttachment(Attachments.Kobra, (model) -> {
-                if (model instanceof Kobra) {
+                if (JsonModel.is(model, "sight/kobra")) {
                     GL11.glTranslatef(0.28F, -1.53F, 0.6F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glTranslatef(0.202F, -1.78F, 0.2F);
                     GL11.glScaled(0.1D, 0.1D, 0.1D);
                 }
 
             })
             .withCompatibleAttachment(Attachments.MicroT1, (model) -> {
-                if (model instanceof MicroT1) {
+                if (JsonModel.is(model, "sight/microt1")) {
                     GL11.glTranslatef(0.135F, -1.67F, 0.6F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glTranslatef(0.195F, -1.83F, 0.4F);
                     GL11.glScaled(0.07D, 0.07D, 0.07D);
                 }
@@ -142,7 +132,7 @@ public class MP7Factory {
             })
             .withTextureName("AK12")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new MP7())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/mp7"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

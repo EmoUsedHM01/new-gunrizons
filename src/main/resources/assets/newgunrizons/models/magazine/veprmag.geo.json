@@ -1,0 +1,149 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.veprmag",
+        "texture_width": 512,
+        "texture_height": 256,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "mag1",
+          "pivot": [
+            -3.4,
+            31.2,
+            -31.8
+          ],
+          "rotation": [
+            14.9112,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.4,
+                23.2,
+                -31.8
+              ],
+              "size": [
+                3,
+                8,
+                11
+              ],
+              "uv": [
+                100,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "mag2",
+          "pivot": [
+            -0.6,
+            31.2,
+            -31.8
+          ],
+          "rotation": [
+            14.9112,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.6,
+                23.2,
+                -31.8
+              ],
+              "size": [
+                1,
+                8,
+                11
+              ],
+              "uv": [
+                100,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "mag3",
+          "pivot": [
+            -3.4,
+            20.6,
+            -23.2
+          ],
+          "rotation": [
+            117.1598,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.4,
+                9.6,
+                -23.2
+              ],
+              "size": [
+                3,
+                11,
+                12
+              ],
+              "uv": [
+                100,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "mag4",
+          "pivot": [
+            -0.6,
+            20.6,
+            -23.2
+          ],
+          "rotation": [
+            117.1598,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.6,
+                9.6,
+                -23.2
+              ],
+              "size": [
+                1,
+                11,
+                12
+              ],
+              "uv": [
+                100,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

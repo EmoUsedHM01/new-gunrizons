@@ -10,24 +10,7 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.misc.PUmount;
-import com.gtnewhorizon.newgunrizons.model.misc.SVTmount;
-import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
-import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
-import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
-import com.gtnewhorizon.newgunrizons.model.sight.FALIron;
-import com.gtnewhorizon.newgunrizons.model.sight.G36CIron1;
-import com.gtnewhorizon.newgunrizons.model.sight.G36CIron2;
-import com.gtnewhorizon.newgunrizons.model.sight.M14Iron;
-import com.gtnewhorizon.newgunrizons.model.sight.M4Iron1;
-import com.gtnewhorizon.newgunrizons.model.sight.M4Iron2;
-import com.gtnewhorizon.newgunrizons.model.sight.MP5Iron;
-import com.gtnewhorizon.newgunrizons.model.sight.P90iron;
-import com.gtnewhorizon.newgunrizons.model.sight.PUreticle;
-import com.gtnewhorizon.newgunrizons.model.sight.PUscope;
-import com.gtnewhorizon.newgunrizons.model.sight.ScarIron1;
-import com.gtnewhorizon.newgunrizons.model.sight.ScarIron2;
-import com.gtnewhorizon.newgunrizons.model.weapon.SVT40;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
@@ -66,15 +49,15 @@ public class SVT40Factory {
                 GL11.glTranslatef(0.4F, -1.2F, 0.2F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             }, (model) -> {
-                if (model instanceof PUscope) {
+                if (JsonModel.is(model, "sight/puscope")) {
                     GL11.glTranslatef(-0.508F, 0.46F, -0.55F);
                     GL11.glScaled(0.22D, 0.22D, 0.22D);
-                } else if (model instanceof PUmount) {
+                } else if (JsonModel.is(model, "misc/pumount")) {
                     GL11.glTranslatef(-0.209F, -0.485F, 1.27F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof SVTmount) {
+                } else if (JsonModel.is(model, "misc/svtmount")) {
                     GL11.glTranslatef(-0.4F, 1.2F, -0.19F);
-                } else if (model instanceof PUreticle) {
+                } else if (JsonModel.is(model, "sight/pureticle")) {
                     GL11.glTranslatef(-0.5F, 0.23F, 0.82F);
                     GL11.glScaled(0.03D, 0.03D, 0.03D);
                 }
@@ -92,43 +75,43 @@ public class SVT40Factory {
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             })
             .withCompatibleAttachment(AuxiliaryAttachments.Extra, true, (model) -> {
-                if (model instanceof AKMiron1) {
+                if (JsonModel.is(model, "sight/akmiron1")) {
                     GL11.glTranslatef(0.125F, -1.8F, -0.5F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof AKMiron2) {
+                } else if (JsonModel.is(model, "sight/akmiron2")) {
                     GL11.glTranslatef(-0.205F, -1.9F, -3.15F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof AK47iron) {
+                } else if (JsonModel.is(model, "sight/ak47iron")) {
                     GL11.glTranslatef(-0.2F, -1.05F, -1.92F);
                     GL11.glScaled(0.75D, 0.6D, 0.75D);
-                } else if (model instanceof M4Iron1) {
+                } else if (JsonModel.is(model, "sight/m4iron1")) {
                     GL11.glTranslatef(0.155F, -1.74F, 1.0F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof M4Iron2) {
+                } else if (JsonModel.is(model, "sight/m4iron2")) {
                     GL11.glTranslatef(0.26F, -1.55F, -2.35F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof P90iron) {
+                } else if (JsonModel.is(model, "sight/p90iron")) {
                     GL11.glTranslatef(0.26F, -1.55F, -2.35F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof G36CIron1) {
+                } else if (JsonModel.is(model, "sight/g36ciron1")) {
                     GL11.glTranslatef(-0.22F, -1.94F, 0.13F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof G36CIron2) {
+                } else if (JsonModel.is(model, "sight/g36ciron2")) {
                     GL11.glTranslatef(-0.13F, -0.77F, -6.2F);
                     GL11.glScaled(0.3D, 0.35D, 0.3D);
-                } else if (model instanceof ScarIron1) {
+                } else if (JsonModel.is(model, "sight/scariron1")) {
                     GL11.glTranslatef(0.165F, -1.65F, 1.0F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof ScarIron2) {
+                } else if (JsonModel.is(model, "sight/scariron2")) {
                     GL11.glTranslatef(0.25F, -1.55F, -2.0F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof FALIron) {
+                } else if (JsonModel.is(model, "sight/faliron")) {
                     GL11.glTranslatef(0.129F, -1.63F, -2.08F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof M14Iron) {
+                } else if (JsonModel.is(model, "sight/m14iron")) {
                     GL11.glTranslatef(0.129F, -1.63F, -2.08F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof MP5Iron) {
+                } else if (JsonModel.is(model, "sight/mp5iron")) {
                     GL11.glTranslatef(0.215F, -1.54F, 1.2F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
@@ -136,7 +119,7 @@ public class SVT40Factory {
             })
             .withTextureName("svt40")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new SVT40())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/svt40"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

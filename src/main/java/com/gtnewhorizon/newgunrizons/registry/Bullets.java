@@ -4,10 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.items.ItemBullet;
-import com.gtnewhorizon.newgunrizons.model.ammo.Bullet44;
-import com.gtnewhorizon.newgunrizons.model.ammo.BulletBig;
-import com.gtnewhorizon.newgunrizons.model.ammo.SMAWRocket;
-import com.gtnewhorizon.newgunrizons.model.ammo.ShotgunShell;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 
 public class Bullets {
 
@@ -48,7 +45,7 @@ public class Bullets {
     public static void init() {
         ShotgunShell = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("ShotgunShell")
-            .withModel(new ShotgunShell(), "ShotgunShell.png")
+            .withModel(new JsonModel("ammo/shotgunshell"), "ShotgunShell.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.2F, 0.4F);
@@ -71,7 +68,7 @@ public class Bullets {
             .build(ItemBullet.class);
         ShotgunShell410 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("ShotgunShell410")
-            .withModel(new ShotgunShell(), "ShotgunShell.png")
+            .withModel(new JsonModel("ammo/shotgunshell"), "ShotgunShell.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.2F, 0.4F);
@@ -94,7 +91,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet9x39mm = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet9x39mm")
-            .withModel(new BulletBig(), "gold.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "gold.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.2F, 0.4F);
@@ -117,7 +114,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet8mm = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet8mm")
-            .withModel(new BulletBig(), "gold.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "gold.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.2F, 0.4F);
@@ -141,7 +138,7 @@ public class Bullets {
         SMAWRocket = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("SMAWRocket")
             .withMaxStackSize(1)
-            .withModel(new SMAWRocket(), "SMAW.png")
+            .withModel(new JsonModel("ammo/smawrocket"), "SMAW.png")
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.2F, 0.4F);
                 GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
@@ -164,7 +161,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet10x24 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet10x24")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.2F, 0.4F);
@@ -187,7 +184,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet762x21 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet762x21")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.2F, 0.4F);
@@ -210,7 +207,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet303British = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet303British")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.2F, 0.4F);
@@ -233,7 +230,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet792x33 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet792x33")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.2F, 0.4F);
@@ -256,7 +253,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet792x57 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet792x57")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.2F, 0.4F);
@@ -279,7 +276,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Magnum44Ammo = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Magnum44Ammo")
-            .withModel(new Bullet44(), "Bullet44.png")
+            .withModel(new JsonModel("ammo/bullet44"), "Bullet44.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -302,7 +299,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet455 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet455")
-            .withModel(new Bullet44(), "Bullet44.png")
+            .withModel(new JsonModel("ammo/bullet44"), "Bullet44.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -325,7 +322,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet380200 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet380200")
-            .withModel(new Bullet44(), "Bullet44.png")
+            .withModel(new JsonModel("ammo/bullet44"), "Bullet44.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -348,7 +345,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Carbine30 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Carbine30")
-            .withModel(new Bullet44(), "Bullet44.png")
+            .withModel(new JsonModel("ammo/bullet44"), "Bullet44.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -371,7 +368,7 @@ public class Bullets {
             .build(ItemBullet.class);
         BulletSpringfield3006 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("BulletSpringfield3006")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -394,7 +391,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet357 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet357")
-            .withModel(new Bullet44(), "Bullet44.png")
+            .withModel(new JsonModel("ammo/bullet44"), "Bullet44.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -417,7 +414,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet50 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet50AE")
-            .withModel(new Bullet44(), "Bullet44.png")
+            .withModel(new JsonModel("ammo/bullet44"), "Bullet44.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -440,7 +437,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet9mm = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet9mm")
-            .withModel(new Bullet44(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bullet44"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -463,7 +460,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet10mm = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet10mm")
-            .withModel(new Bullet44(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bullet44"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -486,7 +483,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet45ACP = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet45ACP")
-            .withModel(new Bullet44(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bullet44"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -509,7 +506,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet762x39 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet762x39")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -532,7 +529,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet46x30 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet46x30")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -555,7 +552,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet57x28 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet57x28")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -578,7 +575,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet556x39 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet556x39")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -601,7 +598,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet545x39 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet545x39")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -624,7 +621,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet762x25 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet762x25")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -647,7 +644,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet556x45 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet556x45")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -670,7 +667,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet762x54 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet762x54")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -693,7 +690,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet762x51 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet762x51")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -716,7 +713,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet308 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet308")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -739,7 +736,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet300Blackout = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet300Blackout")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -762,7 +759,7 @@ public class Bullets {
             .build(ItemBullet.class);
         BMG50 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("BMG50")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);
@@ -785,7 +782,7 @@ public class Bullets {
             .build(ItemBullet.class);
         Bullet65x39 = (new ItemBullet.Builder()).withCreativeTab(NewGunrizonsMod.AmmoTab)
             .withName("Bullet65x39")
-            .withModel(new BulletBig(), "Bullet.png")
+            .withModel(new JsonModel("ammo/bulletbig"), "Bullet.png")
 
             .withFirstPersonPositioning((player, itemStack) -> {
                 GL11.glTranslatef(0.1F, -1.0F, 0.4F);

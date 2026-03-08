@@ -1,0 +1,184 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.l115bolt1",
+        "texture_width": 256,
+        "texture_height": 128,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                2.3,
+                39.8,
+                5
+              ],
+              "size": [
+                1,
+                1,
+                5
+              ],
+              "uv": [
+                0,
+                100
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                1.5,
+                38.8,
+                5
+              ],
+              "size": [
+                2,
+                1,
+                5
+              ],
+              "uv": [
+                0,
+                100
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                2.5,
+                39.6,
+                5
+              ],
+              "size": [
+                1,
+                1,
+                5
+              ],
+              "uv": [
+                0,
+                100
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                1.9,
+                39.6,
+                0
+              ],
+              "size": [
+                1,
+                1,
+                8
+              ],
+              "uv": [
+                0,
+                100
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                1.9,
+                39.6,
+                5.9
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                100
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                1.7,
+                39.8,
+                8
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                100
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                1.9,
+                38.8,
+                0
+              ],
+              "size": [
+                1,
+                1,
+                8
+              ],
+              "uv": [
+                0,
+                100
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                2.3,
+                39.6,
+                0
+              ],
+              "size": [
+                1,
+                1,
+                8
+              ],
+              "uv": [
+                0,
+                100
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                2.4,
+                38.8,
+                0
+              ],
+              "size": [
+                1,
+                1,
+                8
+              ],
+              "uv": [
+                0,
+                100
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -4,8 +4,10 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
+import net.minecraft.client.model.ModelBase;
+
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
-import com.gtnewhorizon.newgunrizons.model.ModelBullet;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 
 public class EntityBulletRenderer extends Render {
 
@@ -13,7 +15,7 @@ public class EntityBulletRenderer extends Render {
         NewGunrizonsMod.MODID,
         "textures/effect/bullet44.png");
 
-    private static final ModelBullet DEFAULT_MODEL = new ModelBullet();
+    private static final ModelBase DEFAULT_MODEL = new JsonModel("misc/modelbullet");
 
     public void doRender(Entity entity, double x, double y, double z, float yaw, float tick) {
         /*

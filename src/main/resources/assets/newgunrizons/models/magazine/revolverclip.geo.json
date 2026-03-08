@@ -1,0 +1,167 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.revolverclip",
+        "texture_width": 512,
+        "texture_height": 256,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3,
+                34,
+                -8.2
+              ],
+              "size": [
+                3,
+                4,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -4,
+                35,
+                -8.2
+              ],
+              "size": [
+                5,
+                2,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2.8,
+                36.8,
+                -10.2
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                50,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1.2,
+                36.8,
+                -10.2
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                50,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2.8,
+                34.2,
+                -10.2
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                50,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1.2,
+                34.2,
+                -10.2
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                50,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.2,
+                35.5,
+                -10.2
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                50,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -3.8,
+                35.5,
+                -10.2
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                50,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

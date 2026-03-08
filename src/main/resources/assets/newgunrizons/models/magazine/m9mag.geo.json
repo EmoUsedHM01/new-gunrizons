@@ -1,0 +1,421 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.m9mag",
+        "texture_width": 512,
+        "texture_height": 256,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.5,
+                16.5,
+                -5.2
+              ],
+              "size": [
+                4,
+                2,
+                6
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -3.3,
+                17.5,
+                -2.5
+              ],
+              "size": [
+                3,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.7,
+                17.5,
+                -2.5
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -3,
+                30.5,
+                -7
+              ],
+              "size": [
+                3,
+                1,
+                4
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.7,
+                29.6,
+                -5.2
+              ],
+              "size": [
+                1,
+                2,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -3.3,
+                29.6,
+                -5.2
+              ],
+              "size": [
+                3,
+                2,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun2",
+          "pivot": [
+            -3.3,
+            30,
+            -7
+          ],
+          "rotation": [
+            -12.7811,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.3,
+                17,
+                -7
+              ],
+              "size": [
+                3,
+                13,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun5",
+          "pivot": [
+            -0.7,
+            30,
+            -7
+          ],
+          "rotation": [
+            -12.7811,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.7,
+                17,
+                -7
+              ],
+              "size": [
+                1,
+                13,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun10",
+          "pivot": [
+            -3,
+            30.5,
+            -7
+          ],
+          "rotation": [
+            -17.0414,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3,
+                29.5,
+                -7
+              ],
+              "size": [
+                3,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun14",
+          "pivot": [
+            -3.3,
+            30.5,
+            -5.1
+          ],
+          "rotation": [
+            -12.7811,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.3,
+                17.5,
+                -5.1
+              ],
+              "size": [
+                3,
+                13,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun15",
+          "pivot": [
+            -0.7,
+            30.5,
+            -5.1
+          ],
+          "rotation": [
+            -12.7811,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.7,
+                17.5,
+                -5.1
+              ],
+              "size": [
+                1,
+                13,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun16",
+          "pivot": [
+            -0.7,
+            26,
+            -5.5
+          ],
+          "rotation": [
+            -12.7811,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.7,
+                17,
+                -5.5
+              ],
+              "size": [
+                1,
+                9,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun17",
+          "pivot": [
+            -3.3,
+            26,
+            -5.5
+          ],
+          "rotation": [
+            -12.7811,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.3,
+                17,
+                -5.5
+              ],
+              "size": [
+                1,
+                9,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun18",
+          "pivot": [
+            -3.1,
+            30,
+            -6.5
+          ],
+          "rotation": [
+            -12.7811,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.1,
+                17,
+                -6.5
+              ],
+              "size": [
+                1,
+                13,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun19",
+          "pivot": [
+            -0.9,
+            30,
+            -6.5
+          ],
+          "rotation": [
+            -12.7811,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.9,
+                17,
+                -6.5
+              ],
+              "size": [
+                1,
+                13,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

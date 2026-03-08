@@ -10,27 +10,7 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
-import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
-import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
-import com.gtnewhorizon.newgunrizons.model.sight.Acog2;
-import com.gtnewhorizon.newgunrizons.model.sight.AcogReticle;
-import com.gtnewhorizon.newgunrizons.model.sight.AcogScope2;
-import com.gtnewhorizon.newgunrizons.model.sight.FALIron;
-import com.gtnewhorizon.newgunrizons.model.sight.G36CIron1;
-import com.gtnewhorizon.newgunrizons.model.sight.G36CIron2;
-import com.gtnewhorizon.newgunrizons.model.sight.LPscope;
-import com.gtnewhorizon.newgunrizons.model.sight.M14Iron;
-import com.gtnewhorizon.newgunrizons.model.sight.M4Iron1;
-import com.gtnewhorizon.newgunrizons.model.sight.M4Iron2;
-import com.gtnewhorizon.newgunrizons.model.sight.MBUSiron;
-import com.gtnewhorizon.newgunrizons.model.sight.MP5Iron;
-import com.gtnewhorizon.newgunrizons.model.sight.MicroT1;
-import com.gtnewhorizon.newgunrizons.model.sight.P90iron;
-import com.gtnewhorizon.newgunrizons.model.sight.Reflex2;
-import com.gtnewhorizon.newgunrizons.model.sight.ScarIron1;
-import com.gtnewhorizon.newgunrizons.model.sight.ScarIron2;
-import com.gtnewhorizon.newgunrizons.model.weapon.L96;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
@@ -83,46 +63,46 @@ public class L96Factory {
                 GL11.glScaled(0.7D, 0.8D, 0.9D);
             })
             .withCompatibleAttachment(Attachments.AKMIron, true, (model) -> {
-                if (model instanceof M4Iron1) {
+                if (JsonModel.is(model, "sight/m4iron1")) {
                     GL11.glTranslatef(-0.165F, -1.5F, -1.15F);
                     GL11.glScaled(0.35D, 0.35D, 0.35D);
-                } else if (model instanceof M4Iron2) {
+                } else if (JsonModel.is(model, "sight/m4iron2")) {
                     GL11.glTranslatef(0.262F, -0.8F, -2.25F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof P90iron) {
+                } else if (JsonModel.is(model, "sight/p90iron")) {
                     GL11.glTranslatef(0.26F, -1.55F, -2.35F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof AKMiron1) {
+                } else if (JsonModel.is(model, "sight/akmiron1")) {
                     GL11.glTranslatef(0.125F, -1.8F, -0.5F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof AKMiron2) {
+                } else if (JsonModel.is(model, "sight/akmiron2")) {
                     GL11.glTranslatef(0.13F, -1.55F, -3.05F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof AK47iron) {
+                } else if (JsonModel.is(model, "sight/ak47iron")) {
                     GL11.glTranslatef(-0.22F, -1.75F, -3.07F);
                     GL11.glScaled(0.6D, 0.7D, 0.1D);
-                } else if (model instanceof G36CIron1) {
+                } else if (JsonModel.is(model, "sight/g36ciron1")) {
                     GL11.glTranslatef(-0.22F, -1.94F, 0.13F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof G36CIron2) {
+                } else if (JsonModel.is(model, "sight/g36ciron2")) {
                     GL11.glTranslatef(-0.205F, -1.9F, -3.15F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof ScarIron1) {
+                } else if (JsonModel.is(model, "sight/scariron1")) {
                     GL11.glTranslatef(0.165F, -1.65F, 1.0F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof ScarIron2) {
+                } else if (JsonModel.is(model, "sight/scariron2")) {
                     GL11.glTranslatef(0.25F, -1.55F, -2.0F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof FALIron) {
+                } else if (JsonModel.is(model, "sight/faliron")) {
                     GL11.glTranslatef(-0.17F, -1.545F, -3.1F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof M14Iron) {
+                } else if (JsonModel.is(model, "sight/m14iron")) {
                     GL11.glTranslatef(0.129F, -1.63F, -2.08F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof MP5Iron) {
+                } else if (JsonModel.is(model, "sight/mp5iron")) {
                     GL11.glTranslatef(0.215F, -1.54F, 1.2F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof MBUSiron) {
+                } else if (JsonModel.is(model, "sight/mbusiron")) {
                     GL11.glTranslatef(0.215F, -1.54F, 1.2F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
@@ -132,7 +112,7 @@ public class L96Factory {
                 GL11.glTranslatef(-0.36F, -1.43F, -1.5F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             }, (model) -> {
-                if (model instanceof LPscope) {
+                if (JsonModel.is(model, "sight/lpscope")) {
                     GL11.glTranslatef(0.237F, -0.235F, 1.16F);
                     GL11.glScaled(0.1D, 0.1D, 0.1D);
                 }
@@ -142,7 +122,7 @@ public class L96Factory {
                 GL11.glTranslatef(-0.36F, -1.43F, -1.0F);
                 GL11.glScaled(1.0D, 1.0D, 1.0D);
             }, (model) -> {
-                if (model instanceof LPscope) {
+                if (JsonModel.is(model, "sight/lpscope")) {
                     GL11.glTranslatef(0.237F, -0.272F, 0.67F);
                     GL11.glScaled(0.05D, 0.05D, 0.05D);
                 }
@@ -152,10 +132,10 @@ public class L96Factory {
                 GL11.glTranslatef(-0.335F, -1.45F, -1.3F);
                 GL11.glScaled(0.9D, 0.9D, 0.9D);
             }, (model) -> {
-                if (model instanceof AcogScope2) {
+                if (JsonModel.is(model, "sight/acogscope2")) {
                     GL11.glTranslatef(-0.018F, -0.25F, 0.13F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof AcogReticle) {
+                } else if (JsonModel.is(model, "sight/acogreticle")) {
                     GL11.glTranslatef(0.243F, -0.23F, 0.68F);
                     GL11.glScaled(0.03D, 0.03D, 0.03D);
                 }
@@ -165,17 +145,17 @@ public class L96Factory {
                 GL11.glTranslatef(-0.19F, -1.15F, -1.5F);
                 GL11.glScaled(0.45D, 0.45D, 0.45D);
             }, (model) -> {
-                if (model instanceof Acog2) {
+                if (JsonModel.is(model, "sight/acog2")) {
                     GL11.glTranslatef(0.15F, -1.035F, 1.513F);
                     GL11.glScaled(0.1D, 0.1D, 0.1D);
                 }
 
             })
             .withCompatibleAttachment(Attachments.MicroT1, (model) -> {
-                if (model instanceof MicroT1) {
+                if (JsonModel.is(model, "sight/microt1")) {
                     GL11.glTranslatef(-0.17F, -1.42F, -0.6F);
                     GL11.glScaled(0.3D, 0.3D, 0.3D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glTranslatef(-0.125F, -1.53F, -0.7F);
                     GL11.glScaled(0.07D, 0.07D, 0.07D);
                 }
@@ -187,7 +167,7 @@ public class L96Factory {
             })
             .withTextureName("L115")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new L96())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/l96"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

@@ -10,8 +10,7 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.sight.LPscope;
-import com.gtnewhorizon.newgunrizons.model.weapon.AUG;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
@@ -52,7 +51,7 @@ public class AUGFactory {
                 GL11.glTranslatef(-0.165F, -1.4F, -1.05F);
                 GL11.glScaled(0.6D, 0.6D, 0.6D);
             }, (model) -> {
-                if (model instanceof LPscope) {
+                if (JsonModel.is(model, "sight/lpscope")) {
                     GL11.glTranslatef(0.08F, -0.12F, 2.92F);
                     GL11.glScaled(0.09D, 0.1D, 0.08D);
                 }
@@ -69,7 +68,7 @@ public class AUGFactory {
             })
             .withTextureName("AUG")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new AUG())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/aug"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

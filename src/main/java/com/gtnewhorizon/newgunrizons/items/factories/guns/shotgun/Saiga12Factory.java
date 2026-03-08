@@ -10,13 +10,7 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.sight.OKP7;
-import com.gtnewhorizon.newgunrizons.model.sight.OKP7reticle;
-import com.gtnewhorizon.newgunrizons.model.sight.PSO12;
-import com.gtnewhorizon.newgunrizons.model.sight.PSO1reticle;
-import com.gtnewhorizon.newgunrizons.model.sight.makarovfrontsight;
-import com.gtnewhorizon.newgunrizons.model.sight.makarovrearsight;
-import com.gtnewhorizon.newgunrizons.model.weapon.Saiga12;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
@@ -58,30 +52,30 @@ public class Saiga12Factory {
                 GL11.glTranslatef(0.14F, -0.9F, -1.1F);
                 GL11.glScaled(1.2D, 1.2D, 1.2D);
             }, (model) -> {
-                if (model instanceof PSO1reticle) {
+                if (JsonModel.is(model, "sight/pso1reticle")) {
                     GL11.glTranslatef(-0.212F, -0.486F, 1.27F);
                     GL11.glScaled(0.017D, 0.017D, 0.017D);
-                } else if (model instanceof PSO12) {
+                } else if (JsonModel.is(model, "sight/pso12")) {
                     GL11.glTranslatef(-0.27F, -0.6F, 1.21F);
                     GL11.glScaled(0.8D, 0.8D, 0.8D);
                 }
 
             })
             .withCompatibleAttachment(AuxiliaryAttachments.Saiga12sights, true, (model) -> {
-                if (model instanceof makarovrearsight) {
+                if (JsonModel.is(model, "sight/makarovrearsight")) {
                     GL11.glTranslatef(-0.1393F, -1.3F, -2.85F);
                     GL11.glScaled(0.2D, 0.22D, 0.2D);
-                } else if (model instanceof makarovfrontsight) {
+                } else if (JsonModel.is(model, "sight/makarovfrontsight")) {
                     GL11.glTranslatef(-0.124F, -1.29F, -4.9F);
                     GL11.glScaled(0.1D, 0.1D, 0.05D);
                 }
 
             })
             .withCompatibleAttachment(Attachments.OKP7, (model) -> {
-                if (model instanceof OKP7) {
+                if (JsonModel.is(model, "sight/okp7")) {
                     GL11.glTranslatef(-0.18F, -0.65F, -1.15F);
                     GL11.glScaled(0.7D, 0.7D, 0.7D);
-                } else if (model instanceof OKP7reticle) {
+                } else if (JsonModel.is(model, "sight/okp7reticle")) {
                     GL11.glTranslatef(-0.07F, -1.45F, -1.5F);
                     GL11.glScaled(0.07D, 0.07D, 0.07D);
                 }
@@ -95,7 +89,7 @@ public class Saiga12Factory {
             })
             .withTextureName("Saiga12")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new Saiga12())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/saiga12"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

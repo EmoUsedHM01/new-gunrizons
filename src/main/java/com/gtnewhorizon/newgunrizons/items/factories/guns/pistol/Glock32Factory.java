@@ -10,10 +10,10 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.weapon.Glock;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 
 public class Glock32Factory {
 
@@ -59,7 +59,7 @@ public class Glock32Factory {
             })
             .withTextureName("G21")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new Glock())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/glock"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

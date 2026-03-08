@@ -10,22 +10,7 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.action.MosinBolt;
-import com.gtnewhorizon.newgunrizons.model.action.MosinBolt2;
-import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
-import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
-import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
-import com.gtnewhorizon.newgunrizons.model.sight.FALIron;
-import com.gtnewhorizon.newgunrizons.model.sight.G36CIron1;
-import com.gtnewhorizon.newgunrizons.model.sight.G36CIron2;
-import com.gtnewhorizon.newgunrizons.model.sight.M14Iron;
-import com.gtnewhorizon.newgunrizons.model.sight.M4Iron1;
-import com.gtnewhorizon.newgunrizons.model.sight.M4Iron2;
-import com.gtnewhorizon.newgunrizons.model.sight.MP5Iron;
-import com.gtnewhorizon.newgunrizons.model.sight.P90iron;
-import com.gtnewhorizon.newgunrizons.model.sight.ScarIron1;
-import com.gtnewhorizon.newgunrizons.model.sight.ScarIron2;
-import com.gtnewhorizon.newgunrizons.model.weapon.MosinNagant;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
@@ -65,7 +50,7 @@ public class MosinNagantFactory {
                     "7.62x54mm Bullet",
                     "Fire Rate: Bolt Action"))
             .withCompatibleAttachment(AuxiliaryAttachments.MosinBolt, true, (model) -> {
-                if (model instanceof MosinBolt) {
+                if (JsonModel.is(model, "action/mosinbolt")) {
                     GL11.glTranslatef(0.85F, -1.29F, -0.03F);
                     GL11.glScaled(0.9D, 0.85D, 0.95D);
                     GL11.glRotatef(-90.0F, 0.0F, 0.0F, 1.0F);
@@ -73,7 +58,7 @@ public class MosinNagantFactory {
 
             })
             .withCompatibleAttachment(AuxiliaryAttachments.MosinBolt2, true, (model) -> {
-                if (model instanceof MosinBolt2) {
+                if (JsonModel.is(model, "action/mosinbolt2")) {
                     GL11.glTranslatef(0.033F, -0.018F, -0.0F);
                     GL11.glScaled(1.2D, 1.0D, 1.0D);
                 }
@@ -81,43 +66,43 @@ public class MosinNagantFactory {
             })
             .withCompatibleBullet(Bullets.Bullet762x54, (model) -> {})
             .withCompatibleAttachment(AuxiliaryAttachments.Extra, true, (model) -> {
-                if (model instanceof M4Iron1) {
+                if (JsonModel.is(model, "sight/m4iron1")) {
                     GL11.glTranslatef(0.17F, -1.42F, 0.43F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof M4Iron2) {
+                } else if (JsonModel.is(model, "sight/m4iron2")) {
                     GL11.glTranslatef(0.255F, -0.8F, -2.25F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof P90iron) {
+                } else if (JsonModel.is(model, "sight/p90iron")) {
                     GL11.glTranslatef(0.26F, -1.55F, -2.35F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof AKMiron1) {
+                } else if (JsonModel.is(model, "sight/akmiron1")) {
                     GL11.glTranslatef(0.125F, -1.8F, -0.5F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof AKMiron2) {
+                } else if (JsonModel.is(model, "sight/akmiron2")) {
                     GL11.glTranslatef(0.13F, -1.55F, -3.05F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof AK47iron) {
+                } else if (JsonModel.is(model, "sight/ak47iron")) {
                     GL11.glTranslatef(-0.27F, -1.58F, -3.45F);
                     GL11.glScaled(0.7D, 0.7D, 0.7D);
-                } else if (model instanceof G36CIron1) {
+                } else if (JsonModel.is(model, "sight/g36ciron1")) {
                     GL11.glTranslatef(-0.22F, -1.94F, -1.0F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof G36CIron2) {
+                } else if (JsonModel.is(model, "sight/g36ciron2")) {
                     GL11.glTranslatef(-0.207F, -1.245F, -9.165F);
                     GL11.glScaled(0.35D, 0.35D, 0.65D);
-                } else if (model instanceof ScarIron1) {
+                } else if (JsonModel.is(model, "sight/scariron1")) {
                     GL11.glTranslatef(0.165F, -1.65F, 1.0F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof ScarIron2) {
+                } else if (JsonModel.is(model, "sight/scariron2")) {
                     GL11.glTranslatef(0.25F, -1.55F, -2.0F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof FALIron) {
+                } else if (JsonModel.is(model, "sight/faliron")) {
                     GL11.glTranslatef(0.125F, -1.43F, -4.88F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof M14Iron) {
+                } else if (JsonModel.is(model, "sight/m14iron")) {
                     GL11.glTranslatef(0.129F, -1.63F, -2.08F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof MP5Iron) {
+                } else if (JsonModel.is(model, "sight/mp5iron")) {
                     GL11.glTranslatef(0.215F, -1.54F, 1.2F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
@@ -125,7 +110,7 @@ public class MosinNagantFactory {
             })
             .withTextureName("MosinNagant")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new MosinNagant())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/mosinnagant"))
                     .withPrepareFirstLoadIterationAnimationDuration(1300)
                     .withAllLoadIterationAnimationsCompletedDuration(1100)
                     .withEntityPositioning((itemStack) -> {

@@ -10,9 +10,7 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.sight.FNP90Sight;
-import com.gtnewhorizon.newgunrizons.model.sight.Reflex2;
-import com.gtnewhorizon.newgunrizons.model.weapon.FNP90;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
@@ -48,10 +46,10 @@ public class FNP90Factory {
                     "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.FNP90Mag, ((model) -> {}))
             .withCompatibleAttachment(AuxiliaryAttachments.FNP90Sight, true, (model) -> {
-                if (model instanceof FNP90Sight) {
+                if (JsonModel.is(model, "sight/fnp90sight")) {
                     GL11.glTranslatef(0.045F, -1.7F, -0.3F);
                     GL11.glScaled(0.75D, 0.9D, 0.9D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glTranslatef(0.19F, -1.76F, 0.0F);
                     GL11.glScaled(0.2D, 0.2D, 0.2D);
                 }
@@ -67,7 +65,7 @@ public class FNP90Factory {
             })
             .withTextureName("ak12")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new FNP90())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/fnp90"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.35D, 0.35D, 0.35D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

@@ -10,10 +10,7 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.action.P2000Top;
-import com.gtnewhorizon.newgunrizons.model.sight.P2000rearsight;
-import com.gtnewhorizon.newgunrizons.model.sight.P226frontsight;
-import com.gtnewhorizon.newgunrizons.model.weapon.P2000;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
@@ -50,12 +47,12 @@ public class P2000Factory {
                     "15rnd 9mm Magazine",
                     "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.P2000Top, true, (model) -> {
-                if (model instanceof P2000Top) {
+                if (JsonModel.is(model, "action/p2000top")) {
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
-                } else if (model instanceof P2000rearsight) {
+                } else if (JsonModel.is(model, "sight/p2000rearsight")) {
                     GL11.glTranslatef(-0.167F, -1.14F, -0.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof P226frontsight) {
+                } else if (JsonModel.is(model, "sight/p226frontsight")) {
                     GL11.glTranslatef(-0.15F, -1.175F, -1.95F);
                     GL11.glScaled(0.25D, 0.25D, 0.3D);
                 }
@@ -73,7 +70,7 @@ public class P2000Factory {
             })
             .withTextureName("GunmetalTexture")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new P2000())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/p2000"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

@@ -1,0 +1,263 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.m1carbineaction",
+        "texture_width": 512,
+        "texture_height": 256,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -5.5,
+                35.5,
+                -21.5
+              ],
+              "size": [
+                3,
+                1,
+                1
+              ],
+              "uv": [
+                150,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2.5,
+                35.8,
+                -22.5
+              ],
+              "size": [
+                2,
+                1,
+                8
+              ],
+              "uv": [
+                150,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2.5,
+                36,
+                -23
+              ],
+              "size": [
+                2,
+                1,
+                2
+              ],
+              "uv": [
+                150,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2,
+                36.2,
+                -23
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                150,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2,
+                36,
+                -22.5
+              ],
+              "size": [
+                1,
+                1,
+                8
+              ],
+              "uv": [
+                150,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -5.5,
+                36,
+                -21.5
+              ],
+              "size": [
+                3,
+                1,
+                1
+              ],
+              "uv": [
+                150,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -3.5,
+                36,
+                -22
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                150,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -3.5,
+                35.5,
+                -22
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                150,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "action92",
+          "pivot": [
+            -2.5,
+            37,
+            -23
+          ],
+          "rotation": [
+            0,
+            0,
+            34.0828
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.5,
+                36,
+                -23
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                150,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "action202",
+          "pivot": [
+            -3.5,
+            36.5,
+            -22
+          ],
+          "rotation": [
+            0,
+            59.645,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.5,
+                35.5,
+                -22
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                150,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "action203",
+          "pivot": [
+            -3.5,
+            37,
+            -22
+          ],
+          "rotation": [
+            0,
+            59.645,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.5,
+                36,
+                -22
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                150,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,602 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.m3a1rearsight",
+        "texture_width": 256,
+        "texture_height": 128,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2,
+                23,
+                4
+              ],
+              "size": [
+                1,
+                2,
+                5
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                2,
+                23,
+                4
+              ],
+              "size": [
+                1,
+                2,
+                5
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                2,
+                23,
+                9
+              ],
+              "size": [
+                1,
+                5,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2,
+                23,
+                9
+              ],
+              "size": [
+                1,
+                5,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.5,
+                28.5,
+                9
+              ],
+              "size": [
+                2,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.5,
+                23,
+                9
+              ],
+              "size": [
+                2,
+                3,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                28,
+                9
+              ],
+              "size": [
+                3,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1.5,
+                23,
+                9
+              ],
+              "size": [
+                1,
+                5,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                1.5,
+                23,
+                9
+              ],
+              "size": [
+                1,
+                5,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                2,
+                25.5,
+                8.5
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2,
+                25.5,
+                8.5
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight6",
+          "pivot": [
+            1.5,
+            29.5,
+            9
+          ],
+          "rotation": [
+            0,
+            0,
+            25.8284
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.5,
+                28.5,
+                9
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight7",
+          "pivot": [
+            -0.5,
+            29.5,
+            9
+          ],
+          "rotation": [
+            0,
+            0,
+            62.0414
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.5,
+                28.5,
+                9
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight8",
+          "pivot": [
+            -2,
+            28,
+            9
+          ],
+          "rotation": [
+            0,
+            0,
+            -62.0414
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2,
+                27,
+                9
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight9",
+          "pivot": [
+            3,
+            28,
+            9
+          ],
+          "rotation": [
+            0,
+            0,
+            156.3018
+          ],
+          "cubes": [
+            {
+              "origin": [
+                3,
+                27,
+                9
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight14",
+          "pivot": [
+            1,
+            26,
+            9
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1,
+                25,
+                9
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight15",
+          "pivot": [
+            0,
+            26,
+            9
+          ],
+          "rotation": [
+            0,
+            0,
+            135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0,
+                25,
+                9
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight16",
+          "pivot": [
+            0,
+            28,
+            9
+          ],
+          "rotation": [
+            0,
+            0,
+            135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0,
+                27,
+                9
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight17",
+          "pivot": [
+            1,
+            28,
+            9
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1,
+                27,
+                9
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight18",
+          "pivot": [
+            -2,
+            25,
+            4
+          ],
+          "rotation": [
+            -19.1716,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2,
+                23,
+                4
+              ],
+              "size": [
+                1,
+                2,
+                5
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight19",
+          "pivot": [
+            2,
+            25,
+            4
+          ],
+          "rotation": [
+            -19.1716,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                2,
+                23,
+                4
+              ],
+              "size": [
+                1,
+                2,
+                5
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight20",
+          "pivot": [
+            2,
+            28,
+            9
+          ],
+          "rotation": [
+            29.8225,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                2,
+                26,
+                9
+              ],
+              "size": [
+                1,
+                2,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight21",
+          "pivot": [
+            -2,
+            28,
+            9
+          ],
+          "rotation": [
+            29.8225,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2,
+                26,
+                9
+              ],
+              "size": [
+                1,
+                2,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

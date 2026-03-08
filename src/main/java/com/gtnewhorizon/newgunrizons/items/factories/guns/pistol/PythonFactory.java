@@ -10,10 +10,10 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.weapon.Python;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 
 public class PythonFactory {
 
@@ -46,7 +46,7 @@ public class PythonFactory {
             .withCompatibleBullet(Bullets.Bullet357, (model) -> {})
             .withTextureName("Python")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new Python())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/python"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

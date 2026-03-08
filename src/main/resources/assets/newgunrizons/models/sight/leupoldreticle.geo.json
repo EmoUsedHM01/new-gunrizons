@@ -1,0 +1,507 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.leupoldreticle",
+        "texture_width": 128,
+        "texture_height": 64,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0,
+                64,
+                0
+              ],
+              "size": [
+                1,
+                20,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0,
+                43,
+                0
+              ],
+              "size": [
+                1,
+                20,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                1,
+                63,
+                0
+              ],
+              "size": [
+                20,
+                1,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -20,
+                63,
+                0
+              ],
+              "size": [
+                21,
+                1,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -3,
+                62.5,
+                0
+              ],
+              "size": [
+                1,
+                2,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -7,
+                62,
+                0
+              ],
+              "size": [
+                1,
+                3,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -11,
+                62.5,
+                0
+              ],
+              "size": [
+                1,
+                2,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -15,
+                62,
+                0
+              ],
+              "size": [
+                1,
+                3,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -19,
+                62,
+                0
+              ],
+              "size": [
+                1,
+                3,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -40,
+                62.5,
+                0
+              ],
+              "size": [
+                20,
+                2,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                21,
+                62.5,
+                0
+              ],
+              "size": [
+                20,
+                2,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.5,
+                84,
+                0
+              ],
+              "size": [
+                2,
+                20,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.5,
+                23,
+                0
+              ],
+              "size": [
+                2,
+                20,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                3,
+                62.5,
+                0
+              ],
+              "size": [
+                1,
+                2,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                7,
+                62,
+                0
+              ],
+              "size": [
+                1,
+                3,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                11,
+                62.5,
+                0
+              ],
+              "size": [
+                1,
+                2,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                15,
+                62,
+                0
+              ],
+              "size": [
+                1,
+                3,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                19,
+                62.5,
+                0
+              ],
+              "size": [
+                1,
+                2,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.5,
+                66,
+                0
+              ],
+              "size": [
+                2,
+                1,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                70,
+                0
+              ],
+              "size": [
+                3,
+                1,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.5,
+                74,
+                0
+              ],
+              "size": [
+                2,
+                1,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                78,
+                0
+              ],
+              "size": [
+                3,
+                1,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.5,
+                82,
+                0
+              ],
+              "size": [
+                2,
+                1,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.5,
+                60,
+                0
+              ],
+              "size": [
+                2,
+                1,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                56,
+                0
+              ],
+              "size": [
+                3,
+                1,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.5,
+                52,
+                0
+              ],
+              "size": [
+                2,
+                1,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                48,
+                0
+              ],
+              "size": [
+                3,
+                1,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.5,
+                44,
+                0
+              ],
+              "size": [
+                2,
+                1,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

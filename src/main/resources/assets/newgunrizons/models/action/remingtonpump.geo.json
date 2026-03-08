@@ -1,0 +1,423 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.remingtonpump",
+        "texture_width": 512,
+        "texture_height": 256,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.8,
+                26,
+                -39
+              ],
+              "size": [
+                1,
+                1,
+                20
+              ],
+              "uv": [
+                250,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.2,
+                26,
+                -39
+              ],
+              "size": [
+                1,
+                1,
+                20
+              ],
+              "uv": [
+                250,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2,
+                24.2,
+                -39
+              ],
+              "size": [
+                2,
+                1,
+                20
+              ],
+              "uv": [
+                250,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2.5,
+                26.4,
+                -39
+              ],
+              "size": [
+                3,
+                2,
+                15
+              ],
+              "uv": [
+                250,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2.8,
+                26.4,
+                -25
+              ],
+              "size": [
+                1,
+                2,
+                1
+              ],
+              "uv": [
+                250,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.2,
+                26.4,
+                -25
+              ],
+              "size": [
+                1,
+                2,
+                1
+              ],
+              "uv": [
+                250,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2.8,
+                26.5,
+                -24
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                250,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.2,
+                26.5,
+                -24
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                250,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "pump4",
+          "pivot": [
+            0.8,
+            26,
+            -39
+          ],
+          "rotation": [
+            0,
+            0,
+            115.0296
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0.8,
+                25,
+                -39
+              ],
+              "size": [
+                2,
+                1,
+                20
+              ],
+              "uv": [
+                250,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "pump5",
+          "pivot": [
+            -2.8,
+            26,
+            -39
+          ],
+          "rotation": [
+            0,
+            0,
+            -23.432
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.8,
+                24,
+                -39
+              ],
+              "size": [
+                1,
+                2,
+                20
+              ],
+              "uv": [
+                250,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "pump9",
+          "pivot": [
+            -2.8,
+            28.4,
+            -24
+          ],
+          "rotation": [
+            21.3018,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.8,
+                27.4,
+                -24
+              ],
+              "size": [
+                1,
+                1,
+                4
+              ],
+              "uv": [
+                250,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "pump10",
+          "pivot": [
+            -0.2,
+            28.4,
+            -24
+          ],
+          "rotation": [
+            21.3018,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.2,
+                27.4,
+                -24
+              ],
+              "size": [
+                1,
+                1,
+                4
+              ],
+              "uv": [
+                250,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "pump13",
+          "pivot": [
+            -0.2,
+            28.4,
+            -25
+          ],
+          "rotation": [
+            36.213,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.2,
+                27.4,
+                -25
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                250,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "pump14",
+          "pivot": [
+            -2.8,
+            28.4,
+            -25
+          ],
+          "rotation": [
+            36.213,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.8,
+                27.4,
+                -25
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                250,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "pump15",
+          "pivot": [
+            -2.8,
+            27,
+            -39
+          ],
+          "rotation": [
+            0,
+            0,
+            -63.9053
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.8,
+                26,
+                -39
+              ],
+              "size": [
+                1,
+                1,
+                15
+              ],
+              "uv": [
+                250,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "pump16",
+          "pivot": [
+            0.8,
+            27,
+            -39
+          ],
+          "rotation": [
+            0,
+            0,
+            153.3728
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0.8,
+                26,
+                -39
+              ],
+              "size": [
+                1,
+                1,
+                20
+              ],
+              "uv": [
+                250,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

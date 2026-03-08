@@ -10,9 +10,7 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.sight.M3A1frontsight;
-import com.gtnewhorizon.newgunrizons.model.sight.M3A1rearsight;
-import com.gtnewhorizon.newgunrizons.model.weapon.M3A1GreaseGun;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
@@ -51,10 +49,10 @@ public class M3A1Factory {
                     "Fire Rate: Auto"))
             .withCompatibleAttachment(Magazines.M3A1Mag, ((model) -> { GL11.glScaled(1.0D, 1.0D, 1.0D); }))
             .withCompatibleAttachment(AuxiliaryAttachments.M3A1sight, true, (model) -> {
-                if (model instanceof M3A1rearsight) {
+                if (JsonModel.is(model, "sight/m3a1rearsight")) {
                     GL11.glTranslatef(-0.133F, -1.2F, -0.1F);
                     GL11.glScaled(0.3D, 0.3D, 0.3D);
-                } else if (model instanceof M3A1frontsight) {
+                } else if (JsonModel.is(model, "sight/m3a1frontsight")) {
                     GL11.glTranslatef(-0.133F, -1.2F, -3.0F);
                     GL11.glScaled(0.3D, 0.4D, 0.3D);
                 }
@@ -67,7 +65,7 @@ public class M3A1Factory {
             .withCompatibleAttachment(AuxiliaryAttachments.M3A1action, true, (model) -> {})
             .withTextureName("M3A1GreaseGun")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new M3A1GreaseGun())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/m3a1greasegun"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

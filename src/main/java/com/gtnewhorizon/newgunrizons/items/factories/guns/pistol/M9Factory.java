@@ -10,10 +10,7 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.action.M9Top;
-import com.gtnewhorizon.newgunrizons.model.sight.M9rearsight;
-import com.gtnewhorizon.newgunrizons.model.sight.m9frontsight;
-import com.gtnewhorizon.newgunrizons.model.weapon.M9;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
@@ -50,12 +47,12 @@ public class M9Factory {
                     "15rnd 9mm Magazine",
                     "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.M9Top, true, (model) -> {
-                if (model instanceof M9Top) {
+                if (JsonModel.is(model, "action/m9top")) {
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
-                } else if (model instanceof M9rearsight) {
+                } else if (JsonModel.is(model, "sight/m9rearsight")) {
                     GL11.glTranslatef(-0.155F, -1.175F, -0.15F);
                     GL11.glScaled(0.3D, 0.3D, 0.4D);
-                } else if (model instanceof m9frontsight) {
+                } else if (JsonModel.is(model, "sight/m9frontsight")) {
                     GL11.glTranslatef(-0.15F, -1.175F, -1.85F);
                     GL11.glScaled(0.25D, 0.25D, 0.3D);
                 }
@@ -68,7 +65,7 @@ public class M9Factory {
             })
             .withTextureName("M9")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new M9())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/m9"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

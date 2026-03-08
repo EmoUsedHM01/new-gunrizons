@@ -10,10 +10,10 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.weapon.Remington870;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 
 public class Remington900Factory {
 
@@ -66,7 +66,7 @@ public class Remington900Factory {
             .withCompatibleBullet(Bullets.ShotgunShell, (model) -> {})
             .withTextureName("Remington870")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new Remington870())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/remington870"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

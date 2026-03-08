@@ -1,0 +1,463 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.m1928rearsight",
+        "texture_width": 128,
+        "texture_height": 64,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0.5,
+                22.5,
+                3
+              ],
+              "size": [
+                3,
+                4,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                6,
+                22.5,
+                3
+              ],
+              "size": [
+                3,
+                4,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0.5,
+                21.8,
+                -10.5
+              ],
+              "size": [
+                8,
+                1,
+                16
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                3.2,
+                21.5,
+                3
+              ],
+              "size": [
+                3,
+                4,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                8.5,
+                25.8,
+                -9
+              ],
+              "size": [
+                1,
+                1,
+                13
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0,
+                25.8,
+                -9
+              ],
+              "size": [
+                1,
+                1,
+                13
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0.5,
+                22.5,
+                3.5
+              ],
+              "size": [
+                8,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0.5,
+                22,
+                2
+              ],
+              "size": [
+                8,
+                3,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0.5,
+                23,
+                -1
+              ],
+              "size": [
+                8,
+                1,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                1.5,
+                23,
+                -10
+              ],
+              "size": [
+                2,
+                1,
+                9
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                6,
+                23,
+                -10
+              ],
+              "size": [
+                2,
+                1,
+                9
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                3.5,
+                23,
+                -10
+              ],
+              "size": [
+                3,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0,
+                21.8,
+                -10.5
+              ],
+              "size": [
+                1,
+                4,
+                16
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                8.5,
+                21.8,
+                -10.5
+              ],
+              "size": [
+                1,
+                4,
+                16
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0,
+                21.8,
+                4.7
+              ],
+              "size": [
+                1,
+                4,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                8.5,
+                21.8,
+                4.7
+              ],
+              "size": [
+                1,
+                4,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "RearSight13",
+          "pivot": [
+            0,
+            23.8,
+            -2.5
+          ],
+          "rotation": [
+            -45,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0,
+                21.8,
+                -2.5
+              ],
+              "size": [
+                9,
+                2,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "RearSight16",
+          "pivot": [
+            0,
+            26.8,
+            -9
+          ],
+          "rotation": [
+            57.5148,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0,
+                24.8,
+                -9
+              ],
+              "size": [
+                1,
+                2,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "RearSight17",
+          "pivot": [
+            0,
+            26.8,
+            4
+          ],
+          "rotation": [
+            31.9527,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0,
+                25.8,
+                4
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "RearSight18",
+          "pivot": [
+            8.5,
+            26.8,
+            4
+          ],
+          "rotation": [
+            31.9527,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                8.5,
+                25.8,
+                4
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "RearSight21",
+          "pivot": [
+            8.5,
+            26.8,
+            -9
+          ],
+          "rotation": [
+            57.5148,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                8.5,
+                24.8,
+                -9
+              ],
+              "size": [
+                1,
+                2,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

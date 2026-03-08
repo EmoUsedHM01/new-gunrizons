@@ -1,0 +1,939 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.r700action",
+        "texture_width": 128,
+        "texture_height": 64,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0,
+                21,
+                0
+              ],
+              "size": [
+                1,
+                3,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                22,
+                0
+              ],
+              "size": [
+                3,
+                1,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0,
+                22.8,
+                -24
+              ],
+              "size": [
+                1,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0,
+                21.2,
+                -24
+              ],
+              "size": [
+                1,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.8,
+                22,
+                -24
+              ],
+              "size": [
+                1,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0.8,
+                22,
+                -24
+              ],
+              "size": [
+                1,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0,
+                22.7,
+                5.1
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0,
+                21.3,
+                5.1
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0.7,
+                22,
+                5.1
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.7,
+                22,
+                5.1
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0,
+                22,
+                5.1
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1.5,
+                21,
+                0
+              ],
+              "size": [
+                2,
+                2,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction3",
+          "pivot": [
+            1,
+            24,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1,
+                23,
+                0
+              ],
+              "size": [
+                1,
+                1,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction4",
+          "pivot": [
+            2,
+            23,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                2,
+                22,
+                0
+              ],
+              "size": [
+                1,
+                1,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction5",
+          "pivot": [
+            0,
+            24,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0,
+                23,
+                0
+              ],
+              "size": [
+                1,
+                1,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction6",
+          "pivot": [
+            -1,
+            23,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                22,
+                0
+              ],
+              "size": [
+                1,
+                1,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction7",
+          "pivot": [
+            -1,
+            22,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                21,
+                0
+              ],
+              "size": [
+                1,
+                1,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction8",
+          "pivot": [
+            2,
+            22,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                2,
+                21,
+                0
+              ],
+              "size": [
+                1,
+                1,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction9",
+          "pivot": [
+            1,
+            21,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1,
+                20,
+                0
+              ],
+              "size": [
+                1,
+                1,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction10",
+          "pivot": [
+            0,
+            21,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0,
+                20,
+                0
+              ],
+              "size": [
+                1,
+                1,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction15",
+          "pivot": [
+            1,
+            23.8,
+            -24
+          ],
+          "rotation": [
+            0,
+            0,
+            45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1,
+                22.8,
+                -24
+              ],
+              "size": [
+                1,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction16",
+          "pivot": [
+            0,
+            23.8,
+            -24
+          ],
+          "rotation": [
+            0,
+            0,
+            45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0,
+                22.8,
+                -24
+              ],
+              "size": [
+                1,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction17",
+          "pivot": [
+            1.8,
+            23,
+            -24
+          ],
+          "rotation": [
+            0,
+            0,
+            135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.8,
+                22,
+                -24
+              ],
+              "size": [
+                1,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction18",
+          "pivot": [
+            -0.8,
+            23,
+            -24
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.8,
+                22,
+                -24
+              ],
+              "size": [
+                1,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction19",
+          "pivot": [
+            -0.8,
+            22,
+            -24
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.8,
+                21,
+                -24
+              ],
+              "size": [
+                1,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction20",
+          "pivot": [
+            1.8,
+            22,
+            -24
+          ],
+          "rotation": [
+            0,
+            0,
+            135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.8,
+                21,
+                -24
+              ],
+              "size": [
+                1,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction21",
+          "pivot": [
+            1,
+            21.2,
+            -24
+          ],
+          "rotation": [
+            0,
+            0,
+            -135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1,
+                20.2,
+                -24
+              ],
+              "size": [
+                1,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction22",
+          "pivot": [
+            0,
+            21.2,
+            -24
+          ],
+          "rotation": [
+            0,
+            0,
+            -135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0,
+                20.2,
+                -24
+              ],
+              "size": [
+                1,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction27",
+          "pivot": [
+            1.7,
+            23,
+            5.1
+          ],
+          "rotation": [
+            0,
+            0,
+            135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.7,
+                22,
+                5.1
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction28",
+          "pivot": [
+            0,
+            23.7,
+            5.1
+          ],
+          "rotation": [
+            0,
+            0,
+            45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0,
+                22.7,
+                5.1
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction29",
+          "pivot": [
+            -0.7,
+            22,
+            5.1
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.7,
+                21,
+                5.1
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction30",
+          "pivot": [
+            0.3,
+            22,
+            5.1
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0.3,
+                21,
+                5.1
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction33",
+          "pivot": [
+            -0.5,
+            21,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            132.071
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.5,
+                20,
+                0
+              ],
+              "size": [
+                6,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "boltaction34",
+          "pivot": [
+            -3.5,
+            18,
+            -0.5
+          ],
+          "rotation": [
+            0,
+            0,
+            132.071
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.5,
+                17,
+                -0.5
+              ],
+              "size": [
+                2,
+                1,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

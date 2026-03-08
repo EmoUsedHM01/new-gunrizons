@@ -10,12 +10,7 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.action.LugerAction1;
-import com.gtnewhorizon.newgunrizons.model.action.LugerAction2;
-import com.gtnewhorizon.newgunrizons.model.action.MakarovTop;
-import com.gtnewhorizon.newgunrizons.model.sight.makarovfrontsight;
-import com.gtnewhorizon.newgunrizons.model.sight.makarovrearsight;
-import com.gtnewhorizon.newgunrizons.model.weapon.LugerP08;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
 
@@ -51,24 +46,24 @@ public class LugerP08Factory {
                     "8rnd 7.62x21mm Magazine",
                     "Fire Rate: Semi"))
             .withCompatibleAttachment(AuxiliaryAttachments.LugerAction1, true, (model) -> {
-                if (model instanceof LugerAction1) {
+                if (JsonModel.is(model, "action/lugeraction1")) {
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
                 }
 
             })
             .withCompatibleAttachment(AuxiliaryAttachments.LugerAction2, true, (model) -> {
-                if (model instanceof LugerAction2) {
+                if (JsonModel.is(model, "action/lugeraction2")) {
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
                 }
 
             })
             .withCompatibleAttachment(AuxiliaryAttachments.MakarovTop, true, (model) -> {
-                if (model instanceof MakarovTop) {
+                if (JsonModel.is(model, "action/makarovtop")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof makarovrearsight) {
+                } else if (JsonModel.is(model, "sight/makarovrearsight")) {
                     GL11.glTranslatef(-0.149F, -1.07F, -0.13F);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof makarovfrontsight) {
+                } else if (JsonModel.is(model, "sight/makarovfrontsight")) {
                     GL11.glTranslatef(-0.1393F, -0.95F, -2.2F);
                     GL11.glScaled(0.15D, 0.25D, 0.2D);
                 }
@@ -77,7 +72,7 @@ public class LugerP08Factory {
             .withCompatibleAttachment(Magazines.LugerP08Mag, ((model) -> {}))
             .withTextureName("LugerP08")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new LugerP08())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/lugerp08"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.4D, 0.4D, 0.4D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

@@ -10,10 +10,10 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.weapon.Webley;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 
 public class EnfieldNo2Factory {
 
@@ -59,7 +59,7 @@ public class EnfieldNo2Factory {
             .withCompatibleBullet(Bullets.Bullet380200, (model) -> {})
             .withTextureName("EnfieldNo2")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new Webley())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/webley"))
                     .withPrepareFirstLoadIterationAnimationDuration(900)
                     .withAllLoadIterationAnimationsCompletedDuration(400)
                     .withEntityPositioning((itemStack) -> {

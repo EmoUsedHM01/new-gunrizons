@@ -8,68 +8,7 @@ import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.client.render.EntityLaserBeamRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.items.ItemScope;
-import com.gtnewhorizon.newgunrizons.model.grip.AngledGrip;
-import com.gtnewhorizon.newgunrizons.model.grip.Bipod;
-import com.gtnewhorizon.newgunrizons.model.grip.Grip2;
-import com.gtnewhorizon.newgunrizons.model.grip.StubbyGrip;
-import com.gtnewhorizon.newgunrizons.model.grip.VGrip;
-import com.gtnewhorizon.newgunrizons.model.misc.Laser;
-import com.gtnewhorizon.newgunrizons.model.misc.Laser2;
-import com.gtnewhorizon.newgunrizons.model.misc.PUmount;
-import com.gtnewhorizon.newgunrizons.model.misc.SVTmount;
-import com.gtnewhorizon.newgunrizons.model.misc.Suppressor;
-import com.gtnewhorizon.newgunrizons.model.misc.Suppressor300AACBlackout;
-import com.gtnewhorizon.newgunrizons.model.misc.Suppressor45ACP;
-import com.gtnewhorizon.newgunrizons.model.misc.Suppressor556x39;
-import com.gtnewhorizon.newgunrizons.model.misc.Suppressor556x45;
-import com.gtnewhorizon.newgunrizons.model.misc.Suppressor762x39;
-import com.gtnewhorizon.newgunrizons.model.misc.Suppressor762x51;
-import com.gtnewhorizon.newgunrizons.model.sight.ACOG;
-import com.gtnewhorizon.newgunrizons.model.sight.AK47iron;
-import com.gtnewhorizon.newgunrizons.model.sight.AKMiron1;
-import com.gtnewhorizon.newgunrizons.model.sight.AKMiron2;
-import com.gtnewhorizon.newgunrizons.model.sight.AR15Iron;
-import com.gtnewhorizon.newgunrizons.model.sight.AUGScope;
-import com.gtnewhorizon.newgunrizons.model.sight.Acog2;
-import com.gtnewhorizon.newgunrizons.model.sight.AcogReticle;
-import com.gtnewhorizon.newgunrizons.model.sight.AcogScope2;
-import com.gtnewhorizon.newgunrizons.model.sight.ColtRearSight;
-import com.gtnewhorizon.newgunrizons.model.sight.FALIron;
-import com.gtnewhorizon.newgunrizons.model.sight.G36CIron1;
-import com.gtnewhorizon.newgunrizons.model.sight.G36CIron2;
-import com.gtnewhorizon.newgunrizons.model.sight.Holo2;
-import com.gtnewhorizon.newgunrizons.model.sight.Holographic;
-import com.gtnewhorizon.newgunrizons.model.sight.Holographic2;
-import com.gtnewhorizon.newgunrizons.model.sight.Kobra;
-import com.gtnewhorizon.newgunrizons.model.sight.LP;
-import com.gtnewhorizon.newgunrizons.model.sight.LPscope;
-import com.gtnewhorizon.newgunrizons.model.sight.Leupold;
-import com.gtnewhorizon.newgunrizons.model.sight.LeupoldReticle;
-import com.gtnewhorizon.newgunrizons.model.sight.M14Iron;
-import com.gtnewhorizon.newgunrizons.model.sight.M1903A1scope;
-import com.gtnewhorizon.newgunrizons.model.sight.M1903A1scope2;
-import com.gtnewhorizon.newgunrizons.model.sight.M4Iron1;
-import com.gtnewhorizon.newgunrizons.model.sight.M4Iron2;
-import com.gtnewhorizon.newgunrizons.model.sight.MBUSiron;
-import com.gtnewhorizon.newgunrizons.model.sight.MP5Iron;
-import com.gtnewhorizon.newgunrizons.model.sight.MicroT1;
-import com.gtnewhorizon.newgunrizons.model.sight.OKP7;
-import com.gtnewhorizon.newgunrizons.model.sight.OKP7reticle;
-import com.gtnewhorizon.newgunrizons.model.sight.P90iron;
-import com.gtnewhorizon.newgunrizons.model.sight.PSO1;
-import com.gtnewhorizon.newgunrizons.model.sight.PSO12;
-import com.gtnewhorizon.newgunrizons.model.sight.PSO1reticle;
-import com.gtnewhorizon.newgunrizons.model.sight.PUreticle;
-import com.gtnewhorizon.newgunrizons.model.sight.PUscope;
-import com.gtnewhorizon.newgunrizons.model.sight.PriscopicScope;
-import com.gtnewhorizon.newgunrizons.model.sight.Reflex;
-import com.gtnewhorizon.newgunrizons.model.sight.Reflex2;
-import com.gtnewhorizon.newgunrizons.model.sight.ScarIron1;
-import com.gtnewhorizon.newgunrizons.model.sight.ScarIron2;
-import com.gtnewhorizon.newgunrizons.model.sight.SpecterSight;
-import com.gtnewhorizon.newgunrizons.model.sight.UFCG36Scope;
-import com.gtnewhorizon.newgunrizons.model.sight.UnertlReticle;
-import com.gtnewhorizon.newgunrizons.model.weapon.HP;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 
 public class Attachments {
 
@@ -118,46 +57,46 @@ public class Attachments {
         Reflex = (new AttachmentBuilder()).withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withRenderablePart()
-            .withModel(new Reflex(), "Reflex.png")
-            .withModel(new Reflex2(), "Reflex2.png")
+            .withModel(new JsonModel("sight/reflex"), "Reflex.png")
+            .withModel(new JsonModel("sight/reflex2"), "Reflex2.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Reflex) {
+                if (JsonModel.is(model, "sight/reflex")) {
                     GL11.glTranslatef(0.1F, -0.8F, 0.2F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Reflex) {
+                if (JsonModel.is(model, "sight/reflex")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.3D, 0.3D, 0.3D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Reflex) {
+                if (JsonModel.is(model, "sight/reflex")) {
                     GL11.glTranslatef(-0.6F, -0.1F, 1.15F);
                     GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Reflex) {
+                if (JsonModel.is(model, "sight/reflex")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
@@ -167,12 +106,12 @@ public class Attachments {
             .build();
         ColtRearSight = (new AttachmentBuilder()).withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new M4Iron1(), "AK12.png")
-            .withModel(new M4Iron2(), "AK12.png")
-            .withModel(new FALIron(), "AK12.png")
-            .withModel(new ColtRearSight(), "AK12.png")
+            .withModel(new JsonModel("sight/m4iron1"), "AK12.png")
+            .withModel(new JsonModel("sight/m4iron2"), "AK12.png")
+            .withModel(new JsonModel("sight/faliron"), "AK12.png")
+            .withModel(new JsonModel("sight/coltrearsight"), "AK12.png")
             .withInventoryModelPositioning((model, s) -> {
-                if (model instanceof ColtRearSight) {
+                if (JsonModel.is(model, "sight/coltrearsight")) {
                     GL11.glTranslatef(-0.6F, 0.0F, 0.2F);
                     GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glRotatef(-190.0F, 0.0F, 1.0F, 0.0F);
@@ -183,7 +122,7 @@ public class Attachments {
 
             })
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof ColtRearSight) {
+                if (JsonModel.is(model, "sight/coltrearsight")) {
                     GL11.glTranslatef(0.1F, 0.0F, 0.4F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.7D, 0.7D);
@@ -193,7 +132,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof ColtRearSight) {
+                if (JsonModel.is(model, "sight/coltrearsight")) {
                     GL11.glTranslatef(-1.6F, -0.5F, 1.2F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -208,46 +147,46 @@ public class Attachments {
             .build();
         OKP7 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new OKP7(), "ak12.png")
-            .withModel(new OKP7reticle(), "green.png")
+            .withModel(new JsonModel("sight/okp7"), "ak12.png")
+            .withModel(new JsonModel("sight/okp7reticle"), "green.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof OKP7) {
+                if (JsonModel.is(model, "sight/okp7")) {
                     GL11.glTranslatef(0.1F, -0.8F, 0.2F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof OKP7reticle) {
+                } else if (JsonModel.is(model, "sight/okp7reticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof OKP7) {
+                if (JsonModel.is(model, "sight/okp7")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.3D, 0.3D, 0.3D);
-                } else if (model instanceof OKP7reticle) {
+                } else if (JsonModel.is(model, "sight/okp7reticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof OKP7) {
+                if (JsonModel.is(model, "sight/okp7")) {
                     GL11.glTranslatef(-0.6F, -0.1F, 1.15F);
                     GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
-                } else if (model instanceof OKP7reticle) {
+                } else if (JsonModel.is(model, "sight/okp7reticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof OKP7) {
+                if (JsonModel.is(model, "sight/okp7")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof OKP7reticle) {
+                } else if (JsonModel.is(model, "sight/okp7reticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
@@ -263,55 +202,55 @@ public class Attachments {
             })
             .withRenderablePart()
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new ACOG(), "Acog.png")
-            .withModel(new AcogScope2(), "AK12.png")
-            .withModel(new AcogReticle(), "acogreticle.png")
+            .withModel(new JsonModel("sight/acog"), "Acog.png")
+            .withModel(new JsonModel("sight/acogscope2"), "AK12.png")
+            .withModel(new JsonModel("sight/acogreticle"), "acogreticle.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof ACOG) {
+                if (JsonModel.is(model, "sight/acog")) {
                     GL11.glTranslatef(0.1F, -0.8F, 0.4F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.7D, 0.7D, 0.7D);
-                } else if (model instanceof AcogReticle) {
+                } else if (JsonModel.is(model, "sight/acogreticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof AcogScope2) {
+                } else if (JsonModel.is(model, "sight/acogscope2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof ACOG) {
+                if (JsonModel.is(model, "sight/acog")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof AcogReticle) {
+                } else if (JsonModel.is(model, "sight/acogreticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof AcogScope2) {
+                } else if (JsonModel.is(model, "sight/acogscope2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof ACOG) {
+                if (JsonModel.is(model, "sight/acog")) {
                     GL11.glTranslatef(-0.6F, -0.7F, 0.65F);
                     GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glRotatef(-190.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.2D, 1.2D, 1.2D);
-                } else if (model instanceof AcogReticle) {
+                } else if (JsonModel.is(model, "sight/acogreticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof AcogScope2) {
+                } else if (JsonModel.is(model, "sight/acogscope2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof ACOG) {
+                if (JsonModel.is(model, "sight/acog")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof AcogReticle) {
+                } else if (JsonModel.is(model, "sight/acogreticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof AcogScope2) {
+                } else if (JsonModel.is(model, "sight/acogscope2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
@@ -327,46 +266,46 @@ public class Attachments {
             })
             .withRenderablePart()
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new SpecterSight(), "SpecterSight.png")
-            .withModel(new Acog2(), "Acog2.png")
+            .withModel(new JsonModel("sight/spectersight"), "SpecterSight.png")
+            .withModel(new JsonModel("sight/acog2"), "Acog2.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof SpecterSight) {
+                if (JsonModel.is(model, "sight/spectersight")) {
                     GL11.glTranslatef(0.1F, -0.8F, 0.4F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.35D, 0.35D, 0.35D);
-                } else if (model instanceof Acog2) {
+                } else if (JsonModel.is(model, "sight/acog2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof SpecterSight) {
+                if (JsonModel.is(model, "sight/spectersight")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.25D, 0.25D, 0.25D);
-                } else if (model instanceof Acog2) {
+                } else if (JsonModel.is(model, "sight/acog2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof SpecterSight) {
+                if (JsonModel.is(model, "sight/spectersight")) {
                     GL11.glTranslatef(-0.6F, 0.0F, 0.85F);
                     GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glRotatef(-190.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.7D, 0.7D, 0.7D);
-                } else if (model instanceof Acog2) {
+                } else if (JsonModel.is(model, "sight/acog2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof SpecterSight) {
+                if (JsonModel.is(model, "sight/spectersight")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof Acog2) {
+                } else if (JsonModel.is(model, "sight/acog2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
@@ -376,46 +315,46 @@ public class Attachments {
             .build();
         Holo2 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Holographic(), "Holographic.png")
-            .withModel(new Holo2(), "Holo3.png")
+            .withModel(new JsonModel("sight/holographic"), "Holographic.png")
+            .withModel(new JsonModel("sight/holo2"), "Holo3.png")
             .withRenderablePart()
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Holographic) {
+                if (JsonModel.is(model, "sight/holographic")) {
                     GL11.glTranslatef(0.1F, -0.8F, 0.2F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
-                } else if (model instanceof Holo2) {
+                } else if (JsonModel.is(model, "sight/holo2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Holographic) {
+                if (JsonModel.is(model, "sight/holographic")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof Holo2) {
+                } else if (JsonModel.is(model, "sight/holo2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Holographic) {
+                if (JsonModel.is(model, "sight/holographic")) {
                     GL11.glTranslatef(-0.6F, -0.1F, 0.3F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
-                } else if (model instanceof Holo2) {
+                } else if (JsonModel.is(model, "sight/holo2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Holographic) {
+                if (JsonModel.is(model, "sight/holographic")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof Holo2) {
+                } else if (JsonModel.is(model, "sight/holo2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
@@ -426,45 +365,45 @@ public class Attachments {
         Holographic2 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withRenderablePart()
-            .withModel(new Holographic2(), "Holographic2.png")
-            .withModel(new Holo2(), "Holo3.png")
+            .withModel(new JsonModel("sight/holographic2"), "Holographic2.png")
+            .withModel(new JsonModel("sight/holo2"), "Holo3.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Holographic2) {
+                if (JsonModel.is(model, "sight/holographic2")) {
                     GL11.glTranslatef(0.1F, -0.8F, 0.2F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
-                } else if (model instanceof Holo2) {
+                } else if (JsonModel.is(model, "sight/holo2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Holographic2) {
+                if (JsonModel.is(model, "sight/holographic2")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof Holo2) {
+                } else if (JsonModel.is(model, "sight/holo2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Holographic2) {
+                if (JsonModel.is(model, "sight/holographic2")) {
                     GL11.glTranslatef(-0.6F, -0.1F, 0.5F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
-                } else if (model instanceof Holo2) {
+                } else if (JsonModel.is(model, "sight/holo2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Holographic2) {
+                if (JsonModel.is(model, "sight/holographic2")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof Holo2) {
+                } else if (JsonModel.is(model, "sight/holo2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
@@ -475,45 +414,45 @@ public class Attachments {
         MicroT1 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withRenderablePart()
-            .withModel(new MicroT1(), "AK12.png")
-            .withModel(new Reflex2(), "Reflex2.png")
+            .withModel(new JsonModel("sight/microt1"), "AK12.png")
+            .withModel(new JsonModel("sight/reflex2"), "Reflex2.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof MicroT1) {
+                if (JsonModel.is(model, "sight/microt1")) {
                     GL11.glTranslatef(0.1F, -0.8F, 0.2F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof MicroT1) {
+                if (JsonModel.is(model, "sight/microt1")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof MicroT1) {
+                if (JsonModel.is(model, "sight/microt1")) {
                     GL11.glTranslatef(-0.6F, -0.1F, 0.3F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof MicroT1) {
+                if (JsonModel.is(model, "sight/microt1")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
@@ -523,46 +462,46 @@ public class Attachments {
             .build();
         Kobra = (new AttachmentBuilder()).withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Kobra(), "Kobra.png")
-            .withModel(new Reflex2(), "Reflex2.png")
+            .withModel(new JsonModel("sight/kobra"), "Kobra.png")
+            .withModel(new JsonModel("sight/reflex2"), "Reflex2.png")
             .withRenderablePart()
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Kobra) {
+                if (JsonModel.is(model, "sight/kobra")) {
                     GL11.glTranslatef(0.4F, -0.8F, 0.5F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.7D, 0.7D, 0.7D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Kobra) {
+                if (JsonModel.is(model, "sight/kobra")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Kobra) {
+                if (JsonModel.is(model, "sight/kobra")) {
                     GL11.glTranslatef(-0.6F, -0.1F, 0.3F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Kobra) {
+                if (JsonModel.is(model, "sight/kobra")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
@@ -577,46 +516,46 @@ public class Attachments {
                 GL11.glTranslatef(-0.095F, 0.6F, 0.85F);
             })
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new UFCG36Scope(), "AK12.png")
-            .withModel(new Reflex2(), "Holo3.png")
+            .withModel(new JsonModel("sight/ufcg36scope"), "AK12.png")
+            .withModel(new JsonModel("sight/reflex2"), "Holo3.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof UFCG36Scope) {
+                if (JsonModel.is(model, "sight/ufcg36scope")) {
                     GL11.glTranslatef(0.1F, -0.8F, 0.4F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.7D, 0.7D, 0.7D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof UFCG36Scope) {
+                if (JsonModel.is(model, "sight/ufcg36scope")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof UFCG36Scope) {
+                if (JsonModel.is(model, "sight/ufcg36scope")) {
                     GL11.glTranslatef(-0.6F, -0.7F, 1.2F);
                     GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glRotatef(-190.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.9D, 0.9D, 0.9D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof UFCG36Scope) {
+                if (JsonModel.is(model, "sight/ufcg36scope")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof Reflex2) {
+                } else if (JsonModel.is(model, "sight/reflex2")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
@@ -630,46 +569,46 @@ public class Attachments {
                 GL11.glScalef(1.65F, 1.65F, 1.6F);
                 GL11.glTranslatef(-0.07F, 0.559F, 1.82F);
             })
-            .withModel(new AUGScope(), "AK12.png")
-            .withModel(new LPscope(), "HP2.png")
+            .withModel(new JsonModel("sight/augscope"), "AK12.png")
+            .withModel(new JsonModel("sight/lpscope"), "HP2.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof AUGScope) {
+                if (JsonModel.is(model, "sight/augscope")) {
                     GL11.glTranslatef(0.1F, -0.8F, 0.4F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.7D, 0.7D, 0.7D);
-                } else if (model instanceof LPscope) {
+                } else if (JsonModel.is(model, "sight/lpscope")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof AUGScope) {
+                if (JsonModel.is(model, "sight/augscope")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof LPscope) {
+                } else if (JsonModel.is(model, "sight/lpscope")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof AUGScope) {
+                if (JsonModel.is(model, "sight/augscope")) {
                     GL11.glTranslatef(-0.6F, -0.7F, 0.65F);
                     GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glRotatef(-190.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.2D, 1.2D, 1.2D);
-                } else if (model instanceof LPscope) {
+                } else if (JsonModel.is(model, "sight/lpscope")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof AUGScope) {
+                if (JsonModel.is(model, "sight/augscope")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof LPscope) {
+                } else if (JsonModel.is(model, "sight/lpscope")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
@@ -686,46 +625,46 @@ public class Attachments {
             .withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withCrosshair("LP")
-            .withModel(new LP(), "AK12.png")
-            .withModel(new LPscope(), "HP2.png")
+            .withModel(new JsonModel("sight/lp"), "AK12.png")
+            .withModel(new JsonModel("sight/lpscope"), "HP2.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof LP) {
+                if (JsonModel.is(model, "sight/lp")) {
                     GL11.glTranslatef(0.1F, -0.8F, 0.4F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.7D, 0.7D, 0.7D);
-                } else if (model instanceof LPscope) {
+                } else if (JsonModel.is(model, "sight/lpscope")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof LP) {
+                if (JsonModel.is(model, "sight/lp")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof LPscope) {
+                } else if (JsonModel.is(model, "sight/lpscope")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof LP) {
+                if (JsonModel.is(model, "sight/lp")) {
                     GL11.glTranslatef(-0.6F, -0.6F, 0.5F);
                     GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glRotatef(-190.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.8D, 0.8D, 0.8D);
-                } else if (model instanceof LPscope) {
+                } else if (JsonModel.is(model, "sight/lpscope")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof LP) {
+                if (JsonModel.is(model, "sight/lp")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof LPscope) {
+                } else if (JsonModel.is(model, "sight/lpscope")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
@@ -742,46 +681,46 @@ public class Attachments {
             .withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withCrosshair("LP")
-            .withModel(new Leupold(), "Leupold.png")
-            .withModel(new LeupoldReticle(), "Reticle.png")
+            .withModel(new JsonModel("sight/leupold"), "Leupold.png")
+            .withModel(new JsonModel("sight/leupoldreticle"), "Reticle.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Leupold) {
+                if (JsonModel.is(model, "sight/leupold")) {
                     GL11.glTranslatef(0.1F, -0.8F, 0.4F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.7D, 0.7D, 0.7D);
-                } else if (model instanceof LeupoldReticle) {
+                } else if (JsonModel.is(model, "sight/leupoldreticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Leupold) {
+                if (JsonModel.is(model, "sight/leupold")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof LeupoldReticle) {
+                } else if (JsonModel.is(model, "sight/leupoldreticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Leupold) {
+                if (JsonModel.is(model, "sight/leupold")) {
                     GL11.glTranslatef(-0.6F, -0.45F, 0.94F);
                     GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glRotatef(-190.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.35D, 0.35D, 0.35D);
-                } else if (model instanceof LeupoldReticle) {
+                } else if (JsonModel.is(model, "sight/leupoldreticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Leupold) {
+                if (JsonModel.is(model, "sight/leupold")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof LeupoldReticle) {
+                } else if (JsonModel.is(model, "sight/leupoldreticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
@@ -798,55 +737,55 @@ public class Attachments {
             .withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withCrosshair("LP")
-            .withModel(new PSO1(), "AK12.png")
-            .withModel(new PSO12(), "AK12.png")
-            .withModel(new PSO1reticle(), "black.png")
+            .withModel(new JsonModel("sight/pso1"), "AK12.png")
+            .withModel(new JsonModel("sight/pso12"), "AK12.png")
+            .withModel(new JsonModel("sight/pso1reticle"), "black.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof PSO1) {
+                if (JsonModel.is(model, "sight/pso1")) {
                     GL11.glTranslatef(0.1F, -0.8F, 0.4F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.7D, 0.7D, 0.7D);
-                } else if (model instanceof PSO1reticle) {
+                } else if (JsonModel.is(model, "sight/pso1reticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof PSO12) {
+                } else if (JsonModel.is(model, "sight/pso12")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof PSO1) {
+                if (JsonModel.is(model, "sight/pso1")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof PSO1reticle) {
+                } else if (JsonModel.is(model, "sight/pso1reticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof PSO12) {
+                } else if (JsonModel.is(model, "sight/pso12")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof PSO1) {
+                if (JsonModel.is(model, "sight/pso1")) {
                     GL11.glTranslatef(-0.6F, -0.3F, 0.7F);
                     GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glRotatef(-190.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
-                } else if (model instanceof PSO1reticle) {
+                } else if (JsonModel.is(model, "sight/pso1reticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof PSO12) {
+                } else if (JsonModel.is(model, "sight/pso12")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof PSO1) {
+                if (JsonModel.is(model, "sight/pso1")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof PSO1reticle) {
+                } else if (JsonModel.is(model, "sight/pso1reticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof PSO12) {
+                } else if (JsonModel.is(model, "sight/pso12")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
@@ -863,64 +802,64 @@ public class Attachments {
             .withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withCrosshair("LP")
-            .withModel(new PUscope(), "ak12.png")
-            .withModel(new PUmount(), "ak12.png")
-            .withModel(new SVTmount(), "ak12.png")
-            .withModel(new PUreticle(), "black.png")
+            .withModel(new JsonModel("sight/puscope"), "ak12.png")
+            .withModel(new JsonModel("misc/pumount"), "ak12.png")
+            .withModel(new JsonModel("misc/svtmount"), "ak12.png")
+            .withModel(new JsonModel("sight/pureticle"), "black.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof PUscope) {
+                if (JsonModel.is(model, "sight/puscope")) {
                     GL11.glTranslatef(0.1F, -1.2F, -0.0F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.2D, 0.2D, 0.2D);
-                } else if (model instanceof PUmount) {
+                } else if (JsonModel.is(model, "misc/pumount")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof PUreticle) {
+                } else if (JsonModel.is(model, "sight/pureticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof SVTmount) {
+                } else if (JsonModel.is(model, "misc/svtmount")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof PUscope) {
+                if (JsonModel.is(model, "sight/puscope")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.2D, 0.2D, 0.2D);
-                } else if (model instanceof SVTmount) {
+                } else if (JsonModel.is(model, "misc/svtmount")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof PUmount) {
+                } else if (JsonModel.is(model, "misc/pumount")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof PUreticle) {
+                } else if (JsonModel.is(model, "sight/pureticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof PUscope) {
+                if (JsonModel.is(model, "sight/puscope")) {
                     GL11.glTranslatef(-0.6F, -0.2F, 1.7F);
                     GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glRotatef(-190.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.45D, 0.45D, 0.45D);
-                } else if (model instanceof SVTmount) {
+                } else if (JsonModel.is(model, "misc/svtmount")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof PUmount) {
+                } else if (JsonModel.is(model, "misc/pumount")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof PUreticle) {
+                } else if (JsonModel.is(model, "sight/pureticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof PUscope) {
+                if (JsonModel.is(model, "sight/puscope")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof SVTmount) {
+                } else if (JsonModel.is(model, "misc/svtmount")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof PUmount) {
+                } else if (JsonModel.is(model, "misc/pumount")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof PUreticle) {
+                } else if (JsonModel.is(model, "sight/pureticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
@@ -937,47 +876,47 @@ public class Attachments {
             .withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withCrosshair("LP")
-            .withModel(new PriscopicScope(), "PriscopicScope.png")
-            .withModel(new UnertlReticle(), "black.png")
+            .withModel(new JsonModel("sight/priscopicscope"), "PriscopicScope.png")
+            .withModel(new JsonModel("sight/unertlreticle"), "black.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof PriscopicScope) {
+                if (JsonModel.is(model, "sight/priscopicscope")) {
                     GL11.glTranslatef(0.1F, -1.2F, -0.0F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.2D, 0.2D, 0.2D);
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
-                } else if (model instanceof UnertlReticle) {
+                } else if (JsonModel.is(model, "sight/unertlreticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof PriscopicScope) {
+                if (JsonModel.is(model, "sight/priscopicscope")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.2D, 0.2D, 0.2D);
-                } else if (model instanceof UnertlReticle) {
+                } else if (JsonModel.is(model, "sight/unertlreticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof PriscopicScope) {
+                if (JsonModel.is(model, "sight/priscopicscope")) {
                     GL11.glTranslatef(-0.6F, -0.2F, 1.7F);
                     GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glRotatef(-190.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.2, 0.2, 0.2);
-                } else if (model instanceof UnertlReticle) {
+                } else if (JsonModel.is(model, "sight/unertlreticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof PriscopicScope) {
+                if (JsonModel.is(model, "sight/priscopicscope")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof UnertlReticle) {
+                } else if (JsonModel.is(model, "sight/unertlreticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
@@ -993,46 +932,46 @@ public class Attachments {
             })
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
             .withCrosshair("HP")
-            .withModel(new HP(), "AK12.png")
-            .withModel(new LPscope(), "HP2.png")
+            .withModel(new JsonModel("weapon/hp"), "AK12.png")
+            .withModel(new JsonModel("sight/lpscope"), "HP2.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof HP) {
+                if (JsonModel.is(model, "weapon/hp")) {
                     GL11.glTranslatef(0.1F, -0.8F, 0.4F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.7D, 0.7D, 0.7D);
-                } else if (model instanceof LPscope) {
+                } else if (JsonModel.is(model, "sight/lpscope")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof HP) {
+                if (JsonModel.is(model, "weapon/hp")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof LPscope) {
+                } else if (JsonModel.is(model, "sight/lpscope")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof HP) {
+                if (JsonModel.is(model, "weapon/hp")) {
                     GL11.glTranslatef(-0.6F, -0.6F, 0.6F);
                     GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glRotatef(-190.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.65D, 0.65D, 0.65D);
-                } else if (model instanceof LPscope) {
+                } else if (JsonModel.is(model, "sight/lpscope")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof HP) {
+                if (JsonModel.is(model, "weapon/hp")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof LPscope) {
+                } else if (JsonModel.is(model, "sight/lpscope")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
@@ -1047,62 +986,62 @@ public class Attachments {
                 GL11.glTranslatef(-0.327F, -1.54F, -0.76F);
             })
             .withCrosshair("HP")
-            .withModel(new M1903A1scope2(), "AK12.png")
-            .withModel(new M1903A1scope(), "AK12.png")
-            .withModel(new UnertlReticle(), "black.png")
+            .withModel(new JsonModel("sight/m1903a1scope2"), "AK12.png")
+            .withModel(new JsonModel("sight/m1903a1scope"), "AK12.png")
+            .withModel(new JsonModel("sight/unertlreticle"), "black.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof M1903A1scope2) {
+                if (JsonModel.is(model, "sight/m1903a1scope2")) {
                     GL11.glTranslatef(0.1F, -0.8F, 0.4F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.7D, 0.7D, 0.7D);
-                } else if (model instanceof M1903A1scope) {
+                } else if (JsonModel.is(model, "sight/m1903a1scope")) {
                     GL11.glTranslatef(0.1F, -0.8F, 0.4F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.7D, 0.7D, 0.7D);
-                } else if (model instanceof UnertlReticle) {
+                } else if (JsonModel.is(model, "sight/unertlreticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof M1903A1scope2) {
+                if (JsonModel.is(model, "sight/m1903a1scope2")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof M1903A1scope) {
+                } else if (JsonModel.is(model, "sight/m1903a1scope")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
-                } else if (model instanceof UnertlReticle) {
+                } else if (JsonModel.is(model, "sight/unertlreticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof M1903A1scope2 || model instanceof M1903A1scope) {
+                if (JsonModel.is(model, "sight/m1903a1scope2") || JsonModel.is(model, "sight/m1903a1scope")) {
                     GL11.glTranslatef(-0.6F, -0.6F, 0.6F);
                     GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glRotatef(-190.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.65D, 0.65D, 0.65D);
-                } else if (model instanceof UnertlReticle) {
+                } else if (JsonModel.is(model, "sight/unertlreticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof M1903A1scope2) {
+                if (JsonModel.is(model, "sight/m1903a1scope2")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
                 }
 
-                if (model instanceof M1903A1scope) {
+                if (JsonModel.is(model, "sight/m1903a1scope")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
-                } else if (model instanceof UnertlReticle) {
+                } else if (JsonModel.is(model, "sight/unertlreticle")) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
@@ -1112,9 +1051,9 @@ public class Attachments {
             .build();
         Silencer556x45 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Suppressor556x45(), "AK12.png")
+            .withModel(new JsonModel("misc/suppressor556x45"), "AK12.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor556x45) {
+                if (JsonModel.is(model, "misc/suppressor556x45")) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1122,7 +1061,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor556x45) {
+                if (JsonModel.is(model, "misc/suppressor556x45")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1131,7 +1070,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor556x45) {
+                if (JsonModel.is(model, "misc/suppressor556x45")) {
                     GL11.glTranslatef(0.6F, 0.1F, 0.3F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -1139,7 +1078,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor556x45) {
+                if (JsonModel.is(model, "misc/suppressor556x45")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
@@ -1152,9 +1091,9 @@ public class Attachments {
             .build();
         Silencer762x39 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Suppressor762x39(), "AK12.png")
+            .withModel(new JsonModel("misc/suppressor762x39"), "AK12.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor762x39) {
+                if (JsonModel.is(model, "misc/suppressor762x39")) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1162,7 +1101,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor762x39) {
+                if (JsonModel.is(model, "misc/suppressor762x39")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1171,7 +1110,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor762x39) {
+                if (JsonModel.is(model, "misc/suppressor762x39")) {
                     GL11.glTranslatef(0.6F, 0.1F, 0.3F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -1179,7 +1118,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor762x39) {
+                if (JsonModel.is(model, "misc/suppressor762x39")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
@@ -1192,9 +1131,9 @@ public class Attachments {
             .build();
         Silencer9mm = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Suppressor(), "GunmetalTexture.png")
+            .withModel(new JsonModel("misc/suppressor"), "GunmetalTexture.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1202,7 +1141,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1211,7 +1150,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.6F, 0.1F, 0.3F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -1219,7 +1158,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
@@ -1232,9 +1171,9 @@ public class Attachments {
             .build();
         Silencer45ACP = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Suppressor45ACP(), "AK12.png")
+            .withModel(new JsonModel("misc/suppressor45acp"), "AK12.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor45ACP) {
+                if (JsonModel.is(model, "misc/suppressor45acp")) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1242,7 +1181,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor45ACP) {
+                if (JsonModel.is(model, "misc/suppressor45acp")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1251,7 +1190,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor45ACP) {
+                if (JsonModel.is(model, "misc/suppressor45acp")) {
                     GL11.glTranslatef(0.6F, 0.1F, 0.3F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -1259,7 +1198,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor45ACP) {
+                if (JsonModel.is(model, "misc/suppressor45acp")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
@@ -1272,9 +1211,9 @@ public class Attachments {
             .build();
         Silencer762x54 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Suppressor(), "AK12.png")
+            .withModel(new JsonModel("misc/suppressor"), "AK12.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1282,7 +1221,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1291,7 +1230,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.6F, 0.1F, 0.3F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -1299,7 +1238,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
@@ -1312,9 +1251,9 @@ public class Attachments {
             .build();
         Silencer762x51 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Suppressor762x51(), "AK12.png")
+            .withModel(new JsonModel("misc/suppressor762x51"), "AK12.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor762x51) {
+                if (JsonModel.is(model, "misc/suppressor762x51")) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1322,7 +1261,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor762x51) {
+                if (JsonModel.is(model, "misc/suppressor762x51")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1331,7 +1270,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor762x51) {
+                if (JsonModel.is(model, "misc/suppressor762x51")) {
                     GL11.glTranslatef(0.6F, 0.1F, 0.3F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -1339,7 +1278,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor762x51) {
+                if (JsonModel.is(model, "misc/suppressor762x51")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
@@ -1352,9 +1291,9 @@ public class Attachments {
             .build();
         Silencer50BMG = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Suppressor(), "GunmetalTexture.png")
+            .withModel(new JsonModel("misc/suppressor"), "GunmetalTexture.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1362,7 +1301,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1371,7 +1310,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.6F, 0.1F, 0.3F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -1379,7 +1318,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
@@ -1392,9 +1331,9 @@ public class Attachments {
             .build();
         Silencer556x39 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Suppressor556x39(), "AK12.png")
+            .withModel(new JsonModel("misc/suppressor556x39"), "AK12.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor556x39) {
+                if (JsonModel.is(model, "misc/suppressor556x39")) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1402,7 +1341,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor556x39) {
+                if (JsonModel.is(model, "misc/suppressor556x39")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1411,7 +1350,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor556x39) {
+                if (JsonModel.is(model, "misc/suppressor556x39")) {
                     GL11.glTranslatef(0.6F, 0.1F, 0.3F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -1419,7 +1358,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor556x39) {
+                if (JsonModel.is(model, "misc/suppressor556x39")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
@@ -1432,23 +1371,23 @@ public class Attachments {
             .build();
         AKMIron = (new AttachmentBuilder()).withCategory(AttachmentCategory.SCOPE)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new AKMiron1(), "AK12.png")
-            .withModel(new AKMiron2(), "AK12.png")
-            .withModel(new AK47iron(), "AK12.png")
-            .withModel(new M4Iron1(), "AK12.png")
-            .withModel(new M4Iron2(), "AK12.png")
-            .withModel(new P90iron(), "AK12.png")
-            .withModel(new G36CIron1(), "AK12.png")
-            .withModel(new G36CIron2(), "AK12.png")
-            .withModel(new ScarIron1(), "AK12.png")
-            .withModel(new ScarIron2(), "AK12.png")
-            .withModel(new FALIron(), "AK12.png")
-            .withModel(new M14Iron(), "AK12.png")
-            .withModel(new MP5Iron(), "AK12.png")
-            .withModel(new MBUSiron(), "AK12.png")
-            .withModel(new MP5Iron(), "AK12.png")
+            .withModel(new JsonModel("sight/akmiron1"), "AK12.png")
+            .withModel(new JsonModel("sight/akmiron2"), "AK12.png")
+            .withModel(new JsonModel("sight/ak47iron"), "AK12.png")
+            .withModel(new JsonModel("sight/m4iron1"), "AK12.png")
+            .withModel(new JsonModel("sight/m4iron2"), "AK12.png")
+            .withModel(new JsonModel("sight/p90iron"), "AK12.png")
+            .withModel(new JsonModel("sight/g36ciron1"), "AK12.png")
+            .withModel(new JsonModel("sight/g36ciron2"), "AK12.png")
+            .withModel(new JsonModel("sight/scariron1"), "AK12.png")
+            .withModel(new JsonModel("sight/scariron2"), "AK12.png")
+            .withModel(new JsonModel("sight/faliron"), "AK12.png")
+            .withModel(new JsonModel("sight/m14iron"), "AK12.png")
+            .withModel(new JsonModel("sight/mp5iron"), "AK12.png")
+            .withModel(new JsonModel("sight/mbusiron"), "AK12.png")
+            .withModel(new JsonModel("sight/mp5iron"), "AK12.png")
             .withInventoryModelPositioning((model, s) -> {
-                if (model instanceof M4Iron1) {
+                if (JsonModel.is(model, "sight/m4iron1")) {
                     GL11.glTranslatef(-0.6F, -0.7F, 0.65F);
                     GL11.glRotatef(10.0F, 1.0F, 0.0F, 0.0F);
                     GL11.glRotatef(-190.0F, 0.0F, 1.0F, 0.0F);
@@ -1459,7 +1398,7 @@ public class Attachments {
 
             })
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof M4Iron1) {
+                if (JsonModel.is(model, "sight/m4iron1")) {
                     GL11.glTranslatef(0.1F, -0.8F, 0.4F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.7D, 0.7D, 0.7D);
@@ -1469,7 +1408,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof M4Iron1) {
+                if (JsonModel.is(model, "sight/m4iron1")) {
                     GL11.glTranslatef(-0.8F, -0.5F, 0.8F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1484,9 +1423,9 @@ public class Attachments {
             .build();
         SilencerMP7 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Suppressor(), "AK12.png")
+            .withModel(new JsonModel("misc/suppressor"), "AK12.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1494,7 +1433,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1503,7 +1442,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.6F, 0.1F, 0.3F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -1511,7 +1450,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
@@ -1524,9 +1463,9 @@ public class Attachments {
             .build();
         Silencer357 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Suppressor(), "GunmetalTexture.png")
+            .withModel(new JsonModel("misc/suppressor"), "GunmetalTexture.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1534,7 +1473,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1543,7 +1482,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.6F, 0.1F, 0.3F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -1551,7 +1490,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
@@ -1564,9 +1503,9 @@ public class Attachments {
             .build();
         Silencer57x38 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Suppressor(), "AK12.png")
+            .withModel(new JsonModel("misc/suppressor"), "AK12.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1574,7 +1513,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1583,7 +1522,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.6F, 0.1F, 0.3F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -1591,7 +1530,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor) {
+                if (JsonModel.is(model, "misc/suppressor")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
@@ -1604,9 +1543,9 @@ public class Attachments {
             .build();
         Silencer12Gauge = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Suppressor45ACP(), "GunmetalTexture.png")
+            .withModel(new JsonModel("misc/suppressor45acp"), "GunmetalTexture.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor45ACP) {
+                if (JsonModel.is(model, "misc/suppressor45acp")) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1614,7 +1553,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor45ACP) {
+                if (JsonModel.is(model, "misc/suppressor45acp")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1623,7 +1562,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor45ACP) {
+                if (JsonModel.is(model, "misc/suppressor45acp")) {
                     GL11.glTranslatef(0.6F, 0.1F, 0.3F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -1631,7 +1570,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor45ACP) {
+                if (JsonModel.is(model, "misc/suppressor45acp")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
@@ -1644,9 +1583,9 @@ public class Attachments {
             .build();
         Silencer300AACBlackout = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Suppressor300AACBlackout(), "AK12.png")
+            .withModel(new JsonModel("misc/suppressor300aacblackout"), "AK12.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor300AACBlackout) {
+                if (JsonModel.is(model, "misc/suppressor300aacblackout")) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1654,7 +1593,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor300AACBlackout) {
+                if (JsonModel.is(model, "misc/suppressor300aacblackout")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1663,7 +1602,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor300AACBlackout) {
+                if (JsonModel.is(model, "misc/suppressor300aacblackout")) {
                     GL11.glTranslatef(0.6F, 0.1F, 0.3F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -1671,7 +1610,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor300AACBlackout) {
+                if (JsonModel.is(model, "misc/suppressor300aacblackout")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
@@ -1684,9 +1623,9 @@ public class Attachments {
             .build();
         Silencer65x39 = (new AttachmentBuilder()).withCategory(AttachmentCategory.SILENCER)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Suppressor556x39(), "AK12.png")
+            .withModel(new JsonModel("misc/suppressor556x39"), "AK12.png")
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor556x39) {
+                if (JsonModel.is(model, "misc/suppressor556x39")) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1694,7 +1633,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor556x39) {
+                if (JsonModel.is(model, "misc/suppressor556x39")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1703,7 +1642,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor556x39) {
+                if (JsonModel.is(model, "misc/suppressor556x39")) {
                     GL11.glTranslatef(0.6F, 0.1F, 0.3F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.0D, 1.0D, 1.0D);
@@ -1711,7 +1650,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Suppressor556x39) {
+                if (JsonModel.is(model, "misc/suppressor556x39")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
@@ -1724,10 +1663,10 @@ public class Attachments {
             .build();
         Laser = (new AttachmentBuilder()).withCategory(AttachmentCategory.GRIP)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Laser(), "AK12.png")
+            .withModel(new JsonModel("misc/laser"), "AK12.png")
             .withPostRender(new EntityLaserBeamRenderer((p, s) -> GL11.glTranslatef(-0.2F, 1.4F, 1.8F)))
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Laser) {
+                if (JsonModel.is(model, "misc/laser")) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1735,13 +1674,13 @@ public class Attachments {
 
             })
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (!(model instanceof AR15Iron)) {
+                if (!(JsonModel.is(model, "sight/ar15iron"))) {
                     GL11.glScaled(0.0D, 0.0D, 0.0D);
                 }
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Laser) {
+                if (JsonModel.is(model, "misc/laser")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1750,7 +1689,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Laser) {
+                if (JsonModel.is(model, "misc/laser")) {
                     GL11.glTranslatef(0.6F, -0.3F, 0.65F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.8D, 1.8D, 1.8D);
@@ -1758,7 +1697,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Laser) {
+                if (JsonModel.is(model, "misc/laser")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
@@ -1770,10 +1709,10 @@ public class Attachments {
             .build();
         Laser2 = (new AttachmentBuilder()).withCategory(AttachmentCategory.GRIP)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Laser2(), "AK12.png")
+            .withModel(new JsonModel("misc/laser2"), "AK12.png")
             .withPostRender(new EntityLaserBeamRenderer((p, s) -> GL11.glTranslatef(-0.2F, 1.3F, 1.8F)))
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Laser2) {
+                if (JsonModel.is(model, "misc/laser2")) {
                     GL11.glTranslatef(0.5F, -1.3F, -0.1F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1781,7 +1720,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Laser2) {
+                if (JsonModel.is(model, "misc/laser2")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1790,7 +1729,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Laser2) {
+                if (JsonModel.is(model, "misc/laser2")) {
                     GL11.glTranslatef(0.6F, -0.3F, 0.65F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.8D, 1.8D, 1.8D);
@@ -1798,7 +1737,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Laser2) {
+                if (JsonModel.is(model, "misc/laser2")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.4D, 0.4D, 0.4D);
@@ -1810,7 +1749,7 @@ public class Attachments {
             .build();
         Grip2 = (new AttachmentBuilder()).withCategory(AttachmentCategory.GRIP)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Grip2(), "AK12.png")
+            .withModel(new JsonModel("grip/grip2"), "AK12.png")
             .withApply(
                 (a, i) -> {
                     i.setRecoil(
@@ -1818,7 +1757,7 @@ public class Attachments {
                             .getRecoil() * 0.6F);
                 })
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Grip2) {
+                if (JsonModel.is(model, "grip/grip2")) {
                     GL11.glTranslatef(0.7F, -1.2F, 0.5F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1826,7 +1765,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Grip2) {
+                if (JsonModel.is(model, "grip/grip2")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1835,7 +1774,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Grip2) {
+                if (JsonModel.is(model, "grip/grip2")) {
                     GL11.glTranslatef(0.6F, 0.3F, -0.5F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.3D, 1.3D, 1.3D);
@@ -1843,7 +1782,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Grip2) {
+                if (JsonModel.is(model, "grip/grip2")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1855,7 +1794,7 @@ public class Attachments {
             .build();
         Grip = (new AttachmentBuilder()).withCategory(AttachmentCategory.GRIP)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new AngledGrip(), "AK12.png")
+            .withModel(new JsonModel("grip/angledgrip"), "AK12.png")
             .withApply(
                 (a, i) -> {
                     i.setRecoil(
@@ -1869,7 +1808,7 @@ public class Attachments {
                             .getRecoil());
                 })
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof AngledGrip) {
+                if (JsonModel.is(model, "grip/angledgrip")) {
                     GL11.glTranslatef(0.7F, -1.1F, 0.5F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
@@ -1877,7 +1816,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof AngledGrip) {
+                if (JsonModel.is(model, "grip/angledgrip")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1886,7 +1825,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof AngledGrip) {
+                if (JsonModel.is(model, "grip/angledgrip")) {
                     GL11.glTranslatef(0.6F, 0.8F, -0.45F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.2D, 1.2D, 1.2D);
@@ -1894,7 +1833,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof AngledGrip) {
+                if (JsonModel.is(model, "grip/angledgrip")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1906,7 +1845,7 @@ public class Attachments {
             .build();
         StubbyGrip = (new AttachmentBuilder()).withCategory(AttachmentCategory.GRIP)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new StubbyGrip(), "AK12.png")
+            .withModel(new JsonModel("grip/stubbygrip"), "AK12.png")
             .withApply(
                 (a, i) -> {
                     i.setRecoil(
@@ -1920,7 +1859,7 @@ public class Attachments {
                             .getRecoil());
                 })
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof StubbyGrip) {
+                if (JsonModel.is(model, "grip/stubbygrip")) {
                     GL11.glTranslatef(0.7F, -1.2F, 0.5F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1928,7 +1867,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof StubbyGrip) {
+                if (JsonModel.is(model, "grip/stubbygrip")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1937,7 +1876,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof StubbyGrip) {
+                if (JsonModel.is(model, "grip/stubbygrip")) {
                     GL11.glTranslatef(0.6F, 0.5F, -0.5F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.6D, 1.6D, 1.6D);
@@ -1945,7 +1884,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof StubbyGrip) {
+                if (JsonModel.is(model, "grip/stubbygrip")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -1957,7 +1896,7 @@ public class Attachments {
             .build();
         VGrip = (new AttachmentBuilder()).withCategory(AttachmentCategory.GRIP)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new VGrip(), "AK12.png")
+            .withModel(new JsonModel("grip/vgrip"), "AK12.png")
             .withApply(
                 (a, i) -> {
                     i.setRecoil(
@@ -1965,7 +1904,7 @@ public class Attachments {
                             .getRecoil() * 0.6F);
                 })
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof VGrip) {
+                if (JsonModel.is(model, "grip/vgrip")) {
                     GL11.glTranslatef(0.7F, -1.1F, 0.5F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
@@ -1973,7 +1912,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof VGrip) {
+                if (JsonModel.is(model, "grip/vgrip")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -1982,7 +1921,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof VGrip) {
+                if (JsonModel.is(model, "grip/vgrip")) {
                     GL11.glTranslatef(0.6F, 0.3F, -0.5F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(1.3D, 1.3D, 1.3D);
@@ -1990,7 +1929,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof VGrip) {
+                if (JsonModel.is(model, "grip/vgrip")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);
@@ -2002,7 +1941,7 @@ public class Attachments {
             .build();
         Bipod = (new AttachmentBuilder()).withCategory(AttachmentCategory.GRIP)
             .withCreativeTab(NewGunrizonsMod.AttachmentsTab)
-            .withModel(new Bipod(), "AK12.png")
+            .withModel(new JsonModel("grip/bipod"), "AK12.png")
             .withApply(
                 (a, i) -> {
                     i.setRecoil(
@@ -2010,7 +1949,7 @@ public class Attachments {
                             .getRecoil() * 0.4F);
                 })
             .withFirstPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Bipod) {
+                if (JsonModel.is(model, "grip/bipod")) {
                     GL11.glTranslatef(0.7F, -1.1F, 0.5F);
                     GL11.glRotatef(30.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.5D, 0.5D, 0.5D);
@@ -2018,7 +1957,7 @@ public class Attachments {
 
             })
             .withThirdPersonModelPositioning((model, itemStack) -> {
-                if (model instanceof Bipod) {
+                if (JsonModel.is(model, "grip/bipod")) {
                     GL11.glTranslatef(-0.7F, -0.5F, 0.6F);
                     GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glRotatef(80.0F, 1.0F, 0.0F, 0.0F);
@@ -2027,7 +1966,7 @@ public class Attachments {
 
             })
             .withInventoryModelPositioning((model, itemStack) -> {
-                if (model instanceof Bipod) {
+                if (JsonModel.is(model, "grip/bipod")) {
                     GL11.glTranslatef(0.6F, -0.05F, -0.5F);
                     GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
                     GL11.glScaled(0.9D, 0.9D, 0.9D);
@@ -2035,7 +1974,7 @@ public class Attachments {
 
             })
             .withEntityModelPositioning((model, itemStack) -> {
-                if (model instanceof Bipod) {
+                if (JsonModel.is(model, "grip/bipod")) {
                     GL11.glTranslatef(0.1F, 0.2F, 0.4F);
                     GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
                     GL11.glScaled(0.6D, 0.6D, 0.6D);

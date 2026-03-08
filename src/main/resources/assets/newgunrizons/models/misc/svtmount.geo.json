@@ -1,0 +1,670 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.svtmount",
+        "texture_width": 64,
+        "texture_height": 32,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2,
+                31,
+                10.8
+              ],
+              "size": [
+                2,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2.9,
+                30.5,
+                -0.2
+              ],
+              "size": [
+                1,
+                1,
+                11
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2,
+                30.5,
+                10.8
+              ],
+              "size": [
+                2,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.1,
+                30.5,
+                -0.2
+              ],
+              "size": [
+                1,
+                1,
+                11
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1.7,
+                32,
+                10.8
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1.3,
+                32,
+                10.8
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.1,
+                30.7,
+                2.8
+              ],
+              "size": [
+                1,
+                1,
+                8
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2.9,
+                30.7,
+                2.8
+              ],
+              "size": [
+                1,
+                1,
+                8
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1.5,
+                30.1,
+                10.5
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1.5,
+                30.1,
+                10
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1.75,
+                30.1,
+                10.25
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1.25,
+                30.1,
+                10.25
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1.5,
+                31.6,
+                11.3
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1.3,
+                34.85,
+                6.1
+              ],
+              "size": [
+                1,
+                1,
+                4
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1.7,
+                34.85,
+                6.1
+              ],
+              "size": [
+                1,
+                1,
+                4
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "SVTmount9",
+          "pivot": [
+            -2.9,
+            31.7,
+            10.8
+          ],
+          "rotation": [
+            0,
+            -60.5,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.9,
+                30.7,
+                10.8
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "SVTmount10",
+          "pivot": [
+            -2.9,
+            31.5,
+            10.8
+          ],
+          "rotation": [
+            0,
+            -60.5,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.9,
+                30.5,
+                10.8
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "SVTmount11",
+          "pivot": [
+            0.9,
+            31.7,
+            10.8
+          ],
+          "rotation": [
+            0,
+            151,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0.9,
+                30.7,
+                10.8
+              ],
+              "size": [
+                2,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "SVTmount12",
+          "pivot": [
+            0.9,
+            31.5,
+            10.8
+          ],
+          "rotation": [
+            0,
+            151,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0.9,
+                30.5,
+                10.8
+              ],
+              "size": [
+                2,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "SVTmount13",
+          "pivot": [
+            -2,
+            32,
+            10.8
+          ],
+          "rotation": [
+            0,
+            0,
+            -70.2958
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2,
+                31,
+                10.8
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "SVTmount14",
+          "pivot": [
+            0,
+            32,
+            10.8
+          ],
+          "rotation": [
+            0,
+            0,
+            161.8935
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0,
+                31,
+                10.8
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "SVTmount20",
+          "pivot": [
+            -0.1,
+            31.7,
+            2.8
+          ],
+          "rotation": [
+            87.3373,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.1,
+                28.7,
+                2.8
+              ],
+              "size": [
+                1,
+                3,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "SVTmount21",
+          "pivot": [
+            -2.9,
+            31.7,
+            2.8
+          ],
+          "rotation": [
+            87.3373,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.9,
+                28.7,
+                2.8
+              ],
+              "size": [
+                1,
+                3,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "SVTmount22",
+          "pivot": [
+            -1.3,
+            33,
+            11.8
+          ],
+          "rotation": [
+            159.7633,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.3,
+                31,
+                11.8
+              ],
+              "size": [
+                1,
+                2,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "SVTmount23",
+          "pivot": [
+            -1.3,
+            34.85,
+            11.1
+          ],
+          "rotation": [
+            119.2899,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.3,
+                32.85,
+                11.1
+              ],
+              "size": [
+                1,
+                2,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "SVTmount24",
+          "pivot": [
+            -1.7,
+            34.85,
+            11.1
+          ],
+          "rotation": [
+            119.2899,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.7,
+                32.85,
+                11.1
+              ],
+              "size": [
+                1,
+                2,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "SVTmount25",
+          "pivot": [
+            -1.7,
+            33,
+            11.8
+          ],
+          "rotation": [
+            159.7633,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.7,
+                31,
+                11.8
+              ],
+              "size": [
+                1,
+                2,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -10,8 +10,7 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.sight.LeupoldReticle;
-import com.gtnewhorizon.newgunrizons.model.weapon.Remington700;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
@@ -63,7 +62,7 @@ public class Remington700Factory {
                 GL11.glTranslatef(-0.105F, -0.5F, -0.43F);
                 GL11.glScaled(0.35D, 0.35D, 0.35D);
             }, (model) -> {
-                if (model instanceof LeupoldReticle) {
+                if (JsonModel.is(model, "sight/leupoldreticle")) {
                     GL11.glTranslatef(0.076F, -0.52F, 4.0251F);
                     GL11.glScaled(0.09D, 0.09D, 0.09D);
                 }
@@ -72,7 +71,7 @@ public class Remington700Factory {
             .withCompatibleBullet(Bullets.Bullet308, (model) -> {})
             .withTextureName("Remington700")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new Remington700())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/remington700"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.5D, 0.5D, 0.5D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

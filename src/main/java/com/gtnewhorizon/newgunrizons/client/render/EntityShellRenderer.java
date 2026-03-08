@@ -7,10 +7,12 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.client.model.ModelBase;
+
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.entities.EntityShellCasing;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.ModelShell;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 
 public class EntityShellRenderer extends Render {
 
@@ -18,7 +20,7 @@ public class EntityShellRenderer extends Render {
         NewGunrizonsMod.MODID,
         "textures/effect/shell.png");
 
-    private static final ModelShell DEFAULT_MODEL = new ModelShell();
+    private static final ModelBase DEFAULT_MODEL = new JsonModel("misc/modelshell");
 
     public void doRender(Entity entity, double x, double y, double z, float yaw, float tick) {
         EntityShellCasing entityShellCasing = (EntityShellCasing) entity;

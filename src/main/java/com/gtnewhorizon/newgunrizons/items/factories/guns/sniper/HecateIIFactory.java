@@ -10,8 +10,7 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.sight.LPscope;
-import com.gtnewhorizon.newgunrizons.model.weapon.HecateII;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Magazines;
@@ -62,7 +61,7 @@ public class HecateIIFactory {
                 GL11.glTranslatef(0.06F, -1.37F, 0.3F);
                 GL11.glScaled(0.6D, 0.6D, 0.6D);
             }, (model) -> {
-                if (model instanceof LPscope) {
+                if (JsonModel.is(model, "sight/lpscope")) {
                     GL11.glTranslatef(0.237F, -0.235F, 1.16F);
                     GL11.glScaled(0.1D, 0.1D, 0.1D);
                 }
@@ -78,7 +77,7 @@ public class HecateIIFactory {
             })
             .withTextureName("HecateII")
             .withRenderer(
-                (new WeaponRenderer.Builder()).withModel(new HecateII())
+                (new WeaponRenderer.Builder()).withModel(new JsonModel("weapon/hecateii"))
                     .withEntityPositioning((itemStack) -> {
                         GL11.glScaled(0.6D, 0.6D, 0.6D);
                         GL11.glRotatef(-90.0F, 0.0F, 0.0F, 4.0F);

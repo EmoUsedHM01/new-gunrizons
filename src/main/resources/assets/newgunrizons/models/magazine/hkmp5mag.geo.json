@@ -1,0 +1,245 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.hkmp5mag",
+        "texture_width": 128,
+        "texture_height": 128,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "Magazine1",
+          "pivot": [
+            -3.5,
+            23,
+            -24.2
+          ],
+          "rotation": [
+            -78.8166,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.5,
+                22,
+                -24.2
+              ],
+              "size": [
+                4,
+                1,
+                12
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "Magazine2",
+          "pivot": [
+            -3.5,
+            22,
+            -19.3
+          ],
+          "rotation": [
+            117.1598,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.5,
+                19,
+                -19.3
+              ],
+              "size": [
+                4,
+                3,
+                12
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "Magazine3",
+          "pivot": [
+            -3.5,
+            23.7,
+            -22.8
+          ],
+          "rotation": [
+            117.1598,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.5,
+                22.7,
+                -22.8
+              ],
+              "size": [
+                4,
+                1,
+                12
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "Magazine4",
+          "pivot": [
+            -3.5,
+            22.6,
+            -22.2
+          ],
+          "rotation": [
+            -78.8166,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.5,
+                19.6,
+                -22.2
+              ],
+              "size": [
+                4,
+                3,
+                12
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "Magazine5",
+          "pivot": [
+            -3.5,
+            13.25,
+            -26.4
+          ],
+          "rotation": [
+            117.1598,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.5,
+                11.25,
+                -26.4
+              ],
+              "size": [
+                4,
+                2,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "Magazine6",
+          "pivot": [
+            -3,
+            23.7,
+            -21.8
+          ],
+          "rotation": [
+            117.1598,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3,
+                22.7,
+                -21.8
+              ],
+              "size": [
+                3,
+                1,
+                12
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "Magazine7",
+          "pivot": [
+            -3,
+            22.8,
+            -23.5
+          ],
+          "rotation": [
+            -78.8166,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3,
+                20.8,
+                -23.5
+              ],
+              "size": [
+                3,
+                2,
+                12
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

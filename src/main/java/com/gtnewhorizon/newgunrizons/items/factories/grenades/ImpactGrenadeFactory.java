@@ -6,7 +6,7 @@ import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
 import com.gtnewhorizon.newgunrizons.grenade.GrenadeRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemGrenade;
-import com.gtnewhorizon.newgunrizons.model.misc.ImpactGrenade;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 
 public class ImpactGrenadeFactory {
 
@@ -27,7 +27,7 @@ public class ImpactGrenadeFactory {
             .withRotationSlowdownFactor(() -> 0.99F)
             .withExplosionOnImpact()
             .withRenderer(
-                (new GrenadeRenderer.Builder()).withModel(new ImpactGrenade())
+                (new GrenadeRenderer.Builder()).withModel(new JsonModel("misc/impactgrenade"))
                     .withAnimationDuration(500)
                     .withThrownEntityPositioning(() -> {
                         GL11.glScalef(0.2F, 0.2F, 0.2F);
