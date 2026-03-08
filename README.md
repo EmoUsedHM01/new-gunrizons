@@ -1,6 +1,6 @@
 # NewGunrizons
 
-A Minecraft 1.7.10 firearms mod for the [GT New Horizons](https://github.com/GTNewHorizons) modpack. NewGunrizons is a heavily modified fork of **Vic's Modern Warfare** (also known as Modern Warfare Mod / MWC), rebuilt from the ground up to integrate with GregTech and the GTNH ecosystem.
+A Minecraft 1.7.10 firearms mod for the [GT New Horizons](https://github.com/GTNewHorizons) modpack. NewGunrizons is a heavily modified fork of [**Vic's Modern Warfare**](https://github.com/vic4games/modern-warfare) (also known as Modern Warfare Mod / MWC), rebuilt from the ground up to integrate with GregTech and the GTNH ecosystem.
 
 > **WARNING: This mod is built for GTNH 2.8.4 release.**
 > It depends on specific versions of GT5-Unofficial (5.09.51.482), Angelica (1.0.0-beta66b), and GTNHLib (0.7.10) shipped with that release. It is **not guaranteed to work** with newer or older GTNH versions, as internal APIs and class structures may change between releases.
@@ -102,7 +102,7 @@ All crafting is done through GregTech machines — no crafting table recipes exi
 
 ## Credits
 
-- **Original mod**: [Vic's Modern Warfare](https://www.curseforge.com/minecraft/mc-mods/vics-modern-warfare-mod) by Vic4Games — the foundation this mod was built upon
+- **Original mod**: [Vic's Modern Warfare](https://github.com/vic4games/modern-warfare) by Vic4Games — the foundation this mod was built upon
 - **GT New Horizons team** — for the modpack and build toolchain
 
 ## License
