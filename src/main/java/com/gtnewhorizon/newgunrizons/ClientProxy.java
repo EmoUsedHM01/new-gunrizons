@@ -8,6 +8,7 @@ import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 
+import com.gtnewhorizon.newgunrizons.client.debug.DebugInputHandler;
 import com.gtnewhorizon.newgunrizons.client.handlers.ClientTickHandler;
 import com.gtnewhorizon.newgunrizons.client.handlers.WeaponHudHandler;
 import com.gtnewhorizon.newgunrizons.client.handlers.WeaponInputHandler;
@@ -54,6 +55,10 @@ public class ClientProxy extends CommonProxy {
             .bus()
             .register(tickHandler);
 
+        FMLCommonHandler.instance()
+            .bus()
+            .register(new DebugInputHandler());
+
         WeaponRenderHandler renderHandler = new WeaponRenderHandler();
         FMLCommonHandler.instance()
             .bus()
@@ -76,6 +81,14 @@ public class ClientProxy extends CommonProxy {
     public void onWeaponFireEffects(EntityLivingBase player, float smokeOffsetX, float smokeOffsetY,
         boolean silencerOn) {
         ParticleManager.spawnSmokeParticle(player, smokeOffsetX, smokeOffsetY);
+    }
+
+    @Override
+    public void applyCameraRecoil(float pitchDelta, float yawDelta, int durationMs) {
+        com.gtnewhorizon.newgunrizons.client.animation.CameraRecoilController controller =
+            com.gtnewhorizon.newgunrizons.client.animation.CameraRecoilController.INSTANCE;
+        controller.setDurationMs(durationMs);
+        controller.addRecoil(pitchDelta, yawDelta);
     }
 
     @Override

@@ -17,6 +17,7 @@ public class KeyBindings {
     public static KeyBinding addKey;
     public static KeyBinding subtractKey;
     public static KeyBinding fireModeKey;
+    public static KeyBinding debugKey;
 
     public static void init() {
         reloadKey = new KeyBinding("key.reload", 19, "key.categories.newgunrizons");
@@ -30,6 +31,7 @@ public class KeyBindings {
         addKey = new KeyBinding("key.add", 27, "key.categories.newgunrizons");
         subtractKey = new KeyBinding("key.subtract", 26, "key.categories.newgunrizons");
         fireModeKey = new KeyBinding("key.fire_mode", 54, "key.categories.newgunrizons");
+        debugKey = new KeyBinding("key.position_debug", 64, "key.categories.newgunrizons");
         ClientRegistry.registerKeyBinding(reloadKey);
         ClientRegistry.registerKeyBinding(attachmentKey);
         ClientRegistry.registerKeyBinding(upArrowKey);
@@ -41,5 +43,6 @@ public class KeyBindings {
         ClientRegistry.registerKeyBinding(addKey);
         ClientRegistry.registerKeyBinding(subtractKey);
         ClientRegistry.registerKeyBinding(fireModeKey);
+        ClientRegistry.registerKeyBinding(debugKey);
     }
 }

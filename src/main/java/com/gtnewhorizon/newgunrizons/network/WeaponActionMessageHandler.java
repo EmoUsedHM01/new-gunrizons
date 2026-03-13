@@ -12,7 +12,6 @@ import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.attachment.CompatibleAttachment;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.items.ItemBullet;
-import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
 import com.gtnewhorizon.newgunrizons.items.ItemScope;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
@@ -62,9 +61,6 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
                 break;
             case WeaponActionMessage.WEAPON_UNLOAD:
                 this.processWeaponUnload(player, itemStack, slotIndex);
-                break;
-            case WeaponActionMessage.MAGAZINE_LOAD:
-                this.processMagazineLoad(player, itemStack);
                 break;
             case WeaponActionMessage.CHANGE_ATTACHMENT:
                 this.processChangeAttachment(player, itemStack, message.getAttachmentCategory(), slotIndex);
@@ -124,49 +120,12 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
 
         ItemWeaponInstance instance = getOrCreateInstance(player, weaponStack, slotIndex);
 
-        List<ItemMagazine> compatibleMagazines = weapon.getCompatibleMagazines();
         List<ItemAttachment> compatibleBullets = weapon.getCompatibleAttachments(ItemBullet.class);
 
-        if (!compatibleMagazines.isEmpty()) {
-            this.loadWithMagazine(player, weaponStack, weapon, instance, compatibleMagazines);
-        } else if (!compatibleBullets.isEmpty()) {
+        if (!compatibleBullets.isEmpty()) {
             this.loadWithBullets(player, weaponStack, weapon, instance, compatibleBullets);
         } else if (weapon.getAmmo() != null) {
             this.loadWithGenericAmmo(player, weaponStack, weapon, instance);
-        }
-    }
-
-    private void loadWithMagazine(EntityPlayerMP player, ItemStack weaponStack, ItemWeapon weapon,
-        ItemWeaponInstance instance, List<ItemMagazine> compatibleMagazines) {
-        ItemAttachment existingMagazine = WeaponAttachmentAspect
-            .getActiveAttachment(AttachmentCategory.MAGAZINE, instance);
-
-        if (existingMagazine != null) {
-            // Magazine already attached — ammo already set from existing magazine
-            int ammo = ItemInstance.getAmmo(weaponStack);
-            instance.setAmmo(ammo);
-            instance.setLoadIterationCount(0);
-            ItemInstance.toStack(weaponStack, instance);
-            return;
-        }
-
-        // Consume a compatible magazine from inventory
-        ItemStack magazineStack = InventoryUtils.tryConsumingCompatibleItem(
-            compatibleMagazines,
-            1,
-            player,
-            (stack) -> ItemInstance.getAmmo(stack) > 0,
-            (stack) -> true);
-
-        if (magazineStack != null) {
-            int ammo = ItemInstance.getAmmo(magazineStack);
-            ItemInstance.setAmmo(weaponStack, ammo);
-
-            WeaponAttachmentAspect.addAttachment((ItemAttachment) magazineStack.getItem(), instance);
-            instance.setAmmo(ammo);
-            instance.setLoadIterationCount(0);
-            ItemInstance.toStack(weaponStack, instance);
-            player.worldObj.playSoundToNearExcept(player, weapon.getReloadSound(), 1.0F, 1.0F);
         }
     }
 
@@ -214,52 +173,12 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
             return;
         }
 
-        // Remove magazine attachment
-        int[] activeAttachmentIds = instance.getActiveAttachmentIds();
-        int magazineAttachmentId = activeAttachmentIds[AttachmentCategory.MAGAZINE.ordinal()];
-        ItemAttachment currentMagazine = null;
-        if (magazineAttachmentId > 0) {
-            currentMagazine = (ItemAttachment) Item.getItemById(magazineAttachmentId);
-        }
-
-        if (currentMagazine instanceof ItemMagazine) {
-            ItemMagazine magazine = (ItemMagazine) currentMagazine;
-            // Create magazine ItemStack with current ammo and return to inventory
-            ItemStack magazineItemStack = magazine.createItemStack();
-            ItemInstance.setAmmo(magazineItemStack, instance.getAmmo());
-            player.inventory.addItemStackToInventory(magazineItemStack);
-
-            // Clear attachment from instance
-            activeAttachmentIds[AttachmentCategory.MAGAZINE.ordinal()] = -1;
-            instance.setActiveAttachmentIds(activeAttachmentIds);
-        }
-
         ItemInstance.setAmmo(weaponStack, 0);
         instance.setAmmo(0);
         ItemInstance.toStack(weaponStack, instance);
 
-        player.worldObj.playSoundToNearExcept(player, weapon.getUnloadSound(), 1.0F, 1.0F);
-    }
-
-    private void processMagazineLoad(EntityPlayerMP player, ItemStack magazineStack) {
-        if (!(magazineStack.getItem() instanceof ItemMagazine)) {
-            return;
-        }
-        ItemMagazine magazine = (ItemMagazine) magazineStack.getItem();
-
-        List<ItemBullet> compatibleBullets = magazine.getCompatibleBullets();
-        int currentAmmo = ItemInstance.getAmmo(magazineStack);
-        int maxToLoad = magazine.getAmmo() - currentAmmo;
-
-        ItemStack consumedStack = InventoryUtils
-            .tryConsumingCompatibleItem(compatibleBullets, maxToLoad, player, (stack) -> true);
-
-        if (consumedStack != null) {
-            ItemInstance.setAmmo(magazineStack, currentAmmo + consumedStack.stackSize);
-
-            if (magazine.getReloadSound() != null) {
-                player.playSound(magazine.getReloadSound(), 1.0F, 1.0F);
-            }
+        if (weapon.getUnloadSound() != null) {
+            player.worldObj.playSoundToNearExcept(player, weapon.getUnloadSound(), 1.0F, 1.0F);
         }
     }
 

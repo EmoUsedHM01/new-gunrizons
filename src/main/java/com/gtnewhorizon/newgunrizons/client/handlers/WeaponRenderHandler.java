@@ -47,6 +47,7 @@ public class WeaponRenderHandler {
             event.renderTickTime);
         EntityPlayer player = minecraft.thePlayer;
         if (event.phase == TickEvent.Phase.START) {
+            com.gtnewhorizon.newgunrizons.client.animation.CameraRecoilController.INSTANCE.update(player);
             if (player != null) {
                 ItemWeaponInstance weaponInstance = ItemInstanceRegistry.getMainHeldWeapon();
                 if (weaponInstance != null) {

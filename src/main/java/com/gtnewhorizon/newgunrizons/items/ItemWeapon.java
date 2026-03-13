@@ -71,6 +71,8 @@ public class ItemWeapon extends Item
     @Getter
     private final float recoil;
     @Getter
+    private final int cameraRecoilDurationMs;
+    @Getter
     private final ItemAmmo ammo;
     @Getter
     private final float fireRate;
@@ -133,6 +135,7 @@ public class ItemWeapon extends Item
         this.textureName = builder.textureName;
         this.ammoCapacity = builder.ammoCapacity;
         this.recoil = builder.recoil;
+        this.cameraRecoilDurationMs = builder.cameraRecoilDurationMs;
         this.ammo = builder.ammo;
         this.fireRate = builder.fireRate;
         this.maxShots = new ArrayList<>(builder.maxShots);
@@ -181,8 +184,7 @@ public class ItemWeapon extends Item
 
     @Override
     public boolean showDurabilityBar(ItemStack stack) {
-        return this.getCompatibleMagazines()
-            .isEmpty();
+        return true;
     }
 
     @Override
@@ -237,14 +239,6 @@ public class ItemWeapon extends Item
 
     public boolean ejectSpentRoundRequired() {
         return this.ejectSpentRoundRequired;
-    }
-
-    public List<ItemMagazine> getCompatibleMagazines() {
-        return this.compatibleAttachments.keySet()
-            .stream()
-            .filter((a) -> a instanceof ItemMagazine)
-            .map((a) -> (ItemMagazine) a)
-            .collect(Collectors.toList());
     }
 
     public List<ItemAttachment> getCompatibleAttachments(Class<? extends ItemAttachment> target) {
@@ -455,6 +449,7 @@ public class ItemWeapon extends Item
 
         public int ammoCapacity = 0;
         float recoil = 1.0F;
+        int cameraRecoilDurationMs = 50;
         private String shootSound;
         private String silencedShootSound;
         private String reloadSound;
@@ -547,6 +542,11 @@ public class ItemWeapon extends Item
 
         public ItemWeapon.Builder withRecoil(float recoil) {
             this.recoil = recoil;
+            return this;
+        }
+
+        public ItemWeapon.Builder withCameraRecoilDuration(int durationMs) {
+            this.cameraRecoilDurationMs = durationMs;
             return this;
         }
 

@@ -147,15 +147,7 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
 
     private void cannotFire(ItemWeaponInstance weaponInstance) {
         if (weaponInstance.getAmmo() == 0) {
-            String message;
-            if (weaponInstance.getWeapon()
-                .getAmmoCapacity() == 0
-                && WeaponAttachmentAspect.INSTANCE.getActiveAttachment(weaponInstance, AttachmentCategory.MAGAZINE)
-                    == null) {
-                message = StatCollector.translateToLocalFormatted("gui.noMagazine");
-            } else {
-                message = StatCollector.translateToLocalFormatted("gui.noAmmo");
-            }
+            String message = StatCollector.translateToLocalFormatted("gui.noAmmo");
 
             StatusMessageManager.INSTANCE.addAlertMessage(message, 3, 250L, 200L);
             if (weaponInstance.getPlayer() instanceof EntityPlayer) {
@@ -188,9 +180,10 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
             player.playSound(weapon.getEndOfShootSound(), 1.0F, 1.0F);
         }
 
-        player.rotationPitch -= weaponInstance.getRecoil();
+        float recoilAmount = weaponInstance.getRecoil();
         float rotationYawFactor = -1.0F + random.nextFloat() * 2.0F;
-        player.rotationYaw += weaponInstance.getRecoil() * rotationYawFactor;
+        NewGunrizonsMod.proxy.applyCameraRecoil(-recoilAmount, recoilAmount * rotationYawFactor,
+            weapon.getCameraRecoilDurationMs());
 
         NewGunrizonsMod.proxy.onWeaponFireEffects(
             player,

@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.WeakHashMap;
 
+import lombok.Getter;
+
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
@@ -31,6 +33,7 @@ public class MultipartRenderStateManager {
 
     private final IdleSway idleSway;
     private final WeakHashMap<Part, Matrix4f> lastApplied = new WeakHashMap<>();
+    @Getter
     private RenderableState currentState;
     private final MultipartTransitionProvider transitionProvider;
     private final Deque<MultipartPositioning> positioningQueue;

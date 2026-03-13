@@ -8,8 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import com.gtnewhorizon.newgunrizons.items.ItemBullet;
-import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
-import com.gtnewhorizon.newgunrizons.registry.Magazines;
+import com.gtnewhorizon.newgunrizons.registry.Bullets;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -26,8 +25,7 @@ public class AmmoTab extends CreativeTabs {
 
     private static int getTypeSortOrder(Item item) {
         if (item instanceof ItemBullet) return 0;
-        if (item instanceof ItemMagazine) return 1;
-        return 2;
+        return 1;
     }
 
     public AmmoTab(int par1, String par2Str) {
@@ -45,6 +43,6 @@ public class AmmoTab extends CreativeTabs {
     @Override
     @SideOnly(Side.CLIENT)
     public Item getTabIconItem() {
-        return Magazines.NATOMag1;
+        return Bullets.ShotgunShell;
     }
 }

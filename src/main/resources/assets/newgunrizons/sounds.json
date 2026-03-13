@@ -1870,5 +1870,15 @@
        "stream": false
       }
     ]
+  },
+  "handcannon": {
+    "category": "master",
+    "sounds": [
+      {
+       "name": "handcannon",
+       "stream": false,
+       "volume": 0.7
+      }
+    ]
   }
 }

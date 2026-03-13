@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
+import com.gtnewhorizon.newgunrizons.client.debug.PositionDebugger;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.weapon.WeaponAttachmentAspect;
@@ -93,6 +94,19 @@ public class MuzzleFlashRenderer {
             .get();
         int imageIndex = Math.abs(rand.nextInt()) % IMAGES_PER_ROW;
         renderFlashQuad(alpha, scale, imageIndex, weaponOffsetX, weaponOffsetY, weaponOffsetZ);
+    }
+
+    /**
+     * Renders a static muzzle flash for position debugging.
+     * Uses the MUZZLE_FLASH debug state's translate as flash offset and scale as flash scale.
+     */
+    public static void renderDebugFlash() {
+        if (!PositionDebugger.isActive()
+            || PositionDebugger.getCurrentMode() != PositionDebugger.Mode.MUZZLE_FLASH) {
+            return;
+        }
+        PositionDebugger.TransformState state = PositionDebugger.getState(PositionDebugger.Mode.MUZZLE_FLASH);
+        renderFlashQuad(1.0F, state.scale, 0, state.translateX, state.translateY, state.translateZ);
     }
 
     private static void renderFlashQuad(float alpha, float scale, int imageIndex, float weaponOffsetX,

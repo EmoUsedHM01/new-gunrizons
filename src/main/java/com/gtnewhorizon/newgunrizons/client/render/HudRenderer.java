@@ -12,7 +12,6 @@ import org.lwjgl.opengl.GL11;
 
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
 import com.gtnewhorizon.newgunrizons.client.input.KeyBindings;
-import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
@@ -73,16 +72,6 @@ public class HudRenderer {
 
         GL11.glPopAttrib();
         return true;
-    }
-
-    public void renderMagazineHud(ScaledResolution resolution, ItemStack itemStack) {
-        int width = resolution.getScaledWidth();
-        int height = resolution.getScaledHeight();
-        Minecraft mc = Minecraft.getMinecraft();
-        FontRenderer fontRender = mc.fontRenderer;
-        mc.entityRenderer.setupOverlayRendering();
-
-        renderStatusMessage(fontRender, width, height, getDefaultMagazineMessage(itemStack), COLOR_RED);
     }
 
     public boolean renderGrenadeHud(ScaledResolution resolution) {
@@ -156,27 +145,9 @@ public class HudRenderer {
         GL11.glPopMatrix();
     }
 
-    private String getDefaultMagazineMessage(ItemStack itemStack) {
-        ItemMagazine magazine = (ItemMagazine) itemStack.getItem();
-        return StatCollector
-            .translateToLocalFormatted("gui.ammoCounter", ItemInstance.getAmmo(itemStack) + "/" + magazine.getAmmo());
-    }
-
     private String getDefaultWeaponMessage(ItemWeaponInstance weaponInstance) {
-        ItemMagazine magazine = (ItemMagazine) WeaponAttachmentAspect
-            .getActiveAttachment(AttachmentCategory.MAGAZINE, weaponInstance);
-        int totalCapacity;
-        if (magazine != null) {
-            totalCapacity = magazine.getAmmo();
-        } else {
-            totalCapacity = weaponInstance.getWeapon()
-                .getAmmoCapacity();
-        }
-
-        if (weaponInstance.getWeapon()
-            .getAmmoCapacity() == 0 && totalCapacity == 0) {
-            return StatCollector.translateToLocalFormatted("gui.noMagazine");
-        }
+        int totalCapacity = weaponInstance.getWeapon()
+            .getAmmoCapacity();
         return StatCollector.translateToLocalFormatted(
             "gui.ammoCounter",
             weaponInstance.getWeapon()

@@ -12,6 +12,7 @@ import java.util.Random;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import com.gtnewhorizon.newgunrizons.client.debug.PositionDebugger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.ScaledResolution;
@@ -62,7 +63,7 @@ public class WeaponRenderer implements IItemRenderer {
     private static final float DEFAULT_ZOOM_RANDOMIZING_AMPLITUDE = 0.005F;
     private static final float DEFAULT_FIRING_RANDOMIZING_AMPLITUDE = 0.03F;
     private static final int DEFAULT_ANIMATION_DURATION = 250;
-    private static final int DEFAULT_RECOIL_ANIMATION_DURATION = 100;
+    private static final int DEFAULT_RECOIL_ANIMATION_DURATION = 10;
     private static final int DEFAULT_SHOOTING_ANIMATION_DURATION = 100;
     private static final int DEFAULT_ITERATION_COMPLETED_ANIMATION_DURATION = 100;
     private static final int DEFAULT_PREPARE_FIRST_LOAD_ITERATION_ANIMATION_DURATION = 100;
@@ -148,6 +149,7 @@ public class WeaponRenderer implements IItemRenderer {
     private final LinkedHashMap<Part, Consumer<RenderContext>> firstPersonCustomPositioningLoadIterationCompleted;
     private final LinkedHashMap<Part, List<Transition>> firstPersonCustomPositioningEjectSpentRound;
     private final boolean hasRecoilPositioningDefined;
+    private final com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimationController bedrockAnimController;
     private Integer cachedInventoryTexture;
 
     private WeaponRenderer(Builder builder) {
@@ -222,6 +224,7 @@ public class WeaponRenderer implements IItemRenderer {
         this.firstPersonCustomPositioningLoadIterationCompleted = builder.firstPersonCustomPositioningLoadIterationCompleted;
         this.firstPersonCustomPositioningEjectSpentRound = builder.firstPersonCustomPositioningEjectSpentRound;
         this.hasRecoilPositioningDefined = builder.hasRecoilPositioningDefined;
+        this.bedrockAnimController = builder.bedrockAnimController;
     }
 
     protected StateDescriptor getStateDescriptor(EntityLivingBase player, ItemStack itemStack) {
@@ -325,12 +328,30 @@ public class WeaponRenderer implements IItemRenderer {
             stateManager.setState(
                 currentState,
                 true,
-                currentState == RenderableState.SHOOTING || currentState == RenderableState.ZOOMING_SHOOTING
-                    || currentState == RenderableState.RUNNING
-                    || currentState == RenderableState.ZOOMING);
+                isImmediateTransition(stateManager.getCurrentState(), currentState));
         }
 
         return new StateDescriptor(itemWeaponInstance, stateManager, rate, amplitude);
+    }
+
+    private static boolean isFireCycleState(RenderableState state) {
+        return state == RenderableState.RECOILED || state == RenderableState.SHOOTING
+            || state == RenderableState.ZOOMING_RECOILED
+            || state == RenderableState.ZOOMING_SHOOTING;
+    }
+
+    /**
+     * Determines whether a state transition should clear the animation queue.
+     * Transitions within or out of the fire cycle (recoil/shooting) are never immediate,
+     * so the recoil animation plays its full configured duration.
+     * Transitions from outside the fire cycle into major states (zooming, running) are
+     * immediate so the weapon snaps to the new pose.
+     */
+    private static boolean isImmediateTransition(RenderableState from, RenderableState to) {
+        if (isFireCycleState(from)) {
+            return false;
+        }
+        return to == RenderableState.ZOOMING || to == RenderableState.RUNNING;
     }
 
     private WeaponStateTimed getNextNonExpiredState(ItemWeaponInstance playerWeaponState) {
@@ -416,6 +437,16 @@ public class WeaponRenderer implements IItemRenderer {
                 .bindTexture(new ResourceLocation(NewGunrizonsMod.MODID + ":textures/models/" + textureName));
         }
 
+        // Apply bedrock bone animations if active
+        if (this.bedrockAnimController != null && this.model instanceof com.gtnewhorizon.newgunrizons.model.JsonModel) {
+            com.gtnewhorizon.newgunrizons.model.JsonModel jsonModel = (com.gtnewhorizon.newgunrizons.model.JsonModel) this.model;
+            RenderableState toState = renderContext.getToState();
+            if (toState != null) {
+                this.bedrockAnimController.onStateChanged(toState);
+            }
+            this.bedrockAnimController.applyToModel(jsonModel);
+        }
+
         this.model.render(
             null,
             renderContext.getLimbSwing(),
@@ -424,6 +455,13 @@ public class WeaponRenderer implements IItemRenderer {
             renderContext.getNetHeadYaw(),
             renderContext.getHeadPitch(),
             renderContext.getScale());
+
+        // Reset bones to rest pose after rendering
+        if (this.bedrockAnimController != null && this.model instanceof com.gtnewhorizon.newgunrizons.model.JsonModel) {
+            this.bedrockAnimController
+                .resetModel((com.gtnewhorizon.newgunrizons.model.JsonModel) this.model);
+        }
+
         if (attachments != null) {
             this.renderAttachments(positioner, renderContext, attachments);
         }
@@ -567,14 +605,14 @@ public class WeaponRenderer implements IItemRenderer {
                     firstPersonLeftHandPositioningRecoiled,
                     firstPersonRightHandPositioningRecoiled,
                     firstPersonCustomPositioningRecoiled,
-                    recoilAnimationDuration);
+                    PositionDebugger.getEffectiveRecoilDuration(recoilAnimationDuration));
             } else if (state == RenderableState.SHOOTING) {
                 return getSimpleTransition(
                     firstPersonPositioningShooting,
                     firstPersonLeftHandPositioningShooting,
                     firstPersonRightHandPositioningShooting,
                     firstPersonCustomPositioning,
-                    shootingAnimationDuration);
+                    PositionDebugger.getEffectiveShootingDuration(shootingAnimationDuration));
             } else if (state == RenderableState.EJECT_SPENT_ROUND) {
                 return getComplexTransition(
                     firstPersonPositioningEjectSpentRound,
@@ -601,14 +639,14 @@ public class WeaponRenderer implements IItemRenderer {
                     firstPersonLeftHandPositioningZooming,
                     firstPersonRightHandPositioningZooming,
                     firstPersonCustomPositioningZoomingShooting,
-                    60);
+                    PositionDebugger.getEffectiveShootingDuration(shootingAnimationDuration));
             } else if (state == RenderableState.ZOOMING_RECOILED) {
                 return getSimpleTransition(
                     firstPersonPositioningZoomingRecoiled,
                     firstPersonLeftHandPositioningZooming,
                     firstPersonRightHandPositioningZooming,
                     firstPersonCustomPositioningZoomingRecoiled,
-                    60);
+                    PositionDebugger.getEffectiveRecoilDuration(recoilAnimationDuration));
             }
             return null;
         }
@@ -670,8 +708,8 @@ public class WeaponRenderer implements IItemRenderer {
         private long totalReloadingDuration;
         private long totalUnloadingDuration;
         private long totalLoadIterationDuration;
-        private final int recoilAnimationDuration = DEFAULT_RECOIL_ANIMATION_DURATION;
-        private final int shootingAnimationDuration = DEFAULT_SHOOTING_ANIMATION_DURATION;
+        private int recoilAnimationDuration = DEFAULT_RECOIL_ANIMATION_DURATION;
+        private int shootingAnimationDuration = DEFAULT_SHOOTING_ANIMATION_DURATION;
         private final int loadIterationCompletedAnimationDuration = DEFAULT_ITERATION_COMPLETED_ANIMATION_DURATION;
         private int prepareFirstLoadIterationAnimationDuration = DEFAULT_PREPARE_FIRST_LOAD_ITERATION_ANIMATION_DURATION;
         private int allLoadIterationAnimationsCompletedDuration = DEFAULT_ALL_LOAD_ITERATION_ANIMATIONS_COMPLETED_DURATION;
@@ -699,9 +737,43 @@ public class WeaponRenderer implements IItemRenderer {
 
         private final LinkedHashMap<Part, List<Transition>> firstPersonCustomPositioningEjectSpentRound = new LinkedHashMap<>();
         private boolean hasRecoilPositioningDefined;
+        private com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimationController bedrockAnimController;
 
         public Builder withModel(ModelBase model) {
             this.model = model;
+            return this;
+        }
+
+        public Builder withRecoilAnimationDuration(int recoilAnimationDuration) {
+            this.recoilAnimationDuration = recoilAnimationDuration;
+            return this;
+        }
+
+        public Builder withShootingAnimationDuration(int shootingAnimationDuration) {
+            this.shootingAnimationDuration = shootingAnimationDuration;
+            return this;
+        }
+
+        /**
+         * Loads a Bedrock animation file containing animation clips.
+         *
+         * @param animationPath path relative to assets/newgunrizons/animations/, without .animation.json extension
+         */
+        public Builder withBedrockAnimation(String animationPath) {
+            this.bedrockAnimController = new com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimationController(
+                new com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimation(animationPath));
+            return this;
+        }
+
+        /**
+         * Maps a weapon renderable state to a named Bedrock animation clip.
+         * Requires {@link #withBedrockAnimation(String)} to be called first.
+         */
+        public Builder withBedrockAnimationForState(RenderableState state, String clipName) {
+            if (this.bedrockAnimController == null) {
+                throw new IllegalStateException("Call withBedrockAnimation() before withBedrockAnimationForState()");
+            }
+            this.bedrockAnimController.mapState(state, clipName);
             return this;
         }
 
@@ -1312,7 +1384,9 @@ public class WeaponRenderer implements IItemRenderer {
                 renderContext.setFromState(multipartPositioning.getFromState(RenderableState.class));
                 renderContext.setToState(multipartPositioning.getToState(RenderableState.class));
                 positioner = multipartPositioning.getPositioner();
-                positioner.applySway(stateDescriptor.rate, stateDescriptor.amplitude);
+                if (!com.gtnewhorizon.newgunrizons.client.debug.PositionDebugger.isScreenOpen()) {
+                    positioner.applySway(stateDescriptor.rate, stateDescriptor.amplitude);
+                }
                 positioner.position(Part.MAIN_ITEM, renderContext);
 
                 renderLeftArm((EntityPlayer) player, renderContext, positioner);
@@ -1325,6 +1399,7 @@ public class WeaponRenderer implements IItemRenderer {
 
         if (type == ItemRenderType.EQUIPPED_FIRST_PERSON) {
             MuzzleFlashRenderer.renderIfFiring(renderContext);
+            MuzzleFlashRenderer.renderDebugFlash();
         }
 
         if (type == ItemRenderType.INVENTORY && inventoryTextureInitializationPhaseOn) {

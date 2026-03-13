@@ -42,7 +42,11 @@ public final class IdleSway {
             if (rate == 0.0F && amplitude == 0.0F) {
                 this.toMatrix = this.fromMatrix = this.currentMatrix = captureIdentity();
             } else {
-                this.pickNewTarget();
+                // Set amplitude before creating random matrices so they use the new value
+                this.amplitude = amplitude;
+                this.fromMatrix = this.currentMatrix = captureIdentity();
+                this.toMatrix = this.createRandomMatrix();
+                this.startTime = System.currentTimeMillis();
             }
             this.rate = rate;
             this.amplitude = amplitude;

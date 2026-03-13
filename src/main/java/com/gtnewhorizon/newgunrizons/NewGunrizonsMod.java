@@ -2,15 +2,10 @@ package com.gtnewhorizon.newgunrizons;
 
 import net.minecraft.creativetab.CreativeTabs;
 
-import com.gtnewhorizon.newgunrizons.registry.GTRecipes;
 import com.gtnewhorizon.newgunrizons.tabs.AmmoTab;
-import com.gtnewhorizon.newgunrizons.tabs.AssaultRiflesTab;
 import com.gtnewhorizon.newgunrizons.tabs.AttachmentsTab;
 import com.gtnewhorizon.newgunrizons.tabs.GunsTab;
-import com.gtnewhorizon.newgunrizons.tabs.PistolsTab;
-import com.gtnewhorizon.newgunrizons.tabs.SMGTab;
 import com.gtnewhorizon.newgunrizons.tabs.ShotgunsTab;
-import com.gtnewhorizon.newgunrizons.tabs.SnipersTab;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -30,11 +25,7 @@ public class NewGunrizonsMod {
     public static final SimpleNetworkWrapper CHANNEL;
 
     public static CreativeTabs gunsTab;
-    public static CreativeTabs AssaultRiflesTab;
-    public static CreativeTabs PistolsTab;
-    public static CreativeTabs SMGTab;
     public static CreativeTabs ShotgunsTab;
-    public static CreativeTabs SnipersTab;
     public static CreativeTabs AmmoTab;
     public static CreativeTabs AttachmentsTab;
 
@@ -55,17 +46,12 @@ public class NewGunrizonsMod {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        GTRecipes.init();
     }
 
     static {
         CHANNEL = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
         gunsTab = new GunsTab(CreativeTabs.getNextID(), "guns_tab");
-        AssaultRiflesTab = new AssaultRiflesTab(CreativeTabs.getNextID(), "AssaultRifles_tab");
-        PistolsTab = new PistolsTab(CreativeTabs.getNextID(), "Pistols_tab");
-        SMGTab = new SMGTab(CreativeTabs.getNextID(), "SMG_tab");
         ShotgunsTab = new ShotgunsTab(CreativeTabs.getNextID(), "ShotgunsTab");
-        SnipersTab = new SnipersTab(CreativeTabs.getNextID(), "SnipersTab");
         AmmoTab = new AmmoTab(CreativeTabs.getNextID(), "AmmoTab");
         AttachmentsTab = new AttachmentsTab(CreativeTabs.getNextID(), "AttachmentsTab");
     }

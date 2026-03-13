@@ -7,7 +7,6 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
 
 import com.gtnewhorizon.newgunrizons.client.render.HudRenderer;
 import com.gtnewhorizon.newgunrizons.items.ItemGrenade;
-import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 
@@ -37,9 +36,6 @@ public class WeaponHudHandler {
             if (hudRenderer.renderWeaponHud(event.resolution, itemStack, weaponInstance)) {
                 event.setCanceled(true);
             }
-        } else if (itemStack.getItem() instanceof ItemMagazine) {
-            hudRenderer.renderMagazineHud(event.resolution, itemStack);
-            event.setCanceled(true);
         } else if (itemStack.getItem() instanceof ItemGrenade) {
             if (hudRenderer.renderGrenadeHud(event.resolution)) {
                 event.setCanceled(true);
