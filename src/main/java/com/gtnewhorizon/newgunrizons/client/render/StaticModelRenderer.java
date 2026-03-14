@@ -86,10 +86,6 @@ public class StaticModelRenderer implements IItemRenderer {
                 break;
             case EQUIPPED_FIRST_PERSON:
                 this.firstPersonPositioning.accept(player, itemStack);
-                WeaponRenderer
-                    .renderLeftArm(player, renderContext, (p, c) -> this.firstPersonLeftHandPositioning.accept(c));
-                WeaponRenderer
-                    .renderRightArm(player, renderContext, (p, c) -> this.firstPersonRightHandPositioning.accept(c));
         }
 
         renderAttachmentModels(renderContext, itemStack, type);

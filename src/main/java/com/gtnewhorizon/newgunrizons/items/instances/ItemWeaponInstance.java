@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.items.instances;
 
 import java.util.Arrays;
-import java.util.Deque;
-import java.util.concurrent.LinkedBlockingDeque;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
@@ -15,7 +13,6 @@ import com.gtnewhorizon.newgunrizons.items.ItemScope;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.network.TypeRegistry;
 import com.gtnewhorizon.newgunrizons.weapon.WeaponState;
-import com.gtnewhorizon.newgunrizons.weapon.WeaponStateTimed;
 
 import io.netty.buffer.ByteBuf;
 import lombok.Getter;
@@ -62,8 +59,6 @@ public class ItemWeaponInstance extends ItemInstance<WeaponState> {
     @Setter
     private int loadIterationCount;
 
-    private final Deque<WeaponStateTimed> filteredStateQueue = new LinkedBlockingDeque<>();
-
     private int[] activeAttachmentIds = new int[0];
     private byte[] selectedAttachmentIndexes = new byte[0];
 
@@ -79,43 +74,6 @@ public class ItemWeaponInstance extends ItemInstance<WeaponState> {
 
     protected int getSerialVersion() {
         return SERIAL_VERSION;
-    }
-
-    private void addStateToHistory(WeaponState state) {
-        WeaponStateTimed t;
-        while ((t = this.filteredStateQueue.peekFirst()) != null && t.getState()
-            .getPriority() < state.getPriority()) {
-            this.filteredStateQueue.pollFirst();
-        }
-
-        long expirationTimeout;
-        if (state != WeaponState.FIRING && state != WeaponState.RECOILED && state != WeaponState.PAUSED) {
-            expirationTimeout = Integer.MAX_VALUE;
-        } else {
-            if (this.isAutomaticModeEnabled() && !this.getWeapon()
-                .hasRecoilPositioning()) {
-                expirationTimeout = (long) (50.0F / this.getFireRate());
-            } else {
-                expirationTimeout = 500L;
-            }
-        }
-
-        this.filteredStateQueue.addFirst(new WeaponStateTimed(state, this.stateUpdateTimestamp, expirationTimeout));
-    }
-
-    public boolean setState(WeaponState state) {
-        boolean result = super.setState(state);
-        this.addStateToHistory(state);
-        return result;
-    }
-
-    public WeaponStateTimed nextHistoryState() {
-        WeaponStateTimed result = this.filteredStateQueue.pollLast();
-        if (result == null) {
-            result = new WeaponStateTimed(this.getState(), this.stateUpdateTimestamp);
-        }
-
-        return result;
     }
 
     public void init(ByteBuf buf) {

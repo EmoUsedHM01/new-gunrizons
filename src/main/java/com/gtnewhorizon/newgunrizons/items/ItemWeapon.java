@@ -367,10 +367,6 @@ public class ItemWeapon extends Item
         return this.renderer.getTotalUnloadingDuration();
     }
 
-    public boolean hasRecoilPositioning() {
-        return this.renderer.hasRecoilPositioning();
-    }
-
     public void incrementZoom(ItemWeaponInstance instance) {
         Item scopeItem = instance.getAttachmentItemWithCategory(AttachmentCategory.SCOPE);
         if (scopeItem instanceof ItemScope && ((ItemScope) scopeItem).isOptical()) {

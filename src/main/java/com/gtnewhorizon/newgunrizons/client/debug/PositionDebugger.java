@@ -1,317 +1,388 @@
 package com.gtnewhorizon.newgunrizons.client.debug;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.EnumMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.minecraft.client.Minecraft;
 
-import org.lwjgl.opengl.GL11;
+import com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimation;
+import com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimation.AnimationClip;
+import com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimation.BoneAnimation;
+import com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimation.Keyframe;
+import com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimationController;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
+/**
+ * Debug tool for adjusting weapon bone positions/rotations in real-time
+ * using the Bedrock animation system. Works by applying additive offsets
+ * to a selected bone on the animation controller.
+ */
 public class PositionDebugger {
 
-    public enum Mode {
+	@Setter
+	@Getter
+	private static boolean active;
 
-        FIRST_PERSON("First Person"),
-        FIRST_PERSON_RECOILED("Recoiled"),
-        FIRST_PERSON_ZOOMING("Zooming"),
-        FIRST_PERSON_RUNNING("Running"),
-        FIRST_PERSON_ZOOMING_RECOILED("Zoom Recoiled"),
-        FIRST_PERSON_MODIFYING("Modifying"),
-        LEFT_HAND("Left Hand"),
-        RIGHT_HAND("Right Hand"),
-        LEFT_HAND_ZOOMING("Left Zoom"),
-        RIGHT_HAND_ZOOMING("Right Zoom"),
-        THIRD_PERSON("Third Person"),
-        ENTITY("Entity"),
-        INVENTORY("Inventory"),
-        MUZZLE_FLASH("Muzzle Flash");
+	@Setter
+	@Getter
+	private static boolean screenOpen;
 
-        public final String displayName;
+	/** Override for shooting animation duration (ms). -1 means use weapon's default. */
+	@Setter
+	@Getter
+	private static int shootingDurationOverride = -1;
 
-        Mode(String displayName) {
-            this.displayName = displayName;
-        }
-    }
+	/** Override for camera recoil duration (ms). -1 means use weapon's default. */
+	@Setter
+	@Getter
+	private static int cameraRecoilDurationOverride = -1;
 
-    public static class TransformState {
+	private static BedrockAnimationController currentController;
+	private static String selectedClipName;
+	@Getter
+	private static String selectedBoneName = "receiver";
+	private static List<String> availableBones = new ArrayList<>();
 
-        public float translateX = 0f;
-        public float translateY = 0f;
-        public float translateZ = 0f;
-        public float rotateX = 0f;
-        public float rotateY = 0f;
-        public float rotateZ = 0f;
-        public float scale = 1.0f;
+	// Current absolute slider values (Bedrock coords / degrees)
+	@Getter @Setter
+	private static float posX;
+	@Getter @Setter
+	private static float posY;
+	@Getter @Setter
+	private static float posZ;
+	@Getter @Setter
+	private static float rotX;
+	@Getter @Setter
+	private static float rotY;
+	@Getter @Setter
+	private static float rotZ;
 
-        public TransformState() {}
+	// Initial values from the selected bone at t=0
+	@Getter
+	private static float initialPosX;
+	@Getter
+	private static float initialPosY;
+	@Getter
+	private static float initialPosZ;
+	@Getter
+	private static float initialRotX;
+	@Getter
+	private static float initialRotY;
+	@Getter
+	private static float initialRotZ;
 
-        public TransformState(float tx, float ty, float tz, float rx, float ry, float rz, float scale) {
-            this.translateX = tx;
-            this.translateY = ty;
-            this.translateZ = tz;
-            this.rotateX = rx;
-            this.rotateY = ry;
-            this.rotateZ = rz;
-            this.scale = scale;
-        }
+	/**
+	 * Sets the current animation controller and selects the first clip.
+	 */
+	public static void setCurrentController(BedrockAnimationController ctrl) {
+		currentController = ctrl;
+		List<String> clips = getAvailableClipNames();
+		if (!clips.isEmpty()) {
+			selectClip(clips.get(0));
+		}
+	}
 
-        public void copyFrom(TransformState other) {
-            this.translateX = other.translateX;
-            this.translateY = other.translateY;
-            this.translateZ = other.translateZ;
-            this.rotateX = other.rotateX;
-            this.rotateY = other.rotateY;
-            this.rotateZ = other.rotateZ;
-            this.scale = other.scale;
-        }
-    }
+	/**
+	 * Returns the list of clip names available in the current controller's animation.
+	 */
+	public static List<String> getAvailableClipNames() {
+		if (currentController == null) return Collections.emptyList();
+		BedrockAnimation anim = currentController.getAnimation();
+		if (anim == null) return Collections.emptyList();
+		return new ArrayList<>(anim.getClips().keySet());
+	}
 
-    @Setter
-    @Getter
-    private static boolean active;
-    /** True only while the debug screen is open — forces all lambdas to use currentMode. */
-    @Setter
-    @Getter
-    private static boolean screenOpen;
-    @Setter
-    @Getter
-    private static Mode currentMode = Mode.FIRST_PERSON;
+	/**
+	 * Returns the currently selected clip name.
+	 */
+	public static String getSelectedClipName() {
+		return selectedClipName;
+	}
 
-    /** Override for recoil animation duration (ms). -1 means use weapon's default. */
-    @Setter
-    @Getter
-    private static int recoilDurationOverride = -1;
+	/**
+	 * Returns the list of bone names in the currently selected clip.
+	 */
+	public static List<String> getAvailableBones() {
+		return availableBones;
+	}
 
-    /** Override for shooting (post-recoil) animation duration (ms). -1 means use weapon's default. */
-    @Setter
-    @Getter
-    private static int shootingDurationOverride = -1;
+	/**
+	 * Selects a clip and rebuilds the bone list. Keeps the current bone if it
+	 * exists in the new clip, otherwise defaults to the first bone.
+	 */
+	public static void selectClip(String clipName) {
+		selectedClipName = clipName;
+		rebuildBoneList();
 
-    /** Override for camera recoil duration (ms). -1 means use weapon's default. */
-    @Setter
-    @Getter
-    private static int cameraRecoilDurationOverride = -1;
+		// Keep current bone if available, else pick first
+		if (!availableBones.contains(selectedBoneName)) {
+			selectedBoneName = availableBones.isEmpty() ? "receiver" : availableBones.get(0);
+		}
 
-    private static final Map<Mode, TransformState> states = new EnumMap<>(Mode.class);
-    private static final Map<Mode, TransformState> initialStates = new EnumMap<>(Mode.class);
-    private static boolean initialized;
+		loadBoneInitialValues();
 
-    static {
-        for (Mode mode : Mode.values()) {
-            states.put(mode, new TransformState());
-        }
-    }
+		if (currentController != null) {
+			currentController.clearDebugOffset();
+		}
+	}
 
-    public static TransformState getState(Mode mode) {
-        return states.get(mode);
-    }
+	/**
+	 * Selects a bone and loads its initial values from the current clip.
+	 */
+	public static void selectBone(String boneName) {
+		selectedBoneName = boneName;
+		loadBoneInitialValues();
 
-    public static void applyTransforms(TransformState s) {
-        if (s == null) return;
-        if (s.rotateY != 0) GL11.glRotatef(s.rotateY, 0.0F, 1.0F, 0.0F);
-        if (s.rotateX != 0) GL11.glRotatef(s.rotateX, 1.0F, 0.0F, 0.0F);
-        if (s.rotateZ != 0) GL11.glRotatef(s.rotateZ, 0.0F, 0.0F, 1.0F);
-        GL11.glTranslatef(s.translateX, s.translateY, s.translateZ);
-        GL11.glScaled(s.scale, s.scale, s.scale);
-    }
+		if (currentController != null) {
+			currentController.clearDebugOffset();
+		}
+	}
 
-    public static void applyTransforms(Mode mode) {
-        applyTransforms(states.get(mode));
-    }
+	/**
+	 * Cycles to the next bone in the list (wraps around).
+	 */
+	public static void nextBone() {
+		if (availableBones.isEmpty()) return;
+		int idx = availableBones.indexOf(selectedBoneName);
+		idx = (idx + 1) % availableBones.size();
+		selectBone(availableBones.get(idx));
+	}
 
-    /**
-     * Registers a debug-capable positioning for the given mode.
-     * The initial TransformState defines both the normal (non-debug) positioning
-     * and the starting slider values when the debugger opens.
-     */
-    public static <T> Consumer<T> debuggable(Mode mode, TransformState initial) {
-        initialStates.put(mode, initial);
-        return (t) -> {
-            if (!active) {
-                applyTransforms(initial);
-            } else if (!screenOpen) {
-                // Screen closed: each lambda uses its own mode's debug state
-                applyTransforms(mode);
-            } else if (currentMode == Mode.MUZZLE_FLASH) {
-                // Muzzle flash debug: render weapon normally
-                applyTransforms(initial);
-            } else if (isHandMode(mode)) {
-                // Hand lambda: resolve to the correct hand state for the current selection
-                applyTransforms(resolveHandMode(mode, currentMode));
-            } else {
-                // Gun lambda: resolve to the correct gun state for the current selection
-                applyTransforms(resolveGunMode(currentMode));
-            }
-        };
-    }
+	/**
+	 * Cycles to the previous bone in the list (wraps around).
+	 */
+	public static void prevBone() {
+		if (availableBones.isEmpty()) return;
+		int idx = availableBones.indexOf(selectedBoneName);
+		idx = (idx - 1 + availableBones.size()) % availableBones.size();
+		selectBone(availableBones.get(idx));
+	}
 
-    private static boolean isHandMode(Mode m) {
-        return m == Mode.LEFT_HAND || m == Mode.RIGHT_HAND
-            || m == Mode.LEFT_HAND_ZOOMING
-            || m == Mode.RIGHT_HAND_ZOOMING;
-    }
+	private static void rebuildBoneList() {
+		availableBones.clear();
+		if (currentController == null || selectedClipName == null) return;
+		BedrockAnimation anim = currentController.getAnimation();
+		if (anim == null) return;
+		AnimationClip clip = anim.getClip(selectedClipName);
+		if (clip == null) return;
+		availableBones.addAll(clip.bones.keySet());
+	}
 
-    private static boolean isZoomRelated(Mode m) {
-        return m == Mode.FIRST_PERSON_ZOOMING || m == Mode.FIRST_PERSON_ZOOMING_RECOILED
-            || m == Mode.LEFT_HAND_ZOOMING
-            || m == Mode.RIGHT_HAND_ZOOMING;
-    }
+	private static void loadBoneInitialValues() {
+		initialPosX = 0;
+		initialPosY = 0;
+		initialPosZ = 0;
+		initialRotX = 0;
+		initialRotY = 0;
+		initialRotZ = 0;
 
-    /** Maps any mode (including hand modes) to the associated gun mode. */
-    private static Mode resolveGunMode(Mode m) {
-        switch (m) {
-            case LEFT_HAND:
-            case RIGHT_HAND:
-                return Mode.FIRST_PERSON;
-            case LEFT_HAND_ZOOMING:
-            case RIGHT_HAND_ZOOMING:
-                return Mode.FIRST_PERSON_ZOOMING;
-            default:
-                return m;
-        }
-    }
+		if (currentController != null && selectedClipName != null && selectedBoneName != null) {
+			BedrockAnimation anim = currentController.getAnimation();
+			if (anim != null) {
+				AnimationClip clip = anim.getClip(selectedClipName);
+				if (clip != null) {
+					BoneAnimation boneAnim = clip.bones.get(selectedBoneName);
+					if (boneAnim != null) {
+						if (boneAnim.rotation != null && !boneAnim.rotation.isEmpty()) {
+							float[] rot = boneAnim.rotation.get(0).value;
+							initialRotX = rot[0];
+							initialRotY = rot[1];
+							initialRotZ = rot[2];
+						}
+						if (boneAnim.position != null && !boneAnim.position.isEmpty()) {
+							float[] pos = boneAnim.position.get(0).value;
+							initialPosX = pos[0];
+							initialPosY = pos[1];
+							initialPosZ = pos[2];
+						}
+					}
+				}
+			}
+		}
 
-    /** For a hand lambda, pick the correct hand variant based on whether the current selection is zoom-related. */
-    private static Mode resolveHandMode(Mode handMode, Mode selected) {
-        boolean zoom = isZoomRelated(selected);
-        if (handMode == Mode.LEFT_HAND || handMode == Mode.LEFT_HAND_ZOOMING) {
-            return zoom ? Mode.LEFT_HAND_ZOOMING : Mode.LEFT_HAND;
-        }
-        if (handMode == Mode.RIGHT_HAND || handMode == Mode.RIGHT_HAND_ZOOMING) {
-            return zoom ? Mode.RIGHT_HAND_ZOOMING : Mode.RIGHT_HAND;
-        }
-        return handMode;
-    }
+		posX = initialPosX;
+		posY = initialPosY;
+		posZ = initialPosZ;
+		rotX = initialRotX;
+		rotY = initialRotY;
+		rotZ = initialRotZ;
+	}
 
-    /**
-     * Returns the recoil duration to use: the debug override if active and set, otherwise the weapon's default.
-     */
-    public static int getEffectiveRecoilDuration(int weaponDefault) {
-        if (active && recoilDurationOverride >= 0) {
-            return recoilDurationOverride;
-        }
-        return weaponDefault;
-    }
+	/**
+	 * Computes the delta between current slider values and initial values,
+	 * then applies it as a debug offset to the controller.
+	 */
+	public static void applyDebugOffset() {
+		if (currentController == null) return;
 
-    public static int getEffectiveShootingDuration(int weaponDefault) {
-        if (active && shootingDurationOverride >= 0) {
-            return shootingDurationOverride;
-        }
-        return weaponDefault;
-    }
+		float dpx = posX - initialPosX;
+		float dpy = posY - initialPosY;
+		float dpz = posZ - initialPosZ;
+		float drx = rotX - initialRotX;
+		float dry = rotY - initialRotY;
+		float drz = rotZ - initialRotZ;
 
-    public static String generateCode(Mode mode) {
-        TransformState s = states.get(mode);
-        if (s == null) return "";
-        StringBuilder sb = new StringBuilder();
-        if (mode == Mode.MUZZLE_FLASH) {
-            sb.append(String.format(".withFlashOffsetX(() -> %.3fF)%n", s.translateX));
-            sb.append(String.format(".withFlashOffsetY(() -> %.3fF)%n", s.translateY));
-            sb.append(String.format(".withFlashOffsetZ(() -> %.3fF)%n", s.translateZ));
-            sb.append(String.format(".withFlashScale(() -> %.1fF)", s.scale));
-            return sb.toString();
-        }
-        sb.append(
-            String.format(
-                "new TransformState(%.3ff, %.3ff, %.3ff, %.1ff, %.1ff, %.1ff, %.1ff)",
-                s.translateX,
-                s.translateY,
-                s.translateZ,
-                s.rotateX,
-                s.rotateY,
-                s.rotateZ,
-                s.scale));
-        if ((mode == Mode.FIRST_PERSON_RECOILED || mode == Mode.FIRST_PERSON_ZOOMING_RECOILED)) {
-            if (recoilDurationOverride >= 0) {
-                sb.append(String.format("%n.withRecoilAnimationDuration(%d)", recoilDurationOverride));
-            }
-            if (shootingDurationOverride >= 0) {
-                sb.append(String.format("%n.withShootingAnimationDuration(%d)", shootingDurationOverride));
-            }
-            if (cameraRecoilDurationOverride >= 0) {
-                sb.append(String.format("%n.withCameraRecoilDuration(%d)", cameraRecoilDurationOverride));
-            }
-        }
-        return sb.toString();
-    }
+		boolean hasPos = dpx != 0 || dpy != 0 || dpz != 0;
+		boolean hasRot = drx != 0 || dry != 0 || drz != 0;
 
-    public static void save() {
-        Gson gson = new GsonBuilder().setPrettyPrinting()
-            .create();
-        JsonObject root = new JsonObject();
-        for (Mode mode : Mode.values()) {
-            root.add(mode.name(), gson.toJsonTree(states.get(mode)));
-        }
-        if (recoilDurationOverride >= 0) {
-            root.addProperty("recoilDuration", recoilDurationOverride);
-        }
-        if (shootingDurationOverride >= 0) {
-            root.addProperty("shootingDuration", shootingDurationOverride);
-        }
-        if (cameraRecoilDurationOverride >= 0) {
-            root.addProperty("cameraRecoilDuration", cameraRecoilDurationOverride);
-        }
-        File file = getSaveFile();
-        file.getParentFile()
-            .mkdirs();
-        try (FileWriter writer = new FileWriter(file)) {
-            gson.toJson(root, writer);
-        } catch (Exception ignored) {}
-    }
+		currentController.setDebugOffset(
+			selectedBoneName,
+			hasPos ? new float[] { dpx, dpy, dpz } : null,
+			hasRot ? new float[] { drx, dry, drz } : null);
+	}
 
-    public static void load() {
-        if (initialized) return;
-        initialized = true;
-        // Seed debug states from registered initial values (factory constants)
-        for (Map.Entry<Mode, TransformState> entry : initialStates.entrySet()) {
-            TransformState debugState = states.get(entry.getKey());
-            if (debugState != null) {
-                debugState.copyFrom(entry.getValue());
-            }
-        }
-        // Overlay with saved values from file (user's tweaked values)
-        File file = getSaveFile();
-        if (!file.exists()) return;
-        try (FileReader reader = new FileReader(file)) {
-            Gson gson = new Gson();
-            JsonObject root = new JsonParser().parse(reader)
-                .getAsJsonObject();
-            for (Mode mode : Mode.values()) {
-                if (root.has(mode.name())) {
-                    states.put(
-                        mode,
-                        gson.fromJson(root.getAsJsonObject(mode.name()), TransformState.class));
-                }
-            }
-            if (root.has("recoilDuration")) {
-                recoilDurationOverride = root.get("recoilDuration")
-                    .getAsInt();
-            }
-            if (root.has("shootingDuration")) {
-                shootingDurationOverride = root.get("shootingDuration")
-                    .getAsInt();
-            }
-            if (root.has("cameraRecoilDuration")) {
-                cameraRecoilDurationOverride = root.get("cameraRecoilDuration")
-                    .getAsInt();
-            }
-        } catch (Exception ignored) {}
-    }
+	/**
+	 * Plays the currently selected clip directly on the controller.
+	 */
+	public static void playSelectedClip() {
+		if (currentController != null && selectedClipName != null) {
+			currentController.playClipDirect(selectedClipName);
+		}
+	}
 
-    private static File getSaveFile() {
-        return new File(
-            Minecraft.getMinecraft().mcDataDir,
-            "config/newgunrizons_debug_positions.json");
-    }
+	/**
+	 * Generates a JSON string for the selected clip with the current slider values
+	 * for the selected bone.
+	 */
+	public static String generateJson() {
+		if (currentController == null || selectedClipName == null) return "{}";
+
+		BedrockAnimation anim = currentController.getAnimation();
+		if (anim == null) return "{}";
+
+		AnimationClip clip = anim.getClip(selectedClipName);
+		if (clip == null) return "{}";
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("\"").append(selectedClipName).append("\": {\n");
+		sb.append("  \"animation_length\": ").append(formatFloat(clip.length)).append(",\n");
+		if (clip.loop) {
+			sb.append("  \"loop\": true,\n");
+		}
+		sb.append("  \"bones\": {\n");
+
+		boolean firstBone = true;
+		for (Map.Entry<String, BoneAnimation> entry : clip.bones.entrySet()) {
+			if (!firstBone) sb.append(",\n");
+			firstBone = false;
+
+			String boneName = entry.getKey();
+			BoneAnimation boneAnim = entry.getValue();
+
+			sb.append("    \"").append(boneName).append("\": {\n");
+
+			boolean isTargetBone = boneName.equals(selectedBoneName);
+			boolean firstChannel = true;
+
+			if (boneAnim.rotation != null && !boneAnim.rotation.isEmpty()) {
+				if (!firstChannel) sb.append(",\n");
+				firstChannel = false;
+
+				if (isTargetBone) {
+					appendModifiedChannel(sb, "rotation", boneAnim.rotation,
+						rotX - initialRotX, rotY - initialRotY, rotZ - initialRotZ,
+						new float[] { rotX, rotY, rotZ });
+				} else {
+					appendChannel(sb, "rotation", boneAnim.rotation);
+				}
+			}
+
+			if (boneAnim.position != null && !boneAnim.position.isEmpty()) {
+				if (!firstChannel) sb.append(",\n");
+				firstChannel = false;
+
+				if (isTargetBone) {
+					appendModifiedChannel(sb, "position", boneAnim.position,
+						posX - initialPosX, posY - initialPosY, posZ - initialPosZ,
+						new float[] { posX, posY, posZ });
+				} else {
+					appendChannel(sb, "position", boneAnim.position);
+				}
+			}
+
+			if (boneAnim.scale != null && !boneAnim.scale.isEmpty()) {
+				if (!firstChannel) sb.append(",\n");
+				appendChannel(sb, "scale", boneAnim.scale);
+			}
+
+			sb.append("\n    }");
+		}
+
+		sb.append("\n  }\n}");
+		return sb.toString();
+	}
+
+	private static void appendModifiedChannel(StringBuilder sb, String channelName,
+			List<Keyframe> keyframes, float dx, float dy, float dz, float[] absoluteValues) {
+		if (keyframes.size() == 1) {
+			sb.append("      \"").append(channelName).append("\": [")
+				.append(formatFloat(absoluteValues[0])).append(", ")
+				.append(formatFloat(absoluteValues[1])).append(", ")
+				.append(formatFloat(absoluteValues[2])).append("]");
+		} else {
+			sb.append("      \"").append(channelName).append("\": {\n");
+			boolean firstKf = true;
+			for (Keyframe kf : keyframes) {
+				if (!firstKf) sb.append(",\n");
+				firstKf = false;
+				sb.append("        \"").append(formatFloat(kf.time)).append("\": [")
+					.append(formatFloat(kf.value[0] + dx)).append(", ")
+					.append(formatFloat(kf.value[1] + dy)).append(", ")
+					.append(formatFloat(kf.value[2] + dz)).append("]");
+			}
+			sb.append("\n      }");
+		}
+	}
+
+	private static void appendChannel(StringBuilder sb, String channelName, List<Keyframe> keyframes) {
+		if (keyframes.size() == 1) {
+			Keyframe kf = keyframes.get(0);
+			sb.append("      \"").append(channelName).append("\": [")
+				.append(formatFloat(kf.value[0])).append(", ")
+				.append(formatFloat(kf.value[1])).append(", ")
+				.append(formatFloat(kf.value[2])).append("]");
+		} else {
+			sb.append("      \"").append(channelName).append("\": {\n");
+			boolean firstKf = true;
+			for (Keyframe kf : keyframes) {
+				if (!firstKf) sb.append(",\n");
+				firstKf = false;
+				sb.append("        \"").append(formatFloat(kf.time)).append("\": [")
+					.append(formatFloat(kf.value[0])).append(", ")
+					.append(formatFloat(kf.value[1])).append(", ")
+					.append(formatFloat(kf.value[2])).append("]");
+			}
+			sb.append("\n      }");
+		}
+	}
+
+	private static String formatFloat(float value) {
+		if (value == (int) value) {
+			return String.valueOf((int) value);
+		}
+		return String.format(java.util.Locale.US, "%.4f", value).replaceAll("0+$", "").replaceAll("\\.$", ".0");
+	}
+
+	/**
+	 * Returns the shooting duration to use: the debug override if active and set,
+	 * otherwise the weapon's default.
+	 */
+	public static int getEffectiveShootingDuration(int weaponDefault) {
+		if (active && shootingDurationOverride >= 0) {
+			return shootingDurationOverride;
+		}
+		return weaponDefault;
+	}
+
+	/**
+	 * Cleans up the debug state: clears offset, marks screen as closed.
+	 */
+	public static void cleanup() {
+		if (currentController != null) {
+			currentController.clearDebugOffset();
+		}
+		screenOpen = false;
+	}
 }

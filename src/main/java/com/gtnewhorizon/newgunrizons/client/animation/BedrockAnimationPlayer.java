@@ -15,9 +15,10 @@ import com.gtnewhorizon.newgunrizons.model.JsonModel;
  * bone transforms as additive deltas to a {@link JsonModel}'s ModelRenderers.
  * <p>
  * Coordinate conversion: Bedrock animations use Y-up with rotation in degrees.
- * ModelRenderer uses Y-down with rotation in radians. The same conversions as
- * JsonModel are applied: rotX = -deg * DEG_TO_RAD, rotY = -deg * DEG_TO_RAD,
- * rotZ = deg * DEG_TO_RAD, posY = -posY.
+ * ModelRenderer uses Y-down with rotation in radians. Animation rotation values
+ * use the opposite sign convention from geometry rotations (X and Y are not
+ * negated), so all axes are simply converted deg-to-rad without negation.
+ * Position Y is negated to convert from Y-up to Y-down: posY = -posY.
  */
 public class BedrockAnimationPlayer {
 
@@ -30,6 +31,23 @@ public class BedrockAnimationPlayer {
 
     public BedrockAnimationPlayer(AnimationClip clip) {
         this.clip = clip;
+    }
+
+    public AnimationClip getClip() {
+        return clip;
+    }
+
+    /**
+     * Returns the current elapsed time clamped to the clip length.
+     */
+    public float getElapsedClamped() {
+        if (!playing && !finished) return 0f;
+        if (finished) return clip.length;
+        float elapsed = (System.currentTimeMillis() - startTime) / 1000f;
+        if (elapsed >= clip.length) {
+            return clip.loop ? elapsed % clip.length : clip.length;
+        }
+        return elapsed;
     }
 
     public void start() {
@@ -73,17 +91,22 @@ public class BedrockAnimationPlayer {
      * Must be called BEFORE model.render() each frame.
      */
     public void applyToModel(JsonModel model) {
-        if (!playing) return;
+        if (!playing && !finished) return;
 
-        float elapsed = (System.currentTimeMillis() - startTime) / 1000f;
-
-        if (elapsed >= clip.length) {
-            if (clip.loop) {
-                elapsed = elapsed % clip.length;
-            } else {
-                elapsed = clip.length;
-                playing = false;
-                finished = true;
+        float elapsed;
+        if (finished) {
+            // Hold the last frame (clamp-to-end)
+            elapsed = clip.length;
+        } else {
+            elapsed = (System.currentTimeMillis() - startTime) / 1000f;
+            if (elapsed >= clip.length) {
+                if (clip.loop) {
+                    elapsed = elapsed % clip.length;
+                } else {
+                    elapsed = clip.length;
+                    playing = false;
+                    finished = true;
+                }
             }
         }
 
@@ -98,14 +121,16 @@ public class BedrockAnimationPlayer {
 
             if (boneAnim.rotation != null && !boneAnim.rotation.isEmpty() && restRot != null) {
                 float[] rot = evaluate(boneAnim.rotation, elapsed);
-                renderer.rotateAngleX = restRot[0] + (-rot[0] * DEG_TO_RAD);
-                renderer.rotateAngleY = restRot[1] + (-rot[1] * DEG_TO_RAD);
+                // Animation rotation values use the opposite sign convention from
+                // geometry rotations for X and Y — apply without negation.
+                renderer.rotateAngleX = restRot[0] + (rot[0] * DEG_TO_RAD);
+                renderer.rotateAngleY = restRot[1] + (rot[1] * DEG_TO_RAD);
                 renderer.rotateAngleZ = restRot[2] + (rot[2] * DEG_TO_RAD);
             }
 
             if (boneAnim.position != null && !boneAnim.position.isEmpty() && restPos != null) {
                 float[] pos = evaluate(boneAnim.position, elapsed);
-                renderer.rotationPointX = restPos[0] + pos[0];
+                renderer.rotationPointX = restPos[0] + (pos[0]);
                 renderer.rotationPointY = restPos[1] + (-pos[1]);
                 renderer.rotationPointZ = restPos[2] + pos[2];
             }
@@ -117,7 +142,7 @@ public class BedrockAnimationPlayer {
     /**
      * Evaluates a keyframe channel at the given time using linear interpolation.
      */
-    private static float[] evaluate(List<Keyframe> keyframes, float time) {
+    static float[] evaluate(List<Keyframe> keyframes, float time) {
         if (keyframes.size() == 1) {
             return keyframes.get(0).value;
         }

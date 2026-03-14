@@ -4,8 +4,9 @@ package com.gtnewhorizon.newgunrizons.state;
  * Simplified visual states used by the rendering system.
  * <p>
  * Maps complex internal states ({@code WeaponState}, {@code GrenadeState}) to a smaller
- * set of animation states. The mapping is performed by {@code WeaponRenderer.getStateDescriptor()}
- * and {@code GrenadeRenderer.getStateDescriptor()}.
+ * set of animation states. For weapons the mapping is performed by
+ * {@code WeaponRenderer.mapWeaponState()}, for grenades by
+ * {@code GrenadeRenderer.getStateDescriptor()}.
  */
 public enum RenderableState {
 
@@ -19,9 +20,7 @@ public enum RenderableState {
     // --- Firing ---
     SHOOTING,
     AUTO_SHOOTING,
-    RECOILED,
     ZOOMING_SHOOTING,
-    ZOOMING_RECOILED,
 
     // --- Reload ---
     RELOADING,

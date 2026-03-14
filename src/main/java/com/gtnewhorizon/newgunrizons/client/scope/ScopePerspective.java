@@ -94,7 +94,7 @@ public class ScopePerspective {
     }
 
     private static boolean isAimingState(RenderableState renderableState) {
-        return renderableState == RenderableState.ZOOMING || renderableState == RenderableState.ZOOMING_RECOILED
+        return renderableState == RenderableState.ZOOMING
             || renderableState == RenderableState.ZOOMING_SHOOTING;
     }
 

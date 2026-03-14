@@ -3,6 +3,7 @@ package com.gtnewhorizon.newgunrizons.client.render;
 import java.nio.FloatBuffer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
 
@@ -12,27 +13,23 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
-import com.gtnewhorizon.newgunrizons.client.debug.PositionDebugger;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
+import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.weapon.WeaponAttachmentAspect;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 /**
- * Renders muzzle flash in the weapon's model space during the first-person render pass.
- * <p>
- * The flash quad is positioned at the barrel tip using the weapon's GL transform stack,
- * then oriented to face the camera. This keeps it locked to the barrel regardless of
- * pitch, recoil animation, or camera angle.
- * <p>
- * Bypasses any active shader program (Angelica/Iris) to render via fixed-function additive
- * blending, and restricts draw output to {@code GL_COLOR_ATTACHMENT0} to avoid writing
- * into auxiliary G-buffer MRT attachments.
+ * Renders muzzle flash at the "muzzle_flash" bone position (child of barrel),
+ * oriented to face the camera (billboard). Falls back to hardcoded offsets
+ * if the bone doesn't exist in the model.
  */
 @SideOnly(Side.CLIENT)
 public class MuzzleFlashRenderer {
+
+    public static final String BONE_MUZZLE_FLASH = "muzzle_flash";
 
     private static final ResourceLocation FLASH_TEXTURE = new ResourceLocation(
         NewGunrizonsMod.MODID,
@@ -40,14 +37,8 @@ public class MuzzleFlashRenderer {
 
     private static final int IMAGES_PER_ROW = 8;
     private static final float UV_WIDTH = 1.0F / IMAGES_PER_ROW;
-
-    /** How long the flash stays visible after firing (milliseconds). */
     private static final long FLASH_DURATION_MS = 60L;
-
-    /** Default barrel tip offset in model space (X, Y, Z). */
-    private static final float BARREL_X = 0.1F;
-    private static final float BARREL_Y = -0.9F;
-    private static final float BARREL_Z = -4.7F;
+    private static final float RAD_TO_DEG = 180F / (float) Math.PI;
 
     /** Flash quad half-size in model space. */
     private static final float FLASH_SIZE = 3.0F;
@@ -57,109 +48,135 @@ public class MuzzleFlashRenderer {
 
     /**
      * Renders a muzzle flash if the weapon just fired.
-     * Must be called while the weapon's model-space GL matrix is active.
+     * If the weapon model has a "muzzle_flash" bone, renders at that bone's position.
+     * Otherwise falls back to the weapon's configured flash offsets.
      */
-    public static void renderIfFiring(RenderContext renderContext) {
+    public static void renderIfFiring(RenderContext renderContext, JsonModel weaponModel, float renderScale) {
         ItemWeaponInstance weaponInstance = renderContext.getWeaponInstance();
-        if (weaponInstance == null) {
-            return;
-        }
+        if (weaponInstance == null) return;
 
         ItemWeapon weapon = weaponInstance.getWeapon();
-        if (weapon.getFlashIntensity() <= 0.0F) {
-            return;
-        }
-
-        if (WeaponAttachmentAspect.INSTANCE.isSilencerOn(weaponInstance)) {
-            return;
-        }
+        if (weapon.getFlashIntensity() <= 0.0F) return;
+        if (WeaponAttachmentAspect.INSTANCE.isSilencerOn(weaponInstance)) return;
 
         long elapsed = System.currentTimeMillis() - weaponInstance.getLastFireTimestamp();
-        if (elapsed < 0 || elapsed > FLASH_DURATION_MS) {
-            return;
-        }
+        if (elapsed < 0 || elapsed > FLASH_DURATION_MS) return;
 
         float alpha = weapon.getFlashIntensity() * (1.0F - (float) elapsed / FLASH_DURATION_MS);
-        if (alpha <= 0.0F) {
-            return;
-        }
+        if (alpha <= 0.0F) return;
 
-        float scale = weapon.getFlashScale()
-            .get();
-        float weaponOffsetX = weapon.getFlashOffsetX()
-            .get();
-        float weaponOffsetY = weapon.getFlashOffsetY()
-            .get();
-        float weaponOffsetZ = weapon.getFlashOffsetZ()
-            .get();
+        float scale = weapon.getFlashScale().get();
         int imageIndex = Math.abs(rand.nextInt()) % IMAGES_PER_ROW;
-        renderFlashQuad(alpha, scale, imageIndex, weaponOffsetX, weaponOffsetY, weaponOffsetZ);
+
+        if (weaponModel != null && weaponModel.getBone(BONE_MUZZLE_FLASH) != null) {
+            renderFlashAtBone(weaponModel, renderScale, alpha, scale, imageIndex);
+        } else {
+            // Fallback: hardcoded offsets
+            float ox = weapon.getFlashOffsetX().get();
+            float oy = weapon.getFlashOffsetY().get();
+            float oz = weapon.getFlashOffsetZ().get();
+            renderFlashAtOffset(alpha, scale, imageIndex, ox, oy, oz);
+        }
     }
 
     /**
-     * Renders a static muzzle flash for position debugging.
-     * Uses the MUZZLE_FLASH debug state's translate as flash offset and scale as flash scale.
+     * Renders the flash quad at the muzzle_flash bone position.
+     * Walks the bone hierarchy: receiver -> barrel -> muzzle_flash.
      */
-    public static void renderDebugFlash() {
-        if (!PositionDebugger.isActive()
-            || PositionDebugger.getCurrentMode() != PositionDebugger.Mode.MUZZLE_FLASH) {
-            return;
-        }
-        PositionDebugger.TransformState state = PositionDebugger.getState(PositionDebugger.Mode.MUZZLE_FLASH);
-        renderFlashQuad(1.0F, state.scale, 0, state.translateX, state.translateY, state.translateZ);
-    }
+    private static void renderFlashAtBone(JsonModel model, float renderScale,
+        float alpha, float flashScale, int imageIndex) {
 
-    private static void renderFlashQuad(float alpha, float scale, int imageIndex, float weaponOffsetX,
-        float weaponOffsetY, float weaponOffsetZ) {
-        // Bypass active shader program (Angelica/Iris compatibility)
         int prevProgram = GL11.glGetInteger(GL20.GL_CURRENT_PROGRAM);
-        if (prevProgram != 0) {
-            GL20.glUseProgram(0);
-        }
+        if (prevProgram != 0) GL20.glUseProgram(0);
 
-        Minecraft.getMinecraft()
-            .getTextureManager()
-            .bindTexture(FLASH_TEXTURE);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(FLASH_TEXTURE);
 
         GL11.glPushMatrix();
         GL11.glPushAttrib(
             GL11.GL_TEXTURE_BIT | GL11.GL_DEPTH_BUFFER_BIT
-                | GL11.GL_ENABLE_BIT
-                | GL11.GL_COLOR_BUFFER_BIT
-                | GL11.GL_CURRENT_BIT
-                | GL11.GL_POLYGON_BIT);
+                | GL11.GL_ENABLE_BIT | GL11.GL_COLOR_BUFFER_BIT
+                | GL11.GL_CURRENT_BIT | GL11.GL_POLYGON_BIT);
 
-        // Restrict to main color attachment only — prevents writing particle RGBA
-        // into shader G-buffer auxiliary MRT attachments (normals, specular).
-        if (prevProgram != 0) {
-            GL11.glDrawBuffer(GL30.GL_COLOR_ATTACHMENT0);
-        }
+        if (prevProgram != 0) GL11.glDrawBuffer(GL30.GL_COLOR_ATTACHMENT0);
 
-        // Translate to barrel tip in model space (default + per-weapon correction)
-        float bx = BARREL_X + weaponOffsetX;
-        float by = BARREL_Y + weaponOffsetY;
-        float bz = BARREL_Z + weaponOffsetZ;
-        GL11.glTranslatef(bx, by, bz);
+        // Walk bone hierarchy: receiver -> barrel -> muzzle_flash
+        applyBoneChain(model, renderScale, "receiver", "barrel", BONE_MUZZLE_FLASH);
 
-        // Extract the current modelview matrix and cancel its rotation so the quad
-        // always faces the camera (billboard). We keep the translation (position)
-        // but replace the upper-left 3x3 with identity.
+        // Billboard: cancel rotation, keep position and scale
         modelviewBuf.clear();
         GL11.glGetFloat(GL11.GL_MODELVIEW_MATRIX, modelviewBuf);
         float tx = modelviewBuf.get(12);
         float ty = modelviewBuf.get(13);
         float tz = modelviewBuf.get(14);
-        // Extract scale from each column to preserve it
-        float sx = (float) Math.sqrt(
-            modelviewBuf.get(0) * modelviewBuf.get(0) + modelviewBuf.get(1) * modelviewBuf.get(1)
-                + modelviewBuf.get(2) * modelviewBuf.get(2));
-        float sy = (float) Math.sqrt(
-            modelviewBuf.get(4) * modelviewBuf.get(4) + modelviewBuf.get(5) * modelviewBuf.get(5)
-                + modelviewBuf.get(6) * modelviewBuf.get(6));
+        float sx = columnLength(modelviewBuf, 0);
+        float sy = columnLength(modelviewBuf, 4);
         GL11.glLoadIdentity();
         GL11.glTranslatef(tx, ty, tz);
         GL11.glScalef(sx, sy, 1.0F);
 
+        drawFlashQuad(alpha, flashScale, imageIndex);
+
+        GL11.glPopAttrib();
+        GL11.glPopMatrix();
+
+        if (prevProgram != 0) GL20.glUseProgram(prevProgram);
+    }
+
+    /**
+     * Fallback: renders flash at hardcoded offset position.
+     */
+    private static void renderFlashAtOffset(float alpha, float flashScale, int imageIndex,
+        float offsetX, float offsetY, float offsetZ) {
+
+        int prevProgram = GL11.glGetInteger(GL20.GL_CURRENT_PROGRAM);
+        if (prevProgram != 0) GL20.glUseProgram(0);
+
+        Minecraft.getMinecraft().getTextureManager().bindTexture(FLASH_TEXTURE);
+
+        GL11.glPushMatrix();
+        GL11.glPushAttrib(
+            GL11.GL_TEXTURE_BIT | GL11.GL_DEPTH_BUFFER_BIT
+                | GL11.GL_ENABLE_BIT | GL11.GL_COLOR_BUFFER_BIT
+                | GL11.GL_CURRENT_BIT | GL11.GL_POLYGON_BIT);
+
+        if (prevProgram != 0) GL11.glDrawBuffer(GL30.GL_COLOR_ATTACHMENT0);
+
+        GL11.glTranslatef(0.1F + offsetX, -0.9F + offsetY, -4.7F + offsetZ);
+
+        modelviewBuf.clear();
+        GL11.glGetFloat(GL11.GL_MODELVIEW_MATRIX, modelviewBuf);
+        float tx = modelviewBuf.get(12);
+        float ty = modelviewBuf.get(13);
+        float tz = modelviewBuf.get(14);
+        float sx = columnLength(modelviewBuf, 0);
+        float sy = columnLength(modelviewBuf, 4);
+        GL11.glLoadIdentity();
+        GL11.glTranslatef(tx, ty, tz);
+        GL11.glScalef(sx, sy, 1.0F);
+
+        drawFlashQuad(alpha, flashScale, imageIndex);
+
+        GL11.glPopAttrib();
+        GL11.glPopMatrix();
+
+        if (prevProgram != 0) GL20.glUseProgram(prevProgram);
+    }
+
+    private static void applyBoneChain(JsonModel model, float renderScale, String... boneNames) {
+        for (String boneName : boneNames) {
+            ModelRenderer bone = model.getBone(boneName);
+            if (bone == null) continue;
+            GL11.glTranslatef(
+                bone.rotationPointX * renderScale,
+                bone.rotationPointY * renderScale,
+                bone.rotationPointZ * renderScale);
+            if (bone.rotateAngleZ != 0) GL11.glRotatef(bone.rotateAngleZ * RAD_TO_DEG, 0, 0, 1);
+            if (bone.rotateAngleY != 0) GL11.glRotatef(bone.rotateAngleY * RAD_TO_DEG, 0, 1, 0);
+            if (bone.rotateAngleX != 0) GL11.glRotatef(bone.rotateAngleX * RAD_TO_DEG, 1, 0, 0);
+        }
+    }
+
+    private static void drawFlashQuad(float alpha, float flashScale, int imageIndex) {
         GL11.glDepthMask(false);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glDisable(GL11.GL_CULL_FACE);
@@ -169,7 +186,7 @@ public class MuzzleFlashRenderer {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        float size = FLASH_SIZE * scale;
+        float size = FLASH_SIZE * flashScale;
         float u0 = imageIndex * UV_WIDTH;
         float u1 = (imageIndex + 1) * UV_WIDTH;
 
@@ -182,13 +199,15 @@ public class MuzzleFlashRenderer {
         tess.addVertexWithUV(size, size, 0.0, u1, 0.0);
         tess.addVertexWithUV(size, -size, 0.0, u1, 1.0);
         tess.draw();
-
-        GL11.glPopAttrib();
-        GL11.glPopMatrix();
-
-        // Restore shader program
-        if (prevProgram != 0) {
-            GL20.glUseProgram(prevProgram);
-        }
     }
+
+    private static float columnLength(FloatBuffer buf, int col) {
+        return (float) Math.sqrt(
+            buf.get(col) * buf.get(col)
+                + buf.get(col + 1) * buf.get(col + 1)
+                + buf.get(col + 2) * buf.get(col + 2));
+    }
+
+    /** No-op placeholder. */
+    public static void renderDebugFlash() {}
 }

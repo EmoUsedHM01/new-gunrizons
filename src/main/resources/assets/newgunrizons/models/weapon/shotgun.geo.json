@@ -316,6 +316,21 @@
 							}
 						}
 					]
+				},
+				{
+					"name": "muzzle_flash",
+					"parent": "barrel",
+					"pivot": [0, 3.75, -15]
+				},
+				{
+					"name": "left_hand",
+					"parent": "receiver",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "right_hand",
+					"parent": "receiver",
+					"pivot": [0, 0, 0]
 				}
 			]
 		}
