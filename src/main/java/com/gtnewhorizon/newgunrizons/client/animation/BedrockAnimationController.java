@@ -120,8 +120,12 @@ public class BedrockAnimationController {
                 currentAnimState = newState;
                 return;
             }
-            // Genuine new shot
+            // Genuine new shot — restart animation even if state name is the same
             lastFireTimestamp = fireTimestamp;
+            captureBlendFrom();
+            currentAnimState = newState;
+            startAnimation(newState);
+            return;
         }
 
         if (newState == currentAnimState) return;

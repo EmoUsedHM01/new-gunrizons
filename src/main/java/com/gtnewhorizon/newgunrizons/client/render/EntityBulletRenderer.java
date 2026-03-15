@@ -69,7 +69,8 @@ public class EntityBulletRenderer extends Render {
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 
         TracerRenderer.render(tracerLength, tracerWidth,
-            weapon.getTracerColorR(), weapon.getTracerColorG(), weapon.getTracerColorB());
+            weapon.getTracerColorR(), weapon.getTracerColorG(), weapon.getTracerColorB(),
+            weapon.getTracerIntensity());
 
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();

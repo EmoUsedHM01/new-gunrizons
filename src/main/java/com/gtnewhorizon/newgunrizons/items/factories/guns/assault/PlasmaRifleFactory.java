@@ -32,7 +32,7 @@ public class PlasmaRifleFactory {
             .withTracerWidth(0.1F)
             .withTracerLength(3.0F)
             .withTracerColor(0.3F, 0.8F, 1.0F)
-            .withInaccuracy(2F)
+            .withInaccuracy(0.5F)
             .withPellets(1)
             .withCreativeTab(NewGunrizonsMod.gunsTab)
             .withInformationProvider(
@@ -56,7 +56,7 @@ public class PlasmaRifleFactory {
                     .withBedrockAnimationForState(RenderableState.RELOADING_ITERATION, "animation.plasmarifle.reload_insert")
                     .withBedrockAnimationForState(RenderableState.RELOADING_END, "animation.plasmarifle.reload_end")
                     .build())
-            .withSpawnEntityDamage(6.0F)
+            .withSpawnEntityDamage(15.0F)
             .withSpawnEntityGravityVelocity(0.008F)
             .withSpawnEntitySpeed(15f)
             .build();

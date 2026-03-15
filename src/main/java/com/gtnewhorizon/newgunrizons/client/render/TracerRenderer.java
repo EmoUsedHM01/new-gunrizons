@@ -31,6 +31,8 @@ public class TracerRenderer {
     private static int displayList = -1;
     private static int shaderProgram = -1;
     private static int uTracerColor = -1;
+    private static int uTracerLength = -1;
+    private static int uIntensity = -1;
     private static boolean initialized;
     private static boolean shaderAvailable;
 
@@ -127,6 +129,8 @@ public class TracerRenderer {
 
         shaderProgram = program;
         uTracerColor = GL20.glGetUniformLocation(program, "u_TracerColor");
+        uTracerLength = GL20.glGetUniformLocation(program, "u_TracerLength");
+        uIntensity = GL20.glGetUniformLocation(program, "u_Intensity");
         shaderAvailable = true;
     }
 
@@ -165,11 +169,12 @@ public class TracerRenderer {
      *
      * @param length tracer length (along the flight axis)
      * @param width  tracer radius (cross-section)
-     * @param r      red component of the tracer color (0–1)
-     * @param g      green component (0–1)
-     * @param b      blue component (0–1)
+     * @param r         red component of the tracer color (0–1)
+     * @param g         green component (0–1)
+     * @param b         blue component (0–1)
+     * @param intensity brightness multiplier (1.0 = normal tracer, 3.0+ = solid laser beam)
      */
-    public static void render(float length, float width, float r, float g, float b) {
+    public static void render(float length, float width, float r, float g, float b, float intensity) {
         ensureInitialized();
 
         // --- Save active shader program (Angelica/Iris compatibility) ---
@@ -196,6 +201,8 @@ public class TracerRenderer {
         if (shaderAvailable) {
             GL20.glUseProgram(shaderProgram);
             GL20.glUniform3f(uTracerColor, r, g, b);
+            GL20.glUniform1f(uTracerLength, length);
+            GL20.glUniform1f(uIntensity, intensity);
         } else {
             GL11.glColor4f(r, g, b, 0.6f);
         }

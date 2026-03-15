@@ -24,15 +24,24 @@ public class InventoryUtils {
         if (maxSize <= 0) {
             return null;
         }
-        int i = itemSlotIndex(item, condition, player);
-        if (i < 0) {
-            return null;
-        }
-        ItemStack stackInSlot = player.inventory.mainInventory[i];
-        int consumedStackSize = Math.min(maxSize, stackInSlot.stackSize);
-        ItemStack result = stackInSlot.splitStack(consumedStackSize);
-        if (stackInSlot.stackSize <= 0) {
-            player.inventory.mainInventory[i] = null;
+        ItemStack result = null;
+        int remaining = maxSize;
+        for (int i = 0; i < player.inventory.mainInventory.length && remaining > 0; i++) {
+            ItemStack stackInSlot = player.inventory.mainInventory[i];
+            if (stackInSlot == null || stackInSlot.getItem() != item || !condition.test(stackInSlot)) {
+                continue;
+            }
+            int take = Math.min(remaining, stackInSlot.stackSize);
+            if (result == null) {
+                result = stackInSlot.splitStack(take);
+            } else {
+                result.stackSize += take;
+                stackInSlot.stackSize -= take;
+            }
+            if (stackInSlot.stackSize <= 0) {
+                player.inventory.mainInventory[i] = null;
+            }
+            remaining -= take;
         }
         return result;
     }

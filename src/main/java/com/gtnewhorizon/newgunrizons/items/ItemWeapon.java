@@ -101,6 +101,8 @@ public class ItemWeapon extends Item
     @Getter
     private final float tracerColorB;
     @Getter
+    private final float tracerIntensity;
+    @Getter
     private final boolean smokeEnabled;
     @Getter
     private final Supplier<Float> smokeOffsetX;
@@ -153,6 +155,7 @@ public class ItemWeapon extends Item
         this.tracerColorR = builder.tracerColorR;
         this.tracerColorG = builder.tracerColorG;
         this.tracerColorB = builder.tracerColorB;
+        this.tracerIntensity = builder.tracerIntensity;
         this.smokeEnabled = builder.smokeEnabled;
         this.smokeOffsetX = builder.smokeOffsetX;
         this.smokeOffsetY = builder.smokeOffsetY;
@@ -464,6 +467,7 @@ public class ItemWeapon extends Item
         public float tracerColorR = 1.0F;
         public float tracerColorG = 0.8F;
         public float tracerColorB = 0.27F;
+        public float tracerIntensity = 1.0F;
 
         public boolean smokeEnabled = true;
         public Supplier<Float> smokeOffsetX = () -> 0.0F;
@@ -719,6 +723,11 @@ public class ItemWeapon extends Item
             this.tracerColorR = r;
             this.tracerColorG = g;
             this.tracerColorB = b;
+            return this;
+        }
+
+        public ItemWeapon.Builder withTracerIntensity(float intensity) {
+            this.tracerIntensity = intensity;
             return this;
         }
 
