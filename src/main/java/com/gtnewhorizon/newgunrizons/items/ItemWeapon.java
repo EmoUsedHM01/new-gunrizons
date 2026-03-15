@@ -4,13 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,7 +19,6 @@ import net.minecraft.world.World;
 
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
-import com.gtnewhorizon.newgunrizons.attachment.AttachmentContainer;
 import com.gtnewhorizon.newgunrizons.attachment.CompatibleAttachment;
 import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 import com.gtnewhorizon.newgunrizons.entities.EntityBullet;
@@ -43,7 +39,7 @@ import com.gtnewhorizon.newgunrizons.weapon.WeaponState;
 import lombok.Getter;
 
 public class ItemWeapon extends Item
-    implements ItemInstanceFactory<ItemWeaponInstance, WeaponState>, AttachmentContainer, Reloadable, Updatable {
+    implements ItemInstanceFactory<ItemWeaponInstance, WeaponState>, Reloadable, Updatable {
 
     @Getter
     private String shootSound;
@@ -93,13 +89,7 @@ public class ItemWeapon extends Item
     @Getter
     private final float flashIntensity;
     @Getter
-    private final Supplier<Float> flashScale;
-    @Getter
-    private final Supplier<Float> flashOffsetX;
-    @Getter
-    private final Supplier<Float> flashOffsetY;
-    @Getter
-    private final Supplier<Float> flashOffsetZ;
+    private final float flashScale;
     @Getter
     private final Supplier<Float> smokeOffsetX;
     @Getter
@@ -150,9 +140,6 @@ public class ItemWeapon extends Item
         this.pellets = builder.pellets;
         this.flashIntensity = builder.flashIntensity;
         this.flashScale = builder.flashScale;
-        this.flashOffsetX = builder.flashOffsetX;
-        this.flashOffsetY = builder.flashOffsetY;
-        this.flashOffsetZ = builder.flashOffsetZ;
         this.smokeOffsetX = builder.smokeOffsetX;
         this.smokeOffsetY = builder.smokeOffsetY;
         this.ejectSpentRoundRequired = builder.ejectSpentRoundRequired;
@@ -478,10 +465,8 @@ public class ItemWeapon extends Item
         private float inaccuracy = 1.0F;
         public int pellets = 1;
         public float flashIntensity = 0.4F;
-        public Supplier<Float> flashScale = () -> 1.0F;
-        public Supplier<Float> flashOffsetX = () -> 0.0F;
-        public Supplier<Float> flashOffsetY = () -> 0.0F;
-        public Supplier<Float> flashOffsetZ = () -> 0.0F;
+        public Float flashScale = 1.0F;
+
         public Supplier<Float> smokeOffsetX = () -> 0.0F;
         public Supplier<Float> smokeOffsetY = () -> 0.0F;
         private boolean ejectSpentRoundRequired;
@@ -662,55 +647,30 @@ public class ItemWeapon extends Item
             return this;
         }
 
-        public ItemWeapon.Builder withCompatibleBullet(ItemBullet bullet, Consumer<ModelBase> positioner) {
-            this.compatibleAttachments.put(bullet, new CompatibleAttachment(bullet, positioner));
+        /** Adds a compatible bullet (no visual bone, purely functional). */
+        public ItemWeapon.Builder withCompatibleBullet(ItemBullet bullet) {
+            this.compatibleAttachments.put(bullet, new CompatibleAttachment(bullet, null));
             return this;
         }
 
+        /** Adds a compatible attachment that renders at the given bone. */
+        public ItemWeapon.Builder withCompatibleAttachment(ItemAttachment attachment, String boneName) {
+            this.compatibleAttachments.put(attachment, new CompatibleAttachment(attachment, boneName));
+            return this;
+        }
+
+        /** Adds a compatible attachment with default flag. */
+        public ItemWeapon.Builder withCompatibleAttachment(ItemAttachment attachment, String boneName,
+            boolean isDefault) {
+            this.compatibleAttachments.put(attachment, new CompatibleAttachment(attachment, boneName, isDefault));
+            return this;
+        }
+
+        /** Adds a compatible attachment with equip/unequip handlers (no visual bone). */
         public ItemWeapon.Builder withCompatibleAttachment(ItemAttachment attachment,
             ItemAttachment.AttachmentHandler applyHandler, ItemAttachment.AttachmentHandler removeHandler) {
             this.compatibleAttachments
                 .put(attachment, new CompatibleAttachment(attachment, applyHandler, removeHandler));
-            return this;
-        }
-
-        public ItemWeapon.Builder withCompatibleAttachment(ItemAttachment attachment,
-            BiConsumer<EntityLivingBase, ItemStack> positioning, Consumer<ModelBase> modelPositioning) {
-            this.compatibleAttachments
-                .put(attachment, new CompatibleAttachment(attachment, positioning, modelPositioning, false));
-            return this;
-        }
-
-        public ItemWeapon.Builder withCompatibleAttachment(ItemAttachment attachment,
-            BiConsumer<EntityLivingBase, ItemStack> positioning) {
-            this.compatibleAttachments.put(attachment, new CompatibleAttachment(attachment, positioning, null, false));
-            return this;
-        }
-
-        public ItemWeapon.Builder withCompatibleAttachment(ItemAttachment attachment, Consumer<ModelBase> positioner) {
-            this.compatibleAttachments.put(attachment, new CompatibleAttachment(attachment, positioner));
-            return this;
-        }
-
-        public ItemWeapon.Builder withCompatibleAttachment(ItemAttachment attachment, boolean isDefault,
-            BiConsumer<EntityLivingBase, ItemStack> positioning, Consumer<ModelBase> modelPositioning) {
-            this.compatibleAttachments
-                .put(attachment, new CompatibleAttachment(attachment, positioning, modelPositioning, isDefault));
-            return this;
-        }
-
-        public ItemWeapon.Builder withCompatibleAttachment(ItemAttachment attachment, boolean isDefault,
-            boolean isPermanent, BiConsumer<EntityLivingBase, ItemStack> positioning,
-            Consumer<ModelBase> modelPositioning) {
-            this.compatibleAttachments.put(
-                attachment,
-                new CompatibleAttachment(attachment, positioning, modelPositioning, isDefault, isPermanent));
-            return this;
-        }
-
-        public ItemWeapon.Builder withCompatibleAttachment(ItemAttachment attachment, boolean isDefault,
-            Consumer<ModelBase> positioner) {
-            this.compatibleAttachments.put(attachment, new CompatibleAttachment(attachment, positioner, isDefault));
             return this;
         }
 
@@ -750,23 +710,8 @@ public class ItemWeapon extends Item
             return this;
         }
 
-        public ItemWeapon.Builder withFlashScale(Supplier<Float> flashScale) {
+        public ItemWeapon.Builder withFlashScale(float flashScale) {
             this.flashScale = flashScale;
-            return this;
-        }
-
-        public ItemWeapon.Builder withFlashOffsetX(Supplier<Float> flashOffsetX) {
-            this.flashOffsetX = flashOffsetX;
-            return this;
-        }
-
-        public ItemWeapon.Builder withFlashOffsetY(Supplier<Float> flashOffsetY) {
-            this.flashOffsetY = flashOffsetY;
-            return this;
-        }
-
-        public ItemWeapon.Builder withFlashOffsetZ(Supplier<Float> flashOffsetZ) {
-            this.flashOffsetZ = flashOffsetZ;
             return this;
         }
 

@@ -1,12 +1,15 @@
 package com.gtnewhorizon.newgunrizons.client.render;
 
+import com.gtnewhorizon.newgunrizons.entities.EntityBullet;
+import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
+import com.gtnewhorizon.newgunrizons.model.BedrockModel;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
-import com.gtnewhorizon.newgunrizons.model.JsonModel;
+import org.lwjgl.opengl.GL11;
 
 public class EntityBulletRenderer extends Render {
 
@@ -14,20 +17,20 @@ public class EntityBulletRenderer extends Render {
         NewGunrizonsMod.MODID,
         "textures/effect/bullet44.png");
 
-    private static final ModelBase DEFAULT_MODEL = new JsonModel("misc/modelbullet");
+    private static final ModelBase DEFAULT_MODEL = new BedrockModel("misc/modelbullet");
 
     public void doRender(Entity entity, double x, double y, double z, float yaw, float tick) {
-        /*
-         * EntityBullet entityBullet = (EntityBullet) entity;
-         * ItemWeapon weapon = entityBullet.getWeapon();
-         * if (weapon != null) {
-         * GL11.glPushMatrix();
-         * this.bindTexture(DEFAULT_TEXTURE);
-         * GL11.glTranslated(x, y, z);
-         * DEFAULT_MODEL.render(entity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-         * GL11.glPopMatrix();
-         * }
-         */
+
+         EntityBullet entityBullet = (EntityBullet) entity;
+         ItemWeapon weapon = entityBullet.getWeapon();
+         if (weapon != null) {
+             GL11.glPushMatrix();
+             this.bindTexture(DEFAULT_TEXTURE);
+             GL11.glTranslated(x, y, z);
+             DEFAULT_MODEL.render(entity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+             GL11.glPopMatrix();
+         }
+
     }
 
     @Override

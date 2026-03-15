@@ -2,8 +2,8 @@ package com.gtnewhorizon.newgunrizons.client.render;
 
 import java.nio.FloatBuffer;
 
+import com.gtnewhorizon.newgunrizons.model.BedrockModel;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
 
@@ -15,7 +15,6 @@ import org.lwjgl.opengl.GL30;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
-import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.weapon.WeaponAttachmentAspect;
 
 import cpw.mods.fml.relauncher.Side;
@@ -38,7 +37,6 @@ public class MuzzleFlashRenderer {
     private static final int IMAGES_PER_ROW = 8;
     private static final float UV_WIDTH = 1.0F / IMAGES_PER_ROW;
     private static final long FLASH_DURATION_MS = 60L;
-    private static final float RAD_TO_DEG = 180F / (float) Math.PI;
 
     /** Flash quad half-size in model space. */
     private static final float FLASH_SIZE = 3.0F;
@@ -51,7 +49,7 @@ public class MuzzleFlashRenderer {
      * If the weapon model has a "muzzle_flash" bone, renders at that bone's position.
      * Otherwise falls back to the weapon's configured flash offsets.
      */
-    public static void renderIfFiring(RenderContext renderContext, JsonModel weaponModel, float renderScale) {
+    public static void renderIfFiring(RenderContext renderContext, BedrockModel weaponModel, float renderScale) {
         ItemWeaponInstance weaponInstance = renderContext.getWeaponInstance();
         if (weaponInstance == null) return;
 
@@ -65,17 +63,11 @@ public class MuzzleFlashRenderer {
         float alpha = weapon.getFlashIntensity() * (1.0F - (float) elapsed / FLASH_DURATION_MS);
         if (alpha <= 0.0F) return;
 
-        float scale = weapon.getFlashScale().get();
+        float scale = weapon.getFlashScale();
         int imageIndex = Math.abs(rand.nextInt()) % IMAGES_PER_ROW;
 
         if (weaponModel != null && weaponModel.getBone(BONE_MUZZLE_FLASH) != null) {
             renderFlashAtBone(weaponModel, renderScale, alpha, scale, imageIndex);
-        } else {
-            // Fallback: hardcoded offsets
-            float ox = weapon.getFlashOffsetX().get();
-            float oy = weapon.getFlashOffsetY().get();
-            float oz = weapon.getFlashOffsetZ().get();
-            renderFlashAtOffset(alpha, scale, imageIndex, ox, oy, oz);
         }
     }
 
@@ -83,8 +75,8 @@ public class MuzzleFlashRenderer {
      * Renders the flash quad at the muzzle_flash bone position.
      * Walks the bone hierarchy: receiver -> barrel -> muzzle_flash.
      */
-    private static void renderFlashAtBone(JsonModel model, float renderScale,
-        float alpha, float flashScale, int imageIndex) {
+    private static void renderFlashAtBone(BedrockModel model, float renderScale,
+                                          float alpha, float flashScale, int imageIndex) {
 
         int prevProgram = GL11.glGetInteger(GL20.GL_CURRENT_PROGRAM);
         if (prevProgram != 0) GL20.glUseProgram(0);
@@ -99,8 +91,8 @@ public class MuzzleFlashRenderer {
 
         if (prevProgram != 0) GL11.glDrawBuffer(GL30.GL_COLOR_ATTACHMENT0);
 
-        // Walk bone hierarchy: receiver -> barrel -> muzzle_flash
-        applyBoneChain(model, renderScale, "receiver", "barrel", BONE_MUZZLE_FLASH);
+        // Walk bone hierarchy to muzzle_flash bone
+        model.applyBoneTransform(BONE_MUZZLE_FLASH, renderScale);
 
         // Billboard: cancel rotation, keep position and scale
         modelviewBuf.clear();
@@ -108,8 +100,8 @@ public class MuzzleFlashRenderer {
         float tx = modelviewBuf.get(12);
         float ty = modelviewBuf.get(13);
         float tz = modelviewBuf.get(14);
-        float sx = columnLength(modelviewBuf, 0);
-        float sy = columnLength(modelviewBuf, 4);
+        float sx = columnLength(0);
+        float sy = columnLength(4);
         GL11.glLoadIdentity();
         GL11.glTranslatef(tx, ty, tz);
         GL11.glScalef(sx, sy, 1.0F);
@@ -120,60 +112,6 @@ public class MuzzleFlashRenderer {
         GL11.glPopMatrix();
 
         if (prevProgram != 0) GL20.glUseProgram(prevProgram);
-    }
-
-    /**
-     * Fallback: renders flash at hardcoded offset position.
-     */
-    private static void renderFlashAtOffset(float alpha, float flashScale, int imageIndex,
-        float offsetX, float offsetY, float offsetZ) {
-
-        int prevProgram = GL11.glGetInteger(GL20.GL_CURRENT_PROGRAM);
-        if (prevProgram != 0) GL20.glUseProgram(0);
-
-        Minecraft.getMinecraft().getTextureManager().bindTexture(FLASH_TEXTURE);
-
-        GL11.glPushMatrix();
-        GL11.glPushAttrib(
-            GL11.GL_TEXTURE_BIT | GL11.GL_DEPTH_BUFFER_BIT
-                | GL11.GL_ENABLE_BIT | GL11.GL_COLOR_BUFFER_BIT
-                | GL11.GL_CURRENT_BIT | GL11.GL_POLYGON_BIT);
-
-        if (prevProgram != 0) GL11.glDrawBuffer(GL30.GL_COLOR_ATTACHMENT0);
-
-        GL11.glTranslatef(0.1F + offsetX, -0.9F + offsetY, -4.7F + offsetZ);
-
-        modelviewBuf.clear();
-        GL11.glGetFloat(GL11.GL_MODELVIEW_MATRIX, modelviewBuf);
-        float tx = modelviewBuf.get(12);
-        float ty = modelviewBuf.get(13);
-        float tz = modelviewBuf.get(14);
-        float sx = columnLength(modelviewBuf, 0);
-        float sy = columnLength(modelviewBuf, 4);
-        GL11.glLoadIdentity();
-        GL11.glTranslatef(tx, ty, tz);
-        GL11.glScalef(sx, sy, 1.0F);
-
-        drawFlashQuad(alpha, flashScale, imageIndex);
-
-        GL11.glPopAttrib();
-        GL11.glPopMatrix();
-
-        if (prevProgram != 0) GL20.glUseProgram(prevProgram);
-    }
-
-    private static void applyBoneChain(JsonModel model, float renderScale, String... boneNames) {
-        for (String boneName : boneNames) {
-            ModelRenderer bone = model.getBone(boneName);
-            if (bone == null) continue;
-            GL11.glTranslatef(
-                bone.rotationPointX * renderScale,
-                bone.rotationPointY * renderScale,
-                bone.rotationPointZ * renderScale);
-            if (bone.rotateAngleZ != 0) GL11.glRotatef(bone.rotateAngleZ * RAD_TO_DEG, 0, 0, 1);
-            if (bone.rotateAngleY != 0) GL11.glRotatef(bone.rotateAngleY * RAD_TO_DEG, 0, 1, 0);
-            if (bone.rotateAngleX != 0) GL11.glRotatef(bone.rotateAngleX * RAD_TO_DEG, 1, 0, 0);
-        }
     }
 
     private static void drawFlashQuad(float alpha, float flashScale, int imageIndex) {
@@ -201,13 +139,10 @@ public class MuzzleFlashRenderer {
         tess.draw();
     }
 
-    private static float columnLength(FloatBuffer buf, int col) {
+    private static float columnLength(int col) {
         return (float) Math.sqrt(
-            buf.get(col) * buf.get(col)
-                + buf.get(col + 1) * buf.get(col + 1)
-                + buf.get(col + 2) * buf.get(col + 2));
+            modelviewBuf.get(col) * modelviewBuf.get(col)
+                + modelviewBuf.get(col + 1) * modelviewBuf.get(col + 1)
+                + modelviewBuf.get(col + 2) * modelviewBuf.get(col + 2));
     }
-
-    /** No-op placeholder. */
-    public static void renderDebugFlash() {}
 }

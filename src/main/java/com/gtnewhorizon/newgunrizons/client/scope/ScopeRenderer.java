@@ -27,6 +27,7 @@ public class ScopeRenderer implements CustomRenderer {
             && renderContext.getTransformType() != TransformType.FIRST_PERSON_LEFT_HAND) {
             return;
         }
+
         ScopePerspective perspective = ScopeManager.INSTANCE.getPerspective(renderContext.getItemInstance(), false);
 
         if (perspective == null) {

@@ -1,20 +1,21 @@
 package com.gtnewhorizon.newgunrizons.client.render;
 
 import java.util.List;
-import java.util.function.Consumer;
 
-import com.gtnewhorizon.newgunrizons.model.JsonModel;
+import com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimationController;
+import com.gtnewhorizon.newgunrizons.client.animation.IdleSway;
+import com.gtnewhorizon.newgunrizons.model.BedrockModel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
@@ -23,15 +24,12 @@ import org.lwjgl.opengl.GL11;
 
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.CompatibleAttachment;
-import com.gtnewhorizon.newgunrizons.client.animation.MultipartPositioning;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
-import com.gtnewhorizon.newgunrizons.model.ModelWithAttachments;
 import com.gtnewhorizon.newgunrizons.state.RenderableState;
-import com.gtnewhorizon.newgunrizons.util.Pair;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -49,10 +47,6 @@ public class WeaponRenderer implements IItemRenderer {
 
     private final ModelBase model;
     private final String textureName;
-    private final Consumer<ItemStack> entityPositioning;
-    private final Consumer<ItemStack> inventoryPositioning;
-    private final Consumer<RenderContext> thirdPersonPositioning;
-    private final Consumer<RenderContext> firstPersonPositioning;
     @Getter
     private final long totalReloadingDuration;
     @Getter
@@ -63,18 +57,17 @@ public class WeaponRenderer implements IItemRenderer {
     private final long prepareFirstLoadIterationAnimationDuration;
     @Getter
     private final long allLoadIterationAnimationsCompletedDuration;
-    private final com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimationController bedrockAnimController;
+    @Getter
+    private final BedrockAnimationController bedrockAnimController;
+    private final IdleSway idleSway = new IdleSway();
+
     private Integer cachedInventoryTexture;
     /** Set to true when the EQUIPPED_FIRST_PERSON path has already applied bedrock animation. */
     private boolean bedrockAnimAppliedThisFrame;
 
     private WeaponRenderer(Builder builder) {
-        this.model = builder.getModel();
-        this.textureName = builder.getTextureName();
-        this.entityPositioning = builder.getEntityPositioning();
-        this.inventoryPositioning = builder.getInventoryPositioning();
-        this.thirdPersonPositioning = builder.getThirdPersonPositioning();
-        this.firstPersonPositioning = builder.firstPersonPositioning;
+        this.model = builder.model;
+        this.textureName = builder.textureName;
         this.totalReloadingDuration = builder.totalReloadingDuration;
         this.totalUnloadingDuration = builder.totalUnloadingDuration;
         this.totalLoadIterationDuration = builder.totalLoadIterationDuration;
@@ -118,34 +111,28 @@ public class WeaponRenderer implements IItemRenderer {
         }
     }
 
-    public void renderItem(ItemStack weaponItemStack, RenderContext renderContext,
-        MultipartPositioning.Positioner positioner) {
-        List<CompatibleAttachment> attachments = null;
-        if (this.model instanceof ModelWithAttachments) {
-            attachments = ((ItemWeapon) weaponItemStack.getItem())
-                .getActiveAttachments(renderContext.getPlayer(), weaponItemStack);
-        }
+    public void renderItem(ItemStack weaponItemStack, RenderContext renderContext) {
 
+        ItemWeapon weapon = (ItemWeapon) weaponItemStack.getItem();
+
+        String texture;
         if (this.textureName != null) {
-            Minecraft.getMinecraft().renderEngine
-                .bindTexture(new ResourceLocation(NewGunrizonsMod.MODID + ":textures/models/" + this.textureName));
+            texture = this.textureName;
         } else {
-            ItemWeapon weapon = (ItemWeapon) weaponItemStack.getItem();
-            String textureName = weapon.getTextureName();
-
-            Minecraft.getMinecraft().renderEngine
-                .bindTexture(new ResourceLocation(NewGunrizonsMod.MODID + ":textures/models/" + textureName));
+            texture = weapon.getTextureName();
         }
+
+        Minecraft.getMinecraft().renderEngine
+            .bindTexture(new ResourceLocation(NewGunrizonsMod.MODID + ":textures/models/" + texture));
+
 
         // Apply bedrock bone animations if active.
         // Skip if already applied by the EQUIPPED_FIRST_PERSON path (which needs
         // animation applied before arm rendering).
-        if (this.bedrockAnimController != null && this.model instanceof com.gtnewhorizon.newgunrizons.model.JsonModel
+        if (this.bedrockAnimController != null && this.model instanceof BedrockModel
             && !this.bedrockAnimAppliedThisFrame) {
-            com.gtnewhorizon.newgunrizons.model.JsonModel jsonModel = (com.gtnewhorizon.newgunrizons.model.JsonModel) this.model;
-            // Reset bones to rest pose before applying new animation frame,
-            // so transitions between states (or to states with no animation) are clean.
-            jsonModel.resetBonesToRestPose();
+            BedrockModel bedrockModel = (BedrockModel) this.model;
+            bedrockModel.resetBonesToRestPose();
             RenderableState toState = renderContext.getToState();
             if (toState != null) {
                 long fireTimestamp = 0;
@@ -155,7 +142,7 @@ public class WeaponRenderer implements IItemRenderer {
                 }
                 this.bedrockAnimController.onStateChanged(toState, fireTimestamp);
             }
-            this.bedrockAnimController.applyToModel(jsonModel);
+            this.bedrockAnimController.applyToModel(bedrockModel);
         }
         this.bedrockAnimAppliedThisFrame = false;
 
@@ -168,67 +155,60 @@ public class WeaponRenderer implements IItemRenderer {
             renderContext.getHeadPitch(),
             renderContext.getScale());
 
-        // Note: bone reset moved to after muzzle flash rendering in the
-        // EQUIPPED_FIRST_PERSON path so flash can read animated bone positions.
+        if (this.model instanceof BedrockModel) {
 
-        if (attachments != null) {
-            this.renderAttachments(positioner, renderContext, attachments);
+            if (weapon == null)
+                return;
+
+            List<CompatibleAttachment> attachments = weapon
+                .getActiveAttachments(renderContext.getPlayer(), weaponItemStack);
+
+            if (attachments != null) {
+                this.renderAttachments((BedrockModel) this.model, renderContext, attachments);
+            }
         }
     }
 
-    public void renderAttachments(MultipartPositioning.Positioner positioner, RenderContext renderContext,
+    public void renderAttachments(BedrockModel weaponModel, RenderContext renderContext,
         List<CompatibleAttachment> attachments) {
         for (CompatibleAttachment attachment : attachments) {
             if (attachment != null) {
-                this.renderCompatibleAttachment(attachment, positioner, renderContext);
+                this.renderCompatibleAttachment(attachment, weaponModel, renderContext);
             }
         }
     }
 
     private void renderCompatibleAttachment(CompatibleAttachment compatibleAttachment,
-        MultipartPositioning.Positioner positioner, RenderContext renderContext) {
-        GL11.glPushMatrix();
-        GL11.glPushAttrib(ATTRIB_ENABLE_CURRENT);
-        if (compatibleAttachment.getPositioning() != null) {
-            compatibleAttachment.getPositioning()
-                .accept(renderContext.getPlayer(), renderContext.getWeapon());
-        }
-
+        BedrockModel weaponModel, RenderContext renderContext) {
         ItemAttachment itemAttachment = compatibleAttachment.getAttachment();
-        if (positioner != null) {
-            if (itemAttachment instanceof com.gtnewhorizon.newgunrizons.attachment.Part) {
-                positioner.position((com.gtnewhorizon.newgunrizons.attachment.Part) itemAttachment, renderContext);
-            } else if (itemAttachment.getRenderablePart() != null) {
-                positioner.position(itemAttachment.getRenderablePart(), renderContext);
-            }
-        }
+        String boneName = compatibleAttachment.getBoneName();
+        BedrockModel attachModel = itemAttachment.getModel();
 
-        for (Pair<ModelBase, String> texturedModel : compatibleAttachment.getAttachment()
-            .getTexturedModels()) {
-            Minecraft.getMinecraft().renderEngine
-                .bindTexture(new ResourceLocation(NewGunrizonsMod.MODID + ":textures/models/" + texturedModel.getV()));
+        // Render attachment model at its bone position
+        if (boneName != null && attachModel != null && weaponModel.getBone(boneName) != null) {
             GL11.glPushMatrix();
             GL11.glPushAttrib(ATTRIB_ENABLE_CURRENT);
-            if (compatibleAttachment.getModelPositioning() != null) {
-                compatibleAttachment.getModelPositioning()
-                    .accept(texturedModel.getU());
-            }
+            weaponModel.applyBoneTransform(boneName, renderContext.getScale());
 
-            texturedModel.getU()
-                .render(
-                    renderContext.getPlayer(),
-                    renderContext.getLimbSwing(),
-                    renderContext.getLimbSwingAmount(),
-                    renderContext.getAgeInTicks(),
-                    renderContext.getNetHeadYaw(),
-                    renderContext.getHeadPitch(),
-                    renderContext.getScale());
+            if (itemAttachment.getModelTextureName() != null) {
+                Minecraft.getMinecraft().renderEngine.bindTexture(
+                    new ResourceLocation(NewGunrizonsMod.MODID + ":textures/models/" + itemAttachment.getModelTextureName()));
+            }
+            attachModel.render(
+                null,
+                renderContext.getLimbSwing(),
+                renderContext.getLimbSwingAmount(),
+                renderContext.getAgeInTicks(),
+                renderContext.getNetHeadYaw(),
+                renderContext.getHeadPitch(),
+                renderContext.getScale());
+
             GL11.glPopAttrib();
             GL11.glPopMatrix();
         }
 
-        CustomRenderer postRenderer = compatibleAttachment.getAttachment()
-            .getPostRenderer();
+        // Post-renderer (e.g. scope viewfinder overlay)
+        CustomRenderer postRenderer = itemAttachment.getPostRenderer();
         if (postRenderer != null) {
             GL11.glPushMatrix();
             GL11.glPushAttrib(ATTRIB_ENABLE_CURRENT);
@@ -236,33 +216,12 @@ public class WeaponRenderer implements IItemRenderer {
             GL11.glPopAttrib();
             GL11.glPopMatrix();
         }
-
-        for (CompatibleAttachment attachment : itemAttachment.getAttachments()) {
-            renderCompatibleAttachment(attachment, positioner, renderContext);
-        }
-
-        GL11.glPopAttrib();
-        GL11.glPopMatrix();
-    }
-
-    public com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimationController getBedrockAnimController() {
-        return bedrockAnimController;
     }
 
     public static class Builder {
 
-        @Getter
         private ModelBase model;
-        @Getter
         private String textureName;
-
-        @Getter
-        private Consumer<ItemStack> entityPositioning;
-        @Getter
-        private Consumer<ItemStack> inventoryPositioning;
-        @Getter
-        private Consumer<RenderContext> thirdPersonPositioning;
-        private Consumer<RenderContext> firstPersonPositioning;
 
         private long totalReloadingDuration = 250;
         private long totalUnloadingDuration = 250;
@@ -331,61 +290,13 @@ public class WeaponRenderer implements IItemRenderer {
             return this;
         }
 
-        public Builder withEntityPositioning(Consumer<ItemStack> entityPositioning) {
-            this.entityPositioning = entityPositioning;
-            return this;
-        }
-
-        public Builder withInventoryPositioning(Consumer<ItemStack> inventoryPositioning) {
-            this.inventoryPositioning = inventoryPositioning;
-            return this;
-        }
-
-        public Builder withThirdPersonPositioning(Consumer<RenderContext> thirdPersonPositioning) {
-            this.thirdPersonPositioning = thirdPersonPositioning;
-            return this;
-        }
-
-        public Builder withFirstPersonPositioning(Consumer<RenderContext> firstPersonPositioning) {
-            this.firstPersonPositioning = firstPersonPositioning;
-            return this;
-        }
-
         public WeaponRenderer build() {
             if (FMLCommonHandler.instance()
                 .getSide() != Side.CLIENT) {
                 return null;
             }
-
-            if (this.inventoryPositioning == null) {
-                this.inventoryPositioning = (itemStack) -> GL11.glTranslatef(0.0F, 0.12F, 0.0F);
-            }
-
-            if (this.entityPositioning == null) {
-                this.entityPositioning = (itemStack) -> {};
-            }
-
-            if (this.thirdPersonPositioning == null) {
-                this.thirdPersonPositioning = (context) -> {
-                    GL11.glTranslatef(-0.4F, 0.2F, 0.4F);
-                    GL11.glRotatef(-45.0F, 0.0F, 1.0F, 0.0F);
-                    GL11.glRotatef(70.0F, 1.0F, 0.0F, 0.0F);
-                };
-            }
-
-            if (this.firstPersonPositioning == null) {
-                this.firstPersonPositioning = (context) -> {
-                    // Counter Forge's block-centering offset (EQUIPPED_BLOCK path)
-                    GL11.glTranslatef(0.5F, -1.0F, 0.5F);
-                    // Counter vanilla ItemRenderer's 45° Y coordinate rotation
-                    // so Blockbench axes map 1:1 to in-game axes.
-                    GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
-                };
-            }
-
             return new WeaponRenderer(this);
         }
-
     }
 
     @Override
@@ -440,21 +351,25 @@ public class WeaponRenderer implements IItemRenderer {
         renderContext.setAgeInTicks(-0.4F);
         renderContext.setScale(0.08F);
         renderContext.setTransformType(TransformType.fromItemRenderType(type));
-        MultipartPositioning.Positioner positioner = null;
+
         switch (type) {
             case ENTITY:
-                this.entityPositioning.accept(weaponItemStack);
                 break;
             case INVENTORY:
-                this.inventoryPositioning.accept(weaponItemStack);
+                GL11.glTranslatef(0.0F, 0.12F, 0.0F);
                 break;
             case EQUIPPED:
-                this.thirdPersonPositioning.accept(renderContext);
+                GL11.glTranslatef(-0.4F, 0.2F, 0.4F);
+                GL11.glRotatef(-45.0F, 0.0F, 1.0F, 0.0F);
+                GL11.glRotatef(70.0F, 1.0F, 0.0F, 0.0F);
                 break;
             case EQUIPPED_FIRST_PERSON:
-                this.firstPersonPositioning.accept(renderContext);
+                GL11.glTranslatef(0.5F, -1.0F, 0.5F);           // Counter Forge's block-centering offset
+                GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);  // Counter vanilla ItemRenderer's 45° Y rotation
 
-                JsonModel weaponModel = this.model instanceof JsonModel ? (JsonModel) this.model : null;
+                this.idleSway.apply(0.33F, 0.06F);
+
+                BedrockModel weaponModel = this.model instanceof BedrockModel ? (BedrockModel) this.model : null;
 
                 // Reset bones before any animation
                 if (weaponModel != null) {
@@ -490,24 +405,24 @@ public class WeaponRenderer implements IItemRenderer {
                 this.bedrockAnimAppliedThisFrame = (weaponModel != null);
 
                 // Render arms at hand bone positions
-                renderLeftArm((EntityPlayer) player, renderContext, null, this.bedrockAnimController, weaponModel, renderContext.getScale());
-                renderRightArm((EntityPlayer) player, renderContext, null, this.bedrockAnimController, weaponModel, renderContext.getScale());
+                renderLeftArm((EntityPlayer) player, weaponModel, renderContext.getScale());
+                renderRightArm((EntityPlayer) player, weaponModel, renderContext.getScale());
                 break;
         }
 
         if (type != ItemRenderType.INVENTORY || inventoryTextureInitializationPhaseOn) {
-            this.renderItem(weaponItemStack, renderContext, positioner);
+            this.renderItem(weaponItemStack, renderContext);
         }
 
         if (type == ItemRenderType.EQUIPPED_FIRST_PERSON) {
-            JsonModel flashModel = this.model instanceof JsonModel ? (JsonModel) this.model : null;
+            BedrockModel flashModel = this.model instanceof BedrockModel ? (BedrockModel) this.model : null;
             MuzzleFlashRenderer.renderIfFiring(renderContext, flashModel, renderContext.getScale());
         }
 
         // Reset bones to rest pose after all rendering (including muzzle flash)
-        if (this.bedrockAnimController != null && this.model instanceof com.gtnewhorizon.newgunrizons.model.JsonModel) {
+        if (this.bedrockAnimController != null && this.model instanceof BedrockModel) {
             this.bedrockAnimController
-                .resetModel((com.gtnewhorizon.newgunrizons.model.JsonModel) this.model);
+                .resetModel((BedrockModel) this.model);
         }
 
         if (type == ItemRenderType.INVENTORY && inventoryTextureInitializationPhaseOn) {
@@ -586,104 +501,38 @@ public class WeaponRenderer implements IItemRenderer {
         tessellator.draw();
     }
 
-    static void renderRightArm(EntityPlayer player, RenderContext renderContext,
-        MultipartPositioning.Positioner positioner,
-        com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimationController animController,
-        com.gtnewhorizon.newgunrizons.model.JsonModel weaponModel, float renderScale) {
-
+    public static void renderRightArm(EntityPlayer player, BedrockModel weaponModel, float renderScale) {
         if (weaponModel != null && weaponModel.getBone(
                 com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimationController.BONE_RIGHT_HAND) != null) {
             renderArmAtBone(player, weaponModel,
                 com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimationController.BONE_RIGHT_HAND,
                 true, renderScale);
-        } else if (positioner != null) {
-            // Fallback to positioner-based arm rendering for models without hand bones
-            RenderPlayer render = (RenderPlayer) RenderManager.instance.getEntityRenderObject(player);
-            Minecraft.getMinecraft()
-                .getTextureManager()
-                .bindTexture(((AbstractClientPlayer) player).getLocationSkin());
-            GL11.glPushMatrix();
-            GL11.glTranslatef(-0.25F, 0.0F, 0.2F);
-            GL11.glRotatef(5.0F, 1.0F, 0.0F, 0.0F);
-            GL11.glRotatef(25.0F, 0.0F, 1.0F, 0.0F);
-            positioner.position(com.gtnewhorizon.newgunrizons.attachment.Part.RIGHT_HAND, renderContext);
-            GL11.glColor3f(1.0F, 1.0F, 1.0F);
-            render.modelBipedMain.onGround = 0.0F;
-            render.modelBipedMain.setRotationAngles(0.0F, 0.3F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
-            render.modelBipedMain.bipedRightArm.render(0.0625F);
-            GL11.glPopMatrix();
         }
-        // If no hand bone and no positioner, skip arm rendering
     }
 
-    static void renderLeftArm(EntityPlayer player, RenderContext renderContext,
-        MultipartPositioning.Positioner positioner,
-        com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimationController animController,
-        com.gtnewhorizon.newgunrizons.model.JsonModel weaponModel, float renderScale) {
-
+    public static void renderLeftArm(EntityPlayer player, BedrockModel weaponModel, float renderScale) {
         if (weaponModel != null && weaponModel.getBone(
                 com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimationController.BONE_LEFT_HAND) != null) {
             renderArmAtBone(player, weaponModel,
                 com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimationController.BONE_LEFT_HAND,
                 false, renderScale);
-        } else if (positioner != null) {
-            // Fallback to positioner-based arm rendering for models without hand bones
-            RenderPlayer render = (RenderPlayer) RenderManager.instance.getEntityRenderObject(player);
-            Minecraft.getMinecraft()
-                .getTextureManager()
-                .bindTexture(((AbstractClientPlayer) player).getLocationSkin());
-            GL11.glPushMatrix();
-            GL11.glTranslatef(0.0F, -1.0F, 0.0F);
-            GL11.glRotatef(-10.0F, 1.0F, 0.0F, 0.0F);
-            GL11.glRotatef(10.0F, 0.0F, 0.0F, 1.0F);
-            positioner.position(com.gtnewhorizon.newgunrizons.attachment.Part.LEFT_HAND, renderContext);
-            GL11.glColor3f(1.0F, 1.0F, 1.0F);
-            render.modelBipedMain.onGround = 0.0F;
-            render.modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
-            render.modelBipedMain.bipedLeftArm.render(0.0625F);
-            GL11.glPopMatrix();
         }
-        // If no hand bone and no positioner, skip arm rendering
     }
 
     /**
      * Renders a player arm (left or right) positioned at the given hand bone's transform.
-     * The hand bone is a child of the receiver bone, so we walk the parent chain
-     * to compose the full transform: receiver -> hand bone.
-     * <p>
-     * ModelRenderer applies transforms as: translate(rotationPoint * scale), rotateZ, rotateY, rotateX.
+     * Uses {@link BedrockModel#applyBoneTransform} to walk the full parent chain.
      */
-    static void renderArmAtBone(EntityPlayer player, com.gtnewhorizon.newgunrizons.model.JsonModel model,
+    public static void renderArmAtBone(EntityPlayer player, BedrockModel model,
         String handBoneName, boolean rightArm, float renderScale) {
-        ModelRenderer handBone = model.getBone(handBoneName);
-        if (handBone == null) return;
+        if (model.getBone(handBoneName) == null) return;
 
         RenderPlayer render = (RenderPlayer) RenderManager.instance.getEntityRenderObject(player);
         Minecraft.getMinecraft().getTextureManager()
             .bindTexture(((AbstractClientPlayer) player).getLocationSkin());
 
         GL11.glPushMatrix();
-
-        // Apply parent bone (receiver) transform first
-        ModelRenderer receiver = model.getBone("receiver");
-        if (receiver != null) {
-            GL11.glTranslatef(
-                receiver.rotationPointX * renderScale,
-                receiver.rotationPointY * renderScale,
-                receiver.rotationPointZ * renderScale);
-            if (receiver.rotateAngleZ != 0) GL11.glRotatef(receiver.rotateAngleZ * (180F / (float) Math.PI), 0, 0, 1);
-            if (receiver.rotateAngleY != 0) GL11.glRotatef(receiver.rotateAngleY * (180F / (float) Math.PI), 0, 1, 0);
-            if (receiver.rotateAngleX != 0) GL11.glRotatef(receiver.rotateAngleX * (180F / (float) Math.PI), 1, 0, 0);
-        }
-
-        // Apply hand bone transform (child of receiver)
-        GL11.glTranslatef(
-            handBone.rotationPointX * renderScale,
-            handBone.rotationPointY * renderScale,
-            handBone.rotationPointZ * renderScale);
-        if (handBone.rotateAngleZ != 0) GL11.glRotatef(handBone.rotateAngleZ * (180F / (float) Math.PI), 0, 0, 1);
-        if (handBone.rotateAngleY != 0) GL11.glRotatef(handBone.rotateAngleY * (180F / (float) Math.PI), 0, 1, 0);
-        if (handBone.rotateAngleX != 0) GL11.glRotatef(handBone.rotateAngleX * (180F / (float) Math.PI), 1, 0, 0);
+        model.applyBoneTransform(handBoneName, renderScale);
 
         // Normalize scale so arm renders at consistent size regardless of weapon scale
         GL11.glScalef(1.3f, 1.3f, 1.3f);

@@ -47,7 +47,7 @@ def process_file(filepath, class_map):
         content = f.read()
 
     original = content
-    json_model_import = "import com.gtnewhorizon.newgunrizons.model.JsonModel;"
+    json_model_import = "import com.gtnewhorizon.newgunrizons.model.BedrockModel;"
     needs_json_import = False
     imports_to_remove = set()
 

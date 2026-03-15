@@ -3,16 +3,16 @@ package com.gtnewhorizon.newgunrizons.client.animation;
 import java.util.List;
 import java.util.Map;
 
+import com.gtnewhorizon.newgunrizons.model.BedrockModel;
 import net.minecraft.client.model.ModelRenderer;
 
 import com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimation.AnimationClip;
 import com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimation.BoneAnimation;
 import com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimation.Keyframe;
-import com.gtnewhorizon.newgunrizons.model.JsonModel;
 
 /**
  * Evaluates a single Bedrock animation clip at the current time and applies
- * bone transforms as additive deltas to a {@link JsonModel}'s ModelRenderers.
+ * bone transforms as additive deltas to a {@link BedrockModel}'s ModelRenderers.
  * <p>
  * Coordinate conversion: Bedrock animations use Y-up with rotation in degrees.
  * ModelRenderer uses Y-down with rotation in radians. Animation rotation values
@@ -90,7 +90,7 @@ public class BedrockAnimationPlayer {
      * as additive deltas on top of the model's rest pose.
      * Must be called BEFORE model.render() each frame.
      */
-    public void applyToModel(JsonModel model) {
+    public void applyToModel(BedrockModel model) {
         if (!playing && !finished) return;
 
         float elapsed;

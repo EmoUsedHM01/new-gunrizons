@@ -3,23 +3,27 @@ package com.gtnewhorizon.newgunrizons.model;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.model.PositionTextureVertex;
 import net.minecraft.client.model.TexturedQuad;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.Entity;
+import net.minecraft.client.renderer.Tessellator;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -44,13 +48,21 @@ import cpw.mods.fml.relauncher.SideOnly;
  *   new WeaponRenderer.Builder().withModel(new JsonModel("weapon/ak12"))
  * </pre>
  */
-public class JsonModel extends ModelWithAttachments {
+public class BedrockModel extends ModelBase {
 
     private static final float DEG_TO_RAD = (float) (Math.PI / 180.0);
 
+    /**
+     * -- GETTER --
+     *  Returns the model path this JsonModel was loaded from.
+     */
+    @Getter
     private final String modelPath;
+    private static final float RAD_TO_DEG = 180F / (float) Math.PI;
+
     private final List<ModelRenderer> rootRenderers = new ArrayList<>();
     private final Map<String, ModelRenderer> boneMap = new LinkedHashMap<>();
+    private final Map<String, String> parentMap = new LinkedHashMap<>();
     private final Map<String, float[]> restRotations = new LinkedHashMap<>();
     private final Map<String, float[]> restPositions = new LinkedHashMap<>();
 
@@ -63,14 +75,7 @@ public class JsonModel extends ModelWithAttachments {
      * @return true if model is a JsonModel loaded from that path
      */
     public static boolean is(ModelBase model, String path) {
-        return model instanceof JsonModel && ((JsonModel) model).modelPath.equals(path);
-    }
-
-    /**
-     * Returns the model path this JsonModel was loaded from.
-     */
-    public String getModelPath() {
-        return modelPath;
+        return model instanceof BedrockModel && ((BedrockModel) model).modelPath.equals(path);
     }
 
     /**
@@ -116,11 +121,54 @@ public class JsonModel extends ModelWithAttachments {
     }
 
     /**
+     * Returns the parent bone name for the given bone, or null if it is a root bone.
+     */
+    public String getParentName(String boneName) {
+        return parentMap.get(boneName);
+    }
+
+    /**
+     * Applies the full bone-chain GL transform for the named bone.
+     * Walks from root to the target bone, applying each ancestor's
+     * translate(rotationPoint * scale) then rotateZ/Y/X.
+     * <p>
+     * Call between glPushMatrix/glPopMatrix. After this call the GL origin
+     * sits at the bone's position with its orientation applied.
+     *
+     * @param boneName    the target bone
+     * @param renderScale model render scale (typically 0.08)
+     */
+    public void applyBoneTransform(String boneName, float renderScale) {
+        ModelRenderer bone = boneMap.get(boneName);
+        if (bone == null) return;
+
+        // Build ancestor chain root → ... → boneName
+        ArrayDeque<String> chain = new ArrayDeque<>();
+        String current = boneName;
+        while (current != null) {
+            chain.addFirst(current);
+            current = parentMap.get(current);
+        }
+
+        for (String name : chain) {
+            ModelRenderer b = boneMap.get(name);
+            if (b == null) continue;
+            GL11.glTranslatef(
+                b.rotationPointX * renderScale,
+                b.rotationPointY * renderScale,
+                b.rotationPointZ * renderScale);
+            if (b.rotateAngleZ != 0) GL11.glRotatef(b.rotateAngleZ * RAD_TO_DEG, 0, 0, 1);
+            if (b.rotateAngleY != 0) GL11.glRotatef(b.rotateAngleY * RAD_TO_DEG, 0, 1, 0);
+            if (b.rotateAngleX != 0) GL11.glRotatef(b.rotateAngleX * RAD_TO_DEG, 1, 0, 0);
+        }
+    }
+
+    /**
      * Load a Bedrock geometry model from the mod's resources.
      *
      * @param modelPath path relative to assets/newgunrizons/models/, without .geo.json extension
      */
-    public JsonModel(String modelPath) {
+    public BedrockModel(String modelPath) {
         this("newgunrizons", modelPath);
     }
 
@@ -130,10 +178,10 @@ public class JsonModel extends ModelWithAttachments {
      * @param domain    resource domain (mod id)
      * @param modelPath path relative to assets/{domain}/models/, without .geo.json extension
      */
-    public JsonModel(String domain, String modelPath) {
+    public BedrockModel(String domain, String modelPath) {
         this.modelPath = modelPath;
         String resourcePath = "/assets/" + domain + "/models/" + modelPath + ".geo.json";
-        InputStream is = JsonModel.class.getResourceAsStream(resourcePath);
+        InputStream is = BedrockModel.class.getResourceAsStream(resourcePath);
         if (is == null) {
             throw new RuntimeException("Model not found on classpath: " + resourcePath);
         }
@@ -178,7 +226,6 @@ public class JsonModel extends ModelWithAttachments {
 
         // First pass: create ModelRenderers, track parents and absolute pivots
         Map<String, ModelRenderer> rendererMap = new LinkedHashMap<>();
-        Map<String, String> parentMap = new LinkedHashMap<>();
         Map<String, float[]> absolutePivots = new LinkedHashMap<>();
 
         for (JsonElement boneElem : bones) {

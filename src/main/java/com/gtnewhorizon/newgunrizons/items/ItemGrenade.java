@@ -1,10 +1,7 @@
 package com.gtnewhorizon.newgunrizons.items;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -16,8 +13,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
-import com.gtnewhorizon.newgunrizons.attachment.AttachmentContainer;
-import com.gtnewhorizon.newgunrizons.attachment.CompatibleAttachment;
 import com.gtnewhorizon.newgunrizons.grenade.GrenadeAttackAspect;
 import com.gtnewhorizon.newgunrizons.grenade.GrenadeRenderer;
 import com.gtnewhorizon.newgunrizons.grenade.GrenadeState;
@@ -28,7 +23,7 @@ import com.gtnewhorizon.newgunrizons.registry.Sounds;
 import lombok.Getter;
 
 public class ItemGrenade extends Item
-    implements ItemInstanceFactory<ItemGrenadeInstance, GrenadeState>, AttachmentContainer, Updatable {
+    implements ItemInstanceFactory<ItemGrenadeInstance, GrenadeState>, Updatable {
 
     public static final int EXPLODE_ON_IMPACT = -1;
 
@@ -52,8 +47,6 @@ public class ItemGrenade extends Item
     private final int explosionTimeout;
     @Getter
     private final float explosionStrength;
-    @Getter
-    private final Map<ItemAttachment, CompatibleAttachment> compatibleAttachments;
     private final Supplier<Float> velocity;
     private final Supplier<Float> farVelocity;
     private final Supplier<Float> gravityVelocity;
@@ -71,7 +64,6 @@ public class ItemGrenade extends Item
         this.textureNames = new ArrayList<>(builder.textureNames);
         this.explosionTimeout = builder.explosionTimeout;
         this.explosionStrength = builder.explosionStrength;
-        this.compatibleAttachments = builder.compatibleAttachments;
         this.velocity = builder.velocity;
         this.farVelocity = builder.farVelocity;
         this.gravityVelocity = builder.gravityVelocity;
@@ -93,10 +85,6 @@ public class ItemGrenade extends Item
 
     public boolean hasSafetyPin() {
         return this.explosionTimeout > 0;
-    }
-
-    public List<CompatibleAttachment> getActiveAttachments(EntityLivingBase player, ItemStack itemStack) {
-        return new ArrayList<>(this.compatibleAttachments.values());
     }
 
     public ItemGrenadeInstance createItemInstance(EntityLivingBase player, ItemStack itemStack, int slot) {
@@ -145,7 +133,6 @@ public class ItemGrenade extends Item
 
         public String name;
 
-        protected Map<ItemAttachment, CompatibleAttachment> compatibleAttachments = new HashMap<>();
         private Supplier<Float> velocity = () -> 1.0F;
         private Supplier<Float> farVelocity = () -> 1.3F;
         private Supplier<Float> gravityVelocity = () -> 0.06F;
@@ -216,12 +203,6 @@ public class ItemGrenade extends Item
             for (String textureName : textureNames) {
                 this.textureNames.add(textureName.toLowerCase() + ".png");
             }
-            return this;
-        }
-
-        public Builder withCompatibleAttachment(ItemAttachment attachment,
-            BiConsumer<EntityLivingBase, ItemStack> positioning) {
-            this.compatibleAttachments.put(attachment, new CompatibleAttachment(attachment, positioning, null, true));
             return this;
         }
 

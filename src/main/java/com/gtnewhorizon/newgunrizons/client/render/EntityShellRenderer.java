@@ -1,5 +1,6 @@
 package com.gtnewhorizon.newgunrizons.client.render;
 
+import com.gtnewhorizon.newgunrizons.model.BedrockModel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
@@ -11,7 +12,6 @@ import org.lwjgl.opengl.GL11;
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.entities.EntityShellCasing;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
-import com.gtnewhorizon.newgunrizons.model.JsonModel;
 
 public class EntityShellRenderer extends Render {
 
@@ -19,7 +19,7 @@ public class EntityShellRenderer extends Render {
         NewGunrizonsMod.MODID,
         "textures/effect/shell.png");
 
-    private static final ModelBase DEFAULT_MODEL = new JsonModel("misc/modelshell");
+    private static final ModelBase DEFAULT_MODEL = new BedrockModel("misc/modelshell");
 
     public void doRender(Entity entity, double x, double y, double z, float yaw, float tick) {
         EntityShellCasing entityShellCasing = (EntityShellCasing) entity;

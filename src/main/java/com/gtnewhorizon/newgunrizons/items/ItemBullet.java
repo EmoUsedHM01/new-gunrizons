@@ -23,7 +23,7 @@ public class ItemBullet extends ItemAttachment {
 
         @Override
         protected ItemAttachment createAttachment() {
-            return new ItemBullet(AttachmentCategory.BULLET, null);
+            return new ItemBullet(AttachmentCategory.EXTRA, null);
         }
     }
 }

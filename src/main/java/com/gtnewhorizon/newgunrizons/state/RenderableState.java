@@ -6,7 +6,7 @@ package com.gtnewhorizon.newgunrizons.state;
  * Maps complex internal states ({@code WeaponState}, {@code GrenadeState}) to a smaller
  * set of animation states. For weapons the mapping is performed by
  * {@code WeaponRenderer.mapWeaponState()}, for grenades by
- * {@code GrenadeRenderer.getStateDescriptor()}.
+ * {@code GrenadeRenderer.mapGrenadeState()}.
  */
 public enum RenderableState {
 

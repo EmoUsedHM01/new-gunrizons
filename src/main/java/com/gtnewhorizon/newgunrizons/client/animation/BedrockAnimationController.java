@@ -5,11 +5,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.gtnewhorizon.newgunrizons.model.BedrockModel;
 import net.minecraft.client.model.ModelRenderer;
 
 import com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimation.AnimationClip;
 import com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimation.BoneAnimation;
-import com.gtnewhorizon.newgunrizons.model.JsonModel;
 import com.gtnewhorizon.newgunrizons.state.RenderableState;
 
 /**
@@ -172,7 +172,7 @@ public class BedrockAnimationController {
      * Applies the current animation's bone transforms to the model,
      * blending from the previous pose if a state transition just occurred.
      */
-    public void applyToModel(JsonModel model) {
+    public void applyToModel(BedrockModel model) {
         float blend = 1.0f;
         if (blending) {
             blend = Math.min((System.currentTimeMillis() - blendStartTime) / (float) BLEND_DURATION_MS, 1.0f);
@@ -202,7 +202,7 @@ public class BedrockAnimationController {
         }
     }
 
-    private void applyDebugOffsetToBone(JsonModel model) {
+    private void applyDebugOffsetToBone(BedrockModel model) {
         if (debugBoneName == null || (debugPosOffset == null && debugRotOffset == null)) return;
         ModelRenderer bone = model.getBone(debugBoneName);
         if (bone == null) return;
@@ -218,7 +218,7 @@ public class BedrockAnimationController {
         }
     }
 
-    private void blendRealBones(JsonModel model, float blend) {
+    private void blendRealBones(BedrockModel model, float blend) {
         Set<String> boneNames = new HashSet<>(blendFromRotations.keySet());
         boneNames.addAll(blendFromPositions.keySet());
         for (Map.Entry<String, BoneAnimation> e : currentPlayer.getClip().bones.entrySet()) {
@@ -246,7 +246,7 @@ public class BedrockAnimationController {
         }
     }
 
-    private void blendTowardRest(JsonModel model, float blend) {
+    private void blendTowardRest(BedrockModel model, float blend) {
         for (Map.Entry<String, float[]> entry : blendFromRotations.entrySet()) {
             String boneName = entry.getKey();
 
@@ -267,7 +267,7 @@ public class BedrockAnimationController {
         }
     }
 
-    private void storeAppliedValues(JsonModel model) {
+    private void storeAppliedValues(BedrockModel model) {
         Set<String> boneNames = new HashSet<>();
         if (currentPlayer != null) {
             boneNames.addAll(currentPlayer.getClip().bones.keySet());
@@ -287,7 +287,7 @@ public class BedrockAnimationController {
     /**
      * Resets all bones to rest pose after rendering.
      */
-    public void resetModel(JsonModel model) {
+    public void resetModel(BedrockModel model) {
         if (currentPlayer != null) {
             model.resetBonesToRestPose();
         }

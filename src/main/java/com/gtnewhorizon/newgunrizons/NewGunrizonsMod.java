@@ -3,7 +3,6 @@ package com.gtnewhorizon.newgunrizons;
 import net.minecraft.creativetab.CreativeTabs;
 
 import com.gtnewhorizon.newgunrizons.tabs.AmmoTab;
-import com.gtnewhorizon.newgunrizons.tabs.AttachmentsTab;
 import com.gtnewhorizon.newgunrizons.tabs.GunsTab;
 import com.gtnewhorizon.newgunrizons.tabs.ShotgunsTab;
 
@@ -27,7 +26,6 @@ public class NewGunrizonsMod {
     public static CreativeTabs gunsTab;
     public static CreativeTabs ShotgunsTab;
     public static CreativeTabs AmmoTab;
-    public static CreativeTabs AttachmentsTab;
 
     @SidedProxy(
         serverSide = "com.gtnewhorizon.newgunrizons.CommonProxy",
@@ -53,6 +51,5 @@ public class NewGunrizonsMod {
         gunsTab = new GunsTab(CreativeTabs.getNextID(), "guns_tab");
         ShotgunsTab = new ShotgunsTab(CreativeTabs.getNextID(), "ShotgunsTab");
         AmmoTab = new AmmoTab(CreativeTabs.getNextID(), "AmmoTab");
-        AttachmentsTab = new AttachmentsTab(CreativeTabs.getNextID(), "AttachmentsTab");
     }
 }

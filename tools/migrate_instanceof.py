@@ -87,7 +87,7 @@ def process_file(filepath, class_map):
         if should_remove:
             continue
 
-        if stripped == "import com.gtnewhorizon.newgunrizons.model.JsonModel;":
+        if stripped == "import com.gtnewhorizon.newgunrizons.model.BedrockModel;":
             json_import_exists = True
 
         new_lines.append(line)
@@ -104,7 +104,7 @@ def process_file(filepath, class_map):
                 if line.strip().startswith("import "):
                     insert_idx = i + 1
         if insert_idx is not None:
-            new_lines.insert(insert_idx, "import com.gtnewhorizon.newgunrizons.model.JsonModel;")
+            new_lines.insert(insert_idx, "import com.gtnewhorizon.newgunrizons.model.BedrockModel;")
 
     content = '\n'.join(new_lines)
 

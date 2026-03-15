@@ -1,5 +1,7 @@
 package com.gtnewhorizon.newgunrizons.client.animation;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.entity.EntityLivingBase;
 
 /**
@@ -19,6 +21,8 @@ public final class CameraRecoilController {
     private float appliedPitch;
     private float appliedYaw;
     private long startTime;
+    @Getter
+    @Setter
     private int durationMs = DEFAULT_DURATION_MS;
 
     private CameraRecoilController() {}
@@ -80,11 +84,4 @@ public final class CameraRecoilController {
         return true;
     }
 
-    public void setDurationMs(int durationMs) {
-        this.durationMs = durationMs;
-    }
-
-    public int getDurationMs() {
-        return durationMs;
-    }
 }

@@ -1,9 +1,11 @@
 package com.gtnewhorizon.newgunrizons.client.handlers;
 
+import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderLivingEvent.Pre;
@@ -140,9 +142,6 @@ public class WeaponRenderHandler {
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onTextureStitch(TextureStitchEvent.Pre event) {
-        event.map.registerIcon(
-            new net.minecraft.util.ResourceLocation(
-                com.gtnewhorizon.newgunrizons.NewGunrizonsMod.MODID,
-                "particle/blood").toString());
+        event.map.registerIcon(new ResourceLocation(NewGunrizonsMod.MODID, "particle/blood").toString());
     }
 }
