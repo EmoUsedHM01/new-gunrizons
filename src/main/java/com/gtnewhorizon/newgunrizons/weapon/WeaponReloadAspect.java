@@ -40,6 +40,9 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
 
     private StateManager<WeaponState, ? super ItemWeaponInstance> stateManager;
 
+    private final Predicate<ItemWeaponInstance> notFullyLoaded = (weaponInstance) -> weaponInstance.getAmmo()
+        < weaponInstance.getWeapon().getAmmoCapacity();
+
     /** Client-side guard: checks if player has compatible ammo in inventory. */
     private final Predicate<ItemWeaponInstance> hasCompatibleAmmo = (weaponInstance) -> {
         if (!(weaponInstance.getPlayer() instanceof EntityPlayer)) {
@@ -60,7 +63,7 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
         this.stateManager = stateManager.in(this)
             .change(WeaponState.IDLE)
             .to(WeaponState.RELOADING_START)
-            .when(supportsDirectBulletLoad.and(this.hasCompatibleAmmo))
+            .when(supportsDirectBulletLoad.and(this.notFullyLoaded).and(this.hasCompatibleAmmo))
             .withAction(this::performLoad)
             .manual()
             .in(this)
@@ -142,12 +145,11 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
             int loaded = this.countAvailableBullets(compatibleBullets, player, maxToLoad);
             if (loaded > 0) {
                 weaponInstance.setAmmo(weaponInstance.getAmmo() + loaded);
-                if (weapon.hasIteratedLoad()) {
-                    weaponInstance.setLoadIterationCount(loaded);
-                }
+                weaponInstance.setLoadIterationCount(weapon.hasIteratedLoad() ? loaded : 1);
             }
         } else if (weapon.getAmmo() != null && player.inventory.hasItem(weapon.getAmmo())) {
             weaponInstance.setAmmo(weapon.getAmmoCapacity());
+            weaponInstance.setLoadIterationCount(1);
         }
 
         if (weapon.getReloadSound() != null) {
@@ -159,14 +161,20 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
     }
 
     private int countAvailableBullets(List<ItemAttachment> compatibleBullets, EntityPlayer player, int maxToLoad) {
-        for (ItemAttachment bullet : compatibleBullets) {
-            for (ItemStack stack : player.inventory.mainInventory) {
-                if (stack != null && stack.getItem() == bullet) {
-                    return Math.min(maxToLoad, stack.stackSize);
+        int total = 0;
+        for (ItemStack stack : player.inventory.mainInventory) {
+            if (stack == null) continue;
+            for (ItemAttachment bullet : compatibleBullets) {
+                if (stack.getItem() == bullet) {
+                    total += stack.stackSize;
+                    if (total >= maxToLoad) {
+                        return maxToLoad;
+                    }
+                    break;
                 }
             }
         }
-        return 0;
+        return total;
     }
 
     public void noAmmoAlert(ItemWeaponInstance weaponInstance) {
@@ -211,8 +219,7 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
                 WeaponState.RELOADING_END,
                 WeaponState.NO_AMMO));
 
-        hasNextLoadIteration = (weaponInstance) -> weaponInstance.getWeapon()
-            .hasIteratedLoad() && weaponInstance.getLoadIterationCount() > 0;
+        hasNextLoadIteration = (weaponInstance) -> weaponInstance.getLoadIterationCount() > 0;
         supportsDirectBulletLoad = (weaponInstance) -> weaponInstance.getWeapon()
             .getAmmoCapacity() > 0;
         loadIterationCompleted = (weaponInstance) -> System.currentTimeMillis()

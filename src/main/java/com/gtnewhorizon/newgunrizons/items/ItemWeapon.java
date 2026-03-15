@@ -95,6 +95,12 @@ public class ItemWeapon extends Item
     @Getter
     private final float tracerLength;
     @Getter
+    private final float tracerColorR;
+    @Getter
+    private final float tracerColorG;
+    @Getter
+    private final float tracerColorB;
+    @Getter
     private final boolean smokeEnabled;
     @Getter
     private final Supplier<Float> smokeOffsetX;
@@ -144,6 +150,9 @@ public class ItemWeapon extends Item
         this.tracerTexture = builder.tracerTexture;
         this.tracerWidth = builder.tracerWidth;
         this.tracerLength = builder.tracerLength;
+        this.tracerColorR = builder.tracerColorR;
+        this.tracerColorG = builder.tracerColorG;
+        this.tracerColorB = builder.tracerColorB;
         this.smokeEnabled = builder.smokeEnabled;
         this.smokeOffsetX = builder.smokeOffsetX;
         this.smokeOffsetY = builder.smokeOffsetY;
@@ -452,6 +461,9 @@ public class ItemWeapon extends Item
         public String tracerTexture = "tracer";
         public float tracerWidth = 0.03F;
         public float tracerLength = 1.5F;
+        public float tracerColorR = 1.0F;
+        public float tracerColorG = 0.8F;
+        public float tracerColorB = 0.27F;
 
         public boolean smokeEnabled = true;
         public Supplier<Float> smokeOffsetX = () -> 0.0F;
@@ -700,6 +712,13 @@ public class ItemWeapon extends Item
 
         public ItemWeapon.Builder withTracerLength(float tracerLength) {
             this.tracerLength = tracerLength;
+            return this;
+        }
+
+        public ItemWeapon.Builder withTracerColor(float r, float g, float b) {
+            this.tracerColorR = r;
+            this.tracerColorG = g;
+            this.tracerColorB = b;
             return this;
         }
 

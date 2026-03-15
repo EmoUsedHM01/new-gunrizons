@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.ActiveRenderInfo;
@@ -103,23 +104,17 @@ public class ParticleManager {
     }
 
     // Cached firing point world position, updated each frame during weapon rendering
-    private static double lastFiringPointX, lastFiringPointY, lastFiringPointZ;
+    @Getter
+    private static double lastFiringPointX;
+    @Getter
+    private static double lastFiringPointY;
+    @Getter
+    private static double lastFiringPointZ;
+
     private static boolean hasFiringPoint;
 
     public static boolean hasFiringPointPosition() {
         return hasFiringPoint;
-    }
-
-    public static double getLastFiringPointX() {
-        return lastFiringPointX;
-    }
-
-    public static double getLastFiringPointY() {
-        return lastFiringPointY;
-    }
-
-    public static double getLastFiringPointZ() {
-        return lastFiringPointZ;
     }
 
     /**
