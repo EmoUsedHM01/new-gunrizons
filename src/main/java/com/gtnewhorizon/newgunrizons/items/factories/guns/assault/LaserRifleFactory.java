@@ -21,7 +21,7 @@ public class LaserRifleFactory {
             .withRecoil(1.5F)
             .withCameraRecoilDuration(50)
             .withMaxShots(1, 3, 24)
-            .withShootSound("plasmarifle_shot")
+            .withShootSound("laserrifle_shot")
             .withReloadSound("drawweapon")
             .withCrosshair("gun")
             .withCrosshairRunning("Running")
@@ -59,7 +59,7 @@ public class LaserRifleFactory {
                     .build())
             .withSpawnEntityDamage(8.0F)
             .withSpawnEntityGravityVelocity(0F)
-            .withSpawnEntitySpeed(20f)
+            .withSpawnEntitySpeed(40f)
             .build();
     }
 }

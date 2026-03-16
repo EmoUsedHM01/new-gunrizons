@@ -7,6 +7,10 @@
     "category": "master",
     "sounds": [{"name": "plasmarifle_shot", "stream": false}]
   },
+  "laserrifle_shot": {
+    "category": "master",
+    "sounds": [{"name": "laserrifle_shot", "stream": false}]
+  },
   "loadshell": {
     "category": "master",
     "sounds": [{"name": "loadshell", "stream": false}]

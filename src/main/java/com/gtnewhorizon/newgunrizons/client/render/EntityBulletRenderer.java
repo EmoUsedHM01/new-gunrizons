@@ -3,6 +3,7 @@ package com.gtnewhorizon.newgunrizons.client.render;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -16,7 +17,7 @@ public class EntityBulletRenderer extends Render {
 
     private static final ResourceLocation DUMMY_TEXTURE = new ResourceLocation("textures/misc/unknown_pack.png");
 
-    private static final int LERP_TICKS = 2;
+    private static final int LERP_TICKS = 4;
 
     @Override
     public void doRender(Entity entity, double x, double y, double z, float yaw, float partialTicks) {
@@ -31,28 +32,49 @@ public class EntityBulletRenderer extends Render {
         double renderY = y;
         double renderZ = z;
 
-        // Origin correction: lerp from firing point to entity position.
-        Minecraft mc = Minecraft.getMinecraft();
-        if (bullet.getThrower() == mc.thePlayer
-            && mc.gameSettings.thirdPersonView == 0
-            && ParticleManager.hasFiringPointPosition()
-            && bullet.ticksExisted <= LERP_TICKS) {
-
-            float t = (bullet.ticksExisted + partialTicks) / (LERP_TICKS + 1.0F);
-            t = Math.min(t, 1.0F);
-
+        // Origin correction: lerp from firing point (or thrower position) to
+        // entity position over the first few ticks, so the tracer visually
+        // starts at the barrel rather than appearing mid-flight.
+        if (bullet.ticksExisted <= LERP_TICKS) {
+            Minecraft mc = Minecraft.getMinecraft();
             Entity view = mc.renderViewEntity;
             double camX = view.lastTickPosX + (view.posX - view.lastTickPosX) * partialTicks;
             double camY = view.lastTickPosY + (view.posY - view.lastTickPosY) * partialTicks;
             double camZ = view.lastTickPosZ + (view.posZ - view.lastTickPosZ) * partialTicks;
 
-            double fpX = ParticleManager.getLastFiringPointX() - camX;
-            double fpY = ParticleManager.getLastFiringPointY() - camY;
-            double fpZ = ParticleManager.getLastFiringPointZ() - camZ;
+            double originX, originY, originZ;
 
-            renderX = fpX + (x - fpX) * t;
-            renderY = fpY + (y - fpY) * t;
-            renderZ = fpZ + (z - fpZ) * t;
+            if (bullet.getThrower() == mc.thePlayer
+                && mc.gameSettings.thirdPersonView == 0
+                && ParticleManager.hasFiringPointPosition()) {
+                // First person: use the captured muzzle bone position
+                originX = ParticleManager.getLastFiringPointX() - camX;
+                originY = ParticleManager.getLastFiringPointY() - camY;
+                originZ = ParticleManager.getLastFiringPointZ() - camZ;
+            } else {
+                // Fallback: use the thrower's eye position
+                EntityLivingBase thrower = bullet.getThrower();
+                if (thrower != null) {
+                    double eyeX = thrower.lastTickPosX + (thrower.posX - thrower.lastTickPosX) * partialTicks;
+                    double eyeY = thrower.lastTickPosY + (thrower.posY - thrower.lastTickPosY) * partialTicks
+                        + thrower.getEyeHeight();
+                    double eyeZ = thrower.lastTickPosZ + (thrower.posZ - thrower.lastTickPosZ) * partialTicks;
+                    originX = eyeX - camX;
+                    originY = eyeY - camY;
+                    originZ = eyeZ - camZ;
+                } else {
+                    originX = renderX;
+                    originY = renderY;
+                    originZ = renderZ;
+                }
+            }
+
+            float t = (bullet.ticksExisted + partialTicks) / (LERP_TICKS + 1.0F);
+            t = Math.min(t, 1.0F);
+
+            renderX = originX + (x - originX) * t;
+            renderY = originY + (y - originY) * t;
+            renderZ = originZ + (z - originZ) * t;
         }
 
         GL11.glPushMatrix();

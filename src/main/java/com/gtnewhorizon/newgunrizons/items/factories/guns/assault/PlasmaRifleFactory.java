@@ -29,9 +29,10 @@ public class PlasmaRifleFactory {
             .withFlashIntensity(0.6F)
             .withFlashScale(0.3F)
             .withSmokeEnabled(false)
-            .withTracerWidth(0.1F)
-            .withTracerLength(3.0F)
-            .withTracerColor(0.3F, 0.8F, 1.0F)
+            .withTracerWidth(0.3F)
+            .withTracerLength(10.0F)
+            .withTracerColor(0.0F, 0.0F, 1.0F)
+            .withTracerIntensity(3.0F)
             .withInaccuracy(0.5F)
             .withPellets(1)
             .withCreativeTab(NewGunrizonsMod.gunsTab)
@@ -57,8 +58,8 @@ public class PlasmaRifleFactory {
                     .withBedrockAnimationForState(RenderableState.RELOADING_END, "animation.plasmarifle.reload_end")
                     .build())
             .withSpawnEntityDamage(15.0F)
-            .withSpawnEntityGravityVelocity(0.008F)
-            .withSpawnEntitySpeed(15f)
+            .withSpawnEntityGravityVelocity(0.0F)
+            .withSpawnEntitySpeed(10f)
             .build();
     }
 }
