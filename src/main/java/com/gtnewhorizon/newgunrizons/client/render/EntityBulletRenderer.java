@@ -32,40 +32,57 @@ public class EntityBulletRenderer extends Render {
         double renderY = y;
         double renderZ = z;
 
-        // Origin correction: lerp from firing point (or thrower position) to
-        // entity position over the first few ticks, so the tracer visually
-        // starts at the barrel rather than appearing mid-flight.
         if (bullet.ticksExisted <= LERP_TICKS) {
             Minecraft mc = Minecraft.getMinecraft();
-            Entity view = mc.renderViewEntity;
-            double camX = view.lastTickPosX + (view.posX - view.lastTickPosX) * partialTicks;
-            double camY = view.lastTickPosY + (view.posY - view.lastTickPosY) * partialTicks;
-            double camZ = view.lastTickPosZ + (view.posZ - view.lastTickPosZ) * partialTicks;
 
-            double originX, originY, originZ;
+            double originX = x;
+            double originY = y;
+            double originZ = z;
 
-            if (bullet.getThrower() == mc.thePlayer
-                && mc.gameSettings.thirdPersonView == 0
-                && ParticleManager.hasFiringPointPosition()) {
-                // First person: use the captured muzzle bone position
-                originX = ParticleManager.getLastFiringPointX() - camX;
-                originY = ParticleManager.getLastFiringPointY() - camY;
-                originZ = ParticleManager.getLastFiringPointZ() - camZ;
-            } else {
-                // Fallback: use the thrower's eye position
-                EntityLivingBase thrower = bullet.getThrower();
-                if (thrower != null) {
-                    double eyeX = thrower.lastTickPosX + (thrower.posX - thrower.lastTickPosX) * partialTicks;
-                    double eyeY = thrower.lastTickPosY + (thrower.posY - thrower.lastTickPosY) * partialTicks
-                        + thrower.getEyeHeight();
-                    double eyeZ = thrower.lastTickPosZ + (thrower.posZ - thrower.lastTickPosZ) * partialTicks;
-                    originX = eyeX - camX;
-                    originY = eyeY - camY;
-                    originZ = eyeZ - camZ;
-                } else {
-                    originX = renderX;
-                    originY = renderY;
-                    originZ = renderZ;
+            // Compute thrower eye position in camera-relative space
+            EntityLivingBase thrower = bullet.getThrower();
+            if (thrower != null) {
+                double entityX = bullet.lastTickPosX + (bullet.posX - bullet.lastTickPosX) * partialTicks;
+                double entityY = bullet.lastTickPosY + (bullet.posY - bullet.lastTickPosY) * partialTicks;
+                double entityZ = bullet.lastTickPosZ + (bullet.posZ - bullet.lastTickPosZ) * partialTicks;
+                double camX = entityX - x;
+                double camY = entityY - y;
+                double camZ = entityZ - z;
+                double eyeX = thrower.lastTickPosX + (thrower.posX - thrower.lastTickPosX) * partialTicks;
+                double eyeY = thrower.lastTickPosY + (thrower.posY - thrower.lastTickPosY) * partialTicks
+                    + thrower.getEyeHeight();
+                double eyeZ = thrower.lastTickPosZ + (thrower.posZ - thrower.lastTickPosZ) * partialTicks;
+                originX = eyeX - camX;
+                originY = eyeY - camY;
+                originZ = eyeZ - camZ;
+
+                // If we have the barrel bone delta (eye-space offset from model origin),
+                // convert it to world-space and add to the eye position for muzzle accuracy.
+                if (thrower == mc.thePlayer
+                    && mc.gameSettings.thirdPersonView == 0
+                    && ParticleManager.hasFiringPointPosition()) {
+                    float dEx = ParticleManager.getLastFiringPointEyeX();
+                    float dEy = ParticleManager.getLastFiringPointEyeY();
+                    float dEz = ParticleManager.getLastFiringPointEyeZ();
+
+                    float playerYaw = mc.thePlayer.prevRotationYaw
+                        + (mc.thePlayer.rotationYaw - mc.thePlayer.prevRotationYaw) * partialTicks;
+                    float playerPitch = mc.thePlayer.prevRotationPitch
+                        + (mc.thePlayer.rotationPitch - mc.thePlayer.prevRotationPitch) * partialTicks;
+
+                    double yawRad = Math.toRadians(-(playerYaw + 180.0));
+                    double pitchRad = Math.toRadians(-playerPitch);
+                    double cosY = Math.cos(yawRad);
+                    double sinY = Math.sin(yawRad);
+                    double cosP = Math.cos(pitchRad);
+                    double sinP = Math.sin(pitchRad);
+
+                    double p1x = dEx;
+                    double p1y = dEy * cosP - dEz * sinP;
+                    double p1z = dEy * sinP + dEz * cosP;
+                    originX += p1x * cosY + p1z * sinY;
+                    originY += p1y;
+                    originZ += -p1x * sinY + p1z * cosY;
                 }
             }
 
@@ -80,7 +97,6 @@ public class EntityBulletRenderer extends Render {
         GL11.glPushMatrix();
         GL11.glTranslated(renderX, renderY, renderZ);
 
-        // Vanilla arrow rotation convention
         GL11.glRotatef(
             bullet.prevRotationYaw + (bullet.rotationYaw - bullet.prevRotationYaw) * partialTicks - 90.0F,
             0.0F, 1.0F, 0.0F);

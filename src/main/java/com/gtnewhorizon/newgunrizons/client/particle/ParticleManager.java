@@ -111,6 +111,13 @@ public class ParticleManager {
     @Getter
     private static double lastFiringPointZ;
 
+    @Getter
+    private static float lastFiringPointEyeX;
+    @Getter
+    private static float lastFiringPointEyeY;
+    @Getter
+    private static float lastFiringPointEyeZ;
+
     private static boolean hasFiringPoint;
 
     public static boolean hasFiringPointPosition() {
@@ -125,6 +132,23 @@ public class ParticleManager {
         lastFiringPointY = y;
         lastFiringPointZ = z;
         hasFiringPoint = true;
+    }
+
+    private static long lastEyeCaptureTime = -1;
+
+    /**
+     * Stores the eye-space position of the firing point bone.
+     * Only captures once per frame — prevents Iris's secondary render passes
+     * (shadow, translucent) from overwriting the correct values from the main pass.
+     * Uses a 5ms cooldown as a frame guard (at 60fps, frames are ~16ms apart).
+     */
+    public static void setFiringPointEyePosition(float ex, float ey, float ez) {
+        long now = System.nanoTime();
+        if (now - lastEyeCaptureTime < 5_000_000L) return;
+        lastEyeCaptureTime = now;
+        lastFiringPointEyeX = ex;
+        lastFiringPointEyeY = ey - 0.1f; // shift down slightly (positive Y = down in eye-space)
+        lastFiringPointEyeZ = ez;
     }
 
     /**

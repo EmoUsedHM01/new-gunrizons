@@ -70,6 +70,7 @@ public abstract class EntityProjectile extends Entity implements IProjectile, IE
     protected float inaccuracy;
     private long timestamp;
     protected long maxLifetime;
+    private double savedMotionX, savedMotionY, savedMotionZ;
 
     public EntityProjectile(World world) {
         super(world);
@@ -171,6 +172,30 @@ public abstract class EntityProjectile extends Entity implements IProjectile, IE
         this.lastTickPosY = this.posY;
         this.lastTickPosZ = this.posZ;
         super.onUpdate();
+
+        // Skip movement and collision on the first tick so the entity tracker
+        // has time to sync the spawn packet to clients. Without this, fast
+        // projectiles that hit terrain immediately are destroyed before the
+        // client ever learns they exist — producing invisible tracers.
+        // Motion is zeroed during the grace period to prevent Iris/Angelica
+        // from motion-extrapolating the entity ahead of its actual position.
+        if (this.ticksExisted <= 1) {
+            if (this.ticksExisted == 1) {
+                this.savedMotionX = this.motionX;
+                this.savedMotionY = this.motionY;
+                this.savedMotionZ = this.motionZ;
+            }
+            this.motionX = 0;
+            this.motionY = 0;
+            this.motionZ = 0;
+            return;
+        }
+        if (this.ticksExisted == 2) {
+            this.motionX = this.savedMotionX;
+            this.motionY = this.savedMotionY;
+            this.motionZ = this.savedMotionZ;
+        }
+
         if (this.throwableShake > 0) {
             --this.throwableShake;
         }
@@ -359,6 +384,13 @@ public abstract class EntityProjectile extends Entity implements IProjectile, IE
             buffer.readBytes(nameBytes);
             this.throwerName = new String(nameBytes);
         }
+
+        // Initialize lastTickPos so the first render frame doesn't interpolate
+        // from (0,0,0) to the spawn position, which causes tracers to appear
+        // at the world origin on the first frame.
+        this.lastTickPosX = this.posX;
+        this.lastTickPosY = this.posY;
+        this.lastTickPosZ = this.posZ;
     }
 
     public float getShadowSize() {

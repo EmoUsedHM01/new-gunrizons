@@ -33,5 +33,8 @@ void main() {
     float fadeZone = clamp(1.5 / u_TracerLength, 0.02, 0.4);
     float lengthFade = smoothstep(0.0, fadeZone, v_LengthPos);
 
-    gl_FragColor = vec4(color * lengthFade, alpha * lengthFade);
+    // Write ONLY to draw buffer 0 (colortex0). Using gl_FragData[0] instead
+    // of gl_FragColor avoids broadcasting to all MRT attachments, which would
+    // corrupt Iris's normal/specular G-buffer targets.
+    gl_FragData[0] = vec4(color * lengthFade, alpha * lengthFade);
 }

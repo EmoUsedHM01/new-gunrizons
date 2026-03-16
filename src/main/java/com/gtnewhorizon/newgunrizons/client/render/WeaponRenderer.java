@@ -173,53 +173,46 @@ public class WeaponRenderer implements IItemRenderer {
     }
 
     /**
-     * Captures the world-space position of the firing point bone for smoke particles.
-     * Uses the bone's model-space position projected into world space via player look vectors.
+     * Captures the world-space position of the firing point bone for tracer origin.
+     * <p>
+     * Reads the bone's eye-space position from the GL modelview, then converts
+     * to world-space via player yaw/pitch. Skips capture if the modelview's
+     * camera direction doesn't match the player's look direction (indicates an
+     * Iris shadow pass that would produce garbage values).
      */
     private void captureFiringPointWorldPosition(BedrockModel model, RenderContext renderContext) {
         if (model.getBone(FIRING_POINT_BONE) == null) return;
         EntityLivingBase player = renderContext.getPlayer();
         if (player == null) return;
 
+        float partialTicks = renderContext.getAgeInTicks() - (int) renderContext.getAgeInTicks();
+        float yaw = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * partialTicks;
+        float pitch = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * partialTicks;
+
+        // Read absolute eye-space position after bone transforms
         GL11.glPushMatrix();
         model.applyBoneTransform(FIRING_POINT_BONE, renderContext.getScale());
-
         MATRIX_BUF.clear();
         GL11.glGetFloat(GL11.GL_MODELVIEW_MATRIX, MATRIX_BUF);
-        // Eye-space position is the translation column (indices 12, 13, 14)
         float ex = MATRIX_BUF.get(12);
         float ey = MATRIX_BUF.get(13);
         float ez = MATRIX_BUF.get(14);
         GL11.glPopMatrix();
 
-        // The camera rotation portion of the modelview is a pure rotation matrix.
-        // Its upper-left 3x3 rows are the camera's right/up/forward axes in world space.
-        // To go from eye-space back to world-space offset we multiply by the
-        // transpose (= inverse for rotation matrices).
-        // We read the camera rotation from the current modelview, but we need the
-        // rotation BEFORE item transforms were applied. Instead, reconstruct it
-        // from the player's yaw and pitch which is how EntityRenderer.orientCamera sets it up.
-        float partialTicks = renderContext.getAgeInTicks() - (int) renderContext.getAgeInTicks();
-        float yaw = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * partialTicks;
-        float pitch = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * partialTicks;
+        // Store eye-space values (once per frame — secondary Iris passes are skipped)
+        ParticleManager.setFiringPointEyePosition(ex, ey, ez);
 
-        // GL camera setup: glRotatef(pitch, 1,0,0) then glRotatef(yaw+180, 0,1,0)
-        // Effective matrix (right-to-left): RotateY(yaw+180) * RotateX(pitch)
-        // Inverse: RotateX(-pitch) * RotateY(-(yaw+180))
+        // Convert eye-space to world-space via inverse camera rotation
         double yawRad = Math.toRadians(-(yaw + 180.0));
         double pitchRad = Math.toRadians(-pitch);
-
         double cosY = Math.cos(yawRad);
         double sinY = Math.sin(yawRad);
         double cosP = Math.cos(pitchRad);
         double sinP = Math.sin(pitchRad);
 
-        // Apply RotateX(-pitch) first
         double p1x = ex;
         double p1y = ey * cosP - ez * sinP;
         double p1z = ey * sinP + ez * cosP;
-
-        // Then apply RotateY(-(yaw+180))
         double wx = p1x * cosY + p1z * sinY;
         double wy = p1y;
         double wz = -p1x * sinY + p1z * cosY;
