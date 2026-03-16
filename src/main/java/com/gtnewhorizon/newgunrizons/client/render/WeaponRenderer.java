@@ -52,7 +52,7 @@ public class WeaponRenderer implements IItemRenderer {
     private static final String FIRING_POINT_BONE = "firing_point";
     private static final FloatBuffer MATRIX_BUF = BufferUtils.createFloatBuffer(16);
 
-    private final ModelBase model;
+    private final BedrockModel model;
     private final String textureName;
     @Getter
     private final BedrockAnimationController bedrockAnimController;
@@ -60,7 +60,7 @@ public class WeaponRenderer implements IItemRenderer {
 
     private Integer cachedInventoryTexture;
     /** Set to true when the EQUIPPED_FIRST_PERSON path has already applied bedrock animation. */
-    private boolean bedrockAnimAppliedThisFrame;
+    private boolean bedrockAnimAppliedThisFrame = false;
 
     private WeaponRenderer(Builder builder) {
         this.model = builder.model;
@@ -116,8 +116,8 @@ public class WeaponRenderer implements IItemRenderer {
         ItemWeapon weapon = (ItemWeapon) weaponItemStack.getItem();
 
         String texture;
-        if (this.textureName != null) {
-            texture = this.textureName;
+        if (textureName != null) {
+            texture = textureName;
         } else {
             texture = weapon.getTextureName();
         }
@@ -129,10 +129,9 @@ public class WeaponRenderer implements IItemRenderer {
         // Apply bedrock bone animations if active.
         // Skip if already applied by the EQUIPPED_FIRST_PERSON path (which needs
         // animation applied before arm rendering).
-        if (this.bedrockAnimController != null && this.model instanceof BedrockModel
-            && !this.bedrockAnimAppliedThisFrame) {
-            BedrockModel bedrockModel = (BedrockModel) this.model;
-            bedrockModel.resetBonesToRestPose();
+        if (bedrockAnimController != null && !bedrockAnimAppliedThisFrame) {
+
+            model.resetBonesToRestPose();
             RenderableState toState = renderContext.getToState();
             if (toState != null) {
                 long fireTimestamp = 0;
@@ -140,13 +139,13 @@ public class WeaponRenderer implements IItemRenderer {
                 if (wi != null) {
                     fireTimestamp = wi.getLastFireTimestamp();
                 }
-                this.bedrockAnimController.onStateChanged(toState, fireTimestamp);
+                bedrockAnimController.onStateChanged(toState, fireTimestamp);
             }
-            this.bedrockAnimController.applyToModel(bedrockModel);
+            bedrockAnimController.applyToModel(model);
         }
-        this.bedrockAnimAppliedThisFrame = false;
+        bedrockAnimAppliedThisFrame = false;
 
-        this.model.render(
+        model.render(
             null,
             renderContext.getLimbSwing(),
             renderContext.getLimbSwingAmount(),
@@ -155,21 +154,18 @@ public class WeaponRenderer implements IItemRenderer {
             renderContext.getHeadPitch(),
             renderContext.getScale());
 
-        if (this.model instanceof BedrockModel) {
-            BedrockModel bedrockModel = (BedrockModel) this.model;
+        captureFiringPointWorldPosition(model, renderContext);
 
-            captureFiringPointWorldPosition(bedrockModel, renderContext);
+        if (weapon == null)
+            return;
 
-            if (weapon == null)
-                return;
+        List<CompatibleAttachment> attachments = weapon
+            .getActiveAttachments(renderContext.getPlayer(), weaponItemStack);
 
-            List<CompatibleAttachment> attachments = weapon
-                .getActiveAttachments(renderContext.getPlayer(), weaponItemStack);
-
-            if (attachments != null) {
-                this.renderAttachments(bedrockModel, renderContext, attachments);
-            }
+        if (attachments != null) {
+            renderAttachments(model, renderContext, attachments);
         }
+
     }
 
     private void captureFiringPointWorldPosition(BedrockModel model, RenderContext renderContext) {
@@ -240,12 +236,12 @@ public class WeaponRenderer implements IItemRenderer {
 
     public static class Builder {
 
-        private ModelBase model;
+        private BedrockModel model;
         private String textureName;
 
         private BedrockAnimationController bedrockAnimController;
 
-        public Builder withModel(ModelBase model) {
+        public Builder withModel(BedrockModel model) {
             this.model = model;
             return this;
         }

@@ -20,7 +20,6 @@ import lombok.Setter;
 
 public class ItemInstance<S extends ManagedState<S>> extends UniversalObject {
 
-    private static final Logger logger = LogManager.getLogger(ItemInstance.class);
     private static final String AMMO_TAG = "Ammo";
     private static final String INSTANCE_TAG = "Instance";
     @Getter
@@ -89,11 +88,6 @@ public class ItemInstance<S extends ManagedState<S>> extends UniversalObject {
         if (this.preparedState != null) {
             if (this.preparedState.getState()
                 .getCommitPhase() == state) {
-                logger.debug(
-                    "Committing state {} to {}",
-                    this.preparedState.getState(),
-                    this.preparedState.getState()
-                        .getCommitPhase());
                 this.updateWith(this.preparedState, false);
             } else {
                 this.rollback();

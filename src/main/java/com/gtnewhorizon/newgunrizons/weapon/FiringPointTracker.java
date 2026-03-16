@@ -1,5 +1,7 @@
 package com.gtnewhorizon.newgunrizons.weapon;
 
+import java.lang.reflect.Method;
+
 import lombok.Getter;
 import net.minecraft.entity.EntityLivingBase;
 
@@ -26,7 +28,26 @@ public class FiringPointTracker {
     private static float eyeZ;
 
     private static boolean captured;
-    private static long lastCaptureTime = -1;
+
+    /** Cached reflection handle for Iris's shadow pass check. */
+    private static final Method SHADOW_CHECK;
+    static {
+        Method m = null;
+        try {
+            Class<?> clazz = Class.forName("net.coderbot.iris.shadows.ShadowRenderingState");
+            m = clazz.getMethod("areShadowsCurrentlyBeingRendered");
+        } catch (Exception ignored) {}
+        SHADOW_CHECK = m;
+    }
+
+    private static boolean isShadowPass() {
+        if (SHADOW_CHECK == null) return false;
+        try {
+            return (Boolean) SHADOW_CHECK.invoke(null);
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     public static boolean hasFiringPoint() {
         return captured;
@@ -34,14 +55,13 @@ public class FiringPointTracker {
 
     /**
      * Stores the eye-space position of the firing point bone.
-     * Only captures once per frame — prevents Iris's secondary render passes
-     * (shadow, translucent) from overwriting the correct values from the main pass.
-     * Uses a 5ms cooldown as a frame guard (at 60fps, frames are ~16ms apart).
+     * Skips capture during Iris shadow passes (detected via
+     * {@code ShadowRenderingState.areShadowsCurrentlyBeingRendered()})
+     * where the modelview has a relocated coordinate origin.
      */
     public static void captureEyePosition(float ex, float ey, float ez) {
-        long now = System.nanoTime();
-        if (now - lastCaptureTime < 5_000_000L) return;
-        lastCaptureTime = now;
+        if (isShadowPass()) return;
+
         eyeX = ex;
         eyeY = ey - 0.1f; // shift down slightly (positive Y = down in eye-space)
         eyeZ = ez;
