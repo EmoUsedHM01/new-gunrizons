@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 import lombok.Getter;
 
 @Getter
-public abstract class UniversalObject implements UniversallySerializable {
+public class UniversalObject implements UniversallySerializable {
 
     private UUID uuid = UUID.randomUUID();
 

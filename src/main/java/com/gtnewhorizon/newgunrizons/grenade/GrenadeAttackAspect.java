@@ -46,7 +46,7 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, ItemGrenadeInst
     public void setStateManager(StateManager<GrenadeState, ? super ItemGrenadeInstance> stateManager) {
         this.stateManager = stateManager;
         stateManager.in(this)
-            .change(GrenadeState.READY)
+            .change(GrenadeState.IDLE)
             .to(GrenadeState.SAFETY_PIN_OFF)
             .withAction(this::takeSafetyPinOff)
             .when(this.hasSafetyPin)
@@ -63,7 +63,7 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, ItemGrenadeInst
             .when(explosionTimeoutExpired)
             .automatic()
             .in(this)
-            .change(GrenadeState.READY)
+            .change(GrenadeState.IDLE)
             .to(GrenadeState.THROWING)
             .when(this.hasSafetyPin.negate())
             .manual()
@@ -79,12 +79,12 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, ItemGrenadeInst
             .manual()
             .in(this)
             .change(GrenadeState.THROWN)
-            .to(GrenadeState.READY)
+            .to(GrenadeState.IDLE)
             .when(reequipTimeoutExpired)
             .automatic()
             .in(this)
             .change(GrenadeState.EXPLODED_IN_HANDS)
-            .to(GrenadeState.READY)
+            .to(GrenadeState.IDLE)
             .when(reequipTimeoutExpired)
             .automatic();
     }
@@ -231,7 +231,7 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, ItemGrenadeInst
     }
 
     static {
-        allowedAttackFromStates = new HashSet<>(Arrays.asList(GrenadeState.READY, GrenadeState.STRIKER_LEVER_RELEASED));
+        allowedAttackFromStates = new HashSet<>(Arrays.asList(GrenadeState.IDLE, GrenadeState.STRIKER_LEVER_RELEASED));
         allowedPinOffFromStates = new HashSet<>(Arrays.asList(GrenadeState.SAFETY_PIN_OFF));
         allowedUpdateFromStates = new HashSet<>(
             Arrays.asList(

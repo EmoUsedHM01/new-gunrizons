@@ -36,7 +36,7 @@ public class TypeRegistry {
         }
     }
 
-    public <T extends UniversallySerializable> void toBytes(T object, ByteBuf buf) {
+    public void toBytes(UniversallySerializable object, ByteBuf buf) {
         UUID typeUuid = this.getUuid(object.getClass());
         if (!this.typeRegistry.containsKey(typeUuid)) {
             throw new RuntimeException(
@@ -46,11 +46,10 @@ public class TypeRegistry {
             buf.writeLong(typeUuid.getLeastSignificantBits());
             if (object.getClass()
                 .isEnum()) {
-                buf.writeInt(((Enum) object).ordinal());
+                buf.writeInt(((Enum<?>) object).ordinal());
             } else {
                 object.serialize(buf);
             }
-
         }
     }
 

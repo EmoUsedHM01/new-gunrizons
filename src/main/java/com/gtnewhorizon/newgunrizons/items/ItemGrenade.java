@@ -89,7 +89,7 @@ public class ItemGrenade extends Item
 
     public ItemGrenadeInstance createItemInstance(EntityLivingBase player, ItemStack itemStack, int slot) {
         ItemGrenadeInstance instance = new ItemGrenadeInstance(slot, player, itemStack);
-        instance.setState(GrenadeState.READY);
+        instance.setState(GrenadeState.IDLE);
         return instance;
     }
 
