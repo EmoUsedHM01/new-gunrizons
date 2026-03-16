@@ -48,7 +48,7 @@ public class ItemInstanceRegistry {
         return INSTANCE.getMainHandItemInstance(player, ItemWeaponInstance.class);
     }
 
-    public <T extends ItemInstance<S>, S extends ManagedState<S>> T getMainHandItemInstance(EntityPlayer player,
+    public <T extends ItemInstance<S>, S extends ManagedState> T getMainHandItemInstance(EntityPlayer player,
         Class<T> targetClass) {
         if (player == null) {
             return null;

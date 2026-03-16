@@ -9,9 +9,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.StatCollector;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.entities.EntityGrenade;
 import com.gtnewhorizon.newgunrizons.entities.Explosion;
@@ -24,7 +21,6 @@ import com.gtnewhorizon.newgunrizons.state.StateManager;
 
 public class GrenadeAttackAspect implements Aspect<GrenadeState, ItemGrenadeInstance> {
 
-    private static final Logger logger = LogManager.getLogger(GrenadeAttackAspect.class);
     private final Predicate<ItemGrenadeInstance> hasSafetyPin = (instance) -> instance.getWeapon()
         .hasSafetyPin();
     private static final Predicate<ItemGrenadeInstance> reequipTimeoutExpired = (instance) -> System.currentTimeMillis()
@@ -84,24 +80,20 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, ItemGrenadeInst
             .in(this)
             .change(GrenadeState.THROWN)
             .to(GrenadeState.READY)
-            .withAction(this::reequip)
             .when(reequipTimeoutExpired)
             .automatic()
             .in(this)
             .change(GrenadeState.EXPLODED_IN_HANDS)
             .to(GrenadeState.READY)
-            .withAction(this::reequip)
             .when(reequipTimeoutExpired)
             .automatic();
     }
 
     private void explode(ItemGrenadeInstance instance) {
-        logger.debug("Exploding!");
         NewGunrizonsMod.CHANNEL.sendToServer(new GrenadeMessage(instance, 0L));
     }
 
     private void throwIt(ItemGrenadeInstance instance) {
-        logger.debug("Throwing with state " + instance.getState());
         long activationTimestamp;
         if (instance.getWeapon()
             .getExplosionTimeout() > 0) {
@@ -123,10 +115,6 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, ItemGrenadeInst
         NewGunrizonsMod.CHANNEL.sendToServer(new GrenadeMessage(instance, activationTimestamp));
     }
 
-    private void reequip(ItemGrenadeInstance instance) {
-        logger.debug("Reequipping");
-    }
-
     private void takeSafetyPinOff(ItemGrenadeInstance instance) {
         if (instance.getWeapon()
             .getSafetyPinOffSound() != null) {
@@ -137,11 +125,9 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, ItemGrenadeInst
                     1.0F,
                     1.0F);
         }
-        logger.debug("Taking safety pin off");
     }
 
     private void releaseStrikerLever(ItemGrenadeInstance instance) {
-        logger.debug("Safety pin is off");
         instance.setActivationTimestamp(System.currentTimeMillis());
     }
 
@@ -157,7 +143,6 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, ItemGrenadeInst
                 GrenadeState.SAFETY_PIN_OFF,
                 GrenadeState.THROWING);
         }
-
     }
 
     public void onAttackButtonUp(EntityPlayer player, boolean throwingFar) {
@@ -171,7 +156,6 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, ItemGrenadeInst
                 allowedPinOffFromStates,
                 GrenadeState.STRIKER_LEVER_RELEASED);
         }
-
     }
 
     public void onUpdate(EntityPlayer player) {
@@ -195,18 +179,14 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, ItemGrenadeInst
 
             this.stateManager.changeStateFromAnyOf(this, grenadeInstance, allowedUpdateFromStates);
         }
-
     }
 
     public void serverThrowGrenade(EntityPlayer player, ItemGrenadeInstance instance, long activationTimestamp) {
-        logger.debug("Throwing grenade");
         GrenadeAttackAspect.serverThrowGrenade((EntityLivingBase) player, instance, activationTimestamp);
-        {
-            int slot = instance.getItemInventoryIndex();
-            if (player.inventory.mainInventory[slot] != null) {
-                if (--player.inventory.mainInventory[slot].stackSize <= 0) {
-                    player.inventory.mainInventory[slot] = null;
-                }
+        int slot = instance.getItemInventoryIndex();
+        if (player.inventory.mainInventory[slot] != null) {
+            if (--player.inventory.mainInventory[slot].stackSize <= 0) {
+                player.inventory.mainInventory[slot] = null;
             }
         }
     }
@@ -246,10 +226,8 @@ public class GrenadeAttackAspect implements Aspect<GrenadeState, ItemGrenadeInst
                     instance.getWeapon()
                         .getRotationSlowdownFactor())
                 .build();
-            logger.debug("Throwing velocity {} ", velocity);
             player.worldObj.spawnEntityInWorld(entityGrenade);
         }
-
     }
 
     static {

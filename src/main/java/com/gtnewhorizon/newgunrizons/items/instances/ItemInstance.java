@@ -18,7 +18,7 @@ import io.netty.buffer.Unpooled;
 import lombok.Getter;
 import lombok.Setter;
 
-public class ItemInstance<S extends ManagedState<S>> extends UniversalObject {
+public class ItemInstance<S extends ManagedState> extends UniversalObject {
 
     private static final String AMMO_TAG = "Ammo";
     private static final String INSTANCE_TAG = "Instance";

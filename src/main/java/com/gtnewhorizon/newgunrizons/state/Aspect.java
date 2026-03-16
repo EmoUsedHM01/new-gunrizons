@@ -19,7 +19,7 @@ import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
  * @param <T> the state enum type this aspect operates on
  * @param <E> the extended state type (e.g. PlayerWeaponInstance)
  */
-public interface Aspect<T extends ManagedState<T>, E extends ItemInstance<T>> {
+public interface Aspect<T extends ManagedState, E extends ItemInstance<T>> {
 
     /**
      * Injects the state manager and configures transition rules for this aspect.

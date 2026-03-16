@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 
 import com.gtnewhorizon.newgunrizons.state.ManagedState;
 
-public interface ItemInstanceFactory<T extends ItemInstance<S>, S extends ManagedState<S>> {
+public interface ItemInstanceFactory<T extends ItemInstance<S>, S extends ManagedState> {
 
     T createItemInstance(EntityLivingBase player, ItemStack itemStack, int slot);
 }

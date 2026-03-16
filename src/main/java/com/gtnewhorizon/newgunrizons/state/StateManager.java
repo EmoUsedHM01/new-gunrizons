@@ -21,7 +21,7 @@ import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
  * @param <S> the state enum type (e.g. WeaponState)
  * @param <E> the extended state type (e.g. PlayerWeaponInstance)
  */
-public class StateManager<S extends ManagedState<S>, E extends ItemInstance<S>> {
+public class StateManager<S extends ManagedState, E extends ItemInstance<S>> {
 
     /** Strategy for comparing two states (typically enum identity). */
     private final StateComparator<S> stateComparator;
@@ -114,7 +114,7 @@ public class StateManager<S extends ManagedState<S>, E extends ItemInstance<S>> 
         return (S[]) new ManagedState[0];
     }
 
-    private static class TransitionRule<S extends ManagedState<S>, E extends ItemInstance<S>> {
+    private static class TransitionRule<S extends ManagedState, E extends ItemInstance<S>> {
 
         final S fromState;
         final S toState;
@@ -148,13 +148,13 @@ public class StateManager<S extends ManagedState<S>, E extends ItemInstance<S>> 
     }
 
     @FunctionalInterface
-    public interface StateComparator<S extends ManagedState<S>> {
+    public interface StateComparator<S extends ManagedState> {
 
         boolean compare(S a, S b);
     }
 
     @FunctionalInterface
-    public interface TransitionAction<S extends ManagedState<S>, EE> {
+    public interface TransitionAction<S extends ManagedState, EE> {
 
         void execute(EE context, S fromState, S toState);
     }

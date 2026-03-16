@@ -8,5 +8,5 @@ import com.gtnewhorizon.newgunrizons.network.UniversallySerializable;
  *
  * @param <T> self-referencing type bound for the state enum
  */
-public interface ManagedState<T extends ManagedState<T>> extends UniversallySerializable {
+public interface ManagedState extends UniversallySerializable {
 }

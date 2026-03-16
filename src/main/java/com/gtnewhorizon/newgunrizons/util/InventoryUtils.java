@@ -80,15 +80,6 @@ public class InventoryUtils {
         }
     }
 
-    public static boolean inventoryHasFreeSlots(EntityPlayer player) {
-        for (int i = 0; i < player.inventory.mainInventory.length; ++i) {
-            if (player.inventory.mainInventory[i] == null) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @SafeVarargs
     public static boolean hasCompatibleItem(List<? extends Item> compatibleParts, EntityPlayer player,
         Predicate<ItemStack>... conditions) {
