@@ -79,9 +79,8 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void onWeaponFireEffects(EntityLivingBase player, float smokeOffsetX, float smokeOffsetY,
-        boolean silencerOn) {
-        ParticleManager.spawnSmokeParticle(player, smokeOffsetX, smokeOffsetY);
+    public void onWeaponFireEffects(EntityLivingBase player) {
+        ParticleManager.spawnSmokeParticle(player);
     }
 
     @Override

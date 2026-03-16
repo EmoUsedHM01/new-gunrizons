@@ -157,13 +157,7 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
         }
 
         if (weapon.isSmokeEnabled()) {
-            NewGunrizonsMod.proxy.onWeaponFireEffects(
-                player,
-                weapon.getSmokeOffsetX()
-                    .get(),
-                weapon.getSmokeOffsetY()
-                    .get(),
-                silencerOn);
+            NewGunrizonsMod.proxy.onWeaponFireEffects(player);
         }
 
         weaponInstance.setSeriesShotCount(weaponInstance.getSeriesShotCount() + 1);

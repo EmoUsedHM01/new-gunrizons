@@ -32,6 +32,7 @@ public class DoomShotgunFactory {
             .withFlashIntensity(0.7F)
             .withFlashScale(0.4F)
             .withInaccuracy(8.0F)
+            .withTracerIntensity(5.0f)
             .withPellets(8)
             .withCreativeTab(NewGunrizonsMod.ShotgunsTab)
             .withInformationProvider(

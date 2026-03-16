@@ -7,7 +7,7 @@ import org.lwjgl.BufferUtils;
 
 import com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimation;
 import com.gtnewhorizon.newgunrizons.client.animation.BedrockAnimationController;
-import com.gtnewhorizon.newgunrizons.client.particle.ParticleManager;
+import com.gtnewhorizon.newgunrizons.weapon.FiringPointTracker;
 
 import com.gtnewhorizon.newgunrizons.client.animation.IdleSway;
 import com.gtnewhorizon.newgunrizons.model.BedrockModel;
@@ -172,24 +172,11 @@ public class WeaponRenderer implements IItemRenderer {
         }
     }
 
-    /**
-     * Captures the world-space position of the firing point bone for tracer origin.
-     * <p>
-     * Reads the bone's eye-space position from the GL modelview, then converts
-     * to world-space via player yaw/pitch. Skips capture if the modelview's
-     * camera direction doesn't match the player's look direction (indicates an
-     * Iris shadow pass that would produce garbage values).
-     */
     private void captureFiringPointWorldPosition(BedrockModel model, RenderContext renderContext) {
         if (model.getBone(FIRING_POINT_BONE) == null) return;
         EntityLivingBase player = renderContext.getPlayer();
         if (player == null) return;
 
-        float partialTicks = renderContext.getAgeInTicks() - (int) renderContext.getAgeInTicks();
-        float yaw = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * partialTicks;
-        float pitch = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * partialTicks;
-
-        // Read absolute eye-space position after bone transforms
         GL11.glPushMatrix();
         model.applyBoneTransform(FIRING_POINT_BONE, renderContext.getScale());
         MATRIX_BUF.clear();
@@ -199,29 +186,7 @@ public class WeaponRenderer implements IItemRenderer {
         float ez = MATRIX_BUF.get(14);
         GL11.glPopMatrix();
 
-        // Store eye-space values (once per frame — secondary Iris passes are skipped)
-        ParticleManager.setFiringPointEyePosition(ex, ey, ez);
-
-        // Convert eye-space to world-space via inverse camera rotation
-        double yawRad = Math.toRadians(-(yaw + 180.0));
-        double pitchRad = Math.toRadians(-pitch);
-        double cosY = Math.cos(yawRad);
-        double sinY = Math.sin(yawRad);
-        double cosP = Math.cos(pitchRad);
-        double sinP = Math.sin(pitchRad);
-
-        double p1x = ex;
-        double p1y = ey * cosP - ez * sinP;
-        double p1z = ey * sinP + ez * cosP;
-        double wx = p1x * cosY + p1z * sinY;
-        double wy = p1y;
-        double wz = -p1x * sinY + p1z * cosY;
-
-        double interpX = player.prevPosX + (player.posX - player.prevPosX) * partialTicks;
-        double interpY = player.prevPosY + (player.posY - player.prevPosY) * partialTicks + player.getEyeHeight();
-        double interpZ = player.prevPosZ + (player.posZ - player.prevPosZ) * partialTicks;
-
-        ParticleManager.setFiringPointWorldPosition(interpX + wx, interpY + wy, interpZ + wz);
+        FiringPointTracker.captureEyePosition(ex, ey, ez);
     }
 
     public void renderAttachments(BedrockModel weaponModel, RenderContext renderContext,

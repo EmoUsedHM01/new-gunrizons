@@ -32,7 +32,7 @@ public class LaserRifleFactory {
             .withTracerWidth(0.1F)
             .withTracerLength(200F)
             .withTracerColor(1.0F, 0.1F, 0.1F)
-            .withTracerIntensity(15.0F)
+            .withTracerIntensity(9.0F)
             .withInaccuracy(0.2F)
             .withPellets(1)
             .withCreativeTab(NewGunrizonsMod.gunsTab)

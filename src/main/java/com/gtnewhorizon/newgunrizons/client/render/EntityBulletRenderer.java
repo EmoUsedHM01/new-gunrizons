@@ -7,9 +7,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
-import com.gtnewhorizon.newgunrizons.client.particle.ParticleManager;
+import com.gtnewhorizon.newgunrizons.weapon.FiringPointTracker;
 import com.gtnewhorizon.newgunrizons.entities.EntityBullet;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 
@@ -60,10 +59,10 @@ public class EntityBulletRenderer extends Render {
                 // convert it to world-space and add to the eye position for muzzle accuracy.
                 if (thrower == mc.thePlayer
                     && mc.gameSettings.thirdPersonView == 0
-                    && ParticleManager.hasFiringPointPosition()) {
-                    float dEx = ParticleManager.getLastFiringPointEyeX();
-                    float dEy = ParticleManager.getLastFiringPointEyeY();
-                    float dEz = ParticleManager.getLastFiringPointEyeZ();
+                    && FiringPointTracker.hasFiringPoint()) {
+                    float dEx = FiringPointTracker.getEyeX();
+                    float dEy = FiringPointTracker.getEyeY();
+                    float dEz = FiringPointTracker.getEyeZ();
 
                     float playerYaw = mc.thePlayer.prevRotationYaw
                         + (mc.thePlayer.rotationYaw - mc.thePlayer.prevRotationYaw) * partialTicks;
@@ -104,13 +103,9 @@ public class EntityBulletRenderer extends Render {
             bullet.prevRotationPitch + (bullet.rotationPitch - bullet.prevRotationPitch) * partialTicks,
             0.0F, 0.0F, 1.0F);
 
-        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-
         TracerRenderer.render(tracerLength, tracerWidth,
             weapon.getTracerColorR(), weapon.getTracerColorG(), weapon.getTracerColorB(),
             weapon.getTracerIntensity());
-
-        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();
     }
 

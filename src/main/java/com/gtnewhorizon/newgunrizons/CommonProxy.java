@@ -92,8 +92,7 @@ public class CommonProxy {
         channel.registerMessage((msg, ctx) -> null, ExplosionMessage.class, 21, Side.CLIENT);
     }
 
-    public void onWeaponFireEffects(EntityLivingBase player, float smokeOffsetX, float smokeOffsetY,
-        boolean silencerOn) {
+    public void onWeaponFireEffects(EntityLivingBase player) {
         // No-op on server; overridden in ClientProxy
     }
 
