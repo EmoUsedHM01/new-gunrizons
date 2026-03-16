@@ -54,14 +54,10 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, ItemWea
             .manual()
             .in(this)
             .change(WeaponState.MODIFYING)
-            .to(WeaponState.NEXT_ATTACHMENT)
+            .to(WeaponState.MODIFYING)
             .when(this.clickSpammingPreventer)
             .withAction(this::changeAttachmentAction)
-            .manual()
-            .in(this)
-            .change(WeaponState.NEXT_ATTACHMENT)
-            .to(WeaponState.MODIFYING)
-            .automatic();
+            .manual();
     }
 
     public void toggleClientAttachmentSelectionMode(EntityPlayer player) {
@@ -129,7 +125,7 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, ItemWea
     public void changeAttachment(AttachmentCategory attachmentCategory, ItemWeaponInstance weaponInstance) {
         if (weaponInstance != null) {
             this.pendingAttachmentCategory = attachmentCategory;
-            this.stateManager.changeState(this, weaponInstance, WeaponState.NEXT_ATTACHMENT);
+            this.stateManager.changeState(this, weaponInstance, WeaponState.MODIFYING);
         }
 
     }

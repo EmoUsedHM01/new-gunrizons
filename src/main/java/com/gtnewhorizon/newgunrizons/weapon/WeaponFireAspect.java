@@ -68,10 +68,6 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
             .manual()
             .in(this)
             .change(WeaponState.SHOOTING)
-            .to(WeaponState.RECOILED)
-            .automatic()
-            .in(this)
-            .change(WeaponState.RECOILED)
             .to(WeaponState.SHOOTING)
             .when(
                 hasAmmo.and(sprinting.negate())
@@ -80,7 +76,7 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
             .withAction(this::fire)
             .manual()
             .in(this)
-            .change(WeaponState.RECOILED)
+            .change(WeaponState.SHOOTING)
             .to(WeaponState.IDLE)
             .withAction(ItemWeaponInstance::resetCurrentSeries)
             .manual();
@@ -205,11 +201,10 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
 
     static {
         allowedFireFromStates = new HashSet<>(
-            Arrays.asList(WeaponState.IDLE, WeaponState.RECOILED));
+            Arrays.asList(WeaponState.IDLE, WeaponState.SHOOTING));
         allowedUpdateFromStates = new HashSet<>(
             Arrays.asList(
                 WeaponState.SHOOTING,
-                WeaponState.RECOILED,
                 WeaponState.NO_AMMO));
     }
 }

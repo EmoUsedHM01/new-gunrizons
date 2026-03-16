@@ -89,7 +89,6 @@ public class WeaponRenderer implements IItemRenderer {
         if (instance == null) return RenderableState.IDLE;
         switch (instance.getState()) {
             case SHOOTING:
-            case RECOILED:
                 return instance.isAimed() ? RenderableState.ZOOMING_SHOOTING : RenderableState.SHOOTING;
             case RELOADING_START:
                 return RenderableState.RELOADING_START;
@@ -99,7 +98,6 @@ public class WeaponRenderer implements IItemRenderer {
             case RELOADING_END:
                 return RenderableState.RELOADING_END;
             case MODIFYING:
-            case NEXT_ATTACHMENT:
                 return RenderableState.MODIFYING;
             default: // IDLE, NO_AMMO, etc.
                 if (player.isSprinting()) return RenderableState.RUNNING;

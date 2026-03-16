@@ -76,15 +76,16 @@ public class StateManager<S extends ManagedState, E extends ItemInstance<S>> {
             return;
         }
 
-        if (targetStates.length == 1 && this.stateComparator.compare(currentState, targetStates[0])) {
-            return;
-        }
-
         S activeState = currentState;
         S[] remainingTargets = targetStates;
 
         TransitionRule<S, E> matchingRule;
         while ((matchingRule = this.findMatchingRule(aspect, extendedState, activeState, remainingTargets)) != null) {
+            // Prevent infinite loops: automatic self-transitions are skipped
+            if (matchingRule.automatic && this.stateComparator.compare(activeState, matchingRule.toState)) {
+                break;
+            }
+
             extendedState.setState(matchingRule.toState);
 
             if (matchingRule.action != null) {
@@ -92,6 +93,7 @@ public class StateManager<S extends ManagedState, E extends ItemInstance<S>> {
             }
 
             activeState = matchingRule.toState;
+            // After the first explicit transition, only follow automatic rules
             remainingTargets = emptyStateArray();
         }
     }

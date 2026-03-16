@@ -156,8 +156,7 @@ public class HudRenderer {
     }
 
     private boolean isInModifyingState(ItemWeaponInstance weaponInstance) {
-        return weaponInstance.getState() == WeaponState.MODIFYING
-            || weaponInstance.getState() == WeaponState.NEXT_ATTACHMENT;
+        return weaponInstance.getState() == WeaponState.MODIFYING;
     }
 
     private int getStatusBarYPosition(int height, int textHeight) {
