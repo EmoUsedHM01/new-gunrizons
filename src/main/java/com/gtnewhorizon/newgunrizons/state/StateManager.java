@@ -29,16 +29,12 @@ public class StateManager<S extends ManagedState<S>, E extends ItemInstance<S>> 
     /** Transition rules indexed by the aspect that owns them. */
     private final Map<Aspect<S, ? extends E>, LinkedHashSet<TransitionRule<S, E>>> transitionRules = new HashMap<>();
 
-    // ==================== Constructor ====================
-
     /**
      * @param stateComparator strategy for comparing states (typically {@code (s1, s2) -> s1 == s2})
      */
     public StateManager(StateComparator<S> stateComparator) {
         this.stateComparator = stateComparator;
     }
-
-    // ==================== Public API ====================
 
     /**
      * Begins building a transition rule for the given aspect.
@@ -73,13 +69,6 @@ public class StateManager<S extends ManagedState<S>, E extends ItemInstance<S>> 
         this.executeTransition(aspect, extendedState, currentState, targetStates);
     }
 
-    // ==================== Transition execution ====================
-
-    /**
-     * Core transition logic. Iteratively finds and applies matching rules until no more
-     * transitions are possible. After the first rule fires, subsequent iterations look
-     * for automatic rules (those that fire without explicit targets).
-     */
     @SafeVarargs
     protected final void executeTransition(Aspect<S, ? extends E> aspect, E extendedState, S currentState,
         S... targetStates) {
@@ -87,7 +76,6 @@ public class StateManager<S extends ManagedState<S>, E extends ItemInstance<S>> 
             return;
         }
 
-        // If already at the sole target state, no transition needed
         if (targetStates.length == 1 && this.stateComparator.compare(currentState, targetStates[0])) {
             return;
         }
@@ -104,12 +92,9 @@ public class StateManager<S extends ManagedState<S>, E extends ItemInstance<S>> 
             }
 
             activeState = matchingRule.toState;
-            // After the first explicit transition, only follow automatic rules
             remainingTargets = emptyStateArray();
         }
     }
-
-    // ==================== Rule matching ====================
 
     @SafeVarargs
     private TransitionRule<S, E> findMatchingRule(Aspect<S, ? extends E> aspect, E extendedState, S currentState,
@@ -124,22 +109,11 @@ public class StateManager<S extends ManagedState<S>, E extends ItemInstance<S>> 
             .orElse(null);
     }
 
-    // ==================== Utilities ====================
-
-    /**
-     * Creates an empty state array. Required because Java forbids generic array creation
-     * ({@code new S[0]}), so we create {@code new ManagedState[0]} and cast.
-     */
     @SuppressWarnings("unchecked")
     private static <S> S[] emptyStateArray() {
         return (S[]) new ManagedState[0];
     }
 
-    // ==================== Inner: Transition rule ====================
-
-    /**
-     * A single transition rule: from-state → to-state, with optional guard and action.
-     */
     private static class TransitionRule<S extends ManagedState<S>, E extends ItemInstance<S>> {
 
         final S fromState;
@@ -167,128 +141,73 @@ public class StateManager<S extends ManagedState<S>, E extends ItemInstance<S>> 
         final boolean matches(StateComparator<S> comparator, E context, S fromState, S... targetStates) {
             boolean fromMatches = fromState == null || comparator.compare(this.fromState, fromState);
             boolean toMatches = (this.automatic && targetStates.length == 0) || Arrays.stream(targetStates)
-                .anyMatch(
-                    target -> comparator.compare(this.toState, target)
-                        || comparator.compare(this.toState, target.getPreparingPhase()));
+                .anyMatch(target -> comparator.compare(this.toState, target));
             boolean guardPasses = this.guard.test(this.toState, context);
             return fromMatches && toMatches && guardPasses;
         }
     }
 
-    // ==================== Inner: Callback interfaces ====================
-
-    /** Compares two managed states for equality. */
     @FunctionalInterface
     public interface StateComparator<S extends ManagedState<S>> {
 
         boolean compare(S a, S b);
     }
 
-    /** Callback executed when a transition fires. */
     @FunctionalInterface
     public interface TransitionAction<S extends ManagedState<S>, EE> {
 
         void execute(EE context, S fromState, S toState);
     }
 
-    /** Callback executed during the prepare phase of a transition. */
-    @FunctionalInterface
-    public interface PrepareCallback<S extends ManagedState<S>, EE> {
-
-        void execute(EE context, S fromState, S toState);
-    }
-
-    // ==================== Inner: Rule builder ====================
-
     /**
      * Fluent API for defining state transition rules.
-     * <p>
-     * Usage:
-     *
-     * <pre>
-     * stateManager.in(aspect)
-     *     .change(WeaponState.IDLE)
-     *     .to(WeaponState.SHOOTING)
-     *     .when(instance -&gt; instance.hasAmmo())
-     *     .withAction(instance -&gt; instance.fire())
-     *     .manual();
-     * </pre>
      *
      * @param <EE> the specific extended state type for this rule
      */
     public class RuleBuilder<EE extends E> {
 
         private final Aspect<S, EE> aspect;
-
-        // --- Transition endpoints ---
         private S fromState;
         private S toState;
-
-        // --- Guard predicate ---
         private BiPredicate<S, EE> guard;
-
-        // --- Transition action ---
         private TransitionAction<S, EE> action;
-
-        // --- Prepare phase ---
-        private PrepareCallback<S, EE> prepareCallback;
-        private Predicate<EE> prepareGuard;
 
         RuleBuilder(Aspect<S, EE> aspect) {
             this.aspect = aspect;
         }
 
-        // --- Builder methods ---
-
-        /** Sets the source state for this transition. */
         public StateManager<S, E>.RuleBuilder<EE> change(S fromState) {
             this.fromState = fromState;
             return this;
         }
 
-        /** Sets the target state for this transition. */
         public StateManager<S, E>.RuleBuilder<EE> to(S toState) {
             this.toState = toState;
             return this;
         }
 
-        /** Sets a guard predicate (context only). */
         public StateManager<S, E>.RuleBuilder<EE> when(Predicate<EE> guard) {
             this.guard = (s, e) -> guard.test(e);
             return this;
         }
 
-        /** Sets a guard predicate (target state + context). */
         public StateManager<S, E>.RuleBuilder<EE> when(BiPredicate<S, EE> guard) {
             this.guard = guard;
             return this;
         }
 
-        /** Configures a prepare phase with a callback and readiness predicate. */
-        public StateManager<S, E>.RuleBuilder<EE> prepare(PrepareCallback<S, EE> prepareCallback,
-            Predicate<EE> prepareGuard) {
-            this.prepareCallback = prepareCallback;
-            this.prepareGuard = prepareGuard;
-            return this;
-        }
-
-        /** Sets the action executed when this transition fires (context only). */
         public StateManager<S, E>.RuleBuilder<EE> withAction(Consumer<EE> action) {
             this.action = (context, from, to) -> action.accept(context);
             return this;
         }
 
-        /** Finalizes this rule as automatic (fires without explicit request when conditions are met). */
         public StateManager<S, E> automatic() {
             return this.addRule(true);
         }
 
-        /** Finalizes this rule as manual (fires only when explicitly requested via changeState). */
         public StateManager<S, E> manual() {
             return this.addRule(false);
         }
-
-        // --- Rule construction ---
 
         @SuppressWarnings("unchecked")
         private StateManager<S, E> addRule(boolean automatic) {
@@ -298,50 +217,17 @@ public class StateManager<S extends ManagedState<S>, E extends ItemInstance<S>> 
             if (this.guard == null) {
                 this.guard = (s, c) -> true;
             }
-
             if (this.action == null) {
                 this.action = (c, f, t) -> {};
             }
 
-            S effectiveFromState;
-            BiPredicate<S, E> effectiveGuard;
-            boolean isAutoAfterPrepare;
-
-            // --- Prepare phase ---
-            if (this.prepareCallback != null || this.prepareGuard != null) {
-                if (automatic) {
-                    throw new IllegalStateException("Prepared transition cannot be automatic");
-                }
-
-                TransitionRule<S, E> prepareRule = new TransitionRule<>(
-                    this.fromState,
-                    this.toState.getPreparingPhase(),
-                    (S s, E e) -> this.guard.test(s, (EE) e),
-                    (E c, S f, S t) -> {
-                        if (this.prepareCallback != null) {
-                            this.prepareCallback.execute((EE) c, f, t);
-                        }
-                    },
-                    false);
-                aspectRules.add(prepareRule);
-
-                effectiveFromState = this.toState.getPreparingPhase();
-                effectiveGuard = (s, e) -> this.prepareGuard == null || this.prepareGuard.test((EE) e);
-                isAutoAfterPrepare = true;
-            } else {
-                effectiveFromState = this.fromState;
-                effectiveGuard = (s, e) -> this.guard.test(s, (EE) e);
-                isAutoAfterPrepare = false;
-            }
-
-            // Direct transition rule
-            TransitionRule<S, E> directRule = new TransitionRule<>(
-                effectiveFromState,
+            TransitionRule<S, E> rule = new TransitionRule<>(
+                this.fromState,
                 this.toState,
-                effectiveGuard,
+                (S s, E e) -> this.guard.test(s, (EE) e),
                 (E c, S f, S t) -> this.action.execute((EE) c, f, t),
-                isAutoAfterPrepare || automatic);
-            aspectRules.add(directRule);
+                automatic);
+            aspectRules.add(rule);
 
             return StateManager.this;
         }

@@ -25,7 +25,6 @@ public enum RenderableState {
     RELOADING_START,
     RELOADING_ITERATION,
     RELOADING_END,
-    UNLOADING,
 
     // --- Attachment mode ---
     MODIFYING,

@@ -93,9 +93,6 @@ public class WeaponRenderer implements IItemRenderer {
                 return instance.isAimed() ? RenderableState.ZOOMING_SHOOTING : RenderableState.SHOOTING;
             case RELOADING_START:
                 return RenderableState.RELOADING_START;
-            case UNLOADING_PREPARING:
-            case UNLOADING:
-                return RenderableState.UNLOADING;
             case RELOADING_ITERATION:
             case RELOADING_ITERATION_COMPLETED:
                 return RenderableState.RELOADING_ITERATION;

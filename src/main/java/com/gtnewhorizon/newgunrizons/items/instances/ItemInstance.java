@@ -33,7 +33,6 @@ public class ItemInstance<S extends ManagedState<S>> extends UniversalObject {
     protected Item item;
     @Getter
     protected int itemInventoryIndex;
-    private ItemInstance<S> preparedState;
 
     public ItemInstance() {}
 
@@ -85,21 +84,8 @@ public class ItemInstance<S extends ManagedState<S>> extends UniversalObject {
     public boolean setState(S state) {
         this.state = state;
         this.stateUpdateTimestamp = System.currentTimeMillis();
-        if (this.preparedState != null) {
-            if (this.preparedState.getState()
-                .getCommitPhase() == state) {
-                this.updateWith(this.preparedState, false);
-            } else {
-                this.rollback();
-            }
-
-            this.preparedState = null;
-        }
-
         return false;
     }
-
-    protected void rollback() {}
 
     protected void updateWith(ItemInstance<S> otherState, boolean updateManagedState) {
         if (updateManagedState) {
