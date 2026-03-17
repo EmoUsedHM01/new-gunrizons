@@ -179,8 +179,7 @@ public class WeaponReloadAspect implements StateAspect<WeaponState, ItemWeaponIn
         List<ItemAttachment> compatibleBullets = weapon.getCompatibleAttachments(ItemBullet.class);
 
         if (!compatibleBullets.isEmpty()) {
-            int maxToLoad = Math
-                .min(weapon.getMaxBulletsPerReload(), weapon.getAmmoCapacity() - weaponInstance.getAmmo());
+            int maxToLoad = weapon.getAmmoCapacity() - weaponInstance.getAmmo();
             int loaded = this.countAvailableBullets(compatibleBullets, player, maxToLoad);
             if (loaded > 0) {
                 weaponInstance.setAmmo(weaponInstance.getAmmo() + loaded);

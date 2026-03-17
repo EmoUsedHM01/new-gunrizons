@@ -54,16 +54,16 @@ public class MuzzleFlashRenderer {
         if (weaponInstance == null || weaponModel == null) return;
         if (weaponInstance.isSilencerOn()) return;
 
-        ItemWeapon weapon = weaponInstance.getWeapon();
-        if (weapon.getFlashIntensity() <= 0.0F) return;
+        WeaponRenderer renderer = weaponInstance.getWeapon().getRenderer();
+        if (renderer == null || renderer.getFlashIntensity() <= 0.0F) return;
 
         long elapsed = System.currentTimeMillis() - weaponInstance.getLastFireTimestamp();
         if (elapsed < 0 || elapsed > FLASH_DURATION_MS) return;
 
-        float alpha = weapon.getFlashIntensity() * (1.0F - (float) elapsed / FLASH_DURATION_MS);
+        float alpha = renderer.getFlashIntensity() * (1.0F - (float) elapsed / FLASH_DURATION_MS);
         if (alpha <= 0.0F) return;
 
-        float scale = weapon.getFlashScale();
+        float scale = renderer.getFlashScale();
         int imageIndex = Math.abs(rand.nextInt()) % IMAGES_PER_ROW;
 
         if (weaponModel.getBone(BONE_FIRING_POINT) != null) {

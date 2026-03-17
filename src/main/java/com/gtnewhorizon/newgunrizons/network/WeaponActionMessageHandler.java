@@ -110,7 +110,7 @@ public class WeaponActionMessageHandler implements IMessageHandler<WeaponActionM
     private void loadWithBullets(EntityPlayerMP player, ItemStack weaponStack, ItemWeapon weapon,
         ItemWeaponInstance instance, List<ItemAttachment> compatibleBullets) {
         int currentAmmo = instance.getAmmo();
-        int maxToLoad = Math.min(weapon.getMaxBulletsPerReload(), weapon.getAmmoCapacity() - currentAmmo);
+        int maxToLoad = weapon.getAmmoCapacity() - currentAmmo;
 
         ItemStack consumedStack = InventoryUtils
             .tryConsumingCompatibleItem(compatibleBullets, maxToLoad, player, (stack) -> true);

@@ -1,7 +1,5 @@
 package com.gtnewhorizon.newgunrizons.items.instances;
 
-import java.util.Arrays;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,7 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class ItemWeaponInstance extends ItemInstance implements Stateful<WeaponState> {
 
-    private static final String AMMO_TAG = "Ammo";
+    private static final String AMMO_TAG = "gunrizons_ammo";
     private static final long AIM_CHANGE_DURATION = 400L;
 
     @Getter
@@ -33,6 +31,7 @@ public class ItemWeaponInstance extends ItemInstance implements Stateful<WeaponS
     @Getter
     private int ammo;
 
+    @Setter
     @Getter
     private float recoil;
 
@@ -46,18 +45,21 @@ public class ItemWeaponInstance extends ItemInstance implements Stateful<WeaponS
 
     @Getter
     private boolean aimed;
+    private long aimChangeTimestamp;
 
+    @Setter
     @Getter
     private int maxShots;
 
+    @Setter
     @Getter
     private float zoom = 1.0F;
 
+    @Setter
     @Getter
     private boolean laserOn;
 
-    private long aimChangeTimestamp;
-
+    @Setter
     @Getter
     private boolean nightVisionOn;
 
@@ -65,7 +67,10 @@ public class ItemWeaponInstance extends ItemInstance implements Stateful<WeaponS
     @Setter
     private int loadIterationCount;
 
+    @Setter
     private int[] activeAttachmentIds = new int[0];
+    @Setter
+    @Getter
     private byte[] selectedAttachmentIndexes = new byte[0];
 
     public ItemWeaponInstance() {}
@@ -82,8 +87,19 @@ public class ItemWeaponInstance extends ItemInstance implements Stateful<WeaponS
     public void readFromBuf(ByteBuf buf) {
         super.readFromBuf(buf);
         this.state = WeaponState.values()[buf.readInt()];
-        this.activeAttachmentIds = readIntArray(buf);
-        this.selectedAttachmentIndexes = readByteArray(buf);
+
+        int lengthActive = buf.readByte();
+        this.activeAttachmentIds = new int[lengthActive];
+        for (int i = 0; i < lengthActive; ++i) {
+            this.activeAttachmentIds[i] = buf.readInt();
+        }
+
+        int lengthSelected = buf.readByte();
+        this.selectedAttachmentIndexes = new byte[lengthSelected];
+        for (int i = 0; i < lengthSelected; ++i) {
+            this.selectedAttachmentIndexes[i] = buf.readByte();
+        }
+
         this.ammo = buf.readInt();
         this.maxShots = buf.readInt();
         this.recoil = buf.readFloat();
@@ -95,8 +111,17 @@ public class ItemWeaponInstance extends ItemInstance implements Stateful<WeaponS
     public void writeToBuf(ByteBuf buf) {
         super.writeToBuf(buf);
         buf.writeInt(this.state != null ? this.state.ordinal() : 0);
-        writeIntArray(buf, this.activeAttachmentIds);
-        writeByteArray(buf, this.selectedAttachmentIndexes);
+
+        buf.writeByte(this.activeAttachmentIds.length);
+        for (int b : this.activeAttachmentIds) {
+            buf.writeInt(b);
+        }
+
+        buf.writeByte(this.selectedAttachmentIndexes.length);
+        for (byte b : this.selectedAttachmentIndexes) {
+            buf.writeByte(b);
+        }
+
         buf.writeInt(this.ammo);
         buf.writeInt(this.maxShots);
         buf.writeFloat(this.recoil);
@@ -109,38 +134,6 @@ public class ItemWeaponInstance extends ItemInstance implements Stateful<WeaponS
         buf.writeByte(1);
     }
 
-    private static void writeIntArray(ByteBuf buf, int[] a) {
-        buf.writeByte(a.length);
-        for (int b : a) {
-            buf.writeInt(b);
-        }
-    }
-
-    private static void writeByteArray(ByteBuf buf, byte[] a) {
-        buf.writeByte(a.length);
-        for (byte b : a) {
-            buf.writeByte(b);
-        }
-    }
-
-    private static int[] readIntArray(ByteBuf buf) {
-        int length = buf.readByte();
-        int[] a = new int[length];
-        for (int i = 0; i < length; ++i) {
-            a[i] = buf.readInt();
-        }
-        return a;
-    }
-
-    private static byte[] readByteArray(ByteBuf buf) {
-        int length = buf.readByte();
-        byte[] a = new byte[length];
-        for (int i = 0; i < length; ++i) {
-            a[i] = buf.readByte();
-        }
-        return a;
-    }
-
     public void setState(WeaponState state) {
         this.state = state;
         this.stateUpdateTimestamp = System.currentTimeMillis();
@@ -150,29 +143,8 @@ public class ItemWeaponInstance extends ItemInstance implements Stateful<WeaponS
         return (ItemWeapon) this.item;
     }
 
-    public void setRecoil(float recoil) {
-        if (recoil != this.recoil) {
-            this.recoil = recoil;
-        }
-    }
-
-    public void setMaxShots(int maxShots) {
-        if (this.maxShots != maxShots) {
-            this.maxShots = maxShots;
-        }
-    }
-
     public void resetCurrentSeries() {
         this.seriesShotCount = 0;
-    }
-
-    public float getFireRate() {
-        return this.getWeapon()
-            .getFireRate();
-    }
-
-    public boolean isAutomaticModeEnabled() {
-        return this.maxShots > 1;
     }
 
     public boolean isSilencerOn() {
@@ -182,7 +154,7 @@ public class ItemWeaponInstance extends ItemInstance implements Stateful<WeaponS
     }
 
     public void setAimed(boolean aimed) {
-        if (aimed != this.aimed) {
+        if (this.aimed != aimed) {
             this.aimed = aimed;
             this.aimChangeTimestamp = System.currentTimeMillis();
         }
@@ -206,22 +178,6 @@ public class ItemWeaponInstance extends ItemInstance implements Stateful<WeaponS
         return this.activeAttachmentIds;
     }
 
-    public void setActiveAttachmentIds(int[] activeAttachmentIds) {
-        if (!Arrays.equals(this.activeAttachmentIds, activeAttachmentIds)) {
-            this.activeAttachmentIds = activeAttachmentIds;
-        }
-    }
-
-    public byte[] getSelectedAttachmentIds() {
-        return this.selectedAttachmentIndexes;
-    }
-
-    public void setSelectedAttachmentIndexes(byte[] selectedAttachmentIndexes) {
-        if (!Arrays.equals(this.selectedAttachmentIndexes, selectedAttachmentIndexes)) {
-            this.selectedAttachmentIndexes = selectedAttachmentIndexes;
-        }
-    }
-
     public boolean isAttachmentZoomEnabled() {
         Item scopeItem = this.getAttachmentItemWithCategory(AttachmentCategory.SCOPE);
         return scopeItem instanceof ItemScope;
@@ -233,24 +189,6 @@ public class ItemWeaponInstance extends ItemInstance implements Stateful<WeaponS
             return activeAttachment instanceof ItemAttachment ? (ItemAttachment) activeAttachment : null;
         } else {
             return null;
-        }
-    }
-
-    public void setZoom(float zoom) {
-        if (this.zoom != zoom) {
-            this.zoom = zoom;
-        }
-    }
-
-    public void setLaserOn(boolean laserOn) {
-        if (this.laserOn != laserOn) {
-            this.laserOn = laserOn;
-        }
-    }
-
-    public void setNightVisionOn(boolean nightVisionOn) {
-        if (this.nightVisionOn != nightVisionOn) {
-            this.nightVisionOn = nightVisionOn;
         }
     }
 

@@ -83,27 +83,8 @@ public class ItemWeapon extends Item implements ItemInstanceFactory<ItemWeaponIn
     @Getter
     private final int pellets;
     @Getter
-    private final float flashIntensity;
-    @Getter
-    private final float flashScale;
-    @Getter
-    private final String tracerTexture;
-    @Getter
-    private final float tracerWidth;
-    @Getter
-    private final float tracerLength;
-    @Getter
-    private final float tracerColorR;
-    @Getter
-    private final float tracerColorG;
-    @Getter
-    private final float tracerColorB;
-    @Getter
-    private final float tracerIntensity;
-    @Getter
     private final boolean smokeEnabled;
-    @Getter
-    private final int maxBulletsPerReload;
+
     private final Function<ItemStack, List<String>> informationProvider;
     @Getter
     private final Map<ItemAttachment, CompatibleAttachment> compatibleAttachments;
@@ -141,17 +122,7 @@ public class ItemWeapon extends Item implements ItemInstanceFactory<ItemWeaponIn
         this.projectileGravityVelocity = builder.spawnEntityGravityVelocity;
         this.inaccuracy = builder.inaccuracy;
         this.pellets = builder.pellets;
-        this.flashIntensity = builder.flashIntensity;
-        this.flashScale = builder.flashScale;
-        this.tracerTexture = builder.tracerTexture;
-        this.tracerWidth = builder.tracerWidth;
-        this.tracerLength = builder.tracerLength;
-        this.tracerColorR = builder.tracerColorR;
-        this.tracerColorG = builder.tracerColorG;
-        this.tracerColorB = builder.tracerColorB;
-        this.tracerIntensity = builder.tracerIntensity;
         this.smokeEnabled = builder.smokeEnabled;
-        this.maxBulletsPerReload = builder.maxBulletsPerReload;
         this.informationProvider = builder.informationProvider;
         this.compatibleAttachments = builder.compatibleAttachments;
         this.renderer = builder.renderer;
@@ -451,20 +422,8 @@ public class ItemWeapon extends Item implements ItemInstanceFactory<ItemWeaponIn
         public long pumpTimeoutMilliseconds;
         private float inaccuracy = 1.0F;
         public int pellets = 1;
-        public float flashIntensity = 0.4F;
-        public Float flashScale = 1.0F;
-        public String tracerTexture = "tracer";
-        public float tracerWidth = 0.03F;
-        public float tracerLength = 1.5F;
-        public float tracerColorR = 1.0F;
-        public float tracerColorG = 0.8F;
-        public float tracerColorB = 0.27F;
-        public float tracerIntensity = 1.0F;
 
         public boolean smokeEnabled = true;
-        public Supplier<Float> smokeOffsetX = () -> 0.0F;
-        public Supplier<Float> smokeOffsetY = () -> 0.0F;
-        public int maxBulletsPerReload;
         private Function<ItemStack, List<String>> informationProvider;
         private float shellCasingForwardOffset = 0.1F;
         private float shellCasingVerticalOffset = 0.0F;
@@ -493,11 +452,6 @@ public class ItemWeapon extends Item implements ItemInstanceFactory<ItemWeaponIn
 
         public ItemWeapon.Builder withAmmoCapacity(int ammoCapacity) {
             this.ammoCapacity = ammoCapacity;
-            return this;
-        }
-
-        public ItemWeapon.Builder withMaxBulletsPerReload(int maxBulletsPerReload) {
-            this.maxBulletsPerReload = maxBulletsPerReload;
             return this;
         }
 
@@ -683,46 +637,6 @@ public class ItemWeapon extends Item implements ItemInstanceFactory<ItemWeaponIn
             return this;
         }
 
-        public ItemWeapon.Builder withFlashIntensity(float flashIntensity) {
-            if (flashIntensity < 0.0F || flashIntensity > 1.0F) {
-                throw new IllegalArgumentException("Invalid flash intensity");
-            }
-            this.flashIntensity = flashIntensity;
-            return this;
-        }
-
-        public ItemWeapon.Builder withFlashScale(float flashScale) {
-            this.flashScale = flashScale;
-            return this;
-        }
-
-        public ItemWeapon.Builder withTracerTexture(String tracerTexture) {
-            this.tracerTexture = tracerTexture;
-            return this;
-        }
-
-        public ItemWeapon.Builder withTracerWidth(float tracerWidth) {
-            this.tracerWidth = tracerWidth;
-            return this;
-        }
-
-        public ItemWeapon.Builder withTracerLength(float tracerLength) {
-            this.tracerLength = tracerLength;
-            return this;
-        }
-
-        public ItemWeapon.Builder withTracerColor(float r, float g, float b) {
-            this.tracerColorR = r;
-            this.tracerColorG = g;
-            this.tracerColorB = b;
-            return this;
-        }
-
-        public ItemWeapon.Builder withTracerIntensity(float intensity) {
-            this.tracerIntensity = intensity;
-            return this;
-        }
-
         public ItemWeapon.Builder withSmokeEnabled(boolean smokeEnabled) {
             this.smokeEnabled = smokeEnabled;
             return this;
@@ -759,10 +673,6 @@ public class ItemWeapon extends Item implements ItemInstanceFactory<ItemWeaponIn
 
             if (this.crosshairZoomed == null) {
                 this.crosshairZoomed = this.crosshair;
-            }
-
-            if (this.maxBulletsPerReload == 0) {
-                this.maxBulletsPerReload = this.ammoCapacity;
             }
 
             if (this.maxShots.isEmpty()) {

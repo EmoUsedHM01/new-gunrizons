@@ -56,14 +56,38 @@ public class WeaponRenderer implements IItemRenderer {
     private final BedrockAnimationController bedrockAnimController;
     private final IdleSway idleSway = new IdleSway();
 
+    @Getter
+    private final float flashIntensity;
+    @Getter
+    private final float flashScale;
+    @Getter
+    private final float tracerWidth;
+    @Getter
+    private final float tracerLength;
+    @Getter
+    private final float tracerColorR;
+    @Getter
+    private final float tracerColorG;
+    @Getter
+    private final float tracerColorB;
+    @Getter
+    private final float tracerIntensity;
+
     private Integer cachedInventoryTexture;
-    /** Set to true when the EQUIPPED_FIRST_PERSON path has already applied bedrock animation. */
     private boolean bedrockAnimAppliedThisFrame = false;
 
     private WeaponRenderer(Builder builder) {
         this.model = builder.model;
         this.textureName = builder.textureName;
         this.bedrockAnimController = builder.bedrockAnimController;
+        this.flashIntensity = builder.flashIntensity;
+        this.flashScale = builder.flashScale;
+        this.tracerWidth = builder.tracerWidth;
+        this.tracerLength = builder.tracerLength;
+        this.tracerColorR = builder.tracerColorR;
+        this.tracerColorG = builder.tracerColorG;
+        this.tracerColorB = builder.tracerColorB;
+        this.tracerIntensity = builder.tracerIntensity;
     }
 
     /**
@@ -231,8 +255,16 @@ public class WeaponRenderer implements IItemRenderer {
 
         private BedrockModel model;
         private String textureName;
-
         private BedrockAnimationController bedrockAnimController;
+
+        private float flashIntensity = 0.4F;
+        private float flashScale = 1.0F;
+        private float tracerWidth = 0.03F;
+        private float tracerLength = 1.5F;
+        private float tracerColorR = 1.0F;
+        private float tracerColorG = 0.8F;
+        private float tracerColorB = 0.27F;
+        private float tracerIntensity = 1.0F;
 
         public Builder withModel(BedrockModel model) {
             this.model = model;
@@ -264,6 +296,38 @@ public class WeaponRenderer implements IItemRenderer {
 
         public Builder withTextureName(String textureName) {
             this.textureName = textureName + ".png";
+            return this;
+        }
+
+        public Builder withFlashIntensity(float flashIntensity) {
+            this.flashIntensity = flashIntensity;
+            return this;
+        }
+
+        public Builder withFlashScale(float flashScale) {
+            this.flashScale = flashScale;
+            return this;
+        }
+
+        public Builder withTracerWidth(float tracerWidth) {
+            this.tracerWidth = tracerWidth;
+            return this;
+        }
+
+        public Builder withTracerLength(float tracerLength) {
+            this.tracerLength = tracerLength;
+            return this;
+        }
+
+        public Builder withTracerColor(float r, float g, float b) {
+            this.tracerColorR = r;
+            this.tracerColorG = g;
+            this.tracerColorB = b;
+            return this;
+        }
+
+        public Builder withTracerIntensity(float intensity) {
+            this.tracerIntensity = intensity;
             return this;
         }
 

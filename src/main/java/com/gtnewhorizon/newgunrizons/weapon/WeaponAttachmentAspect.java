@@ -206,7 +206,7 @@ public final class WeaponAttachmentAspect implements StateAspect<WeaponState, It
     private AttachmentLookupResult next(AttachmentCategory category, Item currentAttachment,
         ItemWeaponInstance weaponInstance) {
         AttachmentLookupResult result = new AttachmentLookupResult();
-        byte[] originallySelectedAttachmentIndexes = weaponInstance.getSelectedAttachmentIds();
+        byte[] originallySelectedAttachmentIndexes = weaponInstance.getSelectedAttachmentIndexes();
         if (originallySelectedAttachmentIndexes != null
             && originallySelectedAttachmentIndexes.length == AttachmentCategory.VALUES.length) {
             byte[] selectedAttachmentIndexes = Arrays

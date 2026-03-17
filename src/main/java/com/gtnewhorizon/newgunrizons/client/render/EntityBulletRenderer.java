@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL11;
 import com.gtnewhorizon.newgunrizons.weapon.FiringPointTracker;
 import com.gtnewhorizon.newgunrizons.entities.EntityBullet;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
+import com.gtnewhorizon.newgunrizons.client.render.WeaponRenderer;
 
 public class EntityBulletRenderer extends Render {
 
@@ -23,9 +24,11 @@ public class EntityBulletRenderer extends Render {
         EntityBullet bullet = (EntityBullet) entity;
         ItemWeapon weapon = bullet.getWeapon();
         if (weapon == null) return;
+        WeaponRenderer renderer = weapon.getRenderer();
+        if (renderer == null) return;
 
-        float tracerWidth = weapon.getTracerWidth();
-        float tracerLength = weapon.getTracerLength();
+        float tracerWidth = renderer.getTracerWidth();
+        float tracerLength = renderer.getTracerLength();
 
         double renderX = x;
         double renderY = y;
@@ -104,8 +107,8 @@ public class EntityBulletRenderer extends Render {
             0.0F, 0.0F, 1.0F);
 
         TracerRenderer.render(tracerLength, tracerWidth,
-            weapon.getTracerColorR(), weapon.getTracerColorG(), weapon.getTracerColorB(),
-            weapon.getTracerIntensity());
+            renderer.getTracerColorR(), renderer.getTracerColorG(), renderer.getTracerColorB(),
+            renderer.getTracerIntensity());
         GL11.glPopMatrix();
     }
 
