@@ -11,9 +11,7 @@ import io.netty.buffer.Unpooled;
 import lombok.Getter;
 import lombok.Setter;
 
-import com.gtnewhorizon.newgunrizons.state.ManagedState;
-
-public abstract class ItemInstance<S extends ManagedState> {
+public abstract class ItemInstance {
 
     private static final String AMMO_TAG = "Ammo";
     private static final String INSTANCE_TAG = "Instance";
@@ -21,10 +19,6 @@ public abstract class ItemInstance<S extends ManagedState> {
     private static final byte TYPE_WEAPON = 0;
     private static final byte TYPE_GRENADE = 1;
 
-    @Getter
-    protected S state;
-    @Getter
-    protected long stateUpdateTimestamp = System.currentTimeMillis();
     @Setter
     @Getter
     protected EntityLivingBase player;
@@ -62,27 +56,14 @@ public abstract class ItemInstance<S extends ManagedState> {
         this.itemInventoryIndex = itemInventoryIndex;
     }
 
-    /** Reads base fields from the buffer. Subclasses must call super and read their own fields. */
     public void readFromBuf(ByteBuf buf) {
         this.item = Item.getItemById(buf.readInt());
         this.itemInventoryIndex = buf.readInt();
     }
 
-    /** Writes base fields to the buffer. Subclasses must call super and write their own fields. */
     public void writeToBuf(ByteBuf buf) {
         buf.writeInt(Item.getIdFromItem(this.item));
         buf.writeInt(this.itemInventoryIndex);
-    }
-
-    public void setState(S state) {
-        this.state = state;
-        this.stateUpdateTimestamp = System.currentTimeMillis();
-    }
-
-    protected void updateWith(ItemInstance<S> otherState, boolean updateManagedState) {
-        if (updateManagedState) {
-            this.setState(otherState.getState());
-        }
     }
 
     public boolean needsOpticalScopePerspective() {
@@ -106,11 +87,11 @@ public abstract class ItemInstance<S extends ManagedState> {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends ItemInstance<?>> T fromStack(ItemStack itemStack) {
+    public static <T extends ItemInstance> T fromStack(ItemStack itemStack) {
         return (T) deserializeInstance(itemStack);
     }
 
-    public static void toStack(ItemStack itemStack, ItemInstance<?> instance) {
+    public static void toStack(ItemStack itemStack, ItemInstance instance) {
         if (itemStack == null) return;
         if (itemStack.stackTagCompound == null) {
             itemStack.stackTagCompound = new NBTTagCompound();
@@ -137,7 +118,7 @@ public abstract class ItemInstance<S extends ManagedState> {
         }
     }
 
-    private static ItemInstance<?> deserializeInstance(ItemStack itemStack) {
+    private static ItemInstance deserializeInstance(ItemStack itemStack) {
         if (itemStack == null || itemStack.stackTagCompound == null) {
             return null;
         }
@@ -148,7 +129,7 @@ public abstract class ItemInstance<S extends ManagedState> {
         ByteBuf buf = Unpooled.copiedBuffer(bytes);
         try {
             byte typeId = buf.readByte();
-            ItemInstance<?> instance;
+            ItemInstance instance;
             switch (typeId) {
                 case TYPE_WEAPON:
                     instance = new ItemWeaponInstance();

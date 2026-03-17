@@ -88,7 +88,7 @@ public final class WeaponAttachmentAspect implements Aspect<WeaponState, ItemWea
             itemStack.stackTagCompound = new NBTTagCompound();
         }
         List<CompatibleAttachment> activeAttachments = new ArrayList<>();
-        ItemInstance<?> itemInstance = ItemInstanceRegistry.INSTANCE.getItemInstance(player, itemStack);
+        ItemInstance itemInstance = ItemInstanceRegistry.INSTANCE.getItemInstance(player, itemStack);
         int[] activeAttachmentsIds;
         if (!(itemInstance instanceof ItemWeaponInstance)) {
             activeAttachmentsIds = new int[AttachmentCategory.VALUES.length];

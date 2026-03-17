@@ -13,15 +13,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import com.gtnewhorizon.newgunrizons.state.ManagedState;
 import com.gtnewhorizon.newgunrizons.util.InventoryUtils;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 /**
- * Maintains runtime state objects ({@link ItemWeaponInstance}, {@link ItemMagazineInstance},
- * {@link ItemGrenadeInstance}) for items in player inventories.
+ * Maintains runtime state objects ({@link ItemWeaponInstance}, {@link ItemGrenadeInstance})
+ * for items in player inventories.
  * <p>
  * Minecraft items are value objects (ItemStack = Item + metadata + NBT), but weapons need
  * mutable runtime state (firing, reloading, aiming, zoom) that persists across ticks.
@@ -32,14 +31,14 @@ public class ItemInstanceRegistry {
     public static final ItemInstanceRegistry INSTANCE = new ItemInstanceRegistry();
 
     /** Primary registry: player UUID → (inventory slot → instance). */
-    private final Map<UUID, Map<Integer, ItemInstance<?>>> registry = new HashMap<>();
+    private final Map<UUID, Map<Integer, ItemInstance>> registry = new HashMap<>();
 
     /**
      * Secondary lookup for rendering: ItemStack → instance.
      * Uses weak keys so entries are GC'd when the ItemStack is no longer referenced.
      * ItemStack uses identity equality, so this works as an identity cache.
      */
-    private final WeakHashMap<ItemStack, ItemInstance<?>> itemStackCache = new WeakHashMap<>();
+    private final WeakHashMap<ItemStack, ItemInstance> itemStackCache = new WeakHashMap<>();
 
     /** Client-side convenience: gets the main-hand weapon instance for the local player. */
     @SideOnly(Side.CLIENT)
@@ -48,19 +47,19 @@ public class ItemInstanceRegistry {
         return INSTANCE.getMainHandItemInstance(player, ItemWeaponInstance.class);
     }
 
-    public <T extends ItemInstance<S>, S extends ManagedState> T getMainHandItemInstance(EntityPlayer player,
+    public <T extends ItemInstance> T getMainHandItemInstance(EntityPlayer player,
         Class<T> targetClass) {
         if (player == null) {
             return null;
         }
-        ItemInstance<?> instance = this.getItemInstance(player, player.inventory.currentItem);
+        ItemInstance instance = this.getItemInstance(player, player.inventory.currentItem);
         return targetClass.isInstance(instance) ? targetClass.cast(instance) : null;
     }
 
-    public ItemInstance<?> getItemInstance(EntityPlayer player, int slot) {
-        Map<Integer, ItemInstance<?>> slotInstances = this.registry
+    public ItemInstance getItemInstance(EntityPlayer player, int slot) {
+        Map<Integer, ItemInstance> slotInstances = this.registry
             .computeIfAbsent(player.getPersistentID(), p -> new HashMap<>());
-        ItemInstance<?> result = slotInstances.get(slot);
+        ItemInstance result = slotInstances.get(slot);
 
         if (result == null) {
             result = this.createItemInstance(player, slot);
@@ -89,7 +88,7 @@ public class ItemInstanceRegistry {
         return result;
     }
 
-    private ItemInstance<?> createItemInstance(EntityPlayer player, int slot) {
+    private ItemInstance createItemInstance(EntityPlayer player, int slot) {
         ItemStack itemStack = player.inventory.getStackInSlot(slot);
         if (itemStack == null) {
             return null;
@@ -100,13 +99,13 @@ public class ItemInstanceRegistry {
             return null;
         }
 
-        ItemInstance<?> result = null;
+        ItemInstance result = null;
         try {
             result = ItemInstance.fromStack(itemStack);
         } catch (RuntimeException ignored) {}
 
         if (result == null) {
-            result = ((ItemInstanceFactory<?, ?>) item).createItemInstance(player, itemStack, slot);
+            result = ((ItemInstanceFactory) item).createItemInstance(player, itemStack, slot);
         }
 
         result.setItemInventoryIndex(slot);
@@ -120,13 +119,13 @@ public class ItemInstanceRegistry {
      * <p>
      * Lookup order: weak cache → slot-based registry → NBT deserialization → factory creation.
      */
-    public ItemInstance<?> getItemInstance(EntityLivingBase player, ItemStack itemStack) {
-        ItemInstance<?> cached = this.itemStackCache.get(itemStack);
+    public ItemInstance getItemInstance(EntityLivingBase player, ItemStack itemStack) {
+        ItemInstance cached = this.itemStackCache.get(itemStack);
         if (cached != null && cached.getItem() == itemStack.getItem()) {
             return cached;
         }
 
-        ItemInstance<?> instance = null;
+        ItemInstance instance = null;
 
         if (player.worldObj != null && player.worldObj.isRemote
             && player instanceof EntityPlayer
@@ -145,7 +144,7 @@ public class ItemInstanceRegistry {
 
         if ((instance == null || instance.getItem() != itemStack.getItem())
             && itemStack.getItem() instanceof ItemInstanceFactory) {
-            instance = ((ItemInstanceFactory<?, ?>) itemStack.getItem()).createItemInstance(player, itemStack, -1);
+            instance = ((ItemInstanceFactory) itemStack.getItem()).createItemInstance(player, itemStack, -1);
             instance.setPlayer(player);
         }
 
@@ -160,13 +159,13 @@ public class ItemInstanceRegistry {
     public void update(EntityPlayer player) {
         if (player == null) return;
 
-        Map<Integer, ItemInstance<?>> slotContexts = this.registry.get(player.getPersistentID());
+        Map<Integer, ItemInstance> slotContexts = this.registry.get(player.getPersistentID());
         if (slotContexts == null) return;
 
-        Iterator<Entry<Integer, ItemInstance<?>>> it = slotContexts.entrySet()
+        Iterator<Entry<Integer, ItemInstance>> it = slotContexts.entrySet()
             .iterator();
         while (it.hasNext()) {
-            Entry<Integer, ItemInstance<?>> entry = it.next();
+            Entry<Integer, ItemInstance> entry = it.next();
             ItemStack slotStack = player.inventory.getStackInSlot(entry.getKey());
             if (slotStack == null || slotStack.getItem() != entry.getValue()
                 .getItem()) {

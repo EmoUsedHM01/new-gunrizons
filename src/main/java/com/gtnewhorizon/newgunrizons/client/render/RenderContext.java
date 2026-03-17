@@ -49,7 +49,7 @@ public class RenderContext {
 	private RenderableState toState;
 	@Setter
 	@Getter
-	private ItemInstance<?> itemInstance;
+	private ItemInstance itemInstance;
 
 	public RenderContext(EntityLivingBase player, ItemStack itemStack) {
 		this.player = player;
@@ -72,7 +72,7 @@ public class RenderContext {
 		if (this.itemInstance instanceof ItemWeaponInstance) {
 			return (ItemWeaponInstance) this.itemInstance;
 		} else {
-			ItemInstance<?> itemInstance = ItemInstanceRegistry.INSTANCE.getItemInstance(this.player, this.itemStack);
+			ItemInstance itemInstance = ItemInstanceRegistry.INSTANCE.getItemInstance(this.player, this.itemStack);
 			return itemInstance instanceof ItemWeaponInstance ? (ItemWeaponInstance) itemInstance : null;
 		}
 	}

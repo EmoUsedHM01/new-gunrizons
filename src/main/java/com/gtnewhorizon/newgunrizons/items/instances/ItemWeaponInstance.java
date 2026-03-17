@@ -11,15 +11,21 @@ import com.gtnewhorizon.newgunrizons.attachment.CompatibleAttachment;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.items.ItemScope;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
+import com.gtnewhorizon.newgunrizons.state.Stateful;
 import com.gtnewhorizon.newgunrizons.weapon.WeaponState;
 
 import io.netty.buffer.ByteBuf;
 import lombok.Getter;
 import lombok.Setter;
 
-public class ItemWeaponInstance extends ItemInstance<WeaponState> {
+public class ItemWeaponInstance extends ItemInstance implements Stateful<WeaponState> {
 
     private static final long AIM_CHANGE_DURATION = 400L;
+
+    @Getter
+    private WeaponState state = WeaponState.IDLE;
+    @Getter
+    private long stateUpdateTimestamp = System.currentTimeMillis();
 
     @Setter
     @Getter
@@ -126,9 +132,12 @@ public class ItemWeaponInstance extends ItemInstance<WeaponState> {
         return a;
     }
 
-    protected void updateWith(ItemInstance<WeaponState> otherItemInstance, boolean updateManagedState) {
-        super.updateWith(otherItemInstance, updateManagedState);
-        ItemWeaponInstance otherWeaponInstance = (ItemWeaponInstance) otherItemInstance;
+    public void setState(WeaponState state) {
+        this.state = state;
+        this.stateUpdateTimestamp = System.currentTimeMillis();
+    }
+
+    protected void updateWith(ItemWeaponInstance otherWeaponInstance) {
         this.setAmmo(otherWeaponInstance.ammo);
         this.setZoom(otherWeaponInstance.zoom);
         this.setRecoil(otherWeaponInstance.recoil);

@@ -121,7 +121,7 @@ public class WeaponRenderHandler {
             ItemStack itemStack = event.entity.getHeldItem();
             if (itemStack != null && itemStack.getItem() instanceof ItemWeapon) {
                 RenderPlayer rp = (RenderPlayer) event.renderer;
-                ItemInstance<?> instance = ItemInstanceRegistry.INSTANCE.getItemInstance(event.entity, itemStack);
+                ItemInstance instance = ItemInstanceRegistry.INSTANCE.getItemInstance(event.entity, itemStack);
                 if (instance instanceof ItemWeaponInstance) {
                     ItemWeaponInstance weaponInstance = (ItemWeaponInstance) instance;
                     rp.modelBipedMain.aimedBow = weaponInstance.isAimed()

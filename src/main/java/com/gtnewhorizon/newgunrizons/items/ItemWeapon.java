@@ -40,7 +40,7 @@ import com.gtnewhorizon.newgunrizons.weapon.WeaponState;
 import lombok.Getter;
 
 public class ItemWeapon extends Item
-    implements ItemInstanceFactory<ItemWeaponInstance, WeaponState>, Reloadable, Updatable {
+    implements ItemInstanceFactory<ItemWeaponInstance>, Reloadable, Updatable {
 
     @Getter
     private String shootSound;

@@ -13,7 +13,7 @@ public class ScopeManager {
     private ScopeWorldRenderer worldRenderer;
     private EffectRenderer effectRenderer;
 
-    public ScopePerspective getPerspective(ItemInstance<?> currentInstance, boolean init) {
+    public ScopePerspective getPerspective(ItemInstance currentInstance, boolean init) {
         if (currentInstance != null && (this.perspective != null || init)) {
             boolean needsPerspective = currentInstance.needsOpticalScopePerspective();
             if (needsPerspective) {

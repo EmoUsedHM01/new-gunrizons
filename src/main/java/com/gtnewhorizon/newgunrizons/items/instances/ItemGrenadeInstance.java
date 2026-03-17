@@ -5,13 +5,18 @@ import net.minecraft.item.ItemStack;
 
 import com.gtnewhorizon.newgunrizons.grenade.GrenadeState;
 import com.gtnewhorizon.newgunrizons.items.ItemGrenade;
+import com.gtnewhorizon.newgunrizons.state.Stateful;
 
 import io.netty.buffer.ByteBuf;
 import lombok.Getter;
 import lombok.Setter;
 
-public class ItemGrenadeInstance extends ItemInstance<GrenadeState> {
+public class ItemGrenadeInstance extends ItemInstance implements Stateful<GrenadeState> {
 
+    @Getter
+    private GrenadeState state = GrenadeState.IDLE;
+    @Getter
+    private long stateUpdateTimestamp = System.currentTimeMillis();
     @Getter
     private int ammo;
     @Setter
@@ -30,6 +35,11 @@ public class ItemGrenadeInstance extends ItemInstance<GrenadeState> {
         super(itemInventoryIndex, player, itemStack);
     }
 
+    public void setState(GrenadeState state) {
+        this.state = state;
+        this.stateUpdateTimestamp = System.currentTimeMillis();
+    }
+
     public void readFromBuf(ByteBuf buf) {
         super.readFromBuf(buf);
         this.state = GrenadeState.values()[buf.readInt()];
@@ -46,12 +56,6 @@ public class ItemGrenadeInstance extends ItemInstance<GrenadeState> {
         if (ammo != this.ammo) {
             this.ammo = ammo;
         }
-    }
-
-    protected void updateWith(ItemInstance<GrenadeState> otherItemInstance, boolean updateManagedState) {
-        super.updateWith(otherItemInstance, updateManagedState);
-        ItemGrenadeInstance other = (ItemGrenadeInstance) otherItemInstance;
-        this.setAmmo(other.ammo);
     }
 
     public ItemGrenade getWeapon() {

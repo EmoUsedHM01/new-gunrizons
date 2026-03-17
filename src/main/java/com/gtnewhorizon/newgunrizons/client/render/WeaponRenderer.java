@@ -359,7 +359,7 @@ public class WeaponRenderer implements IItemRenderer {
 
                 // Map weapon state to renderable state
                 ItemWeaponInstance weaponInstance = null;
-                ItemInstance<?> itemInst = ItemInstanceRegistry.INSTANCE.getItemInstance((EntityLivingBase) player, weaponItemStack);
+                ItemInstance itemInst = ItemInstanceRegistry.INSTANCE.getItemInstance((EntityLivingBase) player, weaponItemStack);
                 if (itemInst instanceof ItemWeaponInstance && itemInst.getItem() == weaponItemStack.getItem()) {
                     weaponInstance = (ItemWeaponInstance) itemInst;
                 }

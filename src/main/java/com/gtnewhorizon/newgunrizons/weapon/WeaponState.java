@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.weapon;
 
-import com.gtnewhorizon.newgunrizons.state.ManagedState;
-
-public enum WeaponState implements ManagedState {
+public enum WeaponState {
 
     IDLE,
     RELOADING_START,

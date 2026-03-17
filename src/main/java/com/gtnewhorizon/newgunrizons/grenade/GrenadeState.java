@@ -1,8 +1,6 @@
 package com.gtnewhorizon.newgunrizons.grenade;
 
-import com.gtnewhorizon.newgunrizons.state.ManagedState;
-
-public enum GrenadeState implements ManagedState {
+public enum GrenadeState {
 
     IDLE,
     SAFETY_PIN_OFF,

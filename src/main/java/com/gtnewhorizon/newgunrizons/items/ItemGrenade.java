@@ -23,7 +23,7 @@ import com.gtnewhorizon.newgunrizons.registry.Sounds;
 import lombok.Getter;
 
 public class ItemGrenade extends Item
-    implements ItemInstanceFactory<ItemGrenadeInstance, GrenadeState>, Updatable {
+    implements ItemInstanceFactory<ItemGrenadeInstance>, Updatable {
 
     public static final int EXPLODE_ON_IMPACT = -1;
 

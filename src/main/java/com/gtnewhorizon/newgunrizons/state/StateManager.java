@@ -9,56 +9,31 @@ import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
-
 /**
- * Finite state machine engine that manages state transitions for weapons, magazines, and grenades.
- * <p>
- * Transition rules are configured per-{@link Aspect} via the fluent {@link RuleBuilder} API.
- * Each rule specifies: source state → target state, an optional guard predicate, an optional
- * action callback, and whether the transition is automatic or manual.
+ * Finite state machine engine that manages state transitions.
  *
- * @param <S> the state enum type (e.g. WeaponState)
- * @param <E> the extended state type (e.g. PlayerWeaponInstance)
+ * @param <S> the state enum type
+ * @param <E> the stateful context type
  */
-public class StateManager<S extends ManagedState, E extends ItemInstance<S>> {
+public class StateManager<S, E extends Stateful<S>> {
 
-    /** Strategy for comparing two states (typically enum identity). */
     private final StateComparator<S> stateComparator;
-
-    /** Transition rules indexed by the aspect that owns them. */
     private final Map<Aspect<S, ? extends E>, LinkedHashSet<TransitionRule<S, E>>> transitionRules = new HashMap<>();
 
-    /**
-     * @param stateComparator strategy for comparing states (typically {@code (s1, s2) -> s1 == s2})
-     */
     public StateManager(StateComparator<S> stateComparator) {
         this.stateComparator = stateComparator;
     }
 
-    /**
-     * Begins building a transition rule for the given aspect.
-     *
-     * @param aspect the behavior module this rule belongs to
-     * @return a fluent rule builder
-     */
     public <EE extends E> RuleBuilder<EE> in(Aspect<S, EE> aspect) {
         return new RuleBuilder<>(aspect);
     }
 
-    /**
-     * Attempts to transition the extended state to one of the target states.
-     * Uses the current state as the source.
-     */
     @SafeVarargs
     public final void changeState(Aspect<S, ? extends E> aspect, E extendedState, S... targetStates) {
         S currentState = extendedState.getState();
         this.executeTransition(aspect, extendedState, currentState, targetStates);
     }
 
-    /**
-     * Attempts to transition only if the current state is one of {@code fromStates}.
-     */
     @SafeVarargs
     public final void changeStateFromAnyOf(Aspect<S, ? extends E> aspect, E extendedState, Collection<S> fromStates,
         S... targetStates) {
@@ -81,7 +56,6 @@ public class StateManager<S extends ManagedState, E extends ItemInstance<S>> {
 
         TransitionRule<S, E> matchingRule;
         while ((matchingRule = this.findMatchingRule(aspect, extendedState, activeState, remainingTargets)) != null) {
-            // Prevent infinite loops: automatic self-transitions are skipped
             if (matchingRule.automatic && this.stateComparator.compare(activeState, matchingRule.toState)) {
                 break;
             }
@@ -93,8 +67,7 @@ public class StateManager<S extends ManagedState, E extends ItemInstance<S>> {
             }
 
             activeState = matchingRule.toState;
-            // After the first explicit transition, only follow automatic rules
-            remainingTargets = emptyStateArray();
+            remainingTargets = emptyArray();
         }
     }
 
@@ -112,11 +85,11 @@ public class StateManager<S extends ManagedState, E extends ItemInstance<S>> {
     }
 
     @SuppressWarnings("unchecked")
-    private static <S> S[] emptyStateArray() {
-        return (S[]) new ManagedState[0];
+    private static <S> S[] emptyArray() {
+        return (S[]) new Object[0];
     }
 
-    private static class TransitionRule<S extends ManagedState, E extends ItemInstance<S>> {
+    private static class TransitionRule<S, E extends Stateful<S>> {
 
         final S fromState;
         final S toState;
@@ -126,12 +99,6 @@ public class StateManager<S extends ManagedState, E extends ItemInstance<S>> {
 
         TransitionRule(S fromState, S toState, BiPredicate<S, E> guard, TransitionAction<S, E> action,
             boolean automatic) {
-            if (fromState == null) {
-                throw new IllegalArgumentException("From-state cannot be null");
-            }
-            if (toState == null) {
-                throw new IllegalArgumentException("To-state cannot be null");
-            }
             this.fromState = fromState;
             this.toState = toState;
             this.guard = guard;
@@ -150,22 +117,17 @@ public class StateManager<S extends ManagedState, E extends ItemInstance<S>> {
     }
 
     @FunctionalInterface
-    public interface StateComparator<S extends ManagedState> {
+    public interface StateComparator<S> {
 
         boolean compare(S a, S b);
     }
 
     @FunctionalInterface
-    public interface TransitionAction<S extends ManagedState, EE> {
+    public interface TransitionAction<S, EE> {
 
         void execute(EE context, S fromState, S toState);
     }
 
-    /**
-     * Fluent API for defining state transition rules.
-     *
-     * @param <EE> the specific extended state type for this rule
-     */
     public class RuleBuilder<EE extends E> {
 
         private final Aspect<S, EE> aspect;

@@ -173,7 +173,7 @@ public class GrenadeRenderer implements IItemRenderer {
 
 				// Map grenade state to renderable state
 				ItemGrenadeInstance grenadeInstance = null;
-				ItemInstance<?> itemInst = ItemInstanceRegistry.INSTANCE.getItemInstance(player, grenadeItemStack);
+				ItemInstance itemInst = ItemInstanceRegistry.INSTANCE.getItemInstance(player, grenadeItemStack);
 				if (itemInst instanceof ItemGrenadeInstance && itemInst.getItem() == grenadeItemStack.getItem()) {
 					grenadeInstance = (ItemGrenadeInstance) itemInst;
 				}
