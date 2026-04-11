@@ -389,7 +389,7 @@ public class GrenadeRenderer implements IItemRenderer {
             positioner = multipartPositioning.getPositioner();
             renderContext.capturePartPosition(Part.NONE);
             this.renderLeftArm((EntityPlayer)player, renderContext, positioner);
-            positioner.applySway(stateDescriptor.rate, stateDescriptor.amplitude);
+            positioner.applySway(stateDescriptor.rate, stateDescriptor.amplitude, 1.0F);
             this.renderRightArm((EntityPlayer)player, renderContext, positioner);
             positioner.position(Part.MAIN_ITEM, renderContext);
             renderContext.capturePartPosition(Part.MAIN_ITEM);

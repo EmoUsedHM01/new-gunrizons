@@ -18,13 +18,14 @@ public final class IdleSway {
    private long startTime;
    private float rate = 0.25F;
    private float amplitude = 0.04F;
+   private float verticalBias = 1.0F;
 
    public IdleSway() {
       this.pickNewTarget();
    }
 
-   public void apply(float rate, float amplitude) {
-      if (rate != this.rate || amplitude != this.amplitude) {
+   public void apply(float rate, float amplitude, float verticalBias) {
+      if (rate != this.rate || amplitude != this.amplitude || verticalBias != this.verticalBias) {
          if (rate == 0.0F && amplitude == 0.0F) {
             this.toMatrix = this.fromMatrix = this.currentMatrix = captureIdentity();
          } else {
@@ -33,6 +34,7 @@ public final class IdleSway {
 
          this.rate = rate;
          this.amplitude = amplitude;
+         this.verticalBias = verticalBias;
       }
 
       if (rate != 0.0F || amplitude != 0.0F) {
@@ -60,15 +62,16 @@ public final class IdleSway {
 
    private Matrix4f createRandomMatrix() {
       return captureTransform(() -> {
-         float xRotation = 5.0F * this.amplitude * (this.random.nextFloat() - 0.5F) * 2.0F;
+         float hScale = 1.0F / this.verticalBias;
+         float xRotation = 5.0F * this.amplitude * (this.random.nextFloat() - 0.5F) * 2.0F * hScale;
          float yRotation = 5.0F * this.amplitude * (this.random.nextFloat() - 0.5F) * 2.0F;
-         float zRotation = 5.0F * this.amplitude * (this.random.nextFloat() - 0.5F) * 2.0F * 3.0F;
+         float zRotation = 5.0F * this.amplitude * (this.random.nextFloat() - 0.5F) * 2.0F * 3.0F * hScale;
          GL11.glRotatef(xRotation, 1.0F, 0.0F, 0.0F);
          GL11.glRotatef(yRotation, 0.0F, 1.0F, 0.0F);
          GL11.glRotatef(zRotation, 0.0F, 0.0F, 1.0F);
-         float xOffset = this.amplitude * (this.random.nextFloat() - 0.5F) * 2.0F;
-         float yOffset = this.amplitude * (this.random.nextFloat() - 0.5F) * 2.0F;
-         float zOffset = this.amplitude * (this.random.nextFloat() - 0.5F) * 2.0F * 0.33333334F;
+         float xOffset = this.amplitude * (this.random.nextFloat() - 0.5F) * 2.0F * hScale;
+         float yOffset = this.amplitude * (this.random.nextFloat() - 0.5F) * 2.0F * this.verticalBias;
+         float zOffset = this.amplitude * (this.random.nextFloat() - 0.5F) * 2.0F * 0.33333334F * hScale;
          GL11.glTranslatef(xOffset, yOffset, zOffset);
       });
    }

@@ -117,8 +117,8 @@ public class MultipartRenderStateManager {
             }
 
             @Override
-            public void applySway(float rate, float amplitude) {
-               MultipartRenderStateManager.this.idleSway.apply(rate, amplitude);
+            public void applySway(float rate, float amplitude, float verticalBias) {
+               MultipartRenderStateManager.this.idleSway.apply(rate, amplitude, verticalBias);
             }
          };
       }
@@ -279,8 +279,8 @@ public class MultipartRenderStateManager {
                }
 
                @Override
-               public void applySway(float rate, float amplitude) {
-                  MultipartRenderStateManager.this.idleSway.apply(0.0F, 0.0F);
+               public void applySway(float rate, float amplitude, float verticalBias) {
+                  MultipartRenderStateManager.this.idleSway.apply(rate, amplitude, verticalBias);
                }
             };
          } else {
@@ -299,8 +299,8 @@ public class MultipartRenderStateManager {
                }
 
                @Override
-               public void applySway(float rate, float amplitude) {
-                  MultipartRenderStateManager.this.idleSway.apply(0.0F, 0.0F);
+               public void applySway(float rate, float amplitude, float verticalBias) {
+                  MultipartRenderStateManager.this.idleSway.apply(rate, amplitude, verticalBias);
                }
             };
          }

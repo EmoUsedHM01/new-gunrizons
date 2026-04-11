@@ -18,7 +18,7 @@ public interface MultipartPositioning {
    public interface Positioner {
       void position(Part var1, RenderContext var2);
 
-      default void applySway(float rate, float amplitude) {
+      default void applySway(float rate, float amplitude, float verticalBias) {
       }
    }
 }

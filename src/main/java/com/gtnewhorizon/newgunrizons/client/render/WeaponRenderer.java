@@ -190,7 +190,7 @@ public class WeaponRenderer implements IItemRenderer {
       this.loadIterationCompletedAnimationDuration = 100;
       this.prepareFirstLoadIterationAnimationDuration = builder.prepareFirstLoadIterationAnimationDuration;
       this.allLoadIterationAnimationsCompletedDuration = builder.allLoadIterationAnimationsCompletedDuration;
-      this.normalRandomizingRate = 0.33F;
+      this.normalRandomizingRate = 1.65F;
       this.firingRandomizingRate = 20.0F;
       this.zoomRandomizingRate = 0.25F;
       this.normalRandomizingAmplitude = 0.06F;
@@ -212,6 +212,7 @@ public class WeaponRenderer implements IItemRenderer {
    protected WeaponRenderer.StateDescriptor getStateDescriptor(EntityLivingBase player, ItemStack itemStack) {
       float amplitude = this.normalRandomizingAmplitude;
       float rate = this.normalRandomizingRate;
+      float verticalBias = 1.0F;
       RenderableState currentState = null;
       ItemInstance<?> itemInstance = ItemInstanceRegistry.INSTANCE.getItemInstance(player, itemStack);
       ItemWeaponInstance itemWeaponInstance = null;
@@ -291,6 +292,8 @@ public class WeaponRenderer implements IItemRenderer {
             default:
                if (player.isSprinting() && this.firstPersonPositioningRunning != null) {
                   currentState = RenderableState.RUNNING;
+                  rate = 8.0F;
+                  verticalBias = 3.0F;
                } else if (itemWeaponInstance.isAimed()) {
                   currentState = RenderableState.ZOOMING;
                   rate = this.zoomRandomizingRate;
@@ -319,7 +322,7 @@ public class WeaponRenderer implements IItemRenderer {
          );
       }
 
-      return new WeaponRenderer.StateDescriptor(itemWeaponInstance, stateManager, rate, amplitude);
+      return new WeaponRenderer.StateDescriptor(itemWeaponInstance, stateManager, rate, amplitude, verticalBias);
    }
 
    private WeaponStateTimed getNextNonExpiredState(ItemWeaponInstance playerWeaponState) {
@@ -562,7 +565,7 @@ public class WeaponRenderer implements IItemRenderer {
             renderContext.setFromState(multipartPositioning.getFromState(RenderableState.class));
             renderContext.setToState(multipartPositioning.getToState(RenderableState.class));
             positioner = multipartPositioning.getPositioner();
-            positioner.applySway(stateDescriptor.rate, stateDescriptor.amplitude);
+            positioner.applySway(stateDescriptor.rate, stateDescriptor.amplitude, stateDescriptor.verticalBias);
             positioner.position(Part.MAIN_ITEM, renderContext);
             renderLeftArm((EntityPlayer)player, renderContext, positioner);
             renderRightArm((EntityPlayer)player, renderContext, positioner);
@@ -1321,13 +1324,15 @@ public class WeaponRenderer implements IItemRenderer {
       protected MultipartRenderStateManager stateManager;
       protected float rate;
       protected float amplitude;
+      protected float verticalBias;
       private final ItemWeaponInstance instance;
 
-      public StateDescriptor(ItemWeaponInstance instance, MultipartRenderStateManager stateManager, float rate, float amplitude) {
+      public StateDescriptor(ItemWeaponInstance instance, MultipartRenderStateManager stateManager, float rate, float amplitude, float verticalBias) {
          this.instance = instance;
          this.stateManager = stateManager;
          this.rate = rate;
          this.amplitude = amplitude;
+         this.verticalBias = verticalBias;
       }
    }
 
