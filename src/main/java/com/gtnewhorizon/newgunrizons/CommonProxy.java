@@ -34,6 +34,7 @@ import com.gtnewhorizon.newgunrizons.network.SpawnParticleMessage;
 import com.gtnewhorizon.newgunrizons.network.TypeRegistry;
 import com.gtnewhorizon.newgunrizons.network.WeaponActionMessage;
 import com.gtnewhorizon.newgunrizons.network.WeaponActionMessageHandler;
+import com.gtnewhorizon.newgunrizons.registry.AttachmentCompatibilityRegistry;
 import com.gtnewhorizon.newgunrizons.registry.Attachments;
 import com.gtnewhorizon.newgunrizons.registry.AuxiliaryAttachments;
 import com.gtnewhorizon.newgunrizons.registry.Bullets;
@@ -132,6 +133,7 @@ public class CommonProxy {
       Bullets.init();
       Magazines.init();
       Guns.init();
+      AttachmentCompatibilityRegistry.buildReverseMap();
       Grenades.init();
    }
 

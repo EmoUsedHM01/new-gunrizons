@@ -5,6 +5,7 @@ import com.gtnewhorizon.newgunrizons.attachment.CompatibleAttachment;
 import com.gtnewhorizon.newgunrizons.attachment.Part;
 import com.gtnewhorizon.newgunrizons.client.render.CustomRenderer;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
+import com.gtnewhorizon.newgunrizons.registry.AttachmentCompatibilityRegistry;
 import com.gtnewhorizon.newgunrizons.util.Pair;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,6 +43,26 @@ public class ItemAttachment extends Item {
    public void addInformation(ItemStack itemStack, EntityPlayer player, List tooltip, boolean flag) {
       if (tooltip != null && this.informationProvider != null) {
          tooltip.add(this.informationProvider.apply(itemStack));
+      }
+
+      if (tooltip != null) {
+         List<String> gunNames = AttachmentCompatibilityRegistry.getCompatibleGunNames(this);
+         if (!gunNames.isEmpty()) {
+            StringBuilder line = new StringBuilder("Can be attached to: ");
+            boolean first = true;
+            for (String name : gunNames) {
+               if (!first) {
+                  line.append(", ");
+               }
+               if (!first && line.length() + name.length() > 40) {
+                  tooltip.add(line.toString());
+                  line = new StringBuilder("  ");
+               }
+               line.append(name);
+               first = false;
+            }
+            tooltip.add(line.toString());
+         }
       }
    }
 
