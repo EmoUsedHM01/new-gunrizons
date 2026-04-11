@@ -25,9 +25,7 @@ public class AttachmentCompatibilityRegistry {
                   ItemWeapon weapon = (ItemWeapon) item;
                   String displayName = StatCollector.translateToLocal("item." + weapon.getName() + ".name");
                   for (ItemAttachment attachment : weapon.getCompatibleAttachments().keySet()) {
-                     if (attachment.getCreativeTab() != null) {
-                        attachmentToGunNames.computeIfAbsent(attachment, k -> new ArrayList<>()).add(displayName);
-                     }
+                     attachmentToGunNames.computeIfAbsent(attachment, k -> new ArrayList<>()).add(displayName);
                   }
                }
             }
