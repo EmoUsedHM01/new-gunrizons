@@ -44,7 +44,6 @@ Eight gun-specific enchantments that can be applied via enchanting table or anvi
 ### Tooltips & UI
 - Enchantments display at the top of weapon tooltips (matching vanilla item style)
 - Attachments show "Can be attached to: ..." listing all compatible guns
-- Hollow Point dynamically modifies the damage line in weapon tooltips
 
 ## Features
 
