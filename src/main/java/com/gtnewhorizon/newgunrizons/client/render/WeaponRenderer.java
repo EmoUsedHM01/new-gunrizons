@@ -8,6 +8,7 @@ import com.gtnewhorizon.newgunrizons.client.animation.MultipartRenderStateManage
 import com.gtnewhorizon.newgunrizons.client.animation.MultipartTransition;
 import com.gtnewhorizon.newgunrizons.client.animation.MultipartTransitionProvider;
 import com.gtnewhorizon.newgunrizons.client.animation.Transition;
+import com.gtnewhorizon.newgunrizons.enchantments.ModEnchantments;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
@@ -213,6 +214,7 @@ public class WeaponRenderer implements IItemRenderer {
       float amplitude = this.normalRandomizingAmplitude;
       float rate = this.normalRandomizingRate;
       float verticalBias = 1.0F;
+      float animationSpeedMultiplier = 1.0F;
       RenderableState currentState = null;
       ItemInstance<?> itemInstance = ItemInstanceRegistry.INSTANCE.getItemInstance(player, itemStack);
       ItemWeaponInstance itemWeaponInstance = null;
@@ -269,18 +271,23 @@ public class WeaponRenderer implements IItemRenderer {
             case UNLOAD_PREPARING:
             case UNLOAD:
                currentState = RenderableState.UNLOADING;
+               animationSpeedMultiplier = getReloadAnimationSpeedMultiplier(itemStack);
                break;
             case LOAD:
                currentState = RenderableState.RELOADING;
+               animationSpeedMultiplier = getReloadAnimationSpeedMultiplier(itemStack);
                break;
             case LOAD_ITERATION:
                currentState = RenderableState.LOAD_ITERATION;
+               animationSpeedMultiplier = getReloadAnimationSpeedMultiplier(itemStack);
                break;
             case LOAD_ITERATION_COMPLETED:
                currentState = RenderableState.LOAD_ITERATION_COMPLETED;
+               animationSpeedMultiplier = getReloadAnimationSpeedMultiplier(itemStack);
                break;
             case ALL_LOAD_ITERATIONS_COMPLETED:
                currentState = RenderableState.ALL_LOAD_ITERATIONS_COMPLETED;
+               animationSpeedMultiplier = getReloadAnimationSpeedMultiplier(itemStack);
                break;
             case EJECTING:
                currentState = RenderableState.EJECT_SPENT_ROUND;
@@ -318,11 +325,17 @@ public class WeaponRenderer implements IItemRenderer {
                || currentState == RenderableState.ZOOMING_SHOOTING
                || currentState == RenderableState.RUNNING
                || currentState == RenderableState.ZOOMING
-               || currentState == RenderableState.NORMAL
+               || currentState == RenderableState.NORMAL,
+            animationSpeedMultiplier
          );
       }
 
       return new WeaponRenderer.StateDescriptor(itemWeaponInstance, stateManager, rate, amplitude, verticalBias);
+   }
+
+   private static float getReloadAnimationSpeedMultiplier(ItemStack itemStack) {
+      int fastHandsLevel = ModEnchantments.getLevel(ModEnchantments.fastHands, itemStack);
+      return (float)Math.max(0.2, 1.0 - fastHandsLevel * 0.2);
    }
 
    private WeaponStateTimed getNextNonExpiredState(ItemWeaponInstance playerWeaponState) {

@@ -380,3 +380,12 @@ gui.inventoryFull=Inventory full
 gui.currentZoom=Zoom: %s%%
 gui.grenadeExplodes=Explodes in %s sec
 gui.coolingDown=Cooling down...
+
+enchantment.armorPiercing=Armor Piercing
+enchantment.collateral=Collateral
+enchantment.etherealRounds=Ethereal Rounds
+enchantment.fastHands=Fast Hands
+enchantment.hollowPoint=Hollow Point
+enchantment.incendiary=Incendiary
+enchantment.gunKnockback=Knockback
+enchantment.stability=Stability

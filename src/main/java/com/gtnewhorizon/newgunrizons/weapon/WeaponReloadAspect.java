@@ -2,6 +2,7 @@ package com.gtnewhorizon.newgunrizons.weapon;
 
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
+import com.gtnewhorizon.newgunrizons.enchantments.ModEnchantments;
 import com.gtnewhorizon.newgunrizons.items.ItemAttachment;
 import com.gtnewhorizon.newgunrizons.items.ItemBullet;
 import com.gtnewhorizon.newgunrizons.items.ItemMagazine;
@@ -43,18 +44,33 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
          AttachmentCategory.MAGAZINE, weaponInstance
       )
       != null;
-   private static final Predicate<ItemWeaponInstance> loadIterationCompleted = weaponInstance -> System.currentTimeMillis()
-      >= weaponInstance.getStateUpdateTimestamp()
-         + Math.max(weaponInstance.getWeapon().getLoadIterationTimeout(), weaponInstance.getWeapon().getTotalLoadIterationDuration() + 250L);
-   private static final Predicate<ItemWeaponInstance> allLoadIterationsCompleted = weaponInstance -> System.currentTimeMillis()
-      >= weaponInstance.getStateUpdateTimestamp() + weaponInstance.getWeapon().getAllLoadIterationAnimationsCompletedDuration();
-   private static final Predicate<ItemWeaponInstance> reloadAnimationCompleted = weaponInstance -> System.currentTimeMillis()
-      >= weaponInstance.getStateUpdateTimestamp()
-         + Math.max((double)weaponInstance.getWeapon().getReloadingTimeout(), weaponInstance.getWeapon().getTotalReloadingDuration() * 1.1);
-   private static final Predicate<ItemWeaponInstance> unloadAnimationCompleted = weaponInstance -> System.currentTimeMillis()
-      >= weaponInstance.getStateUpdateTimestamp() + weaponInstance.getWeapon().getTotalUnloadingDuration() * 1.1;
-   private static final Predicate<ItemWeaponInstance> prepareFirstLoadIterationAnimationCompleted = weaponInstance -> System.currentTimeMillis()
-      >= weaponInstance.getStateUpdateTimestamp() + weaponInstance.getWeapon().getPrepareFirstLoadIterationAnimationDuration() * 1.1;
+   private static final Predicate<ItemWeaponInstance> loadIterationCompleted = weaponInstance -> {
+      double speedMult = getReloadSpeedMultiplier(weaponInstance);
+      return System.currentTimeMillis()
+         >= weaponInstance.getStateUpdateTimestamp()
+            + (long)(Math.max(weaponInstance.getWeapon().getLoadIterationTimeout(), weaponInstance.getWeapon().getTotalLoadIterationDuration() + 250L) * speedMult);
+   };
+   private static final Predicate<ItemWeaponInstance> allLoadIterationsCompleted = weaponInstance -> {
+      double speedMult = getReloadSpeedMultiplier(weaponInstance);
+      return System.currentTimeMillis()
+         >= weaponInstance.getStateUpdateTimestamp() + (long)(weaponInstance.getWeapon().getAllLoadIterationAnimationsCompletedDuration() * speedMult);
+   };
+   private static final Predicate<ItemWeaponInstance> reloadAnimationCompleted = weaponInstance -> {
+      double speedMult = getReloadSpeedMultiplier(weaponInstance);
+      return System.currentTimeMillis()
+         >= weaponInstance.getStateUpdateTimestamp()
+            + (long)(Math.max((double)weaponInstance.getWeapon().getReloadingTimeout(), weaponInstance.getWeapon().getTotalReloadingDuration() * 1.1) * speedMult);
+   };
+   private static final Predicate<ItemWeaponInstance> unloadAnimationCompleted = weaponInstance -> {
+      double speedMult = getReloadSpeedMultiplier(weaponInstance);
+      return System.currentTimeMillis()
+         >= weaponInstance.getStateUpdateTimestamp() + (long)(weaponInstance.getWeapon().getTotalUnloadingDuration() * 1.1 * speedMult);
+   };
+   private static final Predicate<ItemWeaponInstance> prepareFirstLoadIterationAnimationCompleted = weaponInstance -> {
+      double speedMult = getReloadSpeedMultiplier(weaponInstance);
+      return System.currentTimeMillis()
+         >= weaponInstance.getStateUpdateTimestamp() + (long)(weaponInstance.getWeapon().getPrepareFirstLoadIterationAnimationDuration() * 1.1 * speedMult);
+   };
    private static final Predicate<ItemWeaponInstance> alertTimeoutExpired = instance -> System.currentTimeMillis() >= 500L + instance.getStateUpdateTimestamp();
    private final Predicate<ItemWeaponInstance> inventoryHasFreeSlots = weaponInstance -> weaponInstance.getPlayer() instanceof EntityPlayer
       && InventoryUtils.inventoryHasFreeSlots((EntityPlayer)weaponInstance.getPlayer());
@@ -79,6 +95,18 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
          }
       }
    };
+
+   private static double getReloadSpeedMultiplier(ItemWeaponInstance weaponInstance) {
+      int fastHandsLevel = ModEnchantments.getLevel(ModEnchantments.fastHands, weaponInstance.getItemStack());
+      return Math.max(0.2, 1.0 - fastHandsLevel * 0.2);
+   }
+
+   private static float getReloadSoundPitch(ItemWeaponInstance weaponInstance) {
+      double speedMult = getReloadSpeedMultiplier(weaponInstance);
+      float speedup = 1.0F / (float)speedMult;
+      // Use half the semitone shift: sqrt(speedup) = 2^(t/2 / 12) where t = 12*log2(speedup)
+      return (float)Math.sqrt(speedup);
+   }
 
    @Override
    public void setStateManager(StateManager<WeaponState, ? super ItemWeaponInstance> stateManager) {
@@ -194,7 +222,7 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
          }
 
          if (weapon.getReloadSound() != null) {
-            player.playSound(weapon.getReloadSound(), 1.0F, 1.0F);
+            player.playSound(weapon.getReloadSound(), 1.0F, getReloadSoundPitch(weaponInstance));
          }
 
          NewGunrizonsMod.CHANNEL.sendToServer(new WeaponActionMessage((byte)0, weaponInstance.getItemInventoryIndex()));
@@ -235,7 +263,7 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
 
    private void prepareUnload(ItemWeaponInstance weaponInstance) {
       if (weaponInstance.getWeapon().getUnloadSound() != null) {
-         weaponInstance.getPlayer().playSound(weaponInstance.getWeapon().getUnloadSound(), 1.0F, 1.0F);
+         weaponInstance.getPlayer().playSound(weaponInstance.getWeapon().getUnloadSound(), 1.0F, getReloadSoundPitch(weaponInstance));
       }
    }
 
@@ -253,7 +281,7 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
 
    public void startLoadIteration(ItemWeaponInstance weaponInstance) {
       if (weaponInstance.getWeapon().getReloadIterationSound() != null) {
-         weaponInstance.getPlayer().playSound(weaponInstance.getWeapon().getReloadIterationSound(), 1.0F, 1.0F);
+         weaponInstance.getPlayer().playSound(weaponInstance.getWeapon().getReloadIterationSound(), 1.0F, getReloadSoundPitch(weaponInstance));
       }
    }
 
@@ -263,7 +291,7 @@ public class WeaponReloadAspect implements Aspect<WeaponState, ItemWeaponInstanc
 
    public void completeAllLoadIterations(ItemWeaponInstance weaponInstance) {
       if (weaponInstance.getWeapon().getAllReloadIterationsCompletedSound() != null) {
-         weaponInstance.getPlayer().playSound(weaponInstance.getWeapon().getAllReloadIterationsCompletedSound(), 1.0F, 1.0F);
+         weaponInstance.getPlayer().playSound(weaponInstance.getWeapon().getAllReloadIterationsCompletedSound(), 1.0F, getReloadSoundPitch(weaponInstance));
       }
    }
 }

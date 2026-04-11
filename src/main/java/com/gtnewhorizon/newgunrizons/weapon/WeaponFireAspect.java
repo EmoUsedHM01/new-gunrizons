@@ -2,6 +2,7 @@ package com.gtnewhorizon.newgunrizons.weapon;
 
 import com.gtnewhorizon.newgunrizons.NewGunrizonsMod;
 import com.gtnewhorizon.newgunrizons.attachment.AttachmentCategory;
+import com.gtnewhorizon.newgunrizons.enchantments.ModEnchantments;
 import com.gtnewhorizon.newgunrizons.items.ItemWeapon;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstance;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceRegistry;
@@ -154,13 +155,26 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
          player.playSound(weapon.getEndOfShootSound(), 1.0F, 1.0F);
       }
 
-      player.rotationPitch = player.rotationPitch - weaponInstance.getRecoil();
+      // Stability: reduce recoil by 20% per level
+      float recoil = weaponInstance.getRecoil();
+      int stabilityLevel = ModEnchantments.getLevel(ModEnchantments.stability, weaponInstance.getItemStack());
+      if (stabilityLevel > 0) {
+         recoil *= Math.max(0.0F, 1.0F - stabilityLevel * 0.2F);
+      }
+
+      player.rotationPitch = player.rotationPitch - recoil;
       float rotationYawFactor = -1.0F + random.nextFloat() * 2.0F;
-      player.rotationYaw = player.rotationYaw + weaponInstance.getRecoil() * rotationYawFactor;
+      player.rotationYaw = player.rotationYaw + recoil * rotationYawFactor;
       NewGunrizonsMod.proxy.onWeaponFireEffects(player, weapon.getSmokeOffsetX().get(), weapon.getSmokeOffsetY().get(), silencerOn);
       weaponInstance.setSeriesShotCount(weaponInstance.getSeriesShotCount() + 1);
       weaponInstance.setLastFireTimestamp(System.currentTimeMillis());
-      weaponInstance.setAmmo(weaponInstance.getAmmo() - 1);
+
+      // Ethereal Rounds: 15% chance per level to not consume ammo
+      int etherealLevel = ModEnchantments.getLevel(ModEnchantments.etherealRounds, weaponInstance.getItemStack());
+      boolean conserveAmmo = etherealLevel > 0 && random.nextFloat() < etherealLevel * 0.15F;
+      if (!conserveAmmo) {
+         weaponInstance.setAmmo(weaponInstance.getAmmo() - 1);
+      }
    }
 
    private void ejectSpentRound(ItemWeaponInstance weaponInstance) {
@@ -182,12 +196,17 @@ public class WeaponFireAspect implements Aspect<WeaponState, ItemWeaponInstance>
          instance.setPlayer(player);
          int ammo = instance.getAmmo();
          if (ammo > 0) {
-            instance.setAmmo(ammo - 1);
-            ItemInstance.setAmmo(itemStack, ammo - 1);
+            // Ethereal Rounds: 15% chance per level to not consume ammo
+            int etherealLevel = ModEnchantments.getLevel(ModEnchantments.etherealRounds, itemStack);
+            boolean conserveAmmo = etherealLevel > 0 && player.getRNG().nextFloat() < etherealLevel * 0.15F;
+            if (!conserveAmmo) {
+               instance.setAmmo(ammo - 1);
+               ItemInstance.setAmmo(itemStack, ammo - 1);
+            }
             ItemInstance.toStack(itemStack, instance);
 
             for (int i = 0; i < weapon.getPellets(); i++) {
-               weapon.spawnBullet(player);
+               weapon.spawnBullet(player, itemStack);
             }
 
             if (weapon.isShellCasingEjectEnabled()) {

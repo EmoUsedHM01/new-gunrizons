@@ -3,6 +3,7 @@ package com.gtnewhorizon.newgunrizons;
 import codechicken.nei.api.API;
 import com.gtnewhorizon.newgunrizons.client.handlers.ClientTickHandler;
 import com.gtnewhorizon.newgunrizons.client.handlers.WeaponHudHandler;
+import com.gtnewhorizon.newgunrizons.client.handlers.WeaponTooltipHandler;
 import com.gtnewhorizon.newgunrizons.client.handlers.WeaponInputHandler;
 import com.gtnewhorizon.newgunrizons.client.handlers.WeaponRenderHandler;
 import com.gtnewhorizon.newgunrizons.client.input.KeyBindings;
@@ -37,6 +38,7 @@ public class ClientProxy extends CommonProxy {
    public void init(Object mod, FMLPreInitializationEvent event) {
       super.init(mod, event);
       MinecraftForge.EVENT_BUS.register(new WeaponHudHandler());
+      MinecraftForge.EVENT_BUS.register(new WeaponTooltipHandler());
       KeyBindings.init();
       WeaponInputHandler inputHandler = new WeaponInputHandler();
       FMLCommonHandler.instance().bus().register(inputHandler);

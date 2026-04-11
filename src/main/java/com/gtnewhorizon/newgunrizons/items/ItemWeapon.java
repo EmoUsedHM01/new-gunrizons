@@ -12,6 +12,7 @@ import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceFactory;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemInstanceRegistry;
 import com.gtnewhorizon.newgunrizons.items.instances.ItemWeaponInstance;
 import com.gtnewhorizon.newgunrizons.network.StatusMessageManager;
+import com.gtnewhorizon.newgunrizons.enchantments.ModEnchantments;
 import com.gtnewhorizon.newgunrizons.network.WeaponActionMessage;
 import com.gtnewhorizon.newgunrizons.registry.Sounds;
 import com.gtnewhorizon.newgunrizons.weapon.Reloadable;
@@ -30,11 +31,13 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
@@ -126,6 +129,26 @@ public class ItemWeapon extends Item implements ItemInstanceFactory<ItemWeaponIn
       this.setMaxStackSize(1);
    }
 
+   @Override
+   public int getItemEnchantability() {
+      return 14;
+   }
+
+   @Override
+   public int getItemEnchantability(ItemStack stack) {
+      return 14;
+   }
+
+   @Override
+   public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+      return true;
+   }
+
+   @Override
+   public boolean isItemTool(ItemStack stack) {
+      return true;
+   }
+
    public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
       super.onCreated(stack, worldIn, playerIn);
       stack.setTagCompound(new NBTTagCompound());
@@ -196,8 +219,36 @@ public class ItemWeapon extends Item implements ItemInstanceFactory<ItemWeaponIn
    }
 
    public void addInformation(ItemStack itemStack, EntityPlayer player, List tooltip, boolean flag) {
+      // Add enchantments at the top, like vanilla items
+      NBTTagList enchTags = itemStack.getEnchantmentTagList();
+      if (enchTags != null && enchTags.tagCount() > 0) {
+         for (int i = 0; i < enchTags.tagCount(); i++) {
+            short id = enchTags.getCompoundTagAt(i).getShort("id");
+            short lvl = enchTags.getCompoundTagAt(i).getShort("lvl");
+            if (Enchantment.enchantmentsList[id] != null) {
+               tooltip.add(Enchantment.enchantmentsList[id].getTranslatedName(lvl));
+            }
+         }
+         tooltip.add("");
+      }
+
       if (tooltip != null && this.informationProvider != null) {
-         tooltip.addAll(this.informationProvider.apply(itemStack));
+         List<String> lines = this.informationProvider.apply(itemStack);
+         int hollowPointLevel = ModEnchantments.getLevel(ModEnchantments.hollowPoint, itemStack);
+         for (String line : lines) {
+            if (hollowPointLevel > 0 && line.startsWith("Damage: ")) {
+               try {
+                  float baseDamage = Float.parseFloat(line.substring("Damage: ".length()));
+                  float bonus = 0.5F + 0.5F * hollowPointLevel;
+                  float totalDamage = baseDamage + bonus;
+                  tooltip.add(String.format("Damage: %.1f \u00a7a(+%.1f)\u00a7r", totalDamage, bonus));
+               } catch (NumberFormatException e) {
+                  tooltip.add(line);
+               }
+            } else {
+               tooltip.add(line);
+            }
+         }
       }
    }
 
@@ -269,6 +320,10 @@ public class ItemWeapon extends Item implements ItemInstanceFactory<ItemWeaponIn
    }
 
    public void spawnBullet(EntityLivingBase player) {
+      this.spawnBullet(player, null);
+   }
+
+   public void spawnBullet(EntityLivingBase player, ItemStack weaponStack) {
       EntityBullet bullet = new EntityBullet(
          this,
          player.worldObj,
@@ -279,6 +334,9 @@ public class ItemWeapon extends Item implements ItemInstanceFactory<ItemWeaponIn
          this.spawnEntityDamage,
          this.spawnEntityExplosionRadius
       );
+      if (weaponStack != null) {
+         bullet.applyEnchantments(weaponStack);
+      }
       bullet.setPositionAndDirection();
       player.worldObj.spawnEntityInWorld(bullet);
    }

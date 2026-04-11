@@ -32,6 +32,10 @@ public class MultipartRenderStateManager {
    }
 
    public void setState(RenderableState newState, boolean animated, boolean immediate) {
+      this.setState(newState, animated, immediate, 1.0f);
+   }
+
+   public void setState(RenderableState newState, boolean animated, boolean immediate, float animationSpeedMultiplier) {
       if (newState == null) {
          throw new IllegalArgumentException("State cannot be null");
       } else if (!newState.equals(this.currentState)) {
@@ -40,7 +44,7 @@ public class MultipartRenderStateManager {
          }
 
          if (animated) {
-            this.positioningQueue.add(new MultipartRenderStateManager.TransitionedPositioning(this.currentState, newState));
+            this.positioningQueue.add(new MultipartRenderStateManager.TransitionedPositioning(this.currentState, newState, animationSpeedMultiplier));
          }
 
          this.positioningQueue.add(new MultipartRenderStateManager.StaticPositioning(newState));
@@ -147,15 +151,18 @@ public class MultipartRenderStateManager {
       private final RenderableState fromState;
       private final RenderableState toState;
 
-      TransitionedPositioning(RenderableState fromState, RenderableState toState) {
+      private final float speedMultiplier;
+
+      TransitionedPositioning(RenderableState fromState, RenderableState toState, float speedMultiplier) {
          this.fromState = fromState;
          this.toState = toState;
+         this.speedMultiplier = speedMultiplier;
          this.fromPositioning = MultipartRenderStateManager.this.transitionProvider.getPositioning(fromState);
          this.toPositioning = MultipartRenderStateManager.this.transitionProvider.getPositioning(toState);
          this.segmentCount = this.toPositioning.size();
 
          for (MultipartTransition t : this.toPositioning) {
-            this.totalDuration = this.totalDuration + t.getDuration() + t.getPause();
+            this.totalDuration = this.totalDuration + (long)((t.getDuration() + t.getPause()) * speedMultiplier);
          }
       }
 
@@ -247,8 +254,8 @@ public class MultipartRenderStateManager {
       public MultipartPositioning.Positioner getPositioner() {
          long currentTime = System.currentTimeMillis();
          MultipartTransition targetState = this.toPositioning.get(this.currentIndex);
-         long currentDuration = targetState.getDuration();
-         long currentPause = targetState.getPause();
+         long currentDuration = (long)(targetState.getDuration() * this.speedMultiplier);
+         long currentPause = (long)(targetState.getPause() * this.speedMultiplier);
          if (this.currentIndex == 0 && this.startTime == null) {
             this.startTime = currentTime;
          }

@@ -1,6 +1,7 @@
 package com.gtnewhorizon.newgunrizons;
 
 import com.gtnewhorizon.newgunrizons.client.ADSConfig;
+import com.gtnewhorizon.newgunrizons.enchantments.ModEnchantments;
 import com.gtnewhorizon.newgunrizons.registry.GTRecipes;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -42,6 +43,7 @@ public class NewGunrizonsMod {
    @EventHandler
    public void preInit(FMLPreInitializationEvent event) {
       ADSConfig.init(event.getSuggestedConfigurationFile());
+      ModEnchantments.init();
       FMLCommonHandler.instance().bus().register(this);
       proxy.init(this, event);
    }
