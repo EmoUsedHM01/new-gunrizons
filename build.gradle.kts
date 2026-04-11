@@ -3,7 +3,7 @@ plugins {
     id("com.gtnewhorizons.gtnhconvention")
 }
 
-version = "1.0.1"
+version = "1.1.0"
 
 // This has to be here, because otherwise 2.0.7 GTNH Gradle script pulls GTNHLib version
 // incompatible with dependencies from 2.8.4.
