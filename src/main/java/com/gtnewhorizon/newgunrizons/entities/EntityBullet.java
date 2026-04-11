@@ -21,6 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public class EntityBullet extends EntityProjectile {
@@ -85,7 +86,7 @@ public class EntityBullet extends EntityProjectile {
             this.handleExplosiveImpact(position);
             this.setDead();
          } else if (position.entityHit != null) {
-            this.handleEntityHit(position.entityHit);
+            this.handleEntityHit(position.entityHit, position.hitVec);
             if (this.collateralLevel <= 0) {
                this.setDead();
             }
@@ -110,11 +111,25 @@ public class EntityBullet extends EntityProjectile {
       );
    }
 
-   private void handleEntityHit(Entity target) {
+   private boolean isHeadshot(Entity target, Vec3 hitVec) {
+      if (hitVec == null || !(target instanceof EntityLivingBase)) {
+         return false;
+      }
+      double entityHeight = target.boundingBox.maxY - target.boundingBox.minY;
+      double headThreshold = target.boundingBox.maxY - entityHeight * 0.25;
+      return hitVec.yCoord >= headThreshold;
+   }
+
+   private void handleEntityHit(Entity target, Vec3 hitVec) {
       // Calculate total damage with Hollow Point (same as Sharpness: 0.5 + 0.5 * level)
       float totalDamage = this.damage;
       if (this.hollowPointLevel > 0) {
          totalDamage += 0.5F + 0.5F * this.hollowPointLevel;
+      }
+
+      // Headshot: double damage if bullet hits the top 25% of the entity
+      if (this.isHeadshot(target, hitVec)) {
+         totalDamage *= 2.0F;
       }
 
       // Armor Piercing: split damage into regular and armor-bypassing portions

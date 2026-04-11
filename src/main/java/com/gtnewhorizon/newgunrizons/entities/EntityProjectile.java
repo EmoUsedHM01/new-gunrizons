@@ -174,9 +174,9 @@ public abstract class EntityProjectile extends Entity implements IProjectile, IE
          }
 
          if (!this.worldObj.isRemote) {
-            Entity hitEntity = this.findClosestEntityOnPath(startPos, endPos);
-            if (hitEntity != null) {
-               blockHit = new MovingObjectPosition(hitEntity);
+            MovingObjectPosition entityHit = this.findClosestEntityOnPath(startPos, endPos);
+            if (entityHit != null) {
+               blockHit = entityHit;
             }
          }
 
@@ -235,8 +235,9 @@ public abstract class EntityProjectile extends Entity implements IProjectile, IE
       }
    }
 
-   private Entity findClosestEntityOnPath(Vec3 startPos, Vec3 endPos) {
+   private MovingObjectPosition findClosestEntityOnPath(Vec3 startPos, Vec3 endPos) {
       Entity closestEntity = null;
+      Vec3 closestHitVec = null;
       List<Entity> nearbyEntities = this.worldObj
          .getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0, 1.0, 1.0));
       double closestDistance = 0.0;
@@ -250,13 +251,19 @@ public abstract class EntityProjectile extends Entity implements IProjectile, IE
                double hitDistance = startPos.distanceTo(intercept.hitVec);
                if (hitDistance < closestDistance || closestDistance == 0.0) {
                   closestEntity = candidate;
+                  closestHitVec = intercept.hitVec;
                   closestDistance = hitDistance;
                }
             }
          }
       }
 
-      return closestEntity;
+      if (closestEntity != null) {
+         MovingObjectPosition result = new MovingObjectPosition(closestEntity);
+         result.hitVec = closestHitVec;
+         return result;
+      }
+      return null;
    }
 
    private void checkWaterEntry(Vec3 start, Vec3 end) {
