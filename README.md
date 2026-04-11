@@ -9,16 +9,42 @@ A Minecraft 1.7.10 firearms mod for the [GT New Horizons](https://github.com/GTN
 
 NewGunrizons should be compatible with Angelica's shader pipeline. Muzzle flash effects use Angelica's dynamic lighting system for real-time illumination when firing. Scope rendering works correctly with both shaders enabled and disabled.
 
-## What Changed from Vic's Modern Warfare
+## What Changed from the Original De-make
 
-This is not a simple config tweak — the mod has been extensively restructured and refactored.
+This fork builds on [vegeta1k95's NewGunrizons](https://github.com/vegeta1k95/NewGunrizons), a de-make of [Vic's Modern Warfare](https://github.com/vic4games/modern-warfare) for 1.7.10. The original de-make restructured and refactored the codebase, cut everything unrelated to weapons, migrated to JSON/Bedrock models, added bullet tracers with Iris/shader compatibility, and integrated GregTech crafting with tiered progression.
 
-- **Full refactor** of the internal codebase.
-- **Everything unrelated to weapons was cut**.
-- **Bug fixes and enhancements** for the original mod.
-- **GregTech crafting integration** — all items are crafted exclusively through GT machines (Assembler, Forming Press). No vanilla crafting table recipes.
-- **Tiered progression** — weapons are gated behind GregTech voltage tiers (LV through IV), requiring progressively advanced components
-- **Custom component system** — gun barrels, receivers, stocks, firing mechanisms, bullet casings, and precision lenses are intermediate crafting ingredients made in GT machines
+This fork adds the following on top of that work:
+
+### Animation & Feel
+- **Smooth ADS transitions** — aiming down sights now reverses smoothly from the current animation position instead of snapping
+- **Weapon sway** — guns now have a subtle idle sway while held, with more aggressive vertical shaking while sprinting
+- **Configurable ADS** — aim-down-sights zoom, sensitivity, and timing are exposed via config
+
+### Enchantment System
+Eight gun-specific enchantments that can be applied via enchanting table or anvil:
+
+| Enchantment | Max Level | Effect |
+|-------------|-----------|--------|
+| Hollow Point | V | Increases bullet damage by 0.5 + 0.5 per level |
+| Armor Piercing | III | 25% of damage per level bypasses armor |
+| Collateral | I | Bullets pass through entities, hitting multiple targets |
+| Ethereal Rounds | IV | 15% chance per level to not consume ammo |
+| Fast Hands | III | Reduces reload time by 20% per level (animation + timing) |
+| Incendiary | I | Sets targets on fire; ignites blocks on impact |
+| Knockback | II | Knocks targets back along bullet trajectory |
+| Stability | IV | Reduces recoil by 20% per level |
+
+- Dynamic enchantment ID allocation to avoid conflicts in heavily modded environments
+- Enchantment descriptions visible via WAWLA (hold sneak on enchanted books)
+- Hollow Point bonus damage reflected in weapon tooltip
+
+### Combat
+- **Headshot system** — bullets that hit the top 25% of an entity's bounding box deal double damage
+
+### Tooltips & UI
+- Enchantments display at the top of weapon tooltips (matching vanilla item style)
+- Attachments show "Can be attached to: ..." listing all compatible guns
+- Hollow Point dynamically modifies the damage line in weapon tooltips
 
 ## Features
 
@@ -98,6 +124,7 @@ All crafting is done through GregTech machines — no crafting table recipes exi
 ## Credits
 
 - **Original mod**: [Vic's Modern Warfare](https://github.com/vic4games/modern-warfare) by Vic4Games — the foundation this mod was built upon
+- **De-make**: [NewGunrizons](https://github.com/vegeta1k95/NewGunrizons) by vegeta1k95 — the 1.7.10 port this fork is based on
 - **GT New Horizons team** — for the modpack and build toolchain
 
 ## License
