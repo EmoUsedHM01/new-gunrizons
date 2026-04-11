@@ -2,6 +2,9 @@ package com.gtnewhorizon.newgunrizons;
 
 import com.gtnewhorizon.newgunrizons.client.ADSConfig;
 import com.gtnewhorizon.newgunrizons.registry.GTRecipes;
+import cpw.mods.fml.client.event.ConfigChangedEvent;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import com.gtnewhorizon.newgunrizons.tabs.AmmoTab;
 import com.gtnewhorizon.newgunrizons.tabs.AssaultRiflesTab;
 import com.gtnewhorizon.newgunrizons.tabs.AttachmentsTab;
@@ -20,7 +23,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraft.creativetab.CreativeTabs;
 
-@Mod(modid = "newgunrizons", version = "1.0.0")
+@Mod(modid = "newgunrizons", version = "1.0.0", guiFactory = "com.gtnewhorizon.newgunrizons.client.ADSConfigGuiFactory")
 public class NewGunrizonsMod {
    public static final String MODID = "newgunrizons";
    public static final String VERSION = "1.0.0";
@@ -39,7 +42,15 @@ public class NewGunrizonsMod {
    @EventHandler
    public void preInit(FMLPreInitializationEvent event) {
       ADSConfig.init(event.getSuggestedConfigurationFile());
+      FMLCommonHandler.instance().bus().register(this);
       proxy.init(this, event);
+   }
+
+   @SubscribeEvent
+   public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
+      if (MODID.equals(event.modID)) {
+         ADSConfig.reload();
+      }
    }
 
    @EventHandler
