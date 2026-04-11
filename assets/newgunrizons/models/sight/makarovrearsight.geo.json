@@ -1,0 +1,376 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.makarovrearsight",
+        "texture_width": 128,
+        "texture_height": 64,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                5,
+                -3.2,
+                -1
+              ],
+              "size": [
+                1,
+                4,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1.7,
+                -0.2,
+                -1
+              ],
+              "size": [
+                2,
+                2,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2,
+                -3.2,
+                -1
+              ],
+              "size": [
+                1,
+                5,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                2.7,
+                -0.2,
+                -1
+              ],
+              "size": [
+                2,
+                2,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                4,
+                -3.2,
+                -1
+              ],
+              "size": [
+                1,
+                5,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                1.7,
+                -2.8,
+                -1
+              ],
+              "size": [
+                3,
+                3,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1.7,
+                -2.8,
+                -1
+              ],
+              "size": [
+                4,
+                3,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -3,
+                -3.2,
+                -1
+              ],
+              "size": [
+                1,
+                4,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -3,
+                -3.2,
+                -3.5
+              ],
+              "size": [
+                9,
+                1,
+                7
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight10",
+          "pivot": [
+            5,
+            1.8,
+            -1
+          ],
+          "rotation": [
+            0,
+            0,
+            45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                5,
+                0.8,
+                -1
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight11",
+          "pivot": [
+            -2,
+            1.8,
+            -1
+          ],
+          "rotation": [
+            0,
+            0,
+            45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2,
+                0.8,
+                -1
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight12",
+          "pivot": [
+            6,
+            0.8,
+            -1
+          ],
+          "rotation": [
+            0,
+            0,
+            135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                6,
+                -0.2,
+                -1
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight13",
+          "pivot": [
+            -3,
+            0.8,
+            -1
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3,
+                -0.2,
+                -1
+              ],
+              "size": [
+                1,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight15",
+          "pivot": [
+            -3,
+            -2.2,
+            -3.5
+          ],
+          "rotation": [
+            -31.9527,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3,
+                -4.2,
+                -3.5
+              ],
+              "size": [
+                9,
+                2,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "sight16",
+          "pivot": [
+            -3,
+            -2.2,
+            3.5
+          ],
+          "rotation": [
+            121.4201,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3,
+                -5.2,
+                3.5
+              ],
+              "size": [
+                9,
+                3,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

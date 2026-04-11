@@ -1,0 +1,210 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.m14action2",
+        "texture_width": 128,
+        "texture_height": 64,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2,
+                14.7,
+                -37
+              ],
+              "size": [
+                1,
+                1,
+                19
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -3.2,
+                13.2,
+                -37.5
+              ],
+              "size": [
+                1,
+                1,
+                19
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -0.8,
+                13.2,
+                -37.5
+              ],
+              "size": [
+                1,
+                1,
+                19
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "Action8",
+          "pivot": [
+            -2,
+            15.7,
+            -37
+          ],
+          "rotation": [
+            0,
+            0,
+            53.2544
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2,
+                14.7,
+                -37
+              ],
+              "size": [
+                1,
+                1,
+                19
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "Action9",
+          "pivot": [
+            -3.2,
+            14.2,
+            -37.5
+          ],
+          "rotation": [
+            0,
+            0,
+            -66.0355
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.2,
+                13.2,
+                -37.5
+              ],
+              "size": [
+                1,
+                1,
+                19
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "Action10",
+          "pivot": [
+            -1,
+            15.7,
+            -37
+          ],
+          "rotation": [
+            0,
+            0,
+            40.4734
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                14.7,
+                -37
+              ],
+              "size": [
+                1,
+                1,
+                19
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "Action11",
+          "pivot": [
+            0.2,
+            14.2,
+            -37.5
+          ],
+          "rotation": [
+            0,
+            0,
+            153
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0.2,
+                13.2,
+                -37.5
+              ],
+              "size": [
+                1,
+                1,
+                19
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

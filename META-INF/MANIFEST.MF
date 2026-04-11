@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+FMLCorePluginContainsFMLMod: true
+FMLAT: newgunrizons_at.cfg
+TweakClass: org.spongepowered.asm.launch.MixinTweaker
+MixinConfigs: mixins.newgunrizons.json
+ForceLoadAsMod: true
+

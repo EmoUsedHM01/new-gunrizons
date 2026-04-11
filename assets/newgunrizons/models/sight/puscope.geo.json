@@ -1,0 +1,2529 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.puscope",
+        "texture_width": 256,
+        "texture_height": 128,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                9,
+                0
+              ],
+              "size": [
+                5,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                19,
+                0
+              ],
+              "size": [
+                5,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                6,
+                12,
+                0
+              ],
+              "size": [
+                1,
+                5,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -4,
+                12,
+                0
+              ],
+              "size": [
+                1,
+                5,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                19.5,
+                30
+              ],
+              "size": [
+                5,
+                1,
+                50
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                8.5,
+                30
+              ],
+              "size": [
+                5,
+                1,
+                50
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                6.5,
+                12,
+                30
+              ],
+              "size": [
+                1,
+                5,
+                50
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -4.5,
+                12,
+                30
+              ],
+              "size": [
+                1,
+                5,
+                50
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                19.5,
+                20
+              ],
+              "size": [
+                5,
+                1,
+                8
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                8.5,
+                20
+              ],
+              "size": [
+                5,
+                1,
+                8
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                6.5,
+                12,
+                20
+              ],
+              "size": [
+                1,
+                5,
+                8
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -4.5,
+                12,
+                20
+              ],
+              "size": [
+                1,
+                5,
+                8
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -4.5,
+                12,
+                2
+              ],
+              "size": [
+                1,
+                5,
+                6
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                6.5,
+                12,
+                2
+              ],
+              "size": [
+                1,
+                5,
+                6
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                19.5,
+                2
+              ],
+              "size": [
+                5,
+                1,
+                6
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                8.5,
+                2
+              ],
+              "size": [
+                5,
+                1,
+                6
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                7.5,
+                12.5,
+                2
+              ],
+              "size": [
+                3,
+                4,
+                6
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                7.5,
+                12.5,
+                20
+              ],
+              "size": [
+                3,
+                4,
+                8
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -7.5,
+                12.5,
+                20
+              ],
+              "size": [
+                3,
+                4,
+                8
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -7.5,
+                12.5,
+                2
+              ],
+              "size": [
+                3,
+                4,
+                6
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                10,
+                1
+              ],
+              "size": [
+                5,
+                9,
+                1
+              ],
+              "uv": [
+                150,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -3,
+                12.5,
+                1
+              ],
+              "size": [
+                9,
+                4,
+                1
+              ],
+              "uv": [
+                150,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                20.5,
+                34
+              ],
+              "size": [
+                5,
+                4,
+                8
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2.5,
+                16.5,
+                35.5
+              ],
+              "size": [
+                8,
+                8,
+                5
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                24.5,
+                33.5
+              ],
+              "size": [
+                5,
+                1,
+                9
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -3,
+                24.5,
+                35.5
+              ],
+              "size": [
+                9,
+                1,
+                5
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                5.5,
+                10.5,
+                35.5
+              ],
+              "size": [
+                6,
+                8,
+                5
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                5.5,
+                12.5,
+                33.5
+              ],
+              "size": [
+                6,
+                4,
+                9
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                11.5,
+                10,
+                35.5
+              ],
+              "size": [
+                1,
+                9,
+                5
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                11.5,
+                12.5,
+                33
+              ],
+              "size": [
+                1,
+                4,
+                10
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                9.5,
+                78
+              ],
+              "size": [
+                5,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -1,
+                18.5,
+                78
+              ],
+              "size": [
+                5,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -3.5,
+                12,
+                78
+              ],
+              "size": [
+                1,
+                5,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                5.5,
+                12,
+                78
+              ],
+              "size": [
+                1,
+                5,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope5",
+          "pivot": [
+            4,
+            20,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                4,
+                19,
+                0
+              ],
+              "size": [
+                4,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope6",
+          "pivot": [
+            -1,
+            20,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                16,
+                0
+              ],
+              "size": [
+                1,
+                4,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope7",
+          "pivot": [
+            7,
+            12,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                7,
+                11,
+                0
+              ],
+              "size": [
+                4,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope8",
+          "pivot": [
+            -4,
+            12,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4,
+                8,
+                0
+              ],
+              "size": [
+                1,
+                4,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope9",
+          "pivot": [
+            -4,
+            17,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4,
+                16,
+                0
+              ],
+              "size": [
+                1,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope10",
+          "pivot": [
+            -1,
+            9,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                8,
+                0
+              ],
+              "size": [
+                1,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope11",
+          "pivot": [
+            7,
+            17,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                7,
+                16,
+                0
+              ],
+              "size": [
+                1,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope12",
+          "pivot": [
+            4,
+            9,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                4,
+                8,
+                0
+              ],
+              "size": [
+                1,
+                1,
+                30
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope17",
+          "pivot": [
+            -4.5,
+            17,
+            30
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.5,
+                16,
+                30
+              ],
+              "size": [
+                5,
+                1,
+                50
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope18",
+          "pivot": [
+            -4.5,
+            12,
+            30
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.5,
+                7,
+                30
+              ],
+              "size": [
+                1,
+                5,
+                50
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope19",
+          "pivot": [
+            4,
+            20.5,
+            30
+          ],
+          "rotation": [
+            0,
+            0,
+            45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                4,
+                19.5,
+                30
+              ],
+              "size": [
+                5,
+                1,
+                50
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope20",
+          "pivot": [
+            7.5,
+            12,
+            30
+          ],
+          "rotation": [
+            0,
+            0,
+            135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                7.5,
+                11,
+                30
+              ],
+              "size": [
+                5,
+                1,
+                50
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope29",
+          "pivot": [
+            -1,
+            20.5,
+            20
+          ],
+          "rotation": [
+            0,
+            0,
+            45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                15.5,
+                20
+              ],
+              "size": [
+                1,
+                5,
+                8
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope30",
+          "pivot": [
+            -1,
+            20.5,
+            2
+          ],
+          "rotation": [
+            0,
+            0,
+            45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                15.5,
+                2
+              ],
+              "size": [
+                1,
+                5,
+                6
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope31",
+          "pivot": [
+            -4.5,
+            12,
+            2
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.5,
+                7,
+                2
+              ],
+              "size": [
+                1,
+                5,
+                6
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope32",
+          "pivot": [
+            -4.5,
+            12,
+            20
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.5,
+                7,
+                20
+              ],
+              "size": [
+                1,
+                5,
+                8
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope33",
+          "pivot": [
+            4,
+            20.5,
+            2
+          ],
+          "rotation": [
+            0,
+            0,
+            45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                4,
+                19.5,
+                2
+              ],
+              "size": [
+                5,
+                1,
+                6
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope34",
+          "pivot": [
+            4,
+            20.5,
+            20
+          ],
+          "rotation": [
+            0,
+            0,
+            45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                4,
+                19.5,
+                20
+              ],
+              "size": [
+                5,
+                1,
+                8
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope35",
+          "pivot": [
+            7.5,
+            12,
+            2
+          ],
+          "rotation": [
+            0,
+            0,
+            135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                7.5,
+                11,
+                2
+              ],
+              "size": [
+                5,
+                1,
+                6
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope36",
+          "pivot": [
+            7.5,
+            12,
+            20
+          ],
+          "rotation": [
+            0,
+            0,
+            135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                7.5,
+                11,
+                20
+              ],
+              "size": [
+                5,
+                1,
+                8
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope43",
+          "pivot": [
+            -3.2,
+            16.5,
+            1
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.2,
+                14.5,
+                1
+              ],
+              "size": [
+                4,
+                2,
+                1
+              ],
+              "uv": [
+                150,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope44",
+          "pivot": [
+            -3.2,
+            12.5,
+            1
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.2,
+                8.5,
+                1
+              ],
+              "size": [
+                2,
+                4,
+                1
+              ],
+              "uv": [
+                150,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope45",
+          "pivot": [
+            6.2,
+            12.5,
+            1
+          ],
+          "rotation": [
+            0,
+            0,
+            135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                6.2,
+                10.5,
+                1
+              ],
+              "size": [
+                4,
+                2,
+                1
+              ],
+              "uv": [
+                150,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope46",
+          "pivot": [
+            6.2,
+            16.5,
+            1
+          ],
+          "rotation": [
+            0,
+            0,
+            135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                6.2,
+                12.5,
+                1
+              ],
+              "size": [
+                2,
+                4,
+                1
+              ],
+              "uv": [
+                150,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope49",
+          "pivot": [
+            -1,
+            24.5,
+            34
+          ],
+          "rotation": [
+            0,
+            45,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                18.5,
+                34
+              ],
+              "size": [
+                2,
+                6,
+                2
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope50",
+          "pivot": [
+            4,
+            24.5,
+            34
+          ],
+          "rotation": [
+            0,
+            45,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                4,
+                18.5,
+                34
+              ],
+              "size": [
+                2,
+                6,
+                2
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope51",
+          "pivot": [
+            -2.5,
+            24.5,
+            40.5
+          ],
+          "rotation": [
+            0,
+            -45,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.5,
+                16.5,
+                40.5
+              ],
+              "size": [
+                2,
+                8,
+                2
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope52",
+          "pivot": [
+            5.5,
+            24.5,
+            40.5
+          ],
+          "rotation": [
+            0,
+            135,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                5.5,
+                16.5,
+                40.5
+              ],
+              "size": [
+                2,
+                8,
+                2
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope53",
+          "pivot": [
+            -1,
+            24.5,
+            42
+          ],
+          "rotation": [
+            0,
+            -135,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                19.5,
+                42
+              ],
+              "size": [
+                1,
+                5,
+                1
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope54",
+          "pivot": [
+            4,
+            24.5,
+            42
+          ],
+          "rotation": [
+            0,
+            -135,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                4,
+                19.5,
+                42
+              ],
+              "size": [
+                1,
+                5,
+                1
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope55",
+          "pivot": [
+            -2.5,
+            24.5,
+            35.5
+          ],
+          "rotation": [
+            0,
+            -45,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.5,
+                16.5,
+                35.5
+              ],
+              "size": [
+                1,
+                8,
+                1
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope56",
+          "pivot": [
+            5.5,
+            24.5,
+            35.5
+          ],
+          "rotation": [
+            0,
+            135,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                5.5,
+                16.5,
+                35.5
+              ],
+              "size": [
+                1,
+                8,
+                1
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope59",
+          "pivot": [
+            -3,
+            25.5,
+            40.5
+          ],
+          "rotation": [
+            0,
+            -45,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3,
+                24.5,
+                40.5
+              ],
+              "size": [
+                2,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope60",
+          "pivot": [
+            -1,
+            25.5,
+            33.5
+          ],
+          "rotation": [
+            0,
+            45,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                24.5,
+                33.5
+              ],
+              "size": [
+                2,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope61",
+          "pivot": [
+            4,
+            25.5,
+            33.5
+          ],
+          "rotation": [
+            0,
+            45,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                4,
+                24.5,
+                33.5
+              ],
+              "size": [
+                2,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope62",
+          "pivot": [
+            4,
+            25.5,
+            42.5
+          ],
+          "rotation": [
+            0,
+            -135,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                4,
+                24.5,
+                42.5
+              ],
+              "size": [
+                2,
+                1,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope63",
+          "pivot": [
+            -3,
+            25.5,
+            35.5
+          ],
+          "rotation": [
+            0,
+            -45,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3,
+                24.5,
+                35.5
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope64",
+          "pivot": [
+            6,
+            25.5,
+            40.5
+          ],
+          "rotation": [
+            0,
+            135,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                6,
+                24.5,
+                40.5
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope65",
+          "pivot": [
+            6,
+            25.5,
+            35.5
+          ],
+          "rotation": [
+            0,
+            135,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                6,
+                24.5,
+                35.5
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope66",
+          "pivot": [
+            -1,
+            25.5,
+            42.5
+          ],
+          "rotation": [
+            0,
+            -135,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                24.5,
+                42.5
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope69",
+          "pivot": [
+            5.5,
+            18.5,
+            35.5
+          ],
+          "rotation": [
+            45,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                5.5,
+                16.5,
+                35.5
+              ],
+              "size": [
+                6,
+                2,
+                2
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope70",
+          "pivot": [
+            5.5,
+            12.5,
+            33.5
+          ],
+          "rotation": [
+            -45,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                5.5,
+                10.5,
+                33.5
+              ],
+              "size": [
+                6,
+                2,
+                2
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope71",
+          "pivot": [
+            5.5,
+            18.5,
+            40.5
+          ],
+          "rotation": [
+            45,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                5.5,
+                16.5,
+                40.5
+              ],
+              "size": [
+                6,
+                2,
+                2
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope72",
+          "pivot": [
+            5.5,
+            10.5,
+            40.5
+          ],
+          "rotation": [
+            -135,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                5.5,
+                8.5,
+                40.5
+              ],
+              "size": [
+                6,
+                2,
+                2
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope73",
+          "pivot": [
+            5.5,
+            16.5,
+            33.5
+          ],
+          "rotation": [
+            -45,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                5.5,
+                15.5,
+                33.5
+              ],
+              "size": [
+                6,
+                1,
+                1
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope74",
+          "pivot": [
+            5.5,
+            10.5,
+            35.5
+          ],
+          "rotation": [
+            -135,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                5.5,
+                9.5,
+                35.5
+              ],
+              "size": [
+                6,
+                1,
+                1
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope75",
+          "pivot": [
+            5.5,
+            16.5,
+            42.5
+          ],
+          "rotation": [
+            135,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                5.5,
+                15.5,
+                42.5
+              ],
+              "size": [
+                6,
+                1,
+                1
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope76",
+          "pivot": [
+            5.5,
+            12.5,
+            42.5
+          ],
+          "rotation": [
+            135,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                5.5,
+                11.5,
+                42.5
+              ],
+              "size": [
+                6,
+                1,
+                1
+              ],
+              "uv": [
+                200,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope79",
+          "pivot": [
+            11.5,
+            16.5,
+            33
+          ],
+          "rotation": [
+            -45,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                11.5,
+                14.5,
+                33
+              ],
+              "size": [
+                1,
+                2,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope80",
+          "pivot": [
+            11.5,
+            12.5,
+            33
+          ],
+          "rotation": [
+            -45,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                11.5,
+                9.5,
+                33
+              ],
+              "size": [
+                1,
+                3,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope81",
+          "pivot": [
+            11.5,
+            19,
+            40.5
+          ],
+          "rotation": [
+            45,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                11.5,
+                17,
+                40.5
+              ],
+              "size": [
+                1,
+                2,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope82",
+          "pivot": [
+            11.5,
+            10,
+            40.5
+          ],
+          "rotation": [
+            -135,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                11.5,
+                7,
+                40.5
+              ],
+              "size": [
+                1,
+                3,
+                2
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope83",
+          "pivot": [
+            11.5,
+            19,
+            35.5
+          ],
+          "rotation": [
+            45,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                11.5,
+                18,
+                35.5
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope84",
+          "pivot": [
+            11.5,
+            16.5,
+            43
+          ],
+          "rotation": [
+            135,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                11.5,
+                15.5,
+                43
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope85",
+          "pivot": [
+            11.5,
+            12.5,
+            43
+          ],
+          "rotation": [
+            135,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                11.5,
+                11.5,
+                43
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope86",
+          "pivot": [
+            11.5,
+            10,
+            35.5
+          ],
+          "rotation": [
+            -135,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                11.5,
+                9,
+                35.5
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope91",
+          "pivot": [
+            4,
+            19.5,
+            78
+          ],
+          "rotation": [
+            0,
+            0,
+            45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                4,
+                18.5,
+                78
+              ],
+              "size": [
+                4,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope92",
+          "pivot": [
+            -1,
+            19.5,
+            78
+          ],
+          "rotation": [
+            0,
+            0,
+            45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                15.5,
+                78
+              ],
+              "size": [
+                1,
+                4,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope93",
+          "pivot": [
+            -3.5,
+            12,
+            78
+          ],
+          "rotation": [
+            0,
+            0,
+            -45
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.5,
+                8,
+                78
+              ],
+              "size": [
+                1,
+                4,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "PUscope94",
+          "pivot": [
+            6.5,
+            12,
+            78
+          ],
+          "rotation": [
+            0,
+            0,
+            135
+          ],
+          "cubes": [
+            {
+              "origin": [
+                6.5,
+                11,
+                78
+              ],
+              "size": [
+                4,
+                1,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

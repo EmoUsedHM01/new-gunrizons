@@ -1,0 +1,341 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.natog36mag",
+        "texture_width": 256,
+        "texture_height": 128,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "gun133",
+          "pivot": [
+            0.8,
+            12.4,
+            -2.8
+          ],
+          "rotation": [
+            8.5207,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0.8,
+                4.4,
+                -2.8
+              ],
+              "size": [
+                1,
+                8,
+                2
+              ],
+              "uv": [
+                0,
+                50
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun134",
+          "pivot": [
+            1.2,
+            12.4,
+            -2.8
+          ],
+          "rotation": [
+            8.5207,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.2,
+                4.4,
+                -2.8
+              ],
+              "size": [
+                3,
+                8,
+                2
+              ],
+              "uv": [
+                0,
+                50
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun135",
+          "pivot": [
+            1.2,
+            11.9,
+            0.1
+          ],
+          "rotation": [
+            8.5207,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.2,
+                3.9,
+                0.1
+              ],
+              "size": [
+                3,
+                8,
+                3
+              ],
+              "uv": [
+                0,
+                50
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun136",
+          "pivot": [
+            0.8,
+            11.9,
+            0.1
+          ],
+          "rotation": [
+            8.5207,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0.8,
+                3.9,
+                0.1
+              ],
+              "size": [
+                1,
+                8,
+                3
+              ],
+              "uv": [
+                0,
+                50
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun137",
+          "pivot": [
+            0.8,
+            3.6,
+            1.9
+          ],
+          "rotation": [
+            108.639,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0.8,
+                0.6,
+                1.9
+              ],
+              "size": [
+                1,
+                3,
+                5
+              ],
+              "uv": [
+                0,
+                50
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun138",
+          "pivot": [
+            1.2,
+            3.6,
+            1.9
+          ],
+          "rotation": [
+            108.639,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.2,
+                0.6,
+                1.9
+              ],
+              "size": [
+                3,
+                3,
+                5
+              ],
+              "uv": [
+                0,
+                50
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun139",
+          "pivot": [
+            1.2,
+            4.2,
+            -2.05
+          ],
+          "rotation": [
+            108.639,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.2,
+                2.2,
+                -2.05
+              ],
+              "size": [
+                3,
+                2,
+                4
+              ],
+              "uv": [
+                0,
+                50
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun140",
+          "pivot": [
+            0.8,
+            4.2,
+            -2.05
+          ],
+          "rotation": [
+            108.639,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0.8,
+                2.2,
+                -2.05
+              ],
+              "size": [
+                1,
+                2,
+                4
+              ],
+              "uv": [
+                0,
+                50
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun141",
+          "pivot": [
+            0.5,
+            1.2,
+            -5.2
+          ],
+          "rotation": [
+            17.0414,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0.5,
+                0.2,
+                -5.2
+              ],
+              "size": [
+                4,
+                1,
+                6
+              ],
+              "uv": [
+                0,
+                50
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "gun142",
+          "pivot": [
+            1,
+            12.4,
+            -2.5
+          ],
+          "rotation": [
+            10.6509,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1,
+                0.4,
+                -2.5
+              ],
+              "size": [
+                3,
+                12,
+                3
+              ],
+              "uv": [
+                0,
+                50
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

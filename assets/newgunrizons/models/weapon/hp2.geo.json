@@ -1,0 +1,150 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.hp2",
+        "texture_width": 128,
+        "texture_height": 64,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -5.5,
+                9,
+                0
+              ],
+              "size": [
+                12,
+                1,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0,
+                3.5,
+                0
+              ],
+              "size": [
+                1,
+                12,
+                0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0,
+                -1.5,
+                0
+              ],
+              "size": [
+                1,
+                5,
+                0
+              ],
+              "uv": [
+                0,
+                20
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0,
+                15.5,
+                0
+              ],
+              "size": [
+                1,
+                20,
+                0
+              ],
+              "uv": [
+                0,
+                20
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                6.5,
+                9,
+                0
+              ],
+              "size": [
+                22,
+                1,
+                0
+              ],
+              "uv": [
+                0,
+                20
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -27.5,
+                9,
+                0
+              ],
+              "size": [
+                22,
+                1,
+                0
+              ],
+              "uv": [
+                0,
+                20
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                0,
+                -16.5,
+                0
+              ],
+              "size": [
+                1,
+                15,
+                0
+              ],
+              "uv": [
+                0,
+                20
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

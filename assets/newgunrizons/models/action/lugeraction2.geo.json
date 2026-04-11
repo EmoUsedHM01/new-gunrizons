@@ -1,0 +1,146 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.lugeraction2",
+        "texture_width": 512,
+        "texture_height": 256,
+        "visible_bounds_width": 4,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.5,
+                10.8,
+                -5
+              ],
+              "size": [
+                2,
+                1,
+                5
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -2,
+                10.5,
+                -10
+              ],
+              "size": [
+                1,
+                1,
+                5
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            },
+            {
+              "origin": [
+                -3,
+                10.6,
+                -5
+              ],
+              "size": [
+                3,
+                1,
+                5
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "ACTION3",
+          "pivot": [
+            -1,
+            11.5,
+            -10
+          ],
+          "rotation": [
+            0,
+            0,
+            14.9112
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                10.5,
+                -10
+              ],
+              "size": [
+                1,
+                1,
+                5
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "ACTION4",
+          "pivot": [
+            -2,
+            11.5,
+            -10
+          ],
+          "rotation": [
+            0,
+            0,
+            78.8166
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2,
+                10.5,
+                -10
+              ],
+              "size": [
+                1,
+                1,
+                5
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "mirror": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
