@@ -60,7 +60,6 @@ Over **100 firearms** spanning multiple eras and categories:
 | Sniper & Marksman Rifles | 21 | AWP, Dragunov SVD, Barrett M107, Kar98K, Mosin Nagant |
 | Shotguns & Heavy Weapons | 12 | Remington 870, SPAS-12, Saiga 12, M249 SAW, Mk153 SMAW |
 
-![Weapons Showcase](screenshots/weapons_showcase.png)
 
 ### Attachments
 
@@ -69,8 +68,6 @@ Over **100 firearms** spanning multiple eras and categories:
 - **Grips** — angled grip, stubby grip, vertical foregrip, bipod
 - **Lasers** — tactical laser sights
 
-<!-- TODO: Add attachments screenshot -->
-![Attachments](screenshots/attachments.png)
 
 ### Ammunition System
 
@@ -78,7 +75,6 @@ Over **100 firearms** spanning multiple eras and categories:
 - **Magazine-based reloading** — most weapons use detachable magazines that must be loaded with the correct bullet type
 - **Three casing tiers** — small (pistol/SMG), medium (rifle), and large (.50 BMG) casings as crafting intermediates
 
-![Combat](screenshots/combat.png)
 
 ### GregTech Integration
 
@@ -98,7 +94,6 @@ All crafting is done through GregTech machines — no crafting table recipes exi
 | EV (1920) | TungstenSteel barrel + Titanium receiver + Carbon stock | SCAR-H, AK-12, Barrett M107, M249 |
 | IV (7680) | TungstenSteel barrel + Titanium receiver + Carbon stock | M41A, SMAW |
 
-![GregTech Crafting](screenshots/gt_crafting1.png)![GregTech Crafting](screenshots/gt_crafting2.png)![GregTech Crafting](screenshots/gt_crafting3.png)
 
 ## Building
 
