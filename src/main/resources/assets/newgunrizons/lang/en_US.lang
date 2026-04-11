@@ -389,3 +389,12 @@ enchantment.hollowPoint=Hollow Point
 enchantment.incendiary=Incendiary
 enchantment.gunKnockback=Knockback
 enchantment.stability=Stability
+
+description.enchantment.armorPiercing=A portion of the bullet's damage bypasses armour, increasing by 25% per level. This enchantment can only be applied to guns.
+description.enchantment.collateral=Bullets pass through entities on hit, allowing a single shot to damage multiple targets in a line. This enchantment can only be applied to guns.
+description.enchantment.etherealRounds=Each shot has a 15% chance per level to not consume ammunition. This enchantment can only be applied to guns.
+description.enchantment.fastHands=Reduces reload time by 20% per level, speeding up the reload animation. This enchantment can only be applied to guns.
+description.enchantment.hollowPoint=Increases bullet damage by 0.5 plus 0.5 per level. This enchantment can only be applied to guns.
+description.enchantment.incendiary=Bullets set entities on fire for 5 seconds on hit. Bullets that hit blocks will ignite them as well. This enchantment can only be applied to guns.
+description.enchantment.gunKnockback=Bullets knock targets back along the bullet's trajectory. Knockback strength increases with level. This enchantment can only be applied to guns.
+description.enchantment.stability=Reduces weapon recoil by 20% per level, improving accuracy during sustained fire. This enchantment can only be applied to guns.
