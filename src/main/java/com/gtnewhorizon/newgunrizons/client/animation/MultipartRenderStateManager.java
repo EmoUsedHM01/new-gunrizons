@@ -208,15 +208,14 @@ public class MultipartRenderStateManager {
             return this.partDataMap.computeIfAbsent(part, p -> {
                MultipartRenderStateManager.TransitionedPositioning.PartData pd = new MultipartRenderStateManager.TransitionedPositioning.PartData();
                MultipartTransition fromMultipart = this.fromPositioning.get(this.fromPositioning.size() - 1);
-               Matrix4f fromMatrix;
-               if (MultipartTransition.isAnchored(fromMultipart.getPositioning(part))) {
-                  fromMatrix = MultipartRenderStateManager.this.lastApplied.get(p);
-                  if (fromMatrix == null) {
+               Matrix4f fromMatrix = MultipartRenderStateManager.this.lastApplied.get(p);
+               if (fromMatrix == null) {
+                  if (MultipartTransition.isAnchored(fromMultipart.getPositioning(part))) {
                      fromMatrix = new Matrix4f();
                      fromMatrix.setIdentity();
+                  } else {
+                     fromMatrix = MultipartRenderStateManager.captureMatrixForPositioning(fromMultipart, p, context);
                   }
-               } else {
-                  fromMatrix = MultipartRenderStateManager.captureMatrixForPositioning(fromMultipart, p, context);
                }
 
                fromMatrix = this.adjustToAttached(fromMatrix, fromMultipart.getAttachedTo(p), this.toPositioning.get(0).getAttachedTo(p), context);

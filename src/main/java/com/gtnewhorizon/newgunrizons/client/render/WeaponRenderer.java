@@ -315,6 +315,7 @@ public class WeaponRenderer implements IItemRenderer {
                || currentState == RenderableState.ZOOMING_SHOOTING
                || currentState == RenderableState.RUNNING
                || currentState == RenderableState.ZOOMING
+               || currentState == RenderableState.NORMAL
          );
       }
 

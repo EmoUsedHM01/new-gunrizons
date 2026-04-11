@@ -189,8 +189,12 @@ public class ItemWeaponInstance extends ItemInstance<WeaponState> {
 
    public void setAimed(boolean aimed) {
       if (aimed != this.aimed) {
+         // Calculate how far through the current transition we are
+         float currentProgress = this.getAimChangeProgress();
          this.aimed = aimed;
-         this.aimChangeTimestamp = System.currentTimeMillis();
+         // Set timestamp so the reverse animation starts from the current progress
+         // rather than from fully aimed/unaimed
+         this.aimChangeTimestamp = System.currentTimeMillis() - (long)((1.0F - currentProgress) * AIM_CHANGE_DURATION);
       }
    }
 
@@ -267,7 +271,7 @@ public class ItemWeaponInstance extends ItemInstance<WeaponState> {
    }
 
    public float getAimChangeProgress() {
-      float delta = (float)(System.currentTimeMillis() - this.aimChangeTimestamp) / 400.0F;
+      float delta = (float)(System.currentTimeMillis() - this.aimChangeTimestamp) / (float)AIM_CHANGE_DURATION;
       float p = Math.min(Math.max(delta, 0.0F), 1.0F);
       if (!this.isAimed()) {
          p = 1.0F - p;
