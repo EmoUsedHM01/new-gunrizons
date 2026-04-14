@@ -23,7 +23,19 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockAnvil;
+import net.minecraft.block.BlockBed;
+import net.minecraft.block.BlockButton;
+import net.minecraft.block.BlockCake;
+import net.minecraft.block.BlockCauldron;
+import net.minecraft.block.BlockDoor;
+import net.minecraft.block.BlockFenceGate;
+import net.minecraft.block.BlockLever;
+import net.minecraft.block.BlockTrapDoor;
+import net.minecraft.block.BlockWorkbench;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.MouseEvent;
 
 public class WeaponInputHandler {
@@ -38,11 +50,15 @@ public class WeaponInputHandler {
          if (player != null) {
             Item item = getHeldItem(player);
             if (item instanceof ItemWeapon || item instanceof ItemGrenade) {
-               // Allow right-click block interaction (chests, crafting tables, etc.) when looking at a block
+               // Allow right-click block interaction (chests, crafting tables, etc.) when looking at an interactable block
                if (event.button == 1 && event.buttonstate && item instanceof ItemWeapon) {
                   MovingObjectPosition mop = Minecraft.getMinecraft().objectMouseOver;
                   if (mop != null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-                     return;
+                     World world = player.worldObj;
+                     Block block = world.getBlock(mop.blockX, mop.blockY, mop.blockZ);
+                     if (isInteractableBlock(world, block, mop.blockX, mop.blockY, mop.blockZ)) {
+                        return;
+                     }
                   }
                }
                event.setCanceled(true);
@@ -189,5 +205,24 @@ public class WeaponInputHandler {
    private static Item getHeldItem(EntityPlayer player) {
       ItemStack itemStack = player.getHeldItem();
       return itemStack != null ? itemStack.getItem() : null;
+   }
+
+   private static boolean isInteractableBlock(World world, Block block, int x, int y, int z) {
+      // Tile entity blocks: chests, furnaces, dispensers, hoppers, brewing stands,
+      // enchanting tables, beacons, ender chests, and all mod machines (GregTech, etc.)
+      if (world.getTileEntity(x, y, z) != null) {
+         return true;
+      }
+      // Vanilla interactable blocks without tile entities
+      return block instanceof BlockWorkbench
+         || block instanceof BlockDoor
+         || block instanceof BlockTrapDoor
+         || block instanceof BlockFenceGate
+         || block instanceof BlockLever
+         || block instanceof BlockButton
+         || block instanceof BlockBed
+         || block instanceof BlockAnvil
+         || block instanceof BlockCake
+         || block instanceof BlockCauldron;
    }
 }
