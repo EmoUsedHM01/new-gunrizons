@@ -600,27 +600,27 @@ public class GTRecipes {
       addMagazine(Magazines.HK417Mag, Bullets.Bullet762x51, 20, 30);
       addMagazine(Magazines.FALMag, Bullets.Bullet762x51, 20, 30);
       addMagazine(Magazines.M14DMRMag, Bullets.Bullet762x51, 20, 30);
-      addMagazine(Magazines.M8A7Mag, Bullets.Bullet556x45, 30, 30);
+      addMagazine(Magazines.M8A7Mag, Bullets.Bullet300Blackout, 30, 30);
       addMagazine(Magazines.MXMag, Bullets.Bullet65x39, 30, 30);
       addMagazine(Magazines.STG44Mag, Bullets.Bullet792x33, 30, 30);
       addMagazine(Magazines.SVT40mag, Bullets.Bullet762x54, 10, 30);
       addMagazine(Magazines.M2CarbineMag, Bullets.Carbine30, 30, 30);
       addMagazine(Magazines.M1CarbineMag, Bullets.Carbine30, 15, 30);
       addMagazine(Magazines.M16A1Mag, Bullets.Bullet556x45, 20, 30);
-      addMagazine(Magazines.Glock21Mag, Bullets.Bullet9mm, 17, 30);
-      addMagazine(Magazines.Glock32Mag, Bullets.Bullet9mm, 17, 30);
+      addMagazine(Magazines.Glock21Mag, Bullets.Bullet45ACP, 17, 30);
+      addMagazine(Magazines.Glock32Mag, Bullets.Bullet357, 17, 30);
       addMagazine(Magazines.G18Mag, Bullets.Bullet9mm, 33, 30);
       addMagazine(Magazines.M9BerettaMag, Bullets.Bullet9mm, 15, 30);
       addMagazine(Magazines.DeagleMag, Bullets.Magnum44Ammo, 7, 30);
       addMagazine(Magazines.Deagle50Mag, Bullets.Bullet50, 7, 30);
-      addMagazine(Magazines.LugerP08Mag, Bullets.Bullet9mm, 8, 30);
+      addMagazine(Magazines.LugerP08Mag, Bullets.Bullet762x21, 8, 30);
       addMagazine(Magazines.ColtM1911Mag, Bullets.Bullet45ACP, 7, 30);
       addMagazine(Magazines.Mag10mm, Bullets.Bullet10mm, 15, 30);
       addMagazine(Magazines.PythonClip, Bullets.Bullet357, 6, 30);
       addMagazine(Magazines.MP5KMag, Bullets.Bullet9mm, 30, 30);
       addMagazine(Magazines.HKMP7Mag, Bullets.Bullet46x30, 40, 30);
       addMagazine(Magazines.FNP90Mag, Bullets.Bullet57x28, 50, 30);
-      addMagazine(Magazines.VectorMag, Bullets.Bullet9mm, 33, 30);
+      addMagazine(Magazines.VectorMag, Bullets.Bullet45ACP, 33, 30);
       addMagazine(Magazines.MPXmag, Bullets.Bullet9mm, 30, 30);
       addMagazine(Magazines.M1A1mag, Bullets.Bullet45ACP, 30, 30);
       addMagazine(Magazines.MP40Mag, Bullets.Bullet9mm, 32, 30);
@@ -649,7 +649,7 @@ public class GTRecipes {
       addMagazine(Magazines.Saiga12mag, Bullets.ShotgunShell, 10, 30);
       addMagazine(Magazines.Saiga410Mag, Bullets.ShotgunShell410, 10, 30);
       addMagazine(Magazines.VEPR12Mag, Bullets.ShotgunShell, 12, 30);
-      addMagazine(Magazines.M41AMag, Bullets.Bullet556x45, 30, 30);
+      addMagazine(Magazines.M41AMag, Bullets.Bullet65x39, 30, 30);
    }
 
    private static void addMagazine(Object mag, Object ammo, int ammoCount, int eut) {

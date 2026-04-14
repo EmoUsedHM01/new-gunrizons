@@ -130,7 +130,7 @@ public class Magazines {
          .build(ItemMagazine.class);
       STG44Mag = new ItemMagazine.Builder()
          .withAmmo(30)
-         .withCompatibleBullet(Bullets.Bullet762x39)
+         .withCompatibleBullet(Bullets.Bullet792x33)
          .withName("STG44Mag")
          .withCreativeTab(NewGunrizonsMod.AmmoTab)
          .withModel(new JsonModel("magazine/stg44mag"), "STG44.png")
@@ -182,7 +182,7 @@ public class Magazines {
          .build(ItemMagazine.class);
       LeeEnfieldMag = new ItemMagazine.Builder()
          .withAmmo(10)
-         .withCompatibleBullet(Bullets.Bullet762x54)
+         .withCompatibleBullet(Bullets.Bullet303British)
          .withName("LeeEnfieldMag")
          .withCreativeTab(NewGunrizonsMod.AmmoTab)
          .withModel(new JsonModel("magazine/leeenfieldno4magazine"), "LeeEnfieldNo4.png")
@@ -490,7 +490,7 @@ public class Magazines {
          .build(ItemMagazine.class);
       AK12Mag = new ItemMagazine.Builder()
          .withAmmo(31)
-         .withCompatibleBullet(Bullets.Bullet556x39)
+         .withCompatibleBullet(Bullets.Bullet545x39)
          .withName("AK12Mag")
          .withCreativeTab(NewGunrizonsMod.AmmoTab)
          .withModel(new JsonModel("magazine/ak12magazine"), "GunmetalTexture.png")
@@ -516,7 +516,7 @@ public class Magazines {
          .build(ItemMagazine.class);
       RPK74MMag = new ItemMagazine.Builder()
          .withAmmo(40)
-         .withCompatibleBullet(Bullets.Bullet762x39)
+         .withCompatibleBullet(Bullets.Bullet545x39)
          .withName("RPK74MMag")
          .withCreativeTab(NewGunrizonsMod.AmmoTab)
          .withModel(new JsonModel("magazine/rpk74mmag"), "GunmetalTexture.png")
@@ -1736,7 +1736,7 @@ public class Magazines {
          .build(ItemMagazine.class);
       ScarHMag = new ItemMagazine.Builder()
          .withAmmo(30)
-         .withCompatibleBullet(Bullets.Bullet300Blackout)
+         .withCompatibleBullet(Bullets.Bullet762x51)
          .withName("ScarHMag")
          .withCreativeTab(NewGunrizonsMod.AmmoTab)
          .withModel(new JsonModel("magazine/scarhmag"), "GunmetalTexture.png")
