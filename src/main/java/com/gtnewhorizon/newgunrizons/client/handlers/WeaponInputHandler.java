@@ -23,6 +23,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.event.MouseEvent;
 
 public class WeaponInputHandler {
@@ -37,6 +38,13 @@ public class WeaponInputHandler {
          if (player != null) {
             Item item = getHeldItem(player);
             if (item instanceof ItemWeapon || item instanceof ItemGrenade) {
+               // Allow right-click block interaction (chests, crafting tables, etc.) when looking at a block
+               if (event.button == 1 && event.buttonstate && item instanceof ItemWeapon) {
+                  MovingObjectPosition mop = Minecraft.getMinecraft().objectMouseOver;
+                  if (mop != null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+                     return;
+                  }
+               }
                event.setCanceled(true);
                if (event.button == 0) {
                   if (event.buttonstate) {
